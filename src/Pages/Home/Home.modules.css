@@ -1,0 +1,379 @@
+#DivPrincipal{
+    font-family: 'Quicksand', sans-serif;
+    margin: auto;
+}
+
+/* MENU DO SITE*/
+
+#menuNav{
+    display: block;
+    position: relative;
+    margin-left: 25px;
+    z-index: 1000;
+}
+#menuNav a{
+    text-decoration: none;
+    color: #F7770D;
+    transition: color 0.3s ease;
+} 
+#menuNav a:hover{
+    color: #F7770D;
+} 
+#menuNav input{
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 2;
+    -webkit-touch-callout: none;
+}
+#menuNav span{
+    display: block;
+    width: 40px;
+    height: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    background: #F7770D;
+    border-radius: 3px;
+    z-index: 1;
+    transform-origin: 4px 0px;
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+               background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+               opacity 0.55s ease;
+            
+} 
+#menuNav span:first-child{
+    transform-origin: 0% 0%;
+}
+#menuNav span:nth-last-child(2){
+    transform-origin: 0% 100%;
+}
+#menuNav input:checked ~ span{
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #F7770D;
+}
+ #menuNav input:checked ~ span:nth-last-child(3){
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+#menuNav input:checked ~ span:nth-last-child(2){
+    transform: rotate(-45deg) translate(0, -1px);
+}
+#textMenu{
+    display: flex;
+    width: 250px;
+    height: 100vh;
+    flex-direction: column;
+    position: fixed;
+    margin: -100px 0 0 -30px;
+    padding: 50px;
+    padding-top: 125px;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    transform-origin: 0% 0%;
+    transform: translate(-100%, 0);  
+    transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+    transition-duration: 0.5s;
+    background-color: white;
+    box-shadow: 1px 1px 5px #F7770D;
+    border-radius: 15px;
+
+}
+#textMenu li{
+    padding: 10px 0;
+    font-size: 22px;
+}
+#menuNav input:checked ~ ul{
+    transform: none;
+}
+
+/* HEADER SITE */
+
+header{
+    position: fixed;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    background-color: rgba(255, 255, 255, 0.795);
+    z-index: 5;
+    transition: top 0.3s;
+    
+}
+
+header > a > img{
+    max-width: 100%;
+    height: 75px;
+    display: block;
+    margin-left: 50px;
+}
+
+#Navegacoes{
+    position: absolute;
+    right: 0px;
+    display: flex;
+
+}
+#UlNavegacoes{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+#UlNavegacoes > li{
+    font-size: 25px;
+    padding: 23px;
+}
+
+#UlNavegacoes > li > a{
+    text-decoration: none;
+    color: black;
+    text-shadow: 0.5px 0.5px 1px #F7770D;
+    color: #F7770D;
+}
+
+#UlNavegacoes > li > a:hover{
+    text-shadow: 0 0 0 #F7770D;
+
+}
+
+@media screen and ( max-width: 450px){
+    #menuNav{
+        display: block;
+        position: relative;
+        left: 20px;
+        z-index: 1; 
+        user-select: none;
+    }
+    .header_site{
+        height: 80px;
+        display: flex;
+        align-items: center;
+    }    
+}
+
+
+/* Primeira mensagem (main)*/
+
+#Section1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: row; 
+    width: 80%;
+    margin: auto;
+} /*deixando as 2 divs uma ao lado da outra*/
+
+#Div1Section1{
+    position: relative;
+    align-self: center;
+    text-align: center;
+    color: #F7770D;
+    font-size: 38px;
+    border-radius: 10px;
+}
+
+.Div2Section1{
+    margin-left: 50px;
+}
+#DivSeta{
+    height: 100px;
+    position: absolute;
+    bottom: -15px;
+}
+
+#DivSeta{
+    animation: animateUpDown 1.3s infinite alternate;
+}
+@keyframes animateUpDown {
+    from {
+      transform: translateY(0); /* Inicia a animação a partir da posição original */
+    }
+    to {
+      transform: translateY(-20px); /* Define a posição para onde a imagem será movida na animação */
+    }
+  }
+
+
+/* "Por que VanGo?" */
+
+#section2{
+    height: 110vh;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+#h2Section2{
+    position: absolute;
+    color: black;
+    font-size: 30px;
+    left: 20px;
+    margin-bottom: 415px;
+}
+
+#TextSection2{
+    background-color: #F7770D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px 0px 0px 10px;
+}
+
+#TextSection2 > p{
+    font-size: 30px;
+    padding: 20px 50px 20px 50px;
+    color: white;
+}
+
+#ImagemSection2{
+    height: 100%;
+    border-radius: 0px 10px 10px 0px;
+}
+
+#DivFtImg2Section2{
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    width: 98%;
+    margin: auto;
+}
+
+
+#DivAnimacaoSection3{
+    position: relative;
+    width: 200px;
+    animation: slideRight 5s linear infinite; /* Aplica a animação com nome slideRight, duração de 5 segundos, linear e em loop infinito */
+    
+}
+
+@keyframes slideRight {
+    0% {
+      right: -100%; /* Começa a animação com a imagem fora da tela à direita */
+    }
+    100% {
+        right: 100%; /* Termina a animação com a imagem fora da tela à esquerda */
+    }
+  }
+
+  #DivAnimacaoSection3 > img{
+      height: 200px;
+    }
+
+    #h2Section4{
+        text-align: center;
+        font-size: 32px;
+  }
+    #Section4{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 110vh;
+
+
+    }
+  
+  #Section4 > h2{
+      font-size: 32px;
+    }
+
+  #DivGeralSection4{
+    box-shadow: 1px 1px 15px black;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.027);
+    height: 500px;
+    width: 60%;
+  }
+  #DivSection4{
+    display: flex;
+  }
+  #Div2Section4{
+    display: flex;
+  }
+
+  #Section5{
+    height: 350vh;
+  }
+  #DivH2Section5{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    font-size: 30px;
+  }
+
+  #DivGeralSection5{
+    width: 70%;
+    margin: auto;
+    border-radius: 10px;
+  }
+
+
+  #Gif2{
+    position: relative;
+    width: 200px;
+    animation: slideRight2 8s linear infinite; /* Aplica a animação com nome slideRight, duração de 5 segundos, linear e em loop infinito */
+}
+
+#Gif2 > img{
+    width: 300px;
+}
+
+
+
+@keyframes slideRight2 {
+    0% {
+      right: 100%; /* Começa a animação com a imagem fora da tela à esquerda */
+    }
+    100% {
+        right: -100%; /* Termina a animação com a imagem fora da tela à direita */
+    }
+  }
+/* Footer */ 
+footer{
+    text-align: center;
+    width: 100%;
+    font-weight: 700;
+    background-color: #F7770D;
+    color: white;
+}
+
+footer > p{
+    margin: 20px 0 0 0;
+    bottom: 10px;
+}
+#Contatos{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#Contatos > img{
+    height: 40px;
+    padding: 30px;
+}
+
+@media screen and (max-width: 420px) {
+    
+    footer{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: blue;
+    }
+
+    #div_footer{
+        width: 90%;
+
+    }
+
+   
+}
+

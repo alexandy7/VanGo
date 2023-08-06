@@ -1,0 +1,14 @@
+#DivBeneficio{
+    flex-direction: column;
+    padding: 40px;
+    padding-bottom: 25px;
+    margin: auto;
+}
+
+#ImgBeneficio{
+    height: 80px;
+}
+
+#DivBeneficio > p{
+    margin-top: 5px;
+}

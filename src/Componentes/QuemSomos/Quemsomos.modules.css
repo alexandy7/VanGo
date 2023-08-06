@@ -1,0 +1,22 @@
+#Pessoa {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #F7770D;
+
+}
+
+#ImagemPessoa {
+    max-height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 1300px;
+}
+
+#DescricaoPessoa {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    padding: 25px;
+}

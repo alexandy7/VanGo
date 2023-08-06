@@ -138,7 +138,7 @@ export default function Home() {
                     <img src={Instagram} alt="" />
                     <img src={Suporte} alt="" />
                 </div>
-                <p>© VanGo ©</p>
+                <p>© VanGo © Alterando apenas para testar</p>
             </footer>
         </div>
     )

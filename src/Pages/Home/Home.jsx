@@ -123,7 +123,7 @@ export default function Home() {
                         <QuemSomos foto={Joao} direcao="row-reverse" descricao={"João, ele é responsável pela parte de gerenciamento do banco de dados (MySql). Possui 17 anos e tem interesse de seguir na carreira de     FullStack"}></QuemSomos>
                         <QuemSomos foto={Carlos} direcao="row" descricao={"Este é o Carlos, onde por meio de uma votação se tornou gerente do projeto. Carlos é responsável pela administração do projeto, captação de clientes e desenvolvimento do Back-end. Pretende seguir carreira como programador Back-end mobile ou programação em nuvem."}></QuemSomos>
                         <QuemSomos foto={Yago} direcao="row-reverse" descricao={"Yago é responsável pelo desenvolvimento do Front-end (React Native e ReactJs). Yago atualmente trabalha na área de TI e possui intenção de seguir a carreira como desenvolvedor Back-end."}></QuemSomos>
-                        <QuemSomos foto={Thais} direcao="row" descricao={"Esta é a Thais, a responsável por toda a documentação do projeto. Thais tem 18 anos, é formada em Gestão de TI na ryudald e pretende trabalhar como Analista de sistemas."}></QuemSomos>
+                        <QuemSomos foto={Thais} direcao="row" descricao={"Esta é a Thais, a responsável por toda a documentação do projeto. Thais tem 19 anos, é formada em Gestão de TI na unip  e pretende trabalhar como Analista de sistemas."}></QuemSomos>
                     </div>
                 </section>
 
@@ -138,7 +138,7 @@ export default function Home() {
                     <img src={Instagram} alt="" />
                     <img src={Suporte} alt="" />
                 </div>
-                <p>© VanGo © Alterando apenas para testar</p>
+                <p>© VanGo ©</p>
             </footer>
         </div>
     )

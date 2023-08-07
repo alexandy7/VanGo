@@ -21,23 +21,23 @@ export default function Login() {
 
 
 
-        try {
-            const resposta = await Api.get('VerificarLogin', {
-                params: {
-                    email: emailD,
-                    senha: senhaD,
-                },
-            });
+        // try {
+        //     const resposta = await Api.get('VerificarLogin', {
+        //         params: {
+        //             email: emailD,
+        //             senha: senhaD,
+        //         },
+        //     });
 
-            if (resposta != null) {
+        //     if (resposta != null) {
                 navigation.navigate('TabBarScreen');
-            }
+        //     }
 
-        }
+        // }
 
-        catch (error) {
-            console.error('Erro na consulta:', error);
-        }
+        // catch (error) {
+        //     console.error('Erro na consulta:', error);
+        // }
 
 
     }

@@ -101,13 +101,14 @@ function TabBarNavigator() {
 export default function AppNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="TabBarScreen" component={TabBarNavigator} />
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Cadastro" component={Cadastro} />
-      <Stack.Screen name="CadastroEscola" component={CadastroEscola} />
+      <Stack.Screen name="Cadastro" component={Cadastro}/>
+      <Stack.Screen name="CadastroEscola" component={CadastroEscola}/>
       <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo} />
       <Stack.Screen name="ConfigMoto" component={ConfigMoto} />
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
-      <Stack.Screen name="TabBarScreen" component={TabBarNavigator} />
+      
     </Stack.Navigator>
   );
 }

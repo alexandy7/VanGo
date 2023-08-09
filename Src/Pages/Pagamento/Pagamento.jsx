@@ -3,6 +3,7 @@ import { useEffect, useState} from "react";
 import ComprovanteEnviado from "../../Componentes/Common/ComprovanteEnviado"
 import Api from "../../services/Api";
 import NotificacaoDePagamento from "../../Componentes/Common/NotificacaoPagamento";
+import CardPagamento from "../../Componentes/Common/CardPagamento";
 
 export default function Pagamento() {
 
@@ -31,10 +32,10 @@ export default function Pagamento() {
 <ScrollView>
         <View>
             <Text style={styles.titulo}>Pagamentos</Text>
-            <NotificacaoDePagamento></NotificacaoDePagamento>
+
+            <CardPagamento></CardPagamento>
 
             <View style={styles.pagamentoAtual}> 
-                <Image source={require('../../../assets/UserPhoto.png')}/>
                 <Text style={styles.nomeusuario}>Nome usuario</Text>
             </View>
 

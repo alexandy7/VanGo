@@ -28,12 +28,10 @@ export default function CardPagamento({item})
                         <Text style={styles.situacao}>Atraso</Text>
                     </View>
 
-                    <Text style={styles.vencimento}>Vencimento: 10/04/2023</Text>
-                    
+                    <Text style={styles.vencimento}>Venc.: 10/04/2023</Text>
+
                 </View>
-
             </View>
-
         </View>
     )
 }
@@ -71,8 +69,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "80%",
-        height: 40,
+        width: "75%",
+        height: 39,
         position: "relative",
         top: 5
     },
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 
     fatura: {
         position:"relative",
-        left: "30%",
+        left: "50%",
         fontSize: 20,
         color: "red"
     },
@@ -99,8 +97,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "80%",
-        height: 40,
+        width: "75%",
+        height: 39,
         position: "relative",
         top: 5
     },
@@ -123,6 +121,6 @@ const styles = StyleSheet.create({
     vencimento: {
         position: "relative",
         fontSize: 15,   
-        right: "5%"
+        right: "10%"
     }
 })

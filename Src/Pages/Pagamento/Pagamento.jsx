@@ -2,8 +2,8 @@ import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { useEffect, useState} from "react";
 import ComprovanteEnviado from "../../Componentes/Common/ComprovanteEnviado"
 import Api from "../../services/Api";
-import NotificacaoDePagamento from "../../Componentes/Common/NotificacaoPagamento";
 import CardPagamento from "../../Componentes/Common/CardPagamento";
+import CardComprovante from "../../Componentes/Common/CardComprovante";
 
 export default function Pagamento() {
 
@@ -36,13 +36,14 @@ export default function Pagamento() {
             <CardPagamento></CardPagamento>
 
             <View style={styles.pagamentoAtual}> 
-                <Text style={styles.nomeusuario}>Nome usuario</Text>
+                <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
             </View>
 
         <View>
-            <ComprovanteEnviado/> 
-            <ComprovanteEnviado/> 
-            <ComprovanteEnviado/>           
+            <CardComprovante></CardComprovante>
+            <CardComprovante></CardComprovante>
+            <ComprovanteEnviado/>
+            <ComprovanteEnviado/>        
         </View>
 
         </View>

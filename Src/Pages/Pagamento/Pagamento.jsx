@@ -41,9 +41,11 @@ export default function Pagamento() {
 
         <View>
             <CardComprovante></CardComprovante>
+            <CardComprovante></CardComprovante>  
             <CardComprovante></CardComprovante>
-            <ComprovanteEnviado/>
-            <ComprovanteEnviado/>        
+            <CardComprovante></CardComprovante>
+            <CardComprovante></CardComprovante>
+            <CardComprovante></CardComprovante>
         </View>
 
         </View>

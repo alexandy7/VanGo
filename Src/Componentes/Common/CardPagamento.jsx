@@ -8,7 +8,7 @@ export default function CardPagamento({item})
     return(
         <View style={styles.container}>
             <View style={styles.divimagem}>
-                <Image source={require('../../../assets/gato.jpg')} style={styles.divimagem}/>
+                <Image source={require('../../../assets/gato.jpg')} style={styles.imagem}/>
             </View>
 
             <View style={styles.containertexto}>
@@ -53,51 +53,55 @@ const styles = StyleSheet.create({
 
     divimagem: {
         height: 79,
-        width: 79,
+        width: "30%",
         backgroundColor: "black",
         position: "relative",
         borderRadius: 20,
+    },
+
+    imagem: {
+        height: "100%",
+        width: "100%",
+        borderRadius: 20
     },
 
     containertexto: {
         display: "flex",
         flexDirection: "column",
         position: "relative",
+        width: "70%"
     },
     
     divtextosuperior: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
-        width: "75%",
+        width: "100%",
         height: 39,
         position: "relative",
+        justifyContent: "space-evenly",
         top: 5
     },
 
     nome: {
         position:"relative",
-        fontSize: 20,
-        left: "30%"
+        fontSize: 19,
     },
 
     fatura: {
         position:"relative",
-        left: "50%",
-        fontSize: 20,
+        fontSize: 19,
         color: "red"
     },
 
     seta: {
         position:"relative",
-        left: "10%"
     },
 
     divtextoinferior: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
-        width: "75%",
+        justifyContent: "space-evenly",
+        width: "100%",
         height: 39,
         position: "relative",
         top: 5
@@ -115,12 +119,12 @@ const styles = StyleSheet.create({
     alinhatexto:{
         display: "flex",
         flexDirection: "row",
-        left: "3%"
+        right: "3%"
     },
 
     vencimento: {
         position: "relative",
         fontSize: 15,   
-        right: "10%"
+        right: "0%"
     }
 })

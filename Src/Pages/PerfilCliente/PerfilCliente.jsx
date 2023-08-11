@@ -9,78 +9,78 @@ import PincelEditar from "../../Componentes/Common/PincelEditar";
 export default function PerfilCliente() {
 
     const [nomeUsuario, setNomeUsuario] = useState([])
-    
-    const navigation = useNavigation();
-      
-        const irConfig = () => {
-            navigation.navigate('ConfigMoto')
-          
-        };
 
-    return(
+    const navigation = useNavigation();
+
+    const irConfig = () => {
+        navigation.navigate('ConfigMoto')
+
+    };
+
+    return (
         <View style={styles.geral}>
             <Perfil
-            evento={irConfig}
-            fotoUser={require('../../../assets/UserPhoto.png')}
-            nomeUser={'NomeUsuario'}>                
+                evento={irConfig}
+                fotoUser={require('../../../assets/UserPhoto.png')}
+                nomeUser={'NomeUsuario'}>
             </Perfil>
 
-              <View style={styles.informacoes}>
+            <View style={styles.informacoes}>
 
                 <View style={styles.topo} >
-                    
-                <InfoPerfil
-                imagemtitulo={require('../../../assets/profilrNoPerfil.png')}
-                titulo={'Noemia'}
-                subtitulo={'Responsável'}
-                ></InfoPerfil>
 
-                <View style={styles.clock}>
-                <InfoPerfil
-                imagemtitulo={require('../../../assets/cockPerfil.png')}
-                titulo={'06:30 AM'}
-                subtitulo={'  Horário'}></InfoPerfil>
-                </View>
+                    <InfoPerfil
+                        imagemtitulo={require('../../../assets/profilrNoPerfil.png')}
+                        titulo={'Noemia'}
+                        subtitulo={'Responsável'}
+                    ></InfoPerfil>
+
+                    <View style={styles.clock}>
+                        <InfoPerfil
+                            imagemtitulo={require('../../../assets/cockPerfil.png')}
+                            titulo={'06:30 AM'}
+                            subtitulo={'  Horário'}></InfoPerfil>
+                    </View>
                 </View>
 
 
                 <View style={styles.baixo} >
-                <InfoPerfil
-                imagemtitulo={require('../../../assets/homePerfil.png')}
-                titulo={'R.Moraes..'}
-                subtitulo={'  Endereço'}
-                ></InfoPerfil>
-                <InfoPerfil
-                imagemtitulo={require('../../../assets/status.png')}
-                titulo={'Positivo'}
-                subtitulo={'  Status'} ></InfoPerfil>
+                    <InfoPerfil
+                        imagemtitulo={require('../../../assets/homePerfil.png')}
+                        titulo={'R.Moraes..'}
+                        subtitulo={'  Endereço'}
+                    ></InfoPerfil>
+                    <InfoPerfil
+                        imagemtitulo={require('../../../assets/status.png')}
+                        titulo={'Positivo'}
+                        subtitulo={'  Status'} ></InfoPerfil>
                 </View>
-    
-                <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>            
-              </View> 
 
-              <View style={styles.infoMoto}>
-                    <Text style={styles.tituloMoto} >Seu motorista é:</Text>
-                    <View>
-                        <Image source={require('../../../assets/fotoMotorista.png')}/>
-                    </View>
-                    <Text style={{color:'grey', marginBottom: 5}}>Tio Rogerinho</Text>
+                <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
+            </View>
 
-                    <TouchableOpacity style={styles.exibirPerfil}>
-                        <Text style={styles.exibirPerfilMsg} >Exibir perfil</Text>
-                        </TouchableOpacity>
+            <View style={styles.infoMoto}>
+                <Text style={styles.tituloMoto} >Seu motorista é:</Text>
+                <View>
+                    <Image source={require('../../../assets/fotoMotorista.png')} />
+                </View>
+                <Text style={{ color: 'grey', marginBottom: 5 }}>Tio Rogerinho</Text>
 
-              </View>
-              
-              
+                <TouchableOpacity style={styles.exibirPerfil}>
+                    <Text style={styles.exibirPerfilMsg} >Exibir perfil</Text>
+                </TouchableOpacity>
+
+            </View>
+
+
         </View>
     )
 }
 
 const styles = StyleSheet.create(
-     {
+    {
 
-        geral:{
+        geral: {
             flex: 1,
             backgroundColor: 'rgb(250, 250, 250)'
         },
@@ -94,8 +94,8 @@ const styles = StyleSheet.create(
             alignSelf: 'center',
             shadowColor: "#000",
             shadowOffset: {
-              width: 0,
-              height: 2,
+                width: 0,
+                height: 2,
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
@@ -113,11 +113,11 @@ const styles = StyleSheet.create(
             alignSelf: 'center',
         },
 
-        clock:{
+        clock: {
             left: 9 // O relogio esta meio desalinhado, por isso o uso do 'left'
         },
 
-        infoMoto:{
+        infoMoto: {
             backgroundColor: 'white',
             height: '27%',
             width: '80%',
@@ -127,36 +127,36 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             shadowColor: "black",
             shadowOffset: {
-              width: 0,
-              height: 2,
+                width: 0,
+                height: 2,
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 10,
         },
 
-        tituloMoto:{
-            fontSize:19,
+        tituloMoto: {
+            fontSize: 19,
             marginBottom: 5
         },
 
-        exibirPerfil:{
-            backgroundColor:'#F99A4C',
+        exibirPerfil: {
+            backgroundColor: '#F99A4C',
             borderRadius: 10,
             height: 30,
             width: 140,
             alignItems: 'center',
-            
+
         },
 
-        exibirPerfilMsg:{
+        exibirPerfilMsg: {
             color: 'white',
             top: 3
-            
+
         }
 
-      
-     }
+
+    }
 )
 
 

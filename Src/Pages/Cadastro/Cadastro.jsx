@@ -154,10 +154,10 @@ export default function Cadastro() {
           <View style={styles.vieu}>
             <TituloCadastro textoh1={'Faça seu cadastro'} textoh2={'Insira as informações abaixo:'} />
             <View style={styles.botaoCM}>
-              <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]}>
+              <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]} onPress={botaoCliente}>
                 <Text style={[styles.texto, { color: button1letra }]}>Cliente</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]}>
+              <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={botaoMoto}>
                 <Text style={[styles.texto, { color: button2letra }]}>Motorista</Text>
               </TouchableOpacity>
             </View>

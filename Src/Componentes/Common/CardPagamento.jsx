@@ -8,7 +8,7 @@ export default function CardPagamento({item})
     return(
         <View style={styles.container}>
             <View style={styles.divimagem}>
-                <Image source={require('../../../assets/gato.jpg')} style={styles.imagem}/>
+                <Image source={require('../../../assets/Logo.png')} style={styles.imagem}/>
             </View>
 
             <View style={styles.containertexto}>

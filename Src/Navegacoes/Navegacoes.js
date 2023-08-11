@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from '@react-navigation/native';
 import Login from "../Pages/Login/Login";
 import Cadastro from '../Pages/Cadastro/Cadastro';
 import CadastroEscola from '../Pages/CadastroEscola/CadastroEscola';
@@ -12,6 +13,7 @@ import Pagamento from "../Pages/Pagamento/Pagamento";
 import { Ionicons } from '@expo/vector-icons'
 import { View, StyleSheet, Text, Image } from "react-native";
 
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -23,13 +25,16 @@ function TabBarNavigator() {
       screenOptions={{
         tabBarStyle: {
           height: 60,
+          width: "90%",
           bottom: 10,
           borderTopWidth: 0,
           borderBottomWidth: 0,
-          backgroundColor: 'rgb(250, 250, 250)',
+          backgroundColor: '#F7770D',
           elevation: 0,
           color: "red",
           justifyContent: 'center',
+          alignSelf: "center"
+          
         }
       }}> 
           {/* Estilizando cada elemento especifico do Tab.Navigator */}
@@ -100,15 +105,17 @@ function TabBarNavigator() {
 
 export default function AppNavigator() {
   return (
+   
+
     <Stack.Navigator>
-      <Stack.Screen name="TabBarScreen" component={TabBarNavigator} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Cadastro" component={Cadastro}/>
-      <Stack.Screen name="CadastroEscola" component={CadastroEscola}/>
-      <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo} />
-      <Stack.Screen name="ConfigMoto" component={ConfigMoto} />
-      <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} />
-      
+      <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
+      <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
+      <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConfigMoto" component={ConfigMoto}  options={{headerShown: false}}/>
+      <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
     </Stack.Navigator>
+   
   );
 }

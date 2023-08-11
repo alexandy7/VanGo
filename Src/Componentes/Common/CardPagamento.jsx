@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 
 export default function CardPagamento({item}) 
@@ -8,7 +9,7 @@ export default function CardPagamento({item})
     return(
         <View style={styles.container}>
             <View style={styles.divimagem}>
-                <Image source={require('../../../assets/Logo.png')} style={styles.imagem}/>
+                <Image source={require('../../../assets/gato.jpg')} style={styles.imagem}/>
             </View>
 
             <View style={styles.containertexto}>
@@ -38,18 +39,29 @@ export default function CardPagamento({item})
 
 const styles = StyleSheet.create({
     container: {
-        width: "90%",
+        width: '90%',
         height: 80,
         borderColor: 'grey',
         borderRadius: 20,
         alignSelf: 'center',
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        // shadowRadius: 10,
         marginBottom: 35,
-        display: "flex",
-        flexDirection: "row"
-    },
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: 'white', // Adicione um fundo branco
+        
+        ...Platform.select({
+          ios: {
+            shadowColor: 'rgba(0, 0, 0, 0.3)',
+            shadowOffset: { width: 5, height: 5 },
+            shadowOpacity: 0.5,
+            shadowRadius: 5,
+          },
+          android: {
+            elevation: 10,
+          },
+        }),
+      },
+      
 
     divimagem: {
         height: 79,

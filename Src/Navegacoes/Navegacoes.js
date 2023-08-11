@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from "../Pages/Login/Login";
 import Cadastro from '../Pages/Cadastro/Cadastro';
@@ -21,24 +22,21 @@ function TabBarNavigator() {
   return (
     <Tab.Navigator
     /* Estilizando tudo do Tab.Navigator */
-      initialRouteName="MeuPerfil"
-      screenOptions={{
-        tabBarStyle: {
-          height: 60,
-          width: "90%",
-          bottom: 10,
-          borderTopWidth: 0,
-          borderBottomWidth: 0,
-          backgroundColor: '#F7770D',
-          elevation: 0,
-          color: "red",
-          justifyContent: 'center',
-          alignSelf: "center"
-          
-        }
-      }}> 
-          {/* Estilizando cada elemento especifico do Tab.Navigator */}
+    initialRouteName="MeuPerfil"
+    screenOptions={{
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        height: 60,
+        bottom: 10,
+        width: "90%",
+        borderRadius: 15,
+        zIndex: 1000,
+        alignSelf: "center",
+        justifyContent: "space-around",
+      }
+    }}> 
         <Tab.Screen
+          /* Estilizando cada elemento especifico do Tab.Navigator */
           name="Pagamento"
           component={Pagamento}
           options={{
@@ -46,15 +44,11 @@ function TabBarNavigator() {
             tabBarIcon: ({ color, size, focused }) => {
   
               if (focused) {
-                return <Ionicons name="stats-chart" color={'#F7770D'} size={30} /> //Modo quando for clicado
+                return <Icon name="attach-money" color={'#F7770D'} size={33} /> //Modo quando for clicado
               }
   
-              return <Ionicons name="stats-chart-outline" color={'rgba(0, 0, 0, 0.3)'} size={30} /> //Modo quando não estiver clicado
+              return <Icon name="attach-money" color="rgba(0, 0, 0, 0.4)" size={33}/>//Modo quando não estiver clicado
             },
-  
-            tabBarLabel: ({ color, focused, fontSize }) => (
-              <Text style={{ color: focused ? '#F7770D' : color, fontSize: 11, bottom: 7 }}>Pagamento</Text>
-            )
           }} 
           />
 
@@ -71,10 +65,6 @@ function TabBarNavigator() {
 
             return <Ionicons name="home" color={"rgba(0, 0, 0, 0.3)"} size={30} />
           },
-
-          tabBarLabel: ({ color, focused }) => (
-            <Text style={{ color: focused ? '#F7770D' : color, fontSize: 11, bottom: 7 }}>Home</Text>
-          )
         }}
       />
 
@@ -87,15 +77,12 @@ function TabBarNavigator() {
           tabBarIcon: ({ focused }) => {
 
             if (focused) {
-              return <Ionicons name="person" color={'#F7770D'} size={30} />
+              return <Ionicons name="person-sharp" color={'#F7770D'} size={30} />
             }
 
-            return <Ionicons name="person-outline" color={"rgba(0, 0, 0, 0.3)"} size={30} />
-          },
-          tabBarLabel: ({ color, focused }) => (
-            <Text style={{ color: focused ? '#F7770D' : color, fontSize: 11, bottom: 7 }}>Meu perfil</Text>
-          )
+            return <Ionicons name="person-sharp" color={'rgba(0, 0, 0, 0.3)'} size={30} />
 
+          },
         }}
       />
 

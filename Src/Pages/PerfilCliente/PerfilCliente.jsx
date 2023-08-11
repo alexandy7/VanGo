@@ -82,7 +82,6 @@ const styles = StyleSheet.create(
 
         geral: {
             flex: 1,
-            backgroundColor: 'rgb(250, 250, 250)'
         },
 
         informacoes: {

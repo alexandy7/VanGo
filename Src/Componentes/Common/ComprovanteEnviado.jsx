@@ -37,7 +37,7 @@ export default function ComprovanteEnviado({item }) {
 const styles = StyleSheet.create({
     geral: {
         flex: 1,
-        marginBottom: 15
+        marginBottom: 15,
     },
 
     geral2: {

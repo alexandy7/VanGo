@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignSelf: 'center',
         borderWidth: 1,
-        marginBottom: 15,
+        marginBottom: 8,
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: 'white',
     },
 
     divanexo: {

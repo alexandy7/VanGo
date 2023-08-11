@@ -27,12 +27,14 @@ function TabBarNavigator() {
       tabBarShowLabel: false,
       tabBarStyle: {
         height: 60,
-        bottom: 10,
-        width: "90%",
+        bottom: 20,
+        width: "95%",
         borderRadius: 15,
         zIndex: 1000,
-        alignSelf: "center",
-        justifyContent: "space-around",
+        right: 10,
+        left: 10,
+        position: "absolute",
+        elevation: 15
       }
     }}> 
         <Tab.Screen

@@ -29,6 +29,7 @@ export default function Pagamento() {
 
     return (
 
+<ScrollView>
         <View>
             <Text style={styles.titulo}>Pagamentos</Text>
 
@@ -38,8 +39,7 @@ export default function Pagamento() {
                 <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
             </View>
 
-<ScrollView>
-        <View>
+        <View style={styles.Comprovantes}>
             <CardComprovante></CardComprovante>
             <CardComprovante></CardComprovante>  
             <CardComprovante></CardComprovante>
@@ -55,9 +55,9 @@ export default function Pagamento() {
             <CardComprovante></CardComprovante>
             <CardComprovante></CardComprovante>
         </View>
-</ScrollView>
 
         </View>
+</ScrollView>
     )
 }   
 
@@ -78,5 +78,9 @@ const styles = StyleSheet.create({
         position: "relative",
         left: 42,
         bottom: 5
+    },
+
+    Comprovantes:{
+        marginBottom: 100
     }
 })

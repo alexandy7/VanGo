@@ -27,12 +27,12 @@ function TabBarNavigator() {
       tabBarShowLabel: false,
       tabBarStyle: {
         height: 60,
-        bottom: 20,
-        width: "95%",
+        bottom: 25,
+        width: "90%",
         borderRadius: 15,
         zIndex: 1000,
-        right: 10,
-        left: 10,
+        right: 20,
+        left: 20,
         position: "absolute",
         elevation: 15
       }
@@ -46,7 +46,11 @@ function TabBarNavigator() {
             tabBarIcon: ({ color, size, focused }) => {
   
               if (focused) {
-                return <Icon name="attach-money" color={'#F7770D'} size={33} /> //Modo quando for clicado
+                return <Icon name="attach-money" color={'#F7770D'} size={33} style={{
+                  
+                }
+
+                }/> //Modo quando for clicado
               }
   
               return <Icon name="attach-money" color="rgba(0, 0, 0, 0.4)" size={33}/>//Modo quando não estiver clicado

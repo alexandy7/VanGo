@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Common/Perfil";
 import InfoPerfil from "../../Componentes/Common/InfoPerfil";
 import PincelEditar from "../../Componentes/Common/PincelEditar";
+import styles from "./PerfilCliente.modules.jsx"
 
 
 export default function PerfilCliente() {
@@ -18,145 +19,53 @@ export default function PerfilCliente() {
     };
 
     return (
-        <View style={styles.geral}>
+        <View>
+
             <Perfil
                 evento={irConfig}
-                fotoUser={require('../../../assets/UserPhoto.png')}
-                nomeUser={'NomeUsuario'}>
+                fotoUser={require('../../../assets/fotoMotorista.png')}
+                nomeUser={'Karen Cristina'}>
             </Perfil>
 
-            <View style={styles.informacoes}>
+            <View style={styles.geral}>
 
-                <View style={styles.topo} >
-
+                <View style={styles.cima}>
                     <InfoPerfil
-                        imagemtitulo={require('../../../assets/profilrNoPerfil.png')}
+                        imagemtitulo="person"
                         titulo={'Noemia'}
-                        subtitulo={'Responsável'}
-                    ></InfoPerfil>
+                        subtitulo={'Responsável'}>
+                    </InfoPerfil>
 
-                    <View style={styles.clock}>
-                        <InfoPerfil
-                            imagemtitulo={require('../../../assets/cockPerfil.png')}
-                            titulo={'06:30 AM'}
-                            subtitulo={'  Horário'}></InfoPerfil>
-                    </View>
+                    <InfoPerfil
+                        imagemtitulo="time"
+                        titulo={'06:30 AM'}
+                        subtitulo={'Horário'}>
+                    </InfoPerfil>
                 </View>
 
-
-                <View style={styles.baixo} >
+                <View style={styles.baixo}>
                     <InfoPerfil
-                        imagemtitulo={require('../../../assets/homePerfil.png')}
+                        imagemtitulo="location"
                         titulo={'R.Moraes..'}
-                        subtitulo={'  Endereço'}
-                    ></InfoPerfil>
+                        subtitulo={'Endereço'}>
+                    </InfoPerfil>
+
                     <InfoPerfil
-                        imagemtitulo={require('../../../assets/status.png')}
+                        imagemtitulo="hourglass"
                         titulo={'Positivo'}
-                        subtitulo={'  Status'} ></InfoPerfil>
+                        subtitulo={'Status'}>
+                    </InfoPerfil>
                 </View>
 
-                <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
-            </View>
-
-            <View style={styles.infoMoto}>
-                <Text style={styles.tituloMoto} >Seu motorista é:</Text>
-                <View>
-                    <Image source={require('../../../assets/fotoMotorista.png')} />
+                <View style={styles.pincel}>
+                    <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
                 </View>
-                <Text style={{ color: 'grey', marginBottom: 5 }}>Tio Rogerinho</Text>
-
-                <TouchableOpacity style={styles.exibirPerfil}>
-                    <Text style={styles.exibirPerfilMsg} >Exibir perfil</Text>
-                </TouchableOpacity>
-
             </View>
-
 
         </View>
     )
 }
 
-const styles = StyleSheet.create(
-    {
-
-        geral: {
-            flex: 1,
-        },
-
-        informacoes: {
-            backgroundColor: 'white',
-            height: '27%',
-            width: '80%',
-            bottom: 90,
-            borderRadius: 20,
-            alignSelf: 'center',
-            shadowColor: "#000",
-            shadowOffset: {
-                width: 0,
-                height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 10,
-        },
-
-        topo: {
-            flexDirection: 'row',
-            alignSelf: 'center',
-            marginBottom: 30
-        },
-
-        baixo: {
-            flexDirection: 'row',
-            alignSelf: 'center',
-        },
-
-        clock: {
-            left: 9 // O relogio esta meio desalinhado, por isso o uso do 'left'
-        },
-
-        infoMoto: {
-            backgroundColor: 'white',
-            height: '27%',
-            width: '80%',
-            bottom: 60,
-            borderRadius: 20,
-            alignSelf: 'center',
-            alignItems: 'center',
-            shadowColor: "black",
-            shadowOffset: {
-                width: 0,
-                height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 10,
-        },
-
-        tituloMoto: {
-            fontSize: 19,
-            marginBottom: 5
-        },
-
-        exibirPerfil: {
-            backgroundColor: '#F99A4C',
-            borderRadius: 10,
-            height: 30,
-            width: 140,
-            alignItems: 'center',
-
-        },
-
-        exibirPerfilMsg: {
-            color: 'white',
-            top: 3
-
-        }
-
-
-    }
-)
 
 
 // É necessário arrumar a possição das informações ainda, estão desalinhadas

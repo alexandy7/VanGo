@@ -4,7 +4,7 @@ import {Ionicons} from '@expo/vector-icons'
 export default function PincelEditar({evento}){
 
     return(
-        <View style={styles.posicao}>
+        <View>
             <TouchableOpacity onPress={evento}>
             <Ionicons name='brush' size={20} color="#F7770D" />
             </TouchableOpacity>
@@ -12,17 +12,4 @@ export default function PincelEditar({evento}){
     )
 }
 
-const styles = StyleSheet.create(
-    {
-        posicao: {
-            alignSelf: 'flex-end',
-            top: 23,
-            right: 15,
-         },
-
-         botao: {
-            fontSize: 30
-         }
-    }
-)
 

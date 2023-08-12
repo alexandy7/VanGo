@@ -1,13 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
+import { Ionicons } from '@expo/vector-icons'
 
 export default function InfoPerfil({ imagemtitulo, titulo, subtitulo }) {
 
     return (
         <View style={styles.geral}>
 
-            <View style={styles.img}>
-                <Image source={imagemtitulo} style={styles.imagem} />
+            <View style={styles.cima}>
+            <Ionicons name={imagemtitulo} color={'grey'} size={30} style={styles.icone} />
                 <Text style={styles.titulo}>{titulo}</Text>
             </View>
             <Text style={styles.subtitulo}>{subtitulo}</Text>
@@ -17,29 +18,27 @@ export default function InfoPerfil({ imagemtitulo, titulo, subtitulo }) {
 
 const styles = StyleSheet.create(
     {
-        subtitulo: {
-            color: 'grey',
-            left: 30
-        },
-
-        img: {
-            height: 37, //deixa as fotos das informações maiores para n ficarem cortadas
-            flexDirection: "row",
+        geral:{
+            flexDirection: "column",
             alignItems: "center",
-            marginBottom: -10
+            padding: 10,
+            minWidth: 160,
+            justifyContent: "space-between"
         },
 
-        geral: {
-            marginRight: 40, //serve pra dar um espaço entre as informações
-            marginLeft: 10,
-            flexDirection: 'column',
-            top: 20
+        cima:{
+            flexDirection: "row",
+            alignItems: "center"
         },
 
 
+        titulo:{
+            paddingLeft: 10,
+            color: "black"
+        },
 
-        titulo: {
-            left: 10
+        subtitulo:{
+            color: "grey"
         }
 
 

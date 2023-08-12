@@ -1,61 +1,57 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
-export default function Perfil({ fotoUser, nomeUser, evento}) {
+export default function Perfil({ fotoUser, nomeUser, evento }) {
     return (
-        <View style={styles.container}>
-            
-            <View style={styles.fotonome}>
-                <TouchableOpacity style={styles.config} onPress={evento}>
+        <View style={styles.geral}>
+
+            <View style={styles.config}>
+                <TouchableOpacity onPress={evento}>
                     <Image source={require('../../../assets/config.png')} />
                 </TouchableOpacity>
-                <Image source={fotoUser} style={styles.imagem}/>
+            </View>
+
+            <View style={styles.fotoNome}>
+                <Image source={fotoUser} style={styles.imagem} />
                 <Text style={styles.nome}>{nomeUser}</Text>
             </View>
 
-            </View>
+        </View>
     );
 
 }
 
 const styles = StyleSheet.create(
     {
-        container: {
-            flex: 1,
+        geral: {
+            backgroundColor: "#E46C08",
+            borderBottomRightRadius: 40,
+            borderBottomLeftRadius: 40,
+            height: 300
+        },
+
+        config: {
+            alignSelf: "flex-end",
+            right: 15,
+            top: 15
+        },
+
+        fotoNome:{
+            alignSelf: "center",
+            top: 20
+        },
+
+        imagem:{
+            height: 120,
+            width: 130,
+            alignSelf: "center",
+            borderRadius: 25
             
         },
 
-        fotonome: {
-            height: 270,
-            backgroundColor: "#E46C08",
-            borderBottomRightRadius: 50,
-            borderBottomLeftRadius: 50,
-            justifyContent: 'center',
-
-        },
-
-        imagem: {
-            alignSelf: 'center',
-        },
-
-       
-
-        nome: {
-            color: 'white',
-            alignSelf: 'center',
-            fontSize: 20,
-            marginTop: 5
-        },
-
-        config:{
-            position: 'absolute',
-            right: 15,
-            top: 15,
-
+        nome:{
+            color: "white",
+            fontSize: 25
         }
-
-      
-
-
     }
 )

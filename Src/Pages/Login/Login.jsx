@@ -52,7 +52,9 @@ export default function Login() {
 
 
     return (
+      <ScrollView> 
         <View style={styles.geral}>
+          
           <View style={styles.container}>
             <Image source={require('../../../assets/Logo.png')} style={styles.imagem} />
             <Text style={styles.titulo}>Bem vindo de volta</Text>
@@ -77,21 +79,26 @@ export default function Login() {
             </View>
           </View>
         </View>
+      </ScrollView>
       );
       }
       
       const styles = StyleSheet.create({
+
         geral: {
           flex: 1,
-          justifyContent: 'center',
           alignItems: 'center',
+          justifyContent: 'center', // Adicione esta linha para centralizar verticalmente
         },
+        
         container: {
           width: '80%',
+          paddingTop: "30%", // Adicione este espaçamento superior
         },
+        
         imagem: {
           alignSelf: 'center',
-          width: '100%',
+          width: '50%',
           height: 120,
         },
         titulo: {

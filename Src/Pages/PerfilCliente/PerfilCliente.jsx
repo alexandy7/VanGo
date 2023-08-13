@@ -14,7 +14,7 @@ export default function PerfilCliente() {
     const navigation = useNavigation();
 
     const irConfig = () => {
-        navigation.navigate('ConfigMoto')
+        navigation.navigate('ConfigDoMoto')
 
     };
 

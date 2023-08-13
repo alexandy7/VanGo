@@ -11,13 +11,9 @@ export default function Lista({icone, titulo, evento}){
         <TouchableOpacity onPress={evento}>
 
             <View style={styles.geral}>
-
-                <Ionicons name={icone} color={'rgba(0, 0, 0, 0.4)'} size={28}/>
-
+                <Ionicons name={icone} color={'rgba(0, 0, 0, 0.4)'} size={28} style={styles.icone}/>
                 <Text style={styles.Titulo}>{titulo}</Text>
-
-                <Ionicons name="chevron-forward" color={'grey'} size={30} style={styles.seta} />
-
+                <Ionicons name="chevron-forward" color={'grey'} size={30} style={styles.seta}/>
             </View>
 
         </TouchableOpacity>
@@ -33,20 +29,26 @@ const styles = StyleSheet.create({
     geral: {
         flexDirection: 'row', //Alinha lado a lado a imagem, titulo e a seta
         padding: 10,
-        paddingLeft: 30,
         alignItems: 'center',
-        width: 360,
+        justifyContent: "flex-end",
+        marginBottom: 0,
     }, //Alinhando o espaçamento dos elementos
+
+    icone:{
+        position: "absolute",
+        left: "5%"
+    },
 
     Titulo:{
         fontSize: 16,
         margin: 10, //Dá o espaçamento entre os elementos (OBS: esse é o Titulo com "t" maiusculo)
+        position: "absolute",
+        left: "15%"
     },
 
     seta: {
-        position: 'absolute',
-        right: 20,
-        bottom: 20,
+        position: 'relative',
+        margin: 7
     } //Estou posicionando a seta ao final e sua altura
 
 })

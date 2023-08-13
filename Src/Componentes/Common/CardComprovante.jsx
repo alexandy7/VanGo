@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 
-export default function CardComprovante({item}) 
+export default function CardComprovante({item, DataPagamento, DataVencimento}) 
 {
 
     return(
@@ -15,12 +15,12 @@ export default function CardComprovante({item})
             <View style={styles.divinfos}>
                 <View style={styles.divpagamento}>
                     <Ionicons name='cash-outline' size={18} color='green'/>
-                    <Text style={styles.textopagamento}>Pago: 22/08/2023</Text>
+                    <Text style={styles.textopagamento}>Pago: {DataPagamento}</Text>
                 </View>
 
                 <View style={styles.divvencimento}>
                     <Ionicons name='time-outline' size={18} color='goldenrod'/>
-                    <Text style={styles.textovencimento}>Venc.: 29/08/2023</Text>
+                    <Text style={styles.textovencimento}>Venc.: {DataVencimento} </Text>
                 </View>
             </View>
         </View>

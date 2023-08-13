@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Common/Perfil";
 import InfoPerfil from "../../Componentes/Common/InfoPerfil";
 import PincelEditar from "../../Componentes/Common/PincelEditar";
 import styles from "./PerfilCliente.modules.jsx"
-
 
 export default function PerfilCliente() {
 
@@ -23,21 +22,21 @@ export default function PerfilCliente() {
 
             <Perfil
                 evento={irConfig}
-                fotoUser={require('../../../assets/fotoMotorista.png')}
+                fotoUser={require('../../../assets/UserPhoto.png')}
                 nomeUser={'Karen Cristina'}>
             </Perfil>
 
-            <View style={styles.geral}>
+            <View style={styles.geral2}>
 
                 <View style={styles.cima}>
                     <InfoPerfil
-                        imagemtitulo="person"
+                        imagemtitulo="person-outline"
                         titulo={'Noemia'}
                         subtitulo={'Responsável'}>
                     </InfoPerfil>
 
                     <InfoPerfil
-                        imagemtitulo="time"
+                        imagemtitulo="time-outline"
                         titulo={'06:30 AM'}
                         subtitulo={'Horário'}>
                     </InfoPerfil>
@@ -45,13 +44,13 @@ export default function PerfilCliente() {
 
                 <View style={styles.baixo}>
                     <InfoPerfil
-                        imagemtitulo="location"
+                        imagemtitulo="location-outline"
                         titulo={'R.Moraes..'}
                         subtitulo={'Endereço'}>
                     </InfoPerfil>
 
                     <InfoPerfil
-                        imagemtitulo="hourglass"
+                        imagemtitulo="hourglass-outline"
                         titulo={'Positivo'}
                         subtitulo={'Status'}>
                     </InfoPerfil>
@@ -61,6 +60,10 @@ export default function PerfilCliente() {
                     <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
                 </View>
             </View>
+<View>
+
+</View>
+
 
         </View>
     )

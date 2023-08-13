@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
+import BotaoHome from "../../Componentes/Common/BotaoHome";
 
 export default function HomeCliente({nomecliente, fotocliente}) {
 
@@ -32,16 +33,21 @@ const navigation = useNavigation();
             </View>
 
             <View style={styles.divbotoes}>
-                <TouchableOpacity>
-                    <View></View>
-                </TouchableOpacity>
+                
+                <View style={styles.alinhabotao}> 
+                        <BotaoHome icone={"calendar"} texto="Calendário"/>
+                </View>
 
+                <View style={styles.alinhabotao}>
+                        <BotaoHome icone={"card"} texto="Pagamento"/>
+                </View>
+                
+                <View style={styles.alinhabotao}> 
+                    <BotaoHome icone={"settings"} texto="Ajustes"/>
+                </View>
             </View>
-
+            
         </View>
-
-
-
     )
 
 }
@@ -111,12 +117,21 @@ const styles = StyleSheet.create({
 
     divbotoes: {
         width:"90%",
-        height: "20%",
-        borderWidth: 1,
-        borderColor: "red",
+        height: "15%",
         alignSelf: "center",
-        marginTop: "5%"
-    }
+        marginTop: "5%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly"
+    },
+
+    alinhabotao: {
+        display: "flex",
+        flexDirection: "row",
+        width: "23%",
+        height: "100%"
+    },
+
 
 
 })

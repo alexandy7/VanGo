@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Touchable from "../../Componentes/Common/Touchable";
 import MeuText from "../../Componentes/Common/MeuText";
 import Api from "../../services/Api";
-
+import ConfigMoto from "../ConfigMoto/ConfigMoto"
 
 export default function Login() {
 
@@ -43,7 +43,7 @@ export default function Login() {
     }
 
     const irEsqueceuSenha = () => {
-      navigation.navigate('TabBarScreen');
+      navigation.navigate(ConfigMoto);
         // navigation.navigate('RecuperarSenha')
     }
     const irCadastro = () => {

@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create(
     {
-        geral:{
+        geral2:{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -32,7 +32,9 @@ const styles = StyleSheet.create(
             alignSelf: "flex-end",
             right: 15,
             bottom: 7
-        }
+        },
+
+    
     }
 )
 

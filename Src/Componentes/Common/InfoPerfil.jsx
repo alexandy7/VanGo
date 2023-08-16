@@ -21,7 +21,7 @@ const styles = StyleSheet.create(
         geral:{
             flexDirection: "column",
             alignItems: "center",
-            padding: 10,
+            padding: 15,
             minWidth: 160,
             justifyContent: "space-between"
         },

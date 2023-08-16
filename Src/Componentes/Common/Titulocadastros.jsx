@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 13,
         color: 'rgb(145, 138, 138)'
-
-
     },
 
     titulo: {
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
     imagem: {
         top: 15,
         alignSelf: 'center',
-        width: 110,
+        width: 130,
         height: 100,
     }
 })

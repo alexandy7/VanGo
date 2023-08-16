@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ComprovanteEnviado from "../../Componentes/Common/ComprovanteEnviado"
 import Api from "../../services/Api";
 import CardPagamento from "../../Componentes/Common/CardPagamento";
@@ -8,61 +8,53 @@ import CardComprovante from "../../Componentes/Common/CardComprovante";
 export default function Pagamento() {
 
     const [comprovantes, setComprovantes] = useState([]);
-    
-    // useEffect(() => {
-    //     BuscarComprovantes();
-    // }, []) //Executa a função assim que os componentes são redenrizados.
 
-    // async function BuscarComprovantes() {
-    
-    // try{
-    //     const response = await Api.get('ListarCliente')
-    //     let json = response.data;
-    //     setComprovantes(json);
-    // }
+    useEffect(() => {
+        BuscarComprovantes();
+    }, []) //Executa a função assim que os componentes são redenrizados.
 
-    // catch(error){
-    //     console.error('Erro ao buscar os comprovantes:', error);
-    // }
+    async function BuscarComprovantes() {
 
-    // };
+        try {
+            const response = await Api.get('ListarPagamentos?id=1')
+            let json = response.data;
+            setComprovantes(json);
+        }
+
+        catch (error) {
+            console.error('Erro ao buscar os comprovantes:', error);
+        }
+
+    };
 
     return (
 
-<ScrollView>
-        <View>
-            <Text style={styles.titulo}>Pagamentos</Text>
+        <ScrollView>
+            <View>
+                <Text style={styles.titulo}>Pagamentos</Text>
 
-            <CardPagamento></CardPagamento>
+                <CardPagamento></CardPagamento>
 
-            <View style={styles.pagamentoAtual}> 
-                <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
+                <View style={styles.pagamentoAtual}>
+                    <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
+                </View>
+
+                <View style={styles.Comprovantes}>
+                    {
+                        comprovantes.map((Comprovante) => (
+
+                            <CardComprovante DataVencimento={Comprovante.vencimento.substring(0, 10)} DataPagamento={Comprovante.data_pagamento.substring(0, 10)}></CardComprovante>
+                            //substring limita a quantidade de caracteres que irá exibir
+                        ))
+                    }
+                </View>
             </View>
-
-        <View style={styles.Comprovantes}>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>  
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-            <CardComprovante></CardComprovante>
-        </View>
-
-        </View>
-</ScrollView>
+        </ScrollView>
     )
-}   
+}
 
 const styles = StyleSheet.create({
-    titulo:{
+    titulo: {
         fontSize: 25,
         alignSelf: 'center',
         marginTop: 20,
@@ -80,7 +72,7 @@ const styles = StyleSheet.create({
         bottom: 5
     },
 
-    Comprovantes:{
+    Comprovantes: {
         marginBottom: 100
     }
 })

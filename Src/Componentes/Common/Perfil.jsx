@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from '@expo/vector-icons'
 
 export default function Perfil({ fotoUser, nomeUser, evento }) {
     return (
@@ -7,7 +8,7 @@ export default function Perfil({ fotoUser, nomeUser, evento }) {
 
             <View style={styles.config}>
                 <TouchableOpacity onPress={evento}>
-                    <Image source={require('../../../assets/config.png')} />
+                   <Ionicons name="settings-sharp" color={'white'} size={35}/>
                 </TouchableOpacity>
             </View>
 

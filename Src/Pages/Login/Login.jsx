@@ -1,49 +1,50 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import Touchable from "../../Componentes/Common/Touchable";
 import MeuText from "../../Componentes/Common/MeuText";
 import Api from "../../services/Api";
-
+import ConfigMoto from "../ConfigMoto/ConfigMoto"
 
 export default function Login() {
 
 
-
-    const [emailD, setEmailD] = useState('')
-    const [senhaD, setSenhaD] = useState('')
+    const [loading, setLoading] = useState(false);
+    const [emailD, setEmailD] = useState('');
+    const [senhaD, setSenhaD] = useState('');
 
 
     const navigation = useNavigation();
 
     async function Consulta() {
+      setLoading(true)
 
+         try {
+             const resposta = await Api.get('LoginCliente', {
+                 params: {
+                     email: emailD,
+                     senha: senhaD,
+                 },
+             });
 
-
-        // try {
-        //     const resposta = await Api.get('VerificarLogin', {
-        //         params: {
-        //             email: emailD,
-        //             senha: senhaD,
-        //         },
-        //     });
-
-        //     if (resposta != null) {
+             if (resposta != null) {
                 navigation.navigate('TabBarScreen');
-        //     }
+             }
 
-        // }
+         }
 
-        // catch (error) {
-        //     console.error('Erro na consulta:', error);
-        // }
+         catch (error) {
+              setLoading(false);
+             console.error('Erro na consulta:', error);
+         }
 
 
     }
 
     const irEsqueceuSenha = () => {
-        navigation.navigate('RecuperarSenha')
+      navigation.navigate(ConfigMoto);
+        // navigation.navigate('RecuperarSenha')
     }
     const irCadastro = () => {
         navigation.navigate('Cadastro')
@@ -69,7 +70,19 @@ export default function Login() {
               <Text style={styles.esqueceSenha}>Esqueceu sua senha?</Text>
             </TouchableOpacity>
             <View style={styles.BotaoComNovaConta}>
-              <Touchable texto={'Continuar'} evento={Consulta} />
+              { 
+              /*>>>>>>>>>> Após fazer login, aparecera animação de carregamento <<<<<<<<<<<*/
+              loading ? (
+
+                <Touchable texto={<ActivityIndicator color="white" />} />
+                )
+                :
+                (
+                <Touchable texto={"Continuar"} evento={Consulta}  />
+                  
+                )
+
+              }
               <View style={styles.botaoNovaConta}>
                 <Text>Não é cadastrado? </Text>
                 <TouchableOpacity onPress={irCadastro}>

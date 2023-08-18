@@ -12,25 +12,16 @@ export default function Notificacao({fotouser, nomeuser, info, hora, icone})
                 <Image source={fotouser} style={styles.imagem}></Image>
             </View>
             
-            <View style={styles.alinhanome}>
-                <View style={styles.divnomedouser}>
+            <View style={styles.alinha}>
+                <View style={styles.divsuperior}>
                     <Text style={styles.nomedouser}>{nomeuser}</Text>
-                </View>
-
-                <View style={styles.divinformacao}>
-                    <Text style={styles.informacao}>{info}</Text>
-                </View>
-            </View>
-
-            <View style={styles.alinhahora}>
-                <View style={styles.divhorario}>
                     <Text style={styles.horario}>{hora}</Text>
                 </View>
 
-                <View style={styles.divicon}>
+                <View style={styles.divinferior}>
+                    <Text style={styles.informacao}>{info}</Text>
                     <Ionicons style={styles.icon} name={icone} size={25} color='#F7770D'/>
                 </View>
-
             </View>
         </View>
     )
@@ -64,50 +55,39 @@ container: {
         borderRadius: 20
     },
 
-    alinhanome: {
+    alinha: {
         height: 79,
-        width: "55%"
+        width: "75%"
     },
 
-    divnomedouser: {
+    divsuperior: {
         display: "flex",
         flexDirection: "row",
         height: "50%",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "space-between"
     },
 
-    divinformacao: {
+    divinferior: {
         display: "flex",
         flexDirection: "row",
         height: "50%",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "space-between"
     },
 
     nomedouser:{
         fontSize: 20,
         position: "relative",
-        marginLeft: "10%",
-        marginTop: "1%"
+        marginLeft: "5%",
+        marginTop: "3%"
     },
 
     informacao: {
         fontSize: 15,
         position: "relative",
-        marginLeft: "10%",
-        marginBottom: "1%"
-    },
-
-    alinhahora:{
-        display: "flex",
-        flexDirection: "column",
-        height: 79,
-        width: "20%",
-        alignItems: "center"
-    },
-
-    divhorario:{
-        position: "relative",
-        height: "50%",
+        marginLeft: "5%",
+        marginBottom: "3%"
     },
 
     horario: {
@@ -115,17 +95,11 @@ container: {
         color: "#F7770D",
         display: "flex",
         position: "relative",
-        marginTop: "14%"
-    },
-
-    divicon:{
-        position: "relative",
-        height: "50%",
+        marginRight: "5%",
+        marginTop: "3%"
     },
 
     icon:{
-        position: "relative",
-        marginTop: "5%"
+        marginRight: "5%"
     }
-
 })

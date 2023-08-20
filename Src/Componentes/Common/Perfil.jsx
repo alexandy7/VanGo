@@ -28,7 +28,8 @@ const styles = StyleSheet.create(
             backgroundColor: "#E46C08",
             borderBottomRightRadius: 40,
             borderBottomLeftRadius: 40,
-            height: 300
+            height: 300,
+            blurView: 10
         },
 
         config: {

@@ -11,7 +11,7 @@ const styles = StyleSheet.create(
             borderRadius: 15,
             width: "85%",
             bottom: 60,
-            elevation: 10
+            elevation: 10,
         },
 
         cima:{
@@ -31,7 +31,7 @@ const styles = StyleSheet.create(
             position: "relative",
             alignSelf: "flex-end",
             right: "5%",
-            bottom: "3%"
+            bottom: 10
         },
 
     

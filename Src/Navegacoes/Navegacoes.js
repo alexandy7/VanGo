@@ -16,6 +16,7 @@ import { View, StyleSheet, Text, Image } from "react-native";
 import ConfigDoMoto from "../Pages/ConfigDoMoto/ConfigDoMoto";
 import NotificaMoto from "../Pages/NotificaMoto/NotificaMoto";
 import HomeCliente from "../Pages/HomeCliente/HomeCliente";
+import EditarCliente from "../Pages/EditarCliente/EditarCliente";
 
 
 const Tab = createBottomTabNavigator();
@@ -63,7 +64,7 @@ function TabBarNavigator() {
 
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeCliente}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => {
@@ -104,7 +105,8 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
-      {/* <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/> */}
+      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>

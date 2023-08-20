@@ -30,8 +30,8 @@ const styles = StyleSheet.create(
         pincel:{
             position: "relative",
             alignSelf: "flex-end",
-            right: 15,
-            bottom: 7
+            right: "5%",
+            bottom: "3%"
         },
 
     

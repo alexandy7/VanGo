@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create(
     {
+
         geral2:{
             display: "flex",
             flexDirection: "column",
@@ -11,7 +12,7 @@ const styles = StyleSheet.create(
             borderRadius: 15,
             width: "85%",
             bottom: 60,
-            elevation: 10
+            
         },
 
         cima:{

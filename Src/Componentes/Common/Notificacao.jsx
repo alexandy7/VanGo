@@ -69,18 +69,12 @@ container: {
         width: "55%"
     },
 
-    divnomedouser: {
-        display: "flex",
-        flexDirection: "row",
-        height: "50%",
-        alignItems: "center"
-    },
+
 
     divinformacao: {
-        display: "flex",
-        flexDirection: "row",
-        height: "50%",
-        alignItems: "center"
+       
+
+
     },
 
     nomedouser:{

@@ -18,7 +18,7 @@ export default function PerfilCliente() {
     };
 
     return (
-        <View>
+        <View style={styles.geral}>
 
             <Perfil
                 evento={irConfig}

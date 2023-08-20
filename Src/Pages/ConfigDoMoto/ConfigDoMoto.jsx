@@ -26,7 +26,9 @@ export default function ConfigDoMoto() {
             <View style={styles.card}>
                 <Lista icone='person' titulo="Conta"></Lista>
                 <Lista icone='lock-closed' titulo="Privacidade"></Lista>
-                <Lista icone='notifications' titulo="Notificações"></Lista>
+                <Lista icone='notifications' titulo="Notificações" evento={()=>{
+                    navigation.navigate('NotificaMoto')
+                }}></Lista>
             </View>
 
             <Text style={styles.titulocard}>Motorista</Text>

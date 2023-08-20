@@ -28,13 +28,13 @@ const styles = StyleSheet.create(
             backgroundColor: "#E46C08",
             borderBottomRightRadius: 40,
             borderBottomLeftRadius: 40,
-            height: 300
+            height: 300,
         },
 
         config: {
             alignSelf: "flex-end",
             right: 15,
-            top: 15
+            top: 15,
         },
 
         fotoNome:{
@@ -46,7 +46,8 @@ const styles = StyleSheet.create(
             height: 120,
             width: 130,
             alignSelf: "center",
-            borderRadius: 25
+            borderRadius: 25,
+            
             
         },
 

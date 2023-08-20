@@ -39,11 +39,12 @@ export default function Login() {
              console.error('Erro na consulta:', error);
          }
 
+         
 
     }
 
     const irEsqueceuSenha = () => {
-      navigation.navigate(ConfigMoto);
+      navigation.navigate("TabBarScreen");
         // navigation.navigate('RecuperarSenha')
     }
     const irCadastro = () => {

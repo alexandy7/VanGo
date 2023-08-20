@@ -1,6 +1,5 @@
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { useEffect, useState } from "react";
-import ComprovanteEnviado from "../../Componentes/Common/ComprovanteEnviado"
 import Api from "../../services/Api";
 import CardPagamento from "../../Componentes/Common/CardPagamento";
 import CardComprovante from "../../Componentes/Common/CardComprovante";

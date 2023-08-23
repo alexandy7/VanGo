@@ -64,7 +64,6 @@ function TabBarNavigator() {
 
       <Tab.Screen
         name="HomeCliente"
-        name="Home"
         component={HomeCliente}
         options={{
           headerShown: false,

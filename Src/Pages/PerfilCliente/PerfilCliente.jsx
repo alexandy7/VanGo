@@ -5,6 +5,7 @@ import Perfil from "../../Componentes/Common/Perfil";
 import InfoPerfil from "../../Componentes/Common/InfoPerfil";
 import PincelEditar from "../../Componentes/Common/PincelEditar";
 import styles from "./PerfilCliente.modules.jsx"
+import InserirMotorista from "../../Componentes/Common/InserirMotorista";
 
 export default function PerfilCliente() {
 
@@ -18,8 +19,12 @@ export default function PerfilCliente() {
     };
 
     return (
+<<<<<<< HEAD
         <View style={styles.geral}>
 
+=======
+        <View>   
+>>>>>>> telas
             <Perfil
                 evento={irConfig}
                 fotoUser={require('../../../assets/UserPhoto.png')}
@@ -60,10 +65,8 @@ export default function PerfilCliente() {
                     <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
                 </View>
             </View>
-<View>
 
-</View>
-
+            <InserirMotorista></InserirMotorista>
 
         </View>
     )

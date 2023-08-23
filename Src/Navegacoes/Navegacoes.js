@@ -63,11 +63,8 @@ function TabBarNavigator() {
           />
 
       <Tab.Screen
-<<<<<<< HEAD
         name="HomeCliente"
-=======
         name="Home"
->>>>>>> telas
         component={HomeCliente}
         options={{
           headerShown: false,
@@ -109,11 +106,7 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
-<<<<<<< HEAD
-=======
-      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
->>>>>>> telas
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificaMoto" component={NotificaMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
@@ -123,6 +116,7 @@ export default function AppNavigator() {
       <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

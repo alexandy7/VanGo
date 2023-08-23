@@ -9,24 +9,24 @@ export default function NotificaMoto() {
 
     const [notificacoes, setNotificacoes] = useState([]);
 
-    useEffect(() => {
-        ListarNotificacoes();
-    }, [])
+    // useEffect(() => {
+    //     ListarNotificacoes();
+    // }, [])
 
-    async function ListarNotificacoes() {
-        try {
-            const response = await Api.get("https://localhost:7149/api/Motorista/LerNotificacao?id=5");
+    // async function ListarNotificacoes() {
+    //     try {
+    //         const response = await Api.get("https://localhost:7149/api/Motorista/LerNotificacao?id=5");
 
           
-            let json = response.data;
-            setNotificacoes(json)
-        }
+    //         let json = response.data;
+    //         setNotificacoes(json)
+    //     }
         
-        catch (error) {
-            alert( error)
-        }
+    //     catch (error) {
+    //         alert( error)
+    //     }
 
-    }
+    // }
     const navigation = useNavigation();
 
     const irPerfil = () => {
@@ -43,6 +43,13 @@ export default function NotificaMoto() {
                 </TouchableOpacity>
 
                 <Text style={styles.titulo}>Notificações</Text>
+
+                <Notificacao
+                            fotouser={require('../../../assets/UserPhoto.png')}
+                            nomeuser={"Karen"}
+                            info={"Enviou um comprovante"}
+                            hora={"29/04/2023"}
+                        />
             </View>
             
             {
@@ -102,7 +109,6 @@ const styles = StyleSheet.create({
     header: {
         display: "flex",
         flexDirection: "row",
-        height: 80,
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
@@ -110,9 +116,7 @@ const styles = StyleSheet.create({
     },
 
     seta: {
-        position: "relative",
-        right: "80%",
-        top: "5%"
+      
     },
 
     titulo: {

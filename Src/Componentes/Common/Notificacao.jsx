@@ -60,14 +60,6 @@ container: {
         width: "75%"
     },
 
-<<<<<<< HEAD
-
-
-    divinformacao: {
-       
-
-
-=======
     divsuperior: {
         display: "flex",
         flexDirection: "row",
@@ -82,7 +74,6 @@ container: {
         height: "50%",
         alignItems: "center",
         justifyContent: "space-between"
->>>>>>> telas
     },
 
     nomedouser:{

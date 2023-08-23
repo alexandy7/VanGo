@@ -29,6 +29,10 @@ const styles = StyleSheet.create(
             borderBottomRightRadius: 40,
             borderBottomLeftRadius: 40,
             height: 300,
+<<<<<<< HEAD
+=======
+            blurView: 10
+>>>>>>> telas
         },
 
         config: {

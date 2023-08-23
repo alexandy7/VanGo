@@ -10,7 +10,7 @@ export default function Pagamento() {
 
     useEffect(() => {
         BuscarComprovantes();
-    }, []) //Executa a função assim que os componentes são redenrizados.
+    }, []) //Executa a função assim que os componentes são renderizados.
 
     async function BuscarComprovantes() {
 

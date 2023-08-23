@@ -12,7 +12,11 @@ const styles = StyleSheet.create(
             borderRadius: 15,
             width: "85%",
             bottom: 60,
+<<<<<<< HEAD
             
+=======
+            elevation: 10,
+>>>>>>> telas
         },
 
         cima:{
@@ -31,8 +35,8 @@ const styles = StyleSheet.create(
         pincel:{
             position: "relative",
             alignSelf: "flex-end",
-            right: 15,
-            bottom: 7
+            right: "5%",
+            bottom: 10
         },
 
     

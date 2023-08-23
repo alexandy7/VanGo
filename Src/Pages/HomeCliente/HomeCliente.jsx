@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/Common/BotaoHome";
+import CardTurma from "../../Componentes/Common/CardTurma";
+import Touchable from "../../Componentes/Common/Touchable";
 
 export default function HomeCliente({nomecliente, fotocliente}) {
 
@@ -47,6 +49,13 @@ const navigation = useNavigation();
                 <View style={styles.alinhabotao}> 
                     <BotaoHome icone={"settings"} texto="Ajustes"/>
                 </View>
+            </View>
+
+            <CardTurma nome={"Turma da manhã"} chave={"#02324"} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
+
+            <View>
+                <Touchable texto={"Ausência"} onPress={""}/>
+
             </View>
             
         </View>

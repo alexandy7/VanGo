@@ -9,6 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/montserrat": "^0.2.3",
     "@expo/webpack-config": "^18.0.1",
     "@react-native-community/blur": "^4.3.2",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -17,6 +18,7 @@
     "axios": "^1.4.0",
     "expo": "~48.0.15",
     "expo-blur": "~12.2.2",
+    "expo-font": "~11.1.1",
     "expo-status-bar": "~1.4.4",
     "install": "^0.13.0",
     "react": "18.2.0",

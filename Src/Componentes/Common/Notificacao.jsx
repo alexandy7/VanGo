@@ -2,16 +2,20 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_100Thin } from "@expo-google-fonts/montserrat";
 
-export default function Notificacao({fotouser, nomeuser, info, hora, icone}) 
-{
 
-    return(
-        <View style={styles.container}>
+export default function Notificacao({ fotouser, nomeuser, info, hora, icone }) {
+
+    const[fontsLoaded] = useFonts({
+        Montserrat_100Thin
+    })
+    return (
+        <View style={[styles.container, styles.shadow]}> 
             <View style={styles.divimagem}>
                 <Image source={fotouser} style={styles.imagem}></Image>
             </View>
-            
+
             <View style={styles.alinha}>
                 <View style={styles.divsuperior}>
                     <Text style={styles.nomedouser}>{nomeuser}</Text>
@@ -20,7 +24,7 @@ export default function Notificacao({fotouser, nomeuser, info, hora, icone})
 
                 <View style={styles.divinferior}>
                     <Text style={styles.informacao}>{info}</Text>
-                    <Ionicons style={styles.icon} name={icone} size={25} color='#F7770D'/>
+                    <Ionicons style={styles.icon} name={icone} size={25} color='#F7770D' />
                 </View>
             </View>
         </View>
@@ -28,33 +32,38 @@ export default function Notificacao({fotouser, nomeuser, info, hora, icone})
 }
 
 const styles = StyleSheet.create({
-container: {
-    width: '90%',
-    height: 80,
-    borderColor: '#F7770D',
-    borderRadius: 20,
-    alignSelf: 'center',
-    marginBottom: 15,
-    borderWidth: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    },
+    container: {
+        width: '90%',
+        height: 80,
+        borderColor: '#F7770D',
+        borderRadius: 20,
+        alignSelf: 'center',
+        marginBottom: 15,
+        borderWidth: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: "white",
+        fontStyle: "Montserrat_100Thin"        
 
+    },
+    
     divimagem: {
-        height: 79,
-        width: "25%",
+        height: "100%",
+        width: "24%",
+        marginLeft: 3,
         backgroundColor: "black",
-        position: "relative",
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0, 0, 0, 0)"
+    },
+    
+    imagem: {
+        height: "80%",
+        width: "80%",
         borderRadius: 20,
     },
-
-    imagem: {
-        height: "100%",
-        width: "100%",
-        borderRadius: 20
-    },
-
+    
     alinha: {
         height: 79,
         width: "75%"
@@ -67,7 +76,7 @@ container: {
         alignItems: "center",
         justifyContent: "space-between"
     },
-
+    
     divinferior: {
         display: "flex",
         flexDirection: "row",
@@ -76,30 +85,40 @@ container: {
         justifyContent: "space-between"
     },
 
-    nomedouser:{
-        fontSize: 20,
+    nomedouser: {
+        fontSize: 18,
         position: "relative",
         marginLeft: "5%",
-        marginTop: "3%"
+        marginRight: "5%",
+        marginTop: "3%",
+        color: "#252525",
+        fontWeight: '400'
     },
-
+    
     informacao: {
-        fontSize: 15,
+        fontSize: 14,
         position: "relative",
         marginLeft: "5%",
-        marginBottom: "3%"
+        marginBottom: "3%",
     },
 
     horario: {
-        fontSize: 16,
-        color: "#F7770D",
+        fontSize: 14,
         display: "flex",
         position: "relative",
-        marginRight: "5%",
-        marginTop: "3%"
+        marginLeft: "3%",
+        marginRight: "8%",
     },
 
-    icon:{
+    icon: {
         marginRight: "5%"
-    }
-})
+    },
+
+    shadow: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        elevation: 15,
+    },
+});

@@ -9,24 +9,24 @@ export default function NotificaMoto() {
 
     const [notificacoes, setNotificacoes] = useState([]);
 
-    // useEffect(() => {
-    //     ListarNotificacoes();
-    // }, [])
+    useEffect(() => {
+        ListarNotificacoes();
+    }, [])
 
-    // async function ListarNotificacoes() {
-    //     try {
-    //         const response = await Api.get("https://localhost:7149/api/Motorista/LerNotificacao?id=5");
+    async function ListarNotificacoes() {
+        try {
+            const response = await Api.get("https://localhost:7149/api/Motorista/LerNotificacao?id=5");
 
-          
-    //         let json = response.data;
-    //         setNotificacoes(json)
-    //     }
-        
-    //     catch (error) {
-    //         alert( error)
-    //     }
 
-    // }
+            let json = response.data;
+            setNotificacoes(json)
+        }
+
+        catch (error) {
+            alert(error)
+        }
+
+    }
     const navigation = useNavigation();
 
     const irPerfil = () => {
@@ -36,7 +36,7 @@ export default function NotificaMoto() {
     const hoje = new Date(); // Pegando o dia de hoje 
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.scroll}>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.seta} onPress={irPerfil}>
                     <Ionicons name="chevron-back-outline" size={30} />
@@ -44,14 +44,16 @@ export default function NotificaMoto() {
 
                 <Text style={styles.titulo}>Notificações</Text>
 
-                <Notificacao
-                            fotouser={require('../../../assets/UserPhoto.png')}
-                            nomeuser={"Karen"}
-                            info={"Enviou um comprovante"}
-                            hora={"29/04/2023"}
+
+            </View>
+            <View>
+            <Notificacao
+                            fotouser={require('../../../assets/UserPhoto2.png')}
+                            nomeuser={'Milena Ferreira'}
+                            info={'Enviou uma mensagem'}
+                            hora={'17:15'}
                         />
             </View>
-            
             {
                 notificacoes.map((Notificacoes) => {
 
@@ -106,17 +108,23 @@ const styles = StyleSheet.create({
         backgroundColor: '#EFEFEF',
     },
 
+    scroll:{
+        backgroundColor: "white"
+    },
+
     header: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 50
+        marginBottom: 50,
+        marginTop: 50,
     },
 
     seta: {
-      
+        position: "absolute",
+        left: 30
     },
 
     titulo: {

@@ -19,12 +19,10 @@ export default function PerfilCliente() {
     };
 
     return (
-<<<<<<< HEAD
-        <View style={styles.geral}>
+      <View style={styles.geral}>
 
-=======
         <View>   
->>>>>>> telas
+
             <Perfil
                 evento={irConfig}
                 fotoUser={require('../../../assets/UserPhoto.png')}
@@ -68,6 +66,7 @@ export default function PerfilCliente() {
 
             <InserirMotorista></InserirMotorista>
 
+        </View>
         </View>
     )
 }

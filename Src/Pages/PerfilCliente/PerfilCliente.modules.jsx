@@ -12,11 +12,8 @@ const styles = StyleSheet.create(
             borderRadius: 15,
             width: "85%",
             bottom: 60,
-<<<<<<< HEAD
-            
-=======
             elevation: 10,
->>>>>>> telas
+
         },
 
         cima:{

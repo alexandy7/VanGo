@@ -24,7 +24,6 @@ export default function Notificacao({ fotouser, nomeuser, info, hora, icone }) {
 
                 <View style={styles.divinferior}>
                     <Text style={styles.informacao}>{info}</Text>
-                    <Ionicons style={styles.icon} name={icone} size={25} color='#F7770D' />
                 </View>
             </View>
         </View>
@@ -111,7 +110,8 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        marginRight: "5%"
+        marginRight: "9%",
+        marginBottom: "2%"
     },
 
     shadow: {

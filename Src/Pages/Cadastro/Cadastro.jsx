@@ -1,10 +1,11 @@
-import { Text, View, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
 import MeuText from "../../Componentes/Common/MeuText";
 import TituloCadastro from '../../Componentes/Common/Titulocadastros';
 import Touchable from "../../Componentes/Common/Touchable";
 import Api from "../../services/Api";
+import styles from"./Cadastro.modules";
 
 export default function Cadastro() {
   const [loading, setLoading] = useState(false);
@@ -189,46 +190,3 @@ export default function Cadastro() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  scroll: {
-    flex: 1,
-  },
-  container: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 20,
-  },
-  vieu: {
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  botaoCM: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    marginTop: 20,
-  },
-  clienteMotorista1: {
-    width: 110,
-    height: 50,
-    borderRadius: 10,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  clienteMotorista: {
-    width: 110,
-    height: 50,
-    borderRadius: 10,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 50,
-  },
-  texto: {
-    color: 'white',
-    textAlign: 'center',
-  },
-
-});

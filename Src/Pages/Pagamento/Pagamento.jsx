@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Api from "../../services/Api";
 import CardPagamento from "../../Componentes/Common/CardPagamento";
 import CardComprovante from "../../Componentes/Common/CardComprovante";
-
+import styles from "./Pagamento.modules";
 export default function Pagamento() {
 
     const [comprovantes, setComprovantes] = useState([]);
@@ -52,26 +52,3 @@ export default function Pagamento() {
     )
 }
 
-const styles = StyleSheet.create({
-    titulo: {
-        fontSize: 25,
-        alignSelf: 'center',
-        marginTop: 20,
-        marginBottom: 20,
-    },
-
-    pagamentoAtual: {
-        flexDirection: 'row'
-    },
-
-    nomeusuario: {
-        fontSize: 20,
-        position: "relative",
-        left: 42,
-        bottom: 5
-    },
-
-    Comprovantes: {
-        marginBottom: 100
-    }
-})

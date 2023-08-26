@@ -1,22 +1,21 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { NavigationContainer } from '@react-navigation/native';
-import Login from "../Pages/Login/Login";
-import Cadastro from '../Pages/Cadastro/Cadastro';
-import CadastroEscola from '../Pages/CadastroEscola/CadastroEscola';
-import CadastroVeiculo from '../Pages/CadastroVeiculo/CadastroVeiculo';
-import ConfigMoto from '../Pages/ConfigMoto/ConfigMoto';
-import RecuperarSenha from '../Pages/RecuperarSenha/RecuperarSenha';
-import PerfilCliente from '../Pages/PerfilCliente/PerfilCliente';
-import Home from "../Pages/Home/Home";
-import Pagamento from "../Pages/Pagamento/Pagamento";
-import { Ionicons } from '@expo/vector-icons'
 import { View, StyleSheet, Text, Image } from "react-native";
-import ConfigDoMoto from "../Pages/ConfigDoMoto/ConfigDoMoto";
-import NotificaMoto from "../Pages/NotificaMoto/NotificaMoto";
-import HomeCliente from "../Pages/HomeCliente/HomeCliente";
-import EditarCliente from "../Pages/EditarCliente/EditarCliente";
+import { Ionicons } from '@expo/vector-icons'
+import { NavigationContainer } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Login from "../PagesCliente/Login/Login";
+import RecuperarSenha from '../PagesCliente/RecuperarSenha/RecuperarSenha';
+import Cadastro from '../PagesCliente/Cadastro/Cadastro';
+import CadastroEscola from '../PagesCliente/CadastroEscola/CadastroEscola';
+import CadastroVeiculo from '../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
+import ConfigMoto from '../PagesMotorista/ConfigDoMoto/ConfigDoMoto';
+import PerfilCliente from '../PagesCliente/PerfilCliente/PerfilCliente';
+import Pagamento from "../PagesCliente/Pagamento/Pagamento";
+import ConfigDoMoto from "../PagesMotorista/ConfigDoMoto/ConfigDoMoto";
+import NotificaMoto from "../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
+import HomeCliente from "../PagesCliente/HomeCliente/HomeCliente";
+import EditarCliente from "../PagesCliente/EditarCliente/EditarCliente";
 
 
 const Tab = createBottomTabNavigator();
@@ -105,9 +104,9 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
-      <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificaMoto" component={NotificaMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>

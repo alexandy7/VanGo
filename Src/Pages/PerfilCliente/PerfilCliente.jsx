@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Image } from "react-native";
+import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Common/Perfil";
 import InfoPerfil from "../../Componentes/Common/InfoPerfil";
@@ -19,59 +19,57 @@ export default function PerfilCliente() {
     };
 
     return (
-      <View style={styles.geral}>
+        <ScrollView>
 
-        <View>   
+            <View style={styles.geral}>
 
-            <Perfil
-                evento={irConfig}
-                fotoUser={require('../../../assets/UserPhoto.png')}
-                nomeUser={'Karen Cristina'}>
-            </Perfil>
+                <View>
 
-            <View style={styles.geral2}>
+                    <Perfil
+                        evento={irConfig}
+                        fotoUser={require('../../../assets/UserPhoto.png')}
+                        nomeUser={'Karen Cristina'}>
+                    </Perfil>
 
-                <View style={styles.cima}>
-                    <InfoPerfil
-                        imagemtitulo="person-outline"
-                        titulo={'Noemia'}
-                        subtitulo={'Responsável'}>
-                    </InfoPerfil>
+                    <View style={styles.geral2}>
 
-                    <InfoPerfil
-                        imagemtitulo="time-outline"
-                        titulo={'06:30 AM'}
-                        subtitulo={'Horário'}>
-                    </InfoPerfil>
-                </View>
+                        <View style={styles.cima}>
+                            <InfoPerfil
+                                imagemtitulo="person-outline"
+                                titulo={'Noemia'}
+                                subtitulo={'Responsável'}>
+                            </InfoPerfil>
 
-                <View style={styles.baixo}>
-                    <InfoPerfil
-                        imagemtitulo="location-outline"
-                        titulo={'R.Moraes..'}
-                        subtitulo={'Endereço'}>
-                    </InfoPerfil>
+                            <InfoPerfil
+                                imagemtitulo="time-outline"
+                                titulo={'06:30 AM'}
+                                subtitulo={'Horário'}>
+                            </InfoPerfil>
+                        </View>
 
-                    <InfoPerfil
-                        imagemtitulo="hourglass-outline"
-                        titulo={'Positivo'}
-                        subtitulo={'Status'}>
-                    </InfoPerfil>
-                </View>
+                        <View style={styles.baixo}>
+                            <InfoPerfil
+                                imagemtitulo="location-outline"
+                                titulo={'R.Moraes..'}
+                                subtitulo={'Endereço'}>
+                            </InfoPerfil>
 
-                <View style={styles.pincel}>
-                    <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
+                            <InfoPerfil
+                                imagemtitulo="hourglass-outline"
+                                titulo={'Positivo'}
+                                subtitulo={'Status'}>
+                            </InfoPerfil>
+                        </View>
+
+                        <View style={styles.pincel}>
+                            <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
+                        </View>
+                    </View>
+
+                    <InserirMotorista></InserirMotorista>
+
                 </View>
             </View>
-
-            <InserirMotorista></InserirMotorista>
-
-        </View>
-        </View>
+        </ScrollView>
     )
 }
-
-
-
-// É necessário arrumar a possição das informações ainda, estão desalinhadas
-// Arrumar o pincel de edição. Uma parte dele está cortada

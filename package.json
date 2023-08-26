@@ -12,6 +12,7 @@
     "@expo-google-fonts/montserrat": "^0.2.3",
     "@expo/webpack-config": "^18.0.1",
     "@react-native-community/blur": "^4.3.2",
+    "@react-native-community/netinfo": "9.3.7",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",

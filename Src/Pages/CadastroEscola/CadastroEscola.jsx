@@ -1,9 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import TituloCadastro from "../../Componentes/Common/Titulocadastros";
 import MeuText from "../../Componentes/Common/MeuText";
 import Touchable from '../../Componentes/Common/Touchable'
+import styles from "./CadastroEscola.modules";
+
 
 export default function CadastroEscola() {
   const navigation = useNavigation();
@@ -33,16 +35,4 @@ export default function CadastroEscola() {
   );
 }
 
-const styles = StyleSheet.create({
-  geral: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputes: {
-    marginTop: 20,
-  },
-  concluir: {
-    marginTop: '50%',
-  },
-});
+

@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
         borderRadius: 45,
         alignSelf: "center",
         elevation: 10,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        marginBottom: 100 /* Colocado para deixar um espaço quando o usuario for digitar */
     },
 
     divtexto:{

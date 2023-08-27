@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, Text } from "react-native";
-import MeuText from "../../Componentes/Common/MeuText";
-import Touchable from "../../Componentes/Common/Touchable";
+import MeuText from "../../Componentes/MeuText";
+import Touchable from "../../Componentes/Touchable";
 import styles from "./RecuperarSenha.modules";
 
 export default function RecuperarSenha() {

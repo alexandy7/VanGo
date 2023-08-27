@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import InputEdicao from "../../Componentes/Common/InputEdicao";
+import InputEdicao from "../../Componentes/InputEdicao";
 import styles from "./EditarCliente.modules";
 
 export default function EditarCliente() {

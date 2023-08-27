@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Perfil from "../../Componentes/Common/Perfil";
-import InfoPerfil from "../../Componentes/Common/InfoPerfil";
-import PincelEditar from "../../Componentes/Common/PincelEditar";
+import Perfil from "../../Componentes/Perfil";
+import InfoPerfil from "../../Componentes/InfoPerfil";
+import PincelEditar from "../../Componentes/PincelEditar";
 import styles from "./PerfilCliente.modules.jsx"
-import InserirMotorista from "../../Componentes/Common/InserirMotorista";
+import InserirMotorista from "../../Componentes/InserirMotorista";
 
 export default function PerfilCliente() {
 
@@ -23,7 +23,7 @@ export default function PerfilCliente() {
 
             <View style={styles.geral}>
 
-                <View>
+                <View style={styles.m}>
 
                     <Perfil
                         evento={irConfig}
@@ -66,9 +66,9 @@ export default function PerfilCliente() {
                         </View>
                     </View>
 
+                    <InserirMotorista></InserirMotorista>
 
                 </View>
-                    <InserirMotorista></InserirMotorista>
             </View>
         </ScrollView>
     )

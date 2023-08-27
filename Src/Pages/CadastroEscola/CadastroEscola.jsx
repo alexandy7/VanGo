@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import TituloCadastro from "../../Componentes/Common/Titulocadastros";
-import MeuText from "../../Componentes/Common/MeuText";
-import Touchable from '../../Componentes/Common/Touchable'
+import TituloCadastro from "../../Componentes/Titulocadastros";
+import MeuText from "../../Componentes/MeuText";
+import Touchable from '../../Componentes/Touchable'
 import styles from "./CadastroEscola.modules";
 
 

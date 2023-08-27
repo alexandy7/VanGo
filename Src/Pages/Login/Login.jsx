@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
-import Touchable from "../../Componentes/Common/Touchable";
-import MeuText from "../../Componentes/Common/MeuText";
+import Touchable from "../../Componentes/Touchable";
+import MeuText from "../../Componentes/MeuText";
 import Api from "../../services/Api";
 import ConfigMoto from "../ConfiguracaoMotorista/ConfiguracaoMotorista"
 import styles from "./Login.modules";

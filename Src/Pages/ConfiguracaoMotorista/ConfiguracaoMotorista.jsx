@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import Lista from "../../Componentes/Common/Lista";
+import Lista from "../../Componentes/Lista";
 import styles from "./ConfiguracaoMotorista.modules";
 
 export default function ConfiguracaoMotorista() {

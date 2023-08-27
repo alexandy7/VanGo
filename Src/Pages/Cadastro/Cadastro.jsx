@@ -1,9 +1,9 @@
 import { Text, View, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import React, { useState } from 'react';
 import { useNavigation } from "@react-navigation/native";
-import MeuText from "../../Componentes/Common/MeuText";
-import TituloCadastro from '../../Componentes/Common/Titulocadastros';
-import Touchable from "../../Componentes/Common/Touchable";
+import MeuText from "../../Componentes/MeuText";
+import TituloCadastro from '../../Componentes/Titulocadastros';
+import Touchable from "../../Componentes/Touchable";
 import Api from "../../services/Api";
 import styles from"./Cadastro.modules";
 

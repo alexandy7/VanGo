@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import Lista from "../../Componentes/Common/Lista";
+import Lista from "../../Componentes/Lista";
 
 export default function ConfigDoMoto() {
 

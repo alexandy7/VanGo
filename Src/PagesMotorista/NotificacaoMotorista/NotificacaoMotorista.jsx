@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import Notificacao from "../../Componentes/Common/Notificacao";
+import Notificacao from "../../Componentes/Notificacao";
 import Api from "../../services/Api";
 import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';

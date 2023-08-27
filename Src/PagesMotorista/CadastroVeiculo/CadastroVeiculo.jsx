@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import TituloCadastro from '../../Componentes/Common/Titulocadastros'
-import MeuText from '../../Componentes/Common/MeuText'
-import Touchable from "../../Componentes/Common/Touchable";
+import TituloCadastro from '../../Componentes/Titulocadastros'
+import MeuText from '../../Componentes/MeuText'
+import Touchable from "../../Componentes/Touchable";
 
 export default function CadastroVeiculo(){
 

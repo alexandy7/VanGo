@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import BotaoHome from "../../Componentes/Common/BotaoHome";
-import CardTurma from "../../Componentes/Common/CardTurma";
-import Touchable from "../../Componentes/Common/Touchable";
+import BotaoHome from "../../Componentes/BotaoHome";
+import CardTurma from "../../Componentes/CardTurma";
+import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
 
 export default function HomeCliente({nomecliente, fotocliente}) {

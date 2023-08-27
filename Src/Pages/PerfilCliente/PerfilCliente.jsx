@@ -66,9 +66,9 @@ export default function PerfilCliente() {
                         </View>
                     </View>
 
-                    <InserirMotorista></InserirMotorista>
 
                 </View>
+                    <InserirMotorista></InserirMotorista>
             </View>
         </ScrollView>
     )

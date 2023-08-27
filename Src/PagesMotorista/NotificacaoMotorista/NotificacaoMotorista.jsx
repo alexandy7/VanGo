@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Common/Notificacao";
 import Api from "../../services/Api";
 import styles from "./NotificacaoMotorista.modules";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { refresh } from '@react-native-community/netinfo';
 
 export default function NotificacaoMotorista() {
 
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
+    const [refreshingg, setRefreshing] = useState(false);
 
     useEffect(() => {
         checkInternetConnection();
@@ -21,14 +22,14 @@ export default function NotificacaoMotorista() {
     //Verifica se o usuário está conectado na internet
     const checkInternetConnection = async () => {
         const state = await NetInfo.fetch();
-        
+
         if (state.isConnected) {
-          console.log('O dispositivo está conectado à internet.');
+            console.log('O dispositivo está conectado à internet.');
         } else {
-          console.log('O dispositivo não está conectado à internet.');
+            console.log('O dispositivo não está conectado à internet.');
         }
-      }
-      
+    }
+
 
     async function ListarNotificacoes() {
         try {
@@ -51,6 +52,7 @@ export default function NotificacaoMotorista() {
     const irPerfil = () => {
         navigation.navigate('TabBarScreen')
     }
+
 
     const hoje = new Date(); // Pegando o dia de hoje 
 
@@ -77,7 +79,7 @@ export default function NotificacaoMotorista() {
                     :
                     (
 
-                        notificacoes.map((Notificacoes, key) => {
+                        notificacoes.map((Notificacoes) => {
 
                             const dataNotificacao = new Date(Notificacoes.data_notificacao);
                             const diaAnterior = hoje.getDate() - 1;
@@ -122,7 +124,6 @@ export default function NotificacaoMotorista() {
                         })
                     )
             }
-
 
         </ScrollView>
     )

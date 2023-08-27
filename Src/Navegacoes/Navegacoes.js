@@ -4,18 +4,18 @@ import { View, StyleSheet, Text, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Login from "../PagesCliente/Login/Login";
-import RecuperarSenha from '../PagesCliente/RecuperarSenha/RecuperarSenha';
-import Cadastro from '../PagesCliente/Cadastro/Cadastro';
-import CadastroEscola from '../PagesCliente/CadastroEscola/CadastroEscola';
+import Login from "../Pages/Login/Login";
+import RecuperarSenha from '../Pages/RecuperarSenha/RecuperarSenha';
+import Cadastro from '../Pages/Cadastro/Cadastro';
+import CadastroEscola from '../Pages/CadastroEscola/CadastroEscola';
 import CadastroVeiculo from '../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
 import ConfigMoto from '../PagesMotorista/ConfigDoMoto/ConfigDoMoto';
-import PerfilCliente from '../PagesCliente/PerfilCliente/PerfilCliente';
-import Pagamento from "../PagesCliente/Pagamento/Pagamento";
+import PerfilCliente from '../Pages/PerfilCliente/PerfilCliente';
+import Pagamento from "../Pages/Pagamento/Pagamento";
 import ConfigDoMoto from "../PagesMotorista/ConfigDoMoto/ConfigDoMoto";
 import NotificaMoto from "../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
-import HomeCliente from "../PagesCliente/HomeCliente/HomeCliente";
-import EditarCliente from "../PagesCliente/EditarCliente/EditarCliente";
+import HomeCliente from "../Pages/HomeCliente/HomeCliente";
+import EditarCliente from "../Pages/EditarCliente/EditarCliente";
 
 
 const Tab = createBottomTabNavigator();

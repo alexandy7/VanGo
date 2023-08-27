@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, Text } from "react-native";
 export default function TituloCadastro({textoh1, textoh2}) {
     return (
         <View>
-            <Image source={require('../../../assets/Logo.png')} style={styles.imagem} />
+            <Image source={require('../../assets/Logo.png')} style={styles.imagem}/>
 
             <Text style={styles.titulo}>{textoh1}</Text>
             <Text style={styles.msg}>{textoh2}</Text>

@@ -16,6 +16,7 @@ import ConfigDoMoto from "../PagesMotorista/ConfigDoMoto/ConfigDoMoto";
 import NotificaMoto from "../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
 import HomeCliente from "../Pages/HomeCliente/HomeCliente";
 import EditarCliente from "../Pages/EditarCliente/EditarCliente";
+import TelaSolicitacao from "../PagesMotorista/TelaSolicitacao/TelaSolicitacao";
 
 
 const Tab = createBottomTabNavigator();
@@ -114,6 +115,7 @@ export default function AppNavigator() {
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

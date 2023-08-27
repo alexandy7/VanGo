@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
 
     main: {
-        flex: 0,
+        flex: 1,
         backgroundColor: '#EFEFEF',
     },
     
@@ -18,9 +18,10 @@ const styles = StyleSheet.create({
     },
 
     seta: {
-        position: "relative",
-        right: "80%",
-        top: "5%"
+        position: "absolute",
+        left: "5%",
+        top: '35%'
+       
     },
 
     titulo: {
@@ -39,8 +40,8 @@ const styles = StyleSheet.create({
         height: 50,
         width: "85%",
         alignSelf: "center",
-        backgroundColor: "orange",
-        marginTop: 30,
+        backgroundColor: "#F7770D",
+        marginTop: 50,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

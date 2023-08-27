@@ -13,10 +13,16 @@ export default function PerfilCliente() {
 
     const navigation = useNavigation();
 
-    const irConfig = () => {
+    const irConfiguracao = () => {
         navigation.navigate('ConfigDoMoto')
 
     };
+
+    const irEditarCliente= () =>{
+        navigation.navigate("EditarCliente")
+    }
+
+
 
     return (
         <ScrollView>
@@ -26,7 +32,7 @@ export default function PerfilCliente() {
                 <View style={styles.m}>
 
                     <Perfil
-                        evento={irConfig}
+                        evento={irConfiguracao}
                         fotoUser={require('../../../assets/UserPhoto.png')}
                         nomeUser={'Karen Cristina'}>
                     </Perfil>
@@ -62,7 +68,7 @@ export default function PerfilCliente() {
                         </View>
 
                         <View style={styles.pincel}>
-                            <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
+                            <PincelEditar img={require('../../../assets/pincel.png')} evento={irEditarCliente}></PincelEditar>
                         </View>
                     </View>
 

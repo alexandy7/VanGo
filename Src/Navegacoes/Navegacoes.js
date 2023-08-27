@@ -17,6 +17,7 @@ import NotificaMoto from "../PagesMotorista/NotificacaoMotorista/NotificacaoMoto
 import HomeCliente from "../Pages/HomeCliente/HomeCliente";
 import EditarCliente from "../Pages/EditarCliente/EditarCliente";
 import TelaSolicitacao from "../PagesMotorista/TelaSolicitacao/TelaSolicitacao";
+import AnexarPagamentos from "../Pages/AnexarPagamentos/AnexarPagamentos";
 
 
 const Tab = createBottomTabNavigator();
@@ -116,6 +117,7 @@ export default function AppNavigator() {
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
+      <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

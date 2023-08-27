@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
       
 
     divimagem: {
-        height: 79,
+        height: 80,
         width: "30%",
         backgroundColor: "black",
         position: "relative",

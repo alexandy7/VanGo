@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: 18,
-        width: "70%"
+        width: "90%"
     },
     
     icon: {

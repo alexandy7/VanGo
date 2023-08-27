@@ -11,6 +11,10 @@ export default function HomeCliente({nomecliente, fotocliente}) {
 
 const navigation = useNavigation();
 
+const IrAnexarPagamentos = () => {
+    navigation.navigate('AnexarPagamentos')
+}
+
     return(
         
         <View style={styles.main}>
@@ -43,9 +47,9 @@ const navigation = useNavigation();
                         <BotaoHome icone={"calendar"} texto="Calendário"/>
                 </View>
 
-                <View style={styles.alinhabotao}>
-                        <BotaoHome icone={"card"} texto="Pagamento"/>
-                </View>
+                <TouchableOpacity style={styles.alinhabotao} onPress={IrAnexarPagamentos}>
+                        <BotaoHome icone={"document-attach"} texto="Pagamento"/>
+                </TouchableOpacity>
                 
                 <View style={styles.alinhabotao}> 
                     <BotaoHome icone={"settings"} texto="Ajustes"/>

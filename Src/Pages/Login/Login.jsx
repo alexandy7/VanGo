@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import Touchable from "../../Componentes/Touchable";
 import MeuText from "../../Componentes/MeuText";
-import Api from "../../services/Api";
+import Api from "../../services/ApiCiente";
 import ConfigMoto from "../ConfiguracaoMotorista/ConfiguracaoMotorista"
 import styles from "./Login.modules";
 

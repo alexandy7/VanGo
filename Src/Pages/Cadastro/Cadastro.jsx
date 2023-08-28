@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import MeuText from "../../Componentes/MeuText";
 import TituloCadastro from '../../Componentes/Titulocadastros';
 import Touchable from "../../Componentes/Touchable";
-import Api from "../../services/Api";
+import Api from "../../services/ApiCiente";
 import styles from"./Cadastro.modules";
 
 export default function Cadastro() {

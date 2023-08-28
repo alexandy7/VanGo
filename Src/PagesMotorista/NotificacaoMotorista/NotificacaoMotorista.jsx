@@ -3,7 +3,7 @@ import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpa
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Notificacao";
-import Api from "../../services/Api";
+import ApiMotorista from "../../services/ApiMotorista";
 import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';
 
@@ -33,7 +33,7 @@ export default function NotificacaoMotorista() {
 
     async function ListarNotificacoes() {
         try {
-            const response = await Api.get("https://localhost:7149/api/Motorista/LerNotificacao?idMotorista=2");
+            const response = await ApiMotorista.get("LerNotificacao?idMotorista=2");
 
 
             let json = response.data;

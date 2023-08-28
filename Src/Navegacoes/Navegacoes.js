@@ -19,7 +19,6 @@ import EditarCliente from "../Pages/EditarCliente/EditarCliente";
 import TelaSolicitacao from "../PagesMotorista/TelaSolicitacao/TelaSolicitacao";
 import AnexarPagamentos from "../Pages/AnexarPagamentos/AnexarPagamentos";
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -106,6 +105,7 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
+      <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
@@ -116,7 +116,6 @@ export default function AppNavigator() {
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
     </Stack.Navigator>
    

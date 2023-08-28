@@ -49,7 +49,6 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         display: "flex",
         flexDirection: "row",
-        backgroundColor: '#ffe6d4',
     },
 
     divimagem: {

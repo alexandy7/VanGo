@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { useEffect, useState } from "react";
-import Api from "../../services/Api";
+import Api from "../../services/ApiCiente";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./Pagamento.modules";

@@ -1,16 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/Common/BotaoHome";
-import { Calendar } from "react-native-calendars";
-import calendario from "../../Componentes/Common/Calendario";
 
 export default function HomeCliente({nomecliente, fotocliente}) {
 
 const navigation = useNavigation();
-
-const [showModal, setShowModal] = useState(false);
 
     return(
         
@@ -41,12 +37,7 @@ const [showModal, setShowModal] = useState(false);
             <View style={styles.divbotoes}>
                 
                 <View style={styles.alinhabotao}> 
-                    <TouchableOpacity onPress={() => setShowModal(true)} >
-                        <BotaoHome icone={"calendar"} texto="Calendário"> </BotaoHome>
-                        <Modal visible={showModal} animationType="fade">
-                            <Calendar style={{borderRadius:10, elevation:4}}/>
-                        </Modal>
-                    </TouchableOpacity>    
+                        <BotaoHome icone={"calendar"} texto="Calendário"/>
                 </View>
 
                 <View style={styles.alinhabotao}>
@@ -142,7 +133,4 @@ const styles = StyleSheet.create({
         width: "23%",
         height: "100%"
     },
-
-
-
 })

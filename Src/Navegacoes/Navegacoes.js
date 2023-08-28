@@ -6,14 +6,15 @@ import Login from "../Pages/Login/Login";
 import Cadastro from '../Pages/Cadastro/Cadastro';
 import CadastroEscola from '../Pages/CadastroEscola/CadastroEscola';
 import CadastroVeiculo from '../Pages/CadastroVeiculo/CadastroVeiculo';
-import ConfigMoto from '../Pages/ConfigMoto/ConfigMoto';
 import RecuperarSenha from '../Pages/RecuperarSenha/RecuperarSenha';
 import PerfilCliente from '../Pages/PerfilCliente/PerfilCliente';
+import PerfilMotorista from "../Pages/PerfilMotorista/PerfilMotorista";
 import Home from "../Pages/Home/Home";
 import Pagamento from "../Pages/Pagamento/Pagamento";
 import { Ionicons } from '@expo/vector-icons'
 import { View, StyleSheet, Text, Image } from "react-native";
 import ConfigDoMoto from "../Pages/ConfigDoMoto/ConfigDoMoto";
+import ConfigDoCliente from "../Pages/ConfigDoCliente/ConfigDoCliente";
 import NotificaMoto from "../Pages/NotificaMoto/NotificaMoto";
 import HomeCliente from "../Pages/HomeCliente/HomeCliente";
 
@@ -113,6 +114,10 @@ export default function AppNavigator() {
       <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConfigDoCliente" component={ConfigDoCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="PerfilMotorista" component={PerfilMotorista}  options={{headerShown: false}}/>
+      <Stack.Screen name="PerfilCliente" component={PerfilCliente}  options={{headerShown: false}}/>
+
     </Stack.Navigator>
    
   );

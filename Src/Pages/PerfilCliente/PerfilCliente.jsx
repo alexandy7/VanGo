@@ -13,8 +13,11 @@ export default function PerfilCliente() {
     const navigation = useNavigation();
 
     const irConfig = () => {
-        navigation.navigate('ConfigDoMoto')
+        navigation.navigate('ConfigDoCliente');
+    };
 
+    const irEditarPerfil = () => {
+        navigation.navigate('PerfilMotorista');
     };
 
     return (
@@ -57,15 +60,13 @@ export default function PerfilCliente() {
                 </View>
 
                 <View style={styles.pincel}>
-                    <PincelEditar img={require('../../../assets/pincel.png')}></PincelEditar>
+                    <PincelEditar img={require('../../../assets/pincel.png')} evento={irEditarPerfil}
+                    //TROCAR ESSA BOMBA, COLOQUEI SO PRA TESTAR
+                    >
+                    </PincelEditar>
                 </View>
             </View>
-<View>
-
-</View>
-
-
-        </View>
+            </View>
     )
 }
 

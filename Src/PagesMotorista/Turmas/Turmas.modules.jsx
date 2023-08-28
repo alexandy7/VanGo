@@ -46,9 +46,7 @@ const styles = StyleSheet.create({
     botao: {
         height: "100%",
         width: "28%",
-        backgroundColor: "white",
-        borderWidth: 2,
-        borderColor: "#e0e0e0",
+        backgroundColor: "#e0e0e0",
         borderRadius: 15,
         display: "flex",
         justifyContent: "center",
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     },
 
     textobotao: {
-        color: "#e0e0e0",
+        color: "white",
         fontSize: 17
     }
 

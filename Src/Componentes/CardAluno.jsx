@@ -52,15 +52,18 @@ const styles = StyleSheet.create({
     divtexto: {
         width: "75%",
         display: "flex",
-        justifyContent: "space-evenly"
+        justifyContent: "center"
     },
 
     nome: {
-        fontSize: 24
+        fontSize: 22,
+        fontWeight: "bold",
+        position: "relative",
+        bottom: "10%"
     },
 
     escola: {
-        fontSize: 16
+        fontSize: 14
     }
 
 

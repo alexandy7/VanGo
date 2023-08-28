@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
     container: {
         height: 35,
-        width: "80%",
+        width: "90%",
         backgroundColor: "#d6d6d6",
         alignSelf: "center",
         borderRadius: 25,
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         },
 
         input: {
-            fontSize: 16,
-            height: "100%"
+            fontSize: 15,
+            height: "100%",
         }
     
 })

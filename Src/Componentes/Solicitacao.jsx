@@ -1,9 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
-import { Button } from "react-native";
 
-export default function Solicitacao({imagem, nome, hora, turma}) 
+export default function Solicitacao({imagem, nome, hora, turma, onAceitar, onRecusar}) 
 {
     return (
         <View style={styles.container}>
@@ -25,14 +24,14 @@ export default function Solicitacao({imagem, nome, hora, turma})
                 </View>
 
                 <View style={styles.divinferior}>
-                    <TouchableOpacity style={styles.botaoaceitar} onPress={""}>
-                        <Text style={styles.textoaceitar}>Aceitar</Text>
-                    </TouchableOpacity>
+            <TouchableOpacity style={styles.botaoaceitar} onPress={onAceitar}>
+                <Text style={styles.textoaceitar}>Aceitar</Text>
+            </TouchableOpacity>
                     
-                    <TouchableOpacity style={styles.botaorecusar} onPress={""}>
-                        <Text style={styles.textorecusar}>Recusar</Text>
-                    </TouchableOpacity>           
-                </View>
+            <TouchableOpacity style={styles.botaorecusar} onPress={onRecusar}>
+                <Text style={styles.textorecusar}>Recusar</Text>
+            </TouchableOpacity>           
+        </View>
             </View>
         </View>
     )

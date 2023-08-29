@@ -7,6 +7,8 @@ import Solicitacao from "../../Componentes/Solicitacao";
 import ApiMotorista from "../../services/ApiMotorista";
 import FormatadorData from "../../FormatadorData/FormatadorData";
 export default function TelaSolicitacao() {
+    
+    const navigation = useNavigation();
 
     const [solicitacoes, setSolicitacoes] = useState([]);
 
@@ -22,7 +24,17 @@ export default function TelaSolicitacao() {
 
     }
 
-    const navigation = useNavigation();
+    async function AceitarRecusarSolicitacao(id_turma, id_cliente, id_motorista){
+        console.log(id_turma, id_cliente, id_motorista)
+         await ApiMotorista.put("InserirClienteTurma", {
+            
+                Id_cliente: id_cliente,
+                Turma_cliente: id_turma,
+                Id_motorista: id_motorista
+            
+        })
+    }
+
 
     const irPerfil = () => {
         navigation.navigate('TabBarScreen')
@@ -48,11 +60,16 @@ export default function TelaSolicitacao() {
 
                         return (
 
-                            <Solicitacao imagem={require("../../../assets/helpme.jpg")}
-                                nome={Solicitacoes.nome_cliente}
-                                hora={dataFormatada}
-                                turma={Solicitacoes.nome_turma}
-                            ></Solicitacao>
+                            <Solicitacao
+                            imagem={require("../../../assets/UserPhoto.png")}
+                            nome={Solicitacoes.nome_cliente}
+                            hora={dataFormatada}
+                            turma={Solicitacoes.nome_turma}
+                            key={Solicitacoes.id_solicitacoesTurma}
+                            onAceitar={() => AceitarRecusarSolicitacao(Solicitacoes.id_turma, Solicitacoes.id_cliente, Solicitacoes.id_motorista)}
+                            onRecusar={() => console.log("Botão Recusar foi clicado")} // Substitua pelo comportamento desejado
+                        />
+                        
                         )
                     })
                 }

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import InfoPerfil from "../../Componentes/InfoPerfil";
 import PincelEditar from "../../Componentes/PincelEditar";
 import styles from "./PerfilCliente.modules.jsx"
-import InserirMotorista from "../../Componentes/InserirMotorista";
+import InserirMotorista from "../../Componentes/InserirTurma";
+import { AuthContext } from "../../Contexts/Contexts";
 
 export default function PerfilCliente() {
+
+    const {user} = useContext(AuthContext);
 
     const [nomeUsuario, setNomeUsuario] = useState([])
 
@@ -33,8 +36,8 @@ export default function PerfilCliente() {
 
                     <Perfil
                         evento={irConfiguracao}
-                        fotoUser={require('../../../assets/UserPhoto.png')}
-                        nomeUser={'Karen Cristina'}>
+                        fotoUser={user.foto_cliente}
+                        nomeUser={user.nome_cliente}>
                     </Perfil>
 
                     <View style={styles.geral2}>
@@ -72,7 +75,6 @@ export default function PerfilCliente() {
                         </View>
                     </View>
 
-                    <InserirMotorista></InserirMotorista>
 
                 </View>
             </View>

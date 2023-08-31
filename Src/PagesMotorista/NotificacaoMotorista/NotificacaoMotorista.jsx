@@ -35,7 +35,6 @@ export default function NotificacaoMotorista() {
         try {
             const response = await ApiMotorista.get("LerNotificacao?idMotorista=2");
 
-
             let json = response.data;
             setNotificacoes(json);
             setCarregamento(false);
@@ -72,7 +71,6 @@ export default function NotificacaoMotorista() {
                 // Aparece enquanto aguarda a resposta da API
                 carregamento ? (
                     <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
-                        <Text style={{ fontSize: 17, marginBottom: 15 }} >Um momento, estamos buscando.</Text>
                         <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
                     </View>
                 )

@@ -56,7 +56,8 @@ const styles = StyleSheet.create(
 
         nome:{
             color: "white",
-            fontSize: 25
+            fontSize: 25,
+            alignSelf: "center"
         }
     }
 )

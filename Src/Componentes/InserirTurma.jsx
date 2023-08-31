@@ -3,13 +3,13 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
 
-export default function InserirMotorista({valor, evento}) {
+export default function InserirTurma({valor, evento}) {
 
     return(
         <View style={styles.container}>
             <View style={styles.divtexto}>
-                <Text style={styles.texto}>Digite o código do</Text>
-                <Text style={styles.texto}>Motorista</Text>
+                <Text style={styles.texto}>Digite o código de sua</Text>
+                <Text style={styles.texto}>turma</Text>
             </View>
 
             <View style={styles.divinput}>
@@ -27,13 +27,12 @@ export default function InserirMotorista({valor, evento}) {
 const styles = StyleSheet.create({
 
     container: {
-        height: 150,
+        height: 170,
         width: "85%",
         borderRadius: 45,
         alignSelf: "center",
-        elevation: 10,
+        elevation: 20,
         backgroundColor: "white",
-        marginBottom: 100 /* Colocado para deixar um espaço quando o usuario for digitar */
     },
 
     divtexto:{
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     },
 
     texto:{
-        fontSize: 23,
+        fontSize: 22,
     },
     
     divinput: {

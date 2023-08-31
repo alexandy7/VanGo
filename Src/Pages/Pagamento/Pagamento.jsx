@@ -10,12 +10,12 @@ export default function Pagamento() {
 
     useEffect(() => {
         BuscarComprovantes();
-    }, []) //Executa a função assim que os componentes são renderizados.
+    }, []) 
 
     async function BuscarComprovantes() {
 
         try {
-            const response = await Api.get('ListarPagamentos?id=1')
+            const response = await Api.get('ListarPagamentos?id=2')
             let json = response.data;
             setComprovantes(json);
         }
@@ -42,7 +42,11 @@ export default function Pagamento() {
                     {
                         comprovantes.map((Comprovante) => (
 
-                            <CardComprovante DataVencimento={Comprovante.vencimento.substring(0, 10)} DataPagamento={Comprovante.data_pagamento.substring(0, 10)}></CardComprovante>
+                            <CardComprovante 
+                            DataVencimento={Comprovante.vencimento.substring(0, 10)} 
+                            DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
+                            key={Comprovante.id_pagamento}
+                            ></CardComprovante>
                             //substring limita a quantidade de caracteres que irá exibir
                         ))
                     }

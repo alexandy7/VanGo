@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./TelaSolicitacao.modules";
@@ -7,13 +7,14 @@ import Solicitacao from "../../Componentes/Solicitacao";
 import ApiMotorista from "../../services/ApiMotorista";
 import FormatadorData from "../../FormatadorData/FormatadorData";
 export default function TelaSolicitacao() {
-    
+
     const navigation = useNavigation();
 
     const [solicitacoes, setSolicitacoes] = useState([]);
-
+    const [carregamento, setCarregamento] = useState(false)
     useEffect(() => {
         BuscarSolicitacoes();
+        setCarregamento(true);
     }, [])
 
     async function BuscarSolicitacoes() {
@@ -21,18 +22,33 @@ export default function TelaSolicitacao() {
 
         var json = response.data;
         setSolicitacoes(json);
+        setCarregamento(false);
 
     }
 
-    async function AceitarRecusarSolicitacao(id_turma, id_cliente, id_motorista){
-        console.log(id_turma, id_cliente, id_motorista)
-         await ApiMotorista.put("InserirClienteTurma", {
-            
-                Id_cliente: id_cliente,
-                Turma_cliente: id_turma,
-                Id_motorista: id_motorista
-            
+    async function AceitarSolicitacao(id_turma, id_cliente, id_motorista) {
+
+        await ApiMotorista.put("InserirClienteTurma", {
+
+            Id_cliente: id_cliente,
+            Turma_cliente: id_turma,
+            Id_motorista: id_motorista
+
         })
+
+        BuscarSolicitacoes();
+    }
+
+    async function RecusarSolicitacao(id_cliente){
+
+        let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`) 
+
+        if(!response.status){
+            Console.log("Desculpe, houve um erro interno");
+        }
+
+        BuscarSolicitacoes();
+
     }
 
 
@@ -54,26 +70,37 @@ export default function TelaSolicitacao() {
 
             <View>
                 {
-                    solicitacoes.map((Solicitacoes) => {
-                        let dataSolicitacao = Solicitacoes.data_solicitacao;
-                        let dataFormatada = FormatadorData(dataSolicitacao);
+                    carregamento ? (
+                        <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
+                            <Text style={{ fontSize: 17, marginBottom: 15 }} >Um momento, estamos buscando.</Text>
+                            <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
+                        </View>
+                    )
+                        :
+                        (
 
-                        return (
+                            solicitacoes.map((Solicitacoes) => {
+                                let dataSolicitacao = Solicitacoes.data_solicitacao;
+                                let dataFormatada = FormatadorData(dataSolicitacao);
 
-                            <Solicitacao
-                            imagem={require("../../../assets/UserPhoto.png")}
-                            nome={Solicitacoes.nome_cliente}
-                            hora={dataFormatada}
-                            turma={Solicitacoes.nome_turma}
-                            key={Solicitacoes.id_solicitacoesTurma}
-                            onAceitar={() => AceitarRecusarSolicitacao(Solicitacoes.id_turma, Solicitacoes.id_cliente, Solicitacoes.id_motorista)}
-                            onRecusar={() => console.log("Botão Recusar foi clicado")} // Substitua pelo comportamento desejado
-                        />
-                        
+                                return (
+
+                                    <Solicitacao
+                                        imagem={Solicitacoes.foto_cliente}
+                                        nome={Solicitacoes.nome_cliente}
+                                        hora={dataFormatada}
+                                        turma={Solicitacoes.nome_turma}
+                                        key={Solicitacoes.id_solicitacoesTurma}
+                                        
+                                        onAceitar={() => AceitarSolicitacao(Solicitacoes.id_turma, Solicitacoes.id_cliente, Solicitacoes.id_motorista)}
+                                        onRecusar={() => RecusarSolicitacao(Solicitacoes.id_cliente)}
+                                    />
+
+                                )
+                            })
                         )
-                    })
                 }
-                <Solicitacao imagem={require("../../../assets/helpme.jpg")} nome={"Yago..."} hora={"00:00"} turma={"cama e não acordar"} />
+               
             </View>
 
         </ScrollView>

@@ -14,12 +14,10 @@ export default function CardComprovante({item, DataPagamento, DataVencimento})
 
             <View style={styles.divinfos}>
                 <View style={styles.divpagamento}>
-                    <Ionicons name='cash-outline' size={18} color='green'/>
                     <Text style={styles.textopagamento}>Pago: {DataPagamento}</Text>
                 </View>
 
                 <View style={styles.divvencimento}>
-                    <Ionicons name='time-outline' size={18} color='goldenrod'/>
                     <Text style={styles.textovencimento}>Venc.: {DataVencimento} </Text>
                 </View>
             </View>

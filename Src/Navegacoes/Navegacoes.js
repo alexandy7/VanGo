@@ -9,10 +9,9 @@ import RecuperarSenha from '../Pages/RecuperarSenha/RecuperarSenha';
 import Cadastro from '../Pages/Cadastro/Cadastro';
 import CadastroEscola from '../Pages/CadastroEscola/CadastroEscola';
 import CadastroVeiculo from '../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
-import ConfigMoto from '../PagesMotorista/ConfigDoMoto/ConfigDoMoto';
+import ConfigMotorista from "../PagesMotorista/ConfigMotorista/ConfigDoMoto";
 import PerfilCliente from '../Pages/PerfilCliente/PerfilCliente';
 import Pagamento from "../Pages/Pagamento/Pagamento";
-import ConfigDoMoto from "../PagesMotorista/ConfigDoMoto/ConfigDoMoto";
 import NotificaMoto from "../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
 import HomeCliente from "../Pages/HomeCliente/HomeCliente";
 import EditarCliente from "../Pages/EditarCliente/EditarCliente";
@@ -20,6 +19,7 @@ import TelaSolicitacao from "../PagesMotorista/TelaSolicitacao/TelaSolicitacao";
 import AnexarPagamentos from "../Pages/AnexarPagamentos/AnexarPagamentos";
 import Turmas from "../PagesMotorista/Turmas/Turmas";
 import SolicitarTurma from "../Pages/SolicitarTurma/SolicitarTurma";
+import NotificacaoCliente from "../Pages/NotificacaoCliente/NotificacaoCliente";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -108,11 +108,12 @@ export default function AppNavigator() {
 
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
+      <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitacaoTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificaMoto" component={NotificaMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConfigDoMoto" component={ConfigDoMoto}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConfigMotorista" component={ConfigMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo}  options={{headerShown: false}}/>

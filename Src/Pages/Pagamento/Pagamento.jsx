@@ -1,10 +1,14 @@
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Api from "../../services/ApiCiente";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./Pagamento.modules";
+import { AuthContext } from "../../Contexts/Contexts";
+
 export default function Pagamento() {
+
+    const { user } = useContext(AuthContext);
 
     const [comprovantes, setComprovantes] = useState([]);
 
@@ -15,7 +19,7 @@ export default function Pagamento() {
     async function BuscarComprovantes() {
 
         try {
-            const response = await Api.get('ListarPagamentos?id=2')
+            const response = await Api.get(`ListarPagamentos?id=${user.id_cliente}`)
             let json = response.data;
             setComprovantes(json);
         }

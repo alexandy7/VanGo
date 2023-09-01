@@ -10,32 +10,27 @@ import { AuthContext } from "../../Contexts/Contexts";
 
 export default function PerfilCliente() {
 
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     const [nomeUsuario, setNomeUsuario] = useState()
 
     const navigation = useNavigation();
 
-    const irConfiguracao = () => {
-        navigation.navigate('ConfigDoMoto')
-
-    };
-
-    const irEditarCliente= () =>{
+    const irEditarCliente = () => {
         navigation.navigate("EditarCliente")
     }
-    useEffect(()=>{
-    const nome = user.nome_cliente;
-    const partesNome = nome.split(' ') // Separa as palavras com o espaço
+    useEffect(() => {
+        const nome = user.nome_cliente;
+        const partesNome = nome.split(' ') // Separa as palavras com o espaço
 
-    if(partesNome.length >= 2){
-        const nome1 = partesNome[0];
-        const nome2 = partesNome[1];
-        const NomeSobrenome = nome1 + ' ' + nome2;
-        setNomeUsuario(NomeSobrenome)
-        console.log(NomeSobrenome)
-    }
-}, [])
+        if (partesNome.length >= 2) {
+            const nome1 = partesNome[0];
+            const nome2 = partesNome[1];
+            const NomeSobrenome = nome1 + ' ' + nome2;
+            setNomeUsuario(NomeSobrenome)
+            console.log(NomeSobrenome)
+        }
+    }, [])
 
     return (
         <ScrollView>
@@ -45,7 +40,7 @@ export default function PerfilCliente() {
                 <View style={styles.m}>
 
                     <Perfil
-                        evento={irConfiguracao}
+                        evento={() => { navigation.navigate('ConfigDoMoto') }}
                         fotoUser={user.foto_cliente}
                         nomeUser={nomeUsuario}>
                     </Perfil>
@@ -81,7 +76,10 @@ export default function PerfilCliente() {
                         </View>
 
                         <View style={styles.pincel}>
-                            <PincelEditar img={require('../../../assets/pincel.png')} evento={irEditarCliente}></PincelEditar>
+                            <PincelEditar img={require('../../../assets/pincel.png')}
+                                evento={() => { navigation.navigate("EditarCliente")}}>
+
+                            </PincelEditar>
                         </View>
                     </View>
 

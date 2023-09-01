@@ -35,7 +35,7 @@ const IrAnexarPagamentos = () => {
                     <View style={styles.alinhaicone}>
                         <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white'/>
                         <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white'onPress={()=>{
-                            navigation.navigate('NotificaMoto')
+                            navigation.navigate('NotificacaoCliente')
                         }}/>
                     </View>
                 </View>

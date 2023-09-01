@@ -15,14 +15,14 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const [emailUsuario, setEmailUsuario] = useState('');
-  const [SenhaUsuario, setSenhaUsuario] = useState('');
+  const [senhaUsuario, setSenhaUsuario] = useState('');
 
 
   const navigation = useNavigation();
 
   const data = {
     email: emailUsuario,
-    senha: SenhaUsuario
+    senha: senhaUsuario
   }
 
   async function lala(){

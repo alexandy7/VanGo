@@ -10,24 +10,24 @@ function AuthProvider({ children }) {
     const navigation = useNavigation();
 
     async function Consulta({ data }) {
-     
+
 
         try {
             const response = await axios.get(`https://localhost:7149/api/Auth/LoginCliente?email=${data.email}&senha=${data.senha}`);
 
-            if (response.status !== 200) {
-                console.log("houve um erro")
-            }
-            setUser(response.data)
-            console.log(user)
+            if (response.status == 200) {
+                
+                setUser(response.data)
 
-            navigation.navigate('TabBarScreen');
+                navigation.navigate('TabBarScreen');
+                return;
+            }
         }
 
         catch (error) {
             console.error('Erro na consulta:', error);
         }
-    }
+    }   
 
 
     return (

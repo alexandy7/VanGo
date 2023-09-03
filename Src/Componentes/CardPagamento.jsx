@@ -3,33 +3,44 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 
-export default function CardPagamento({item, evento}) 
+export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, status, vencimento, evento}) 
 {
 
     return(
         <View style={[styles.container, Platform.OS === 'android' && styles.shadow]}>
             <View style={styles.divimagem}>
-                <Image source={require('../../assets/gato.jpg')} style={styles.imagem}/>
+                <Image source={imagem} style={styles.imagem}/>
             </View>
 
             <View style={styles.containertexto}>
         
-                <View style={styles.divtextosuperior}>
-                    <Text style={styles.nome}>Matriona</Text>
-                    <Text style={styles.fatura}>R$130,00</Text>
-                    <TouchableOpacity style={styles.seta} onPress={evento}>
-                        <Ionicons name="chevron-forward-outline" size={27} color='#F7770D'/>
-                    </TouchableOpacity>
-                </View>
-            
-                <View style={styles.divtextoinferior}>
-
-                    <View style={styles.alinhatexto}>
-                        <Ionicons style={styles.warning} name="warning-outline" size={20} color='red'/>
-                        <Text style={styles.situacao}>Atraso</Text>
+                <View style={styles.divsuperior}>
+                    {/* Essas réguas servem para deixar os conteúdos fixos no lugar */}
+                    <View style={styles.reguanome}> 
+                        <Text style={styles.nome}>{nome}</Text>
                     </View>
 
-                    <Text style={styles.vencimento}>Venc.: 10/04/2023</Text>
+                    <View style={styles.reguafatura}>
+                        <Text style={styles.fatura}>{"R$" + fatura}</Text>
+                    </View>
+
+                    <View style={styles.reguaicone}>
+                        <TouchableOpacity style={styles.seta} onPress={evento}>
+                            <Ionicons name="chevron-forward-outline" size={27} color='#F7770D'/>
+                        </TouchableOpacity>
+                    </View>      
+                </View>
+            
+                <View style={styles.divinferior}>
+
+                    <View style={styles.reguastatus}>
+                        <Ionicons style={styles.warning} name={icon} size={20} color={"black"}/>
+                        <Text style={styles.situacao}>{status}</Text>
+                    </View>
+
+                    <View style={styles.reguavencimento}>
+                        <Text style={styles.vencimento}>{"Venc.:" + vencimento}</Text>
+                    </View>
 
                 </View>
             </View>
@@ -44,15 +55,14 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 20,
         alignSelf: 'center',
-        marginBottom: 35,
+        marginBottom: 10,
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: 'white', // Adicione um fundo branco
-        
       },
       
     shadow: {
-        elevation: 15, // Esta propriedade adiciona sombra no Android
+        elevation: 10, // Esta propriedade adiciona sombra no Android
     },
 
     divimagem: {
@@ -71,63 +81,94 @@ const styles = StyleSheet.create({
     containertexto: {
         display: "flex",
         flexDirection: "column",
-        position: "relative",
         width: "75%",
     },
     
-    divtextosuperior: {
+    divsuperior: {
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        height: 39,
+        height: 40,
         position: "relative",
-        justifyContent: "space-evenly",
-        top: 5
+    },
+
+    reguanome: {
+        width: "45%",
+        height: "100%",
+        display	: "flex",
+        justifyContent: "center"
+    },
+
+    reguafatura: {
+        width: "35%",
+        height: "100%",
+        display	: "flex",
+        justifyContent: "center"
+    },
+
+    reguaicone: {
+        width: "20%",
+        height: "100%",
+        display	: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
     nome: {
-        position:"relative",
-        fontSize: 19,
+        fontSize: 20,
+        marginLeft: "5%"
     },
 
     fatura: {
-        position:"relative",
-        fontSize: 19,
-        color: "red"
+        fontSize: 20,
+        color: "black"
     },
 
     seta: {
-        position:"relative",
+        marginTop: 2
     },
 
-    divtextoinferior: {
+    divinferior: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-evenly",
         width: "100%",
-        height: 39,
+        height: 40,
         position: "relative",
-        top: 5
+    },
+
+    reguastatus:{
+        display: "flex",
+        flexDirection: "row",
+        height: "100%",
+        width: "40%",
+        alignItems: "center"
     },
 
     warning: {
         position: "relative",
+        marginLeft: "5%",
+        marginBottom: 5
     },
 
     situacao: {
         position: "relative",
-        fontSize: 15
+        fontSize: 15,
+        marginBottom: 5
     },
 
-    alinhatexto:{
+    reguavencimento: {
         display: "flex",
         flexDirection: "row",
-        right: "3%"
+        height: "100%",
+        width: "60%",
+        alignItems: "center",
+        justifyContent: "flex-end",
     },
 
     vencimento: {
         position: "relative",
-        fontSize: 15,   
-        right: "0%"
+        fontSize: 15,
+        marginRight: "15%",
+        marginBottom: 5
     }
 })

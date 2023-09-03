@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
 
     main: {
         flex: 1,
-        backgroundColor: '#EFEFEF'
+        backgroundColor: '#EFEFEF',
     },
 
     header: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     nome: {
         fontSize: 23,
         marginLeft: "5%",
-        color: "white"
+        color: "white",
     },
 
     divicones: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "23%",
-        height: "100%"
+        height: "100%",
     },
 
 

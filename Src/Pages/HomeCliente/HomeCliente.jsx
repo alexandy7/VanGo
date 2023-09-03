@@ -12,6 +12,8 @@ export default function HomeCliente({nomecliente, fotocliente}) {
 
 const navigation = useNavigation();
 
+
+
 const { user } = useContext(AuthContext); 
 useEffect(()=>{
 

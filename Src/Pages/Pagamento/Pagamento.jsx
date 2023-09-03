@@ -38,7 +38,7 @@ export default function Pagamento() {
             <View>
                 <Text style={styles.titulo}>Pagamentos</Text>
 
-                <CardPagamento evento={()=> navigation.navigate("AnexarPagamentos")}></CardPagamento>
+                <CardPagamento imagem={require('../../../assets/Ana.jpeg')} nome={"Ana"} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"} evento={()=> navigation.navigate("AnexarPagamentos")}/>
 
                 <View style={styles.pagamentoAtual}>
                     <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>

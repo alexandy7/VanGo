@@ -2,10 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
-import InfoPerfil from "../../Componentes/InfoPerfil";
-import PincelEditar from "../../Componentes/PincelEditar";
 import styles from "./PerfilCliente.modules.jsx"
-import InserirMotorista from "../../Componentes/InserirTurma";
 import { AuthContext } from "../../Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
 
@@ -36,7 +33,7 @@ export default function PerfilCliente() {
             <View>
 
                 <Perfil
-                    evento={() => { navigation.navigate('ConfigDoMoto') }}
+                    evento={() => { navigation.navigate('ConfigMotorista') }}
                     fotoUser={{ uri: user.foto_cliente}}
                     nomeUser={nomeUsuario}>
                 </Perfil>

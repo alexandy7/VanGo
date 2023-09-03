@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "40%",
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 50
     },
 
     texto: {
@@ -85,7 +86,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 5,
-        borderColor: "darkgray"
+        borderColor: "darkgray",
+        marginTop: 40
     },
 
     botaoanexar: {

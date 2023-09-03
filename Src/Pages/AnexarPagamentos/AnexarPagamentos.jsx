@@ -25,7 +25,7 @@ export default function AnexarPagamentos() {
                 <Text style={styles.titulo}>Anexar Comprovante</Text>
             </View>
 
-            <CardPagamento/>
+            <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"}/>
 
             <View style={styles.divopcoes}>
 

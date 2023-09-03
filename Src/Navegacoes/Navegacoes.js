@@ -20,6 +20,7 @@ import AnexarPagamentos from "../Pages/AnexarPagamentos/AnexarPagamentos";
 import Turmas from "../PagesMotorista/Turmas/Turmas";
 import SolicitarTurma from "../Pages/SolicitarTurma/SolicitarTurma";
 import NotificacaoCliente from "../Pages/NotificacaoCliente/NotificacaoCliente";
+import TelaPagamentos from "../PagesMotorista/TelaPagamentos/TelaPagamentos";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -122,6 +123,7 @@ export default function AppNavigator() {
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
       <Stack.Screen name="Turmas" component={Turmas}  options={{headerShown: false}}/>
+      <Stack.Screen name="TelaPagamentos" component={TelaPagamentos}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

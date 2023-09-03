@@ -1,7 +1,16 @@
 import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create(
-    {
+    {   
+        geral: {
+            flex: 1
+        },
+        
+        regua: {
+            height: 400,
+            position: "relative",
+            bottom: 80
+        },
 
         geral2:{
             display: "flex",

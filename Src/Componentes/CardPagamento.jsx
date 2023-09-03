@@ -39,7 +39,7 @@ export default function CardPagamento({item, evento})
 
 const styles = StyleSheet.create({
     container: {
-        width: '98%',
+        width: '90%',
         height: 80,
         borderColor: 'grey',
         borderRadius: 20,
@@ -56,10 +56,8 @@ const styles = StyleSheet.create({
     },
 
     divimagem: {
-        height: 80,
-        width: "30%",
-        position: "relative",
-        borderRadius: 20,
+        width: "25%",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center"
     },
@@ -68,14 +66,13 @@ const styles = StyleSheet.create({
         height: "80%",
         width: "80%",
         borderRadius: 20,
-        
     },
 
     containertexto: {
         display: "flex",
         flexDirection: "column",
         position: "relative",
-        width: "70%"
+        width: "75%",
     },
     
     divtextosuperior: {

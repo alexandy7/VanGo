@@ -3,7 +3,7 @@ import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpa
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Notificacao";
-import ApiMotorista from "../../services/ApiMotorista";
+import ApiCliente from "../../services/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
 import { AuthContext } from "../../Contexts/Contexts";
@@ -35,7 +35,7 @@ export default function NotificacaoCliente() {
 
     async function ListarNotificacoes() {
         try {
-            const response = await ApiMotorista.get(`LerNotificacao?idMotorista=${user.id_cliente}`);
+            const response = await ApiCliente.get(`ListarNotificacoes?id=${user.id_cliente}`);
 
             let json = response.data;
             setNotificacoes(json);
@@ -114,7 +114,7 @@ export default function NotificacaoCliente() {
                             return (
                                 <Notificacao
                                     fotouser={require('../../../assets/UserPhoto.png')}
-                                    nomeuser={Notificacoes.nome_cliente}
+                                    nomeuser={'Motorista'}
                                     info={Notificacoes.mensagem_notificacao}
                                     hora={horaOuData}
                                     key={Notificacoes.id_notificacao} //Key serve para dar uma identificação unica ao elemento 

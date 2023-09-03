@@ -3,11 +3,11 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 
-export default function CardPagamento({item}) 
+export default function CardPagamento({item, evento}) 
 {
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, Platform.OS === 'android' && styles.shadow]}>
             <View style={styles.divimagem}>
                 <Image source={require('../../assets/gato.jpg')} style={styles.imagem}/>
             </View>
@@ -17,7 +17,7 @@ export default function CardPagamento({item})
                 <View style={styles.divtextosuperior}>
                     <Text style={styles.nome}>Matriona</Text>
                     <Text style={styles.fatura}>R$130,00</Text>
-                    <TouchableOpacity style={styles.seta}>
+                    <TouchableOpacity style={styles.seta} onPress={evento}>
                         <Ionicons name="chevron-forward-outline" size={27} color='#F7770D'/>
                     </TouchableOpacity>
                 </View>
@@ -39,7 +39,7 @@ export default function CardPagamento({item})
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '98%',
         height: 80,
         borderColor: 'grey',
         borderRadius: 20,
@@ -49,32 +49,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: 'white', // Adicione um fundo branco
         
-        ...Platform.select({
-          ios: {
-            shadowColor: 'rgba(0, 0, 0, 0.3)',
-            shadowOffset: { width: 5, height: 5 },
-            shadowOpacity: 0.5,
-            shadowRadius: 5,
-          },
-          android: {
-            elevation: 10,
-          },
-        }),
       },
       
+    shadow: {
+        elevation: 15, // Esta propriedade adiciona sombra no Android
+    },
 
     divimagem: {
         height: 80,
         width: "30%",
-        backgroundColor: "black",
         position: "relative",
         borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center"
     },
 
     imagem: {
-        height: "100%",
-        width: "100%",
-        borderRadius: 20
+        height: "80%",
+        width: "80%",
+        borderRadius: 20,
+        
     },
 
     containertexto: {

@@ -105,7 +105,7 @@ export default function Cadastro() {
 
       try {
         // navigation.navigate('CadastroEscola');
-        const resposta = await Api.post('InserirCliente', {
+        const resposta = await Api.post('CadastrarCliente', {
           Email_cliente: email,
           Senha_cliente: senha,
           Nome_cliente: nome,

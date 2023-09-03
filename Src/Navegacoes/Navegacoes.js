@@ -28,7 +28,7 @@ function TabBarNavigator() {
   return (
     <Tab.Navigator
     /* Estilizando tudo do Tab.Navigator */
-    initialRouteName="MeuPerfil"
+    initialRouteName="HomeCliente"
     screenOptions={{
       tabBarShowLabel: false,
       tabBarStyle: {
@@ -108,8 +108,8 @@ export default function AppNavigator() {
 
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
-      <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitacaoTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
+      <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificaMoto" component={NotificaMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TelaSolicitacao" component={TelaSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarScreen" component={TabBarNavigator}  options={{headerShown: false}}/>

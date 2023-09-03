@@ -12,16 +12,13 @@ export default function PerfilCliente() {
 
     const { user } = useContext(AuthContext);
 
-    const [nomeUsuario, setNomeUsuario] = useState()
+    const [nomeUsuario, setNomeUsuario] = useState(user.nome_cliente)
 
     const navigation = useNavigation();
 
-    const irEditarCliente = () => {
-        navigation.navigate("EditarCliente")
-    }
+    //Formata nome para aparecer somente nome e sobrenome
     useEffect(() => {
-        const nome = user.nome_cliente;
-        const partesNome = nome.split(' ') // Separa as palavras com o espaço
+        const partesNome = nomeUsuario.split(' ') // Separa as palavras com o espaço
 
         if (partesNome.length >= 2) {
             const nome1 = partesNome[0];
@@ -37,11 +34,11 @@ export default function PerfilCliente() {
 
             <View style={styles.geral}>
 
-                <View style={styles.m}>
+                <View>
 
                     <Perfil
                         evento={() => { navigation.navigate('ConfigDoMoto') }}
-                        fotoUser={user.foto_cliente}
+                        fotoUser={{ uri: user.foto_cliente}}
                         nomeUser={nomeUsuario}>
                     </Perfil>
 

@@ -13,13 +13,14 @@ function AuthProvider({ children }) {
 
 
         try {
-            const response = await axios.get(`https://localhost:7149/api/Auth/LoginCliente?email=${data.email}&senha=${data.senha}`);
+            const response = await axios.get(`https://apivango.azurewebsites.net/api/Auth/LoginCliente?email=${data.email}&senha=${data.senha}`);
 
             if (response.status == 200) {
-                
-                setUser(response.data)
 
-                navigation.navigate('TabBarScreen');
+                setUser(response.data)
+                
+
+                navigation.navigate('SolicitacaoTurma');
                 return;
             }
         }
@@ -27,7 +28,7 @@ function AuthProvider({ children }) {
         catch (error) {
             console.error('Erro na consulta:', error);
         }
-    }   
+    }
 
 
     return (

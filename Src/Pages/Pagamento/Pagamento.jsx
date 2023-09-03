@@ -1,13 +1,15 @@
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Image, navigation } from "react-native";
 import { useContext, useEffect, useState } from "react";
 import Api from "../../services/ApiCiente";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./Pagamento.modules";
 import { AuthContext } from "../../Contexts/Contexts";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Pagamento() {
 
+    const navigation = useNavigation();
     const { user } = useContext(AuthContext);
 
     const [comprovantes, setComprovantes] = useState([]);
@@ -36,7 +38,7 @@ export default function Pagamento() {
             <View>
                 <Text style={styles.titulo}>Pagamentos</Text>
 
-                <CardPagamento></CardPagamento>
+                <CardPagamento evento={()=> navigation.navigate("AnexarPagamentos")}></CardPagamento>
 
                 <View style={styles.pagamentoAtual}>
                     <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>

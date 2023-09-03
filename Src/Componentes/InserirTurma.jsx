@@ -14,7 +14,10 @@ export default function InserirTurma({valor, evento}) {
 
             <View style={styles.divinput}>
                 <View style={styles.juncaoinput}>
-                    <TextInput placeholder={"Exemplo: #032843"} placeholderTextColor= "lightgray" style={styles.input} value={valor}></TextInput>
+                    <TextInput placeholder={"Exemplo: #032843"} 
+                    placeholderTextColor= "lightgray" 
+                    style={styles.input} 
+                    onChangeText={valor}></TextInput>
                     <TouchableOpacity onPress={evento}>
                         <Ionicons style={styles.icon} name={"chevron-forward-sharp"} size={30} color="#b1aeae"/>
                     </TouchableOpacity>

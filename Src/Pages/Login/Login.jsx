@@ -25,7 +25,7 @@ export default function Login() {
     senha: senhaUsuario
   }
 
-  async function lala(){
+  async function login(){
     setLoading(true);
     await Consulta({data});
     setLoading(false);
@@ -60,7 +60,7 @@ export default function Login() {
               )
                 :
                 (
-                  <Touchable texto={"Continuar"} evento={lala} />
+                  <Touchable texto={"Continuar"} evento={login} />
 
                 )
 

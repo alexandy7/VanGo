@@ -5,11 +5,11 @@ export default function Touchable({texto, evento} ){
 
     return(
       
-    <View style={styles.prosseguir}>
         <TouchableOpacity onPress={evento}>
+    <View style={styles.prosseguir}>
                 <Text style={styles.textoProsseguir}>{texto}</Text>
-            </TouchableOpacity>
     </View>
+            </TouchableOpacity>
     
     )
 }

@@ -8,7 +8,7 @@ export default function CardTurma({nome, chave, horarioinic,horariofin}) {
         <View style={styles.container}>
             <View style={styles.divsuperior}>
                 <Text style={styles.titulo}>{nome}</Text>
-                <Text style={styles.txtsecundario}>{chave}</Text>
+                <Text style={styles.txtsecundario}></Text>
             </View>
 
             <View style={styles.divinferior}>
@@ -19,7 +19,7 @@ export default function CardTurma({nome, chave, horarioinic,horariofin}) {
 
                 <View style={styles.juncao2}>
                     <Ionicons name='key' size={20} color='orange'/>
-                    <Text style={styles.info}>{"#123002"}</Text>
+                    <Text style={styles.info}>#{chave}</Text>
                 </View>
             </View>
 

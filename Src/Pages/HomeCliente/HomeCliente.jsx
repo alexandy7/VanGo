@@ -41,27 +41,32 @@ const IrAnexarPagamentos = () => {
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('ListaChat')}}>
                         <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white'/>
-                        <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white'
-                        onPress={()=>{navigation.navigate('NotificacaoCliente')}}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={()=>{navigation.navigate('NotificacaoCliente')}}>
+                        <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white'/>
+                    </TouchableOpacity>
+
                     </View>
                 </View>
             </View>
 
             <View style={styles.divbotoes}>
                 
-                <View style={styles.alinhabotao}> 
+                <TouchableOpacity style={styles.alinhabotao}> 
                         <BotaoHome icone={"calendar"} texto="Calendário"/>
-                </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao} 
                 onPress={() => {navigation.navigate('AnexarPagamentos')}}>
                         <BotaoHome icone={"document-attach"} texto="Pagamento"/>
                 </TouchableOpacity>
                 
-                <View style={styles.alinhabotao}> 
+                <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfigMotorista') }}> 
                     <BotaoHome icone={"settings"} texto="Ajustes"/>
-                </View>
+                </TouchableOpacity>
             </View>
 
             <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>

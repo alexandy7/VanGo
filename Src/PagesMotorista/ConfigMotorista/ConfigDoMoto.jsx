@@ -36,7 +36,9 @@ export default function ConfigMotorista() {
             <View style={styles.card}>
                 <Lista icone='eye'titulo="Ver clientes"></Lista>
                 <Lista icone='cloudy-night' titulo="Visualizar turmas"></Lista>
-                <Lista icone='chatbubbles' titulo="Chat"></Lista>
+                <Lista icone='chatbubbles' titulo="Chat" evento={()=>{
+                    navigation.navigate('ListaChat')
+                }}></Lista>
             </View>
         </View>
     )

@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import styles from "./TelaSolicitacao.modules";
+import styles from "./SolicitacoesTurmaMotorista.modules";
 import Solicitacao from "../../Componentes/Solicitacao";
-import ApiMotorista from "../../services/ApiMotorista";
-import FormatadorData from "../../FormatadorData/FormatadorData";
+import ApiMotorista from "../../services/Api/ApiMotorista";
+import FormatadorData from "../../Formatadores/FormatadorData/FormatadorData";
+import { AuthContext } from "../../services/Contexts/Contexts";
+import FormatadorTexto from "../../Formatadores/FormatadorTextos/FormatadorTextos";
 export default function TelaSolicitacao() {
 
     const navigation = useNavigation();
 
     const [solicitacoes, setSolicitacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false)
+    const { user } = useContext(AuthContext);
+
     useEffect(() => {
         BuscarSolicitacoes();
         setCarregamento(true);
     }, [])
 
     async function BuscarSolicitacoes() {
-        var response = await ApiMotorista.get("ListarSolicitacoesTurma?id_motorista=2")
+        var response = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${user.id_motorista}`)
 
         var json = response.data;
         setSolicitacoes(json);
@@ -26,7 +30,10 @@ export default function TelaSolicitacao() {
 
     }
 
-    async function AceitarSolicitacao(id_turma, id_cliente, id_motorista) {
+    async function AceitarSolicitacao(id_turma, id_cliente, id_motorista, id_solicitacoesTurma) {
+
+       
+        RemoverItemDaLista(id_solicitacoesTurma);
 
         await ApiMotorista.put("InserirClienteTurma", {
 
@@ -36,32 +43,30 @@ export default function TelaSolicitacao() {
 
         })
 
-        BuscarSolicitacoes();
     }
 
-    async function RecusarSolicitacao(id_cliente){
-
-        let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`) 
-
-        if(!response.status){
+    async function RecusarSolicitacao(id_cliente, id_solicitacoesTurma) {
+        
+        RemoverItemDaLista(id_solicitacoesTurma);
+        
+        let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`)
+        
+        if (!response.status) {
             Console.log("Desculpe, houve um erro interno");
         }
-
-        BuscarSolicitacoes();
-
     }
-
-
-    const irPerfil = () => {
-        navigation.navigate('TabBarScreen')
+    
+    function RemoverItemDaLista(itemid) {
+        console.log("ItemID a ser removido:", itemid);
+        
+        const updatedList = solicitacoes.filter(item => item.id_solicitacoesTurma !== itemid);
+        setSolicitacoes(updatedList);
     }
-
-    const hoje = new Date(); // Pegando o dia de hoje 
-
+    
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                <TouchableOpacity style={styles.seta} onPress={() => {navigation.navigate('TabBarScreen')}}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 
@@ -78,29 +83,26 @@ export default function TelaSolicitacao() {
                     )
                         :
                         (
-
                             solicitacoes.map((Solicitacoes) => {
                                 let dataSolicitacao = Solicitacoes.data_solicitacao;
                                 let dataFormatada = FormatadorData(dataSolicitacao);
 
                                 return (
-
                                     <Solicitacao
-                                        imagem={Solicitacoes.foto_cliente}
-                                        nome={Solicitacoes.nome_cliente}
+                                        imagem={{ uri: Solicitacoes.foto_cliente }}
+                                        nome={FormatadorTexto(Solicitacoes.nome_cliente, 14)}
                                         hora={dataFormatada}
                                         turma={Solicitacoes.nome_turma}
                                         key={Solicitacoes.id_solicitacoesTurma}
-                                        
-                                        onAceitar={() => AceitarSolicitacao(Solicitacoes.id_turma, Solicitacoes.id_cliente, Solicitacoes.id_motorista)}
-                                        onRecusar={() => RecusarSolicitacao(Solicitacoes.id_cliente)}
-                                    />
 
+                                        onAceitar={() => AceitarSolicitacao(Solicitacoes.id_turma, Solicitacoes.id_cliente, Solicitacoes.id_motorista, Solicitacoes.id_solicitacoesTurma)}
+                                        onRecusar={() => RecusarSolicitacao(Solicitacoes.id_cliente, Solicitacoes.id_solicitacoesTurma)}
+                                    />
                                 )
                             })
                         )
                 }
-               
+
             </View>
 
         </ScrollView>

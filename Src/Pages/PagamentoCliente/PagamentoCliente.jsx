@@ -1,13 +1,13 @@
 import { ScrollView, StyleSheet, Text, View, Image, navigation } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import Api from "../../services/ApiCiente";
+import Api from "../../services/Api/ApiCiente";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
-import styles from "./Pagamento.modules";
-import { AuthContext } from "../../Contexts/Contexts";
+import styles from "./PagamentoCliente.modules";
+import { AuthContext } from "../../services/Contexts/Contexts";
 import { useNavigation } from "@react-navigation/native";
 
-export default function Pagamento() {
+export default function PagamentoCliente() {
 
     const navigation = useNavigation();
     const { user } = useContext(AuthContext);

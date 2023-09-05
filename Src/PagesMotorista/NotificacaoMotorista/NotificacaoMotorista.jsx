@@ -3,7 +3,7 @@ import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpa
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Notificacao";
-import ApiMotorista from "../../services/ApiMotorista";
+import ApiMotorista from "../../services/Api/ApiMotorista";
 import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';
 

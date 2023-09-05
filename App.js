@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './Src/Navegacoes/Navegacoes';
-import AuthProvider from './Src/Contexts/Contexts';
+import AppNavigator from './Src/services/Navegacoes/NavegacoesCliente';
+import AuthProvider from './Src/services/Contexts/Contexts';
 
 export default function App() {
 
@@ -11,6 +11,7 @@ export default function App() {
 
       <AuthProvider>
         <AppNavigator/>
+        
         <StatusBar hidden={true} />
       </AuthProvider>
 

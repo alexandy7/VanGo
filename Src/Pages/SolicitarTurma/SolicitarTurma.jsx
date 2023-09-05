@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import InserirTurma from "../../Componentes/InserirTurma";
-import ApiMotorista from "../../services/ApiMotorista";
-import { AuthContext } from "../../Contexts/Contexts";
-import ApiCliente from "../../services/ApiCiente";
+import ApiMotorista from "../../services/Api/ApiMotorista";
+import { AuthContext } from "../../services/Contexts/Contexts";
+import ApiCliente from "../../services/Api/ApiCiente";
 import TituloCadastro from "../../Componentes/Titulocadastros";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons'
@@ -19,8 +19,6 @@ export default function SolicitarTurma() {
     const [solicitacaoenviada, setSolicitacaoenviada] = useState(false);
     const [codigo, setCodigo] = useState('');
     const { user } = useContext(AuthContext);
-
-    console.log(user.turma_cliente);
 
     if(user.turma_cliente !== null){
         navigation.navigate("TabBarScreen");
@@ -45,8 +43,12 @@ export default function SolicitarTurma() {
                 },
 
             });
+
+            if(response.status == 200){
+
+                setSolicitacaoenviada(true);
+            }
             
-            setSolicitacaoenviada(true);
         }
 
         catch (error) {

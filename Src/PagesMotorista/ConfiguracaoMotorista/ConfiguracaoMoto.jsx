@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Lista from "../../Componentes/Lista";
 
-export default function ConfigMotorista() {
+export default function ConfiguracaoMoto() {
 
     const navigation = useNavigation();
 

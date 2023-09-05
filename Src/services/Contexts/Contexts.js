@@ -11,32 +11,40 @@ function AuthProvider({ children }) {
 
     async function Consulta({ data }) {
 
-
         try {
-            const response = await axios.get(`https://apivango.azurewebsites.net/api/Auth/LoginCliente?email=${data.email}&senha=${data.senha}`);
+            const response = await axios.get(`https://apivango.azurewebsites.net/api/Auth/Login?email=${data.email}&senha=${data.senha}`);
 
             if (response.status == 200) {
-
                 setUser(response.data)
-                
 
-                navigation.navigate('SolicitacaoTurma');
-                return;
+                Navegacao(response.data);
             }
+
+        }
+        
+        catch (error) {
+            console.error('Erro na consulta:', error)
         }
 
-        catch (error) {
-            console.error('Erro na consulta:', error);
-        }
     }
 
+    // Verifica quem fez login e direciona para a page certa
+    function Navegacao(userData){
+
+        if(userData.id_cliente !== undefined){
+            navigation.navigate('SolicitarTurma')
+        }
+
+        if(userData.email_motorista !== undefined){
+            navigation.navigate('SolicitacoesTurmaMotorista')
+        }
+    };
 
     return (
-
+        
         <AuthContext.Provider value={{ user, Consulta }}>
             {children}
         </AuthContext.Provider>
-
     )
 
 };

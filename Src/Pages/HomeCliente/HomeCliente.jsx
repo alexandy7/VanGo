@@ -6,23 +6,16 @@ import BotaoHome from "../../Componentes/BotaoHome";
 import CardTurma from "../../Componentes/CardTurma";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
-import { AuthContext } from "../../Contexts/Contexts";
+import { AuthContext } from "../../services/Contexts/Contexts";
 
-export default function HomeCliente({nomecliente, fotocliente}) {
+export default function HomeCliente() {
 
 const navigation = useNavigation();
 
-
-
 const { user } = useContext(AuthContext); 
-useEffect(()=>{
 
-    console.log(user.foto_cliente)
-}, [])
-const IrAnexarPagamentos = () => {
-    navigation.navigate('AnexarPagamentos')
-}
-
+    let name = user.nome_cliente;
+    let PrimeiroNome = name.split(' ');
     return(
         
         <View style={styles.main}>
@@ -35,13 +28,13 @@ const IrAnexarPagamentos = () => {
 
                     <View style={styles.divnome}>
                         <Text style={styles.nome}>Seja bem vindo(a),</Text>
-                        <Text style={styles.nome}>{user.nome_cliente}</Text>
+                        <Text style={styles.nome}>{PrimeiroNome[0]}</Text>
                     </View>
                 </View>
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
-                    <TouchableOpacity onPress={()=>{navigation.navigate('ListaChat')}}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate('Chat')}}>
                         <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white'/>
                     </TouchableOpacity>
 

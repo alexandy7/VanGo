@@ -3,9 +3,9 @@ import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import styles from "./PerfilCliente.modules.jsx"
-import { AuthContext } from "../../Contexts/Contexts";
+import { AuthContext } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
-
+import FormatadorTexto from "../../Formatadores/FormatadorTextos/FormatadorTextos";
 export default function PerfilCliente() {
 
     const { user } = useContext(AuthContext);
@@ -15,17 +15,16 @@ export default function PerfilCliente() {
     const navigation = useNavigation();
 
     //Formata nome para aparecer somente nome e sobrenome
-    // useEffect(() => {
-    //     const partesNome = nomeUsuario.split(' ') // Separa as palavras com o espaço
+     useEffect(() => {
+         const partesNome = nomeUsuario.split(' ') // Separa as palavras com o espaço
 
-    //     if (partesNome.length >= 2) {
-    //         const nome1 = partesNome[0];
-    //         const nome2 = partesNome[1];
-    //         const NomeSobrenome = nome1 + ' ' + nome2;
-    //         setNomeUsuario(NomeSobrenome)
-    //         console.log(NomeSobrenome)
-    //     }
-    // }, [])
+         if (partesNome.length >= 2) {
+             const nome1 = partesNome[0];
+             const nome2 = partesNome[1];
+             const NomeSobrenome = nome1 + ' ' + nome2;
+             setNomeUsuario(NomeSobrenome)
+         }
+     }, [])
 
     return (
         <ScrollView style={styles.geral}>
@@ -78,7 +77,10 @@ export default function PerfilCliente() {
                     </View> */}
 
                     <View style={styles.regua}>
-                        <CaixaPerfil responsavel={"Carlos Alex..."} horario={"18:30"} endereco={"Rua Diamant..."} status={"Positivo"}></CaixaPerfil>
+                        <CaixaPerfil responsavel={FormatadorTexto(user.responsavel_cliente, 2, 1)} 
+                        horario={"18:30"} 
+                        endereco={FormatadorTexto(user.endereco_cliente, 10, 1)} 
+                        status={"Positivo"}></CaixaPerfil>
                     </View>
 
                 </View>

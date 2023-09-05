@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import Touchable from "../../Componentes/Touchable";
 import MeuText from "../../Componentes/MeuText";
-import Api from "../../services/ApiCiente";
+import Api from "../../services/Api/ApiCiente";
 import ConfigMoto from "../ConfiguracaoMotorista/ConfiguracaoMotorista"
 import styles from "./Login.modules";
-import { AuthContext } from "../../Contexts/Contexts";
+import { AuthContext } from "../../services/Contexts/Contexts";
 
 export default function Login() {
 
@@ -25,9 +25,9 @@ export default function Login() {
     senha: senhaUsuario
   }
 
-  async function login(){
+  async function login() {
     setLoading(true);
-    await Consulta({data});
+    await Consulta({ data });
     setLoading(false);
   }
 

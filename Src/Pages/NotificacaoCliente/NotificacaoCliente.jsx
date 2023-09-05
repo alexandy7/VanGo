@@ -3,10 +3,10 @@ import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpa
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Notificacao";
-import ApiCliente from "../../services/ApiCiente"
+import ApiCliente from "../../services/Api/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
-import { AuthContext } from "../../Contexts/Contexts";
+import { AuthContext } from "../../services/Contexts/Contexts";
 
 export default function NotificacaoCliente() {
 

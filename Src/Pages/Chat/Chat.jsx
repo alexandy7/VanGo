@@ -1,13 +1,13 @@
 import { ScrollView, StyleSheet, Text, View, Image, navigation } from "react-native";
 import { useContext, useEffect, useState } from "react";
-import styles from "./ListaChat.modules";
+import styles from "./Chat.modules";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import BarraDePesquisaChat from "../../Componentes/BarraDePesquisaChat";
 import CardChat from "../../Componentes/CardChat";
 import { useNavigation } from "@react-navigation/native";
 
-export default function ListaChat() {
+export default function Chat() {
 
     const navigation = useNavigation();
 

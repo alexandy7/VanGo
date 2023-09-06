@@ -4,7 +4,12 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/Common/BotaoHome";
 import { Calendar } from "react-native-calendars";
-import calendario from "../../Componentes/Common/Calendario";
+
+
+// o diabo do video de um indiano explicando como essa bomba funciona 
+// https://www.youtube.com/watch?v=NHjqwWHqt8s
+//pqp q odio q eu fiquei com isso vsfd
+
 
 export default function HomeCliente({nomecliente, fotocliente}) {
 
@@ -41,10 +46,17 @@ const [showModal, setShowModal] = useState(false);
             <View style={styles.divbotoes}>
                 
                 <View style={styles.alinhabotao}> 
-                    <TouchableOpacity onPress={() => setShowModal(true)} >
+                    <TouchableOpacity 
+                    onPress={() => setShowModal(true)} 
+                    >
                         <BotaoHome icone={"calendar"} texto="Calendário"> </BotaoHome>
                         <Modal visible={showModal} animationType="fade">
                             <Calendar style={{borderRadius:10, elevation:4}}/>
+
+                            <TouchableOpacity>
+                                
+                            </TouchableOpacity>
+                            
                         </Modal>
                     </TouchableOpacity>    
                 </View>

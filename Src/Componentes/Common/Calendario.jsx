@@ -14,21 +14,7 @@ const calendario = () => {
 
     return(
         <View>
-            <TouchableOpacity 
-            onPress={() => setShowModal(true)} 
-            style={{
-                backgroundColor:"black", 
-                borderRadius: 10, 
-                margin:40, 
-                padding: 10, 
-                width: 200,
-                alignItens:"center"
-                }}>
-                <Text style={{color:"white", fontSize: 22}}>Mostrar calendario</Text>
-            </TouchableOpacity>
-            <Modal visible={showModal} animationType="fade">
-                <Calendar style={{borderRadius:10, elevation:4}}/>
-            </Modal>
+           
         </View>
     );
 };

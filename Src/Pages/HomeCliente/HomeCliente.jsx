@@ -11,14 +11,23 @@ import { Calendar } from "react-native-calendars";
 //pqp q odio q eu fiquei com isso vsfd
 
 
-export default function HomeCliente({nomecliente, fotocliente}) {
+export default function HomeCliente({ nomecliente, fotocliente }) {
 
-const navigation = useNavigation();
+    const navigation = useNavigation();
 
-const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-    return(
-        
+
+    //lógica para deixar o dia atual marcado no calendario
+    const currentDate = new Date(); // Obtenha a data atual
+    const currentDateString = currentDate.toISOString().split('T')[0]; // Formate para 'YYYY-MM-DD'
+
+    const customMarkedDates = {
+        [currentDateString]: { selected: true, selectedColor: '#F7770D' },
+    };
+
+    return (
+
         <View style={styles.main}>
             <View style={styles.header}>
 
@@ -35,41 +44,55 @@ const [showModal, setShowModal] = useState(false);
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
-                        <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white'/>
-                        <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white'onPress={()=>{
+                        <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
+                        <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' onPress={() => {
                             navigation.navigate('NotificaMoto')
-                        }}/>
+                        }} />
                     </View>
                 </View>
             </View>
 
             <View style={styles.divbotoes}>
-                
-                <View style={styles.alinhabotao}> 
-                    <TouchableOpacity 
-                    onPress={() => setShowModal(true)} 
-                    >
-                        <BotaoHome icone={"calendar"} texto="Calendário"> </BotaoHome>
-                        <Modal visible={showModal} animationType="fade">
-                            <Calendar style={{borderRadius:10, elevation:4}}/>
 
-                            <TouchableOpacity>
-                                
+                <View style={styles.alinhabotao}>
+                    <TouchableOpacity //botao para acessar o calendario
+                        onPress={() => setShowModal(true)}
+                    >
+                        <BotaoHome icone={"calendar"} texto="Calendário"></BotaoHome>
+
+                        <Modal visible={showModal} animationType="fade" style={styles.modalCalendario}
+                        //o modal serve como uma "tela temporaria" ai nn precisa mudar de componente
+                        >
+
+                            <TouchableOpacity style={styles.seta} onPress={() => setShowModal(false)}>
+                                <Ionicons name="chevron-back-outline" size={30} />
                             </TouchableOpacity>
-                            
+
+                            <View style={styles.viewCalendario}>
+                                <Calendar style={styles.calendario} markedDates={customMarkedDates} />
+                                <View style={styles.botoesCalendario}>
+                                    <TouchableOpacity style={styles.botaoAusencia}>
+                                        <Text style={{ color: "white" }}>Ausência hoje</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={styles.botaoFalta}>
+                                        <Text style={{ color: "white" }}>Agendar Falta</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </Modal>
-                    </TouchableOpacity>    
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.alinhabotao}>
-                        <BotaoHome icone={"card"} texto="Pagamento"/>
+                    <BotaoHome icone={"card"} texto="Pagamento" />
                 </View>
-                
-                <View style={styles.alinhabotao}> 
-                    <BotaoHome icone={"settings"} texto="Ajustes"/>
+
+                <View style={styles.alinhabotao}>
+                    <BotaoHome icone={"settings"} texto="Ajustes" />
                 </View>
             </View>
-            
+
         </View>
     )
 
@@ -111,7 +134,7 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
 
-    divnome:{
+    divnome: {
         height: "40%",
         display: "flex",
         position: "relative",
@@ -129,7 +152,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row"
     },
-    
+
     alinhaicone: {
         height: "50%",
         width: "100%",
@@ -139,7 +162,7 @@ const styles = StyleSheet.create({
     },
 
     divbotoes: {
-        width:"90%",
+        width: "90%",
         height: "15%",
         alignSelf: "center",
         marginTop: "5%",
@@ -155,6 +178,59 @@ const styles = StyleSheet.create({
         height: "100%"
     },
 
+    seta: {
+        position: "relative",
+    },
+    
+    viewCalendario: {
+        backgroundColor:"white",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        borderWidth: 1,
+        borderColor: '#F7770D',
+        margin: 20,
+        borderRadius: 15,
+    },
 
+    calendario: {
+        borderRadius: 15,
+        textDayFontWeight: '600',
+        arrowColor: '#F04D23',
+        monthTextColor: 'black',
+        selected: true,
+        selectedColor: 'red',
+    },
 
+    botaoAusencia: {
+        backgroundColor: "orange",
+
+        borderRadius: 10,
+        margin: 5,
+        padding: 10,
+        width: "90%",
+        display: 'flex',
+        alignItems: "center",
+    },
+
+    botaoFalta: {
+        backgroundColor: "#C4C4C4B5",
+        borderRadius: 10,
+        margin: 5,
+        padding: 10,
+        width: "90%",
+        display: 'flex',
+        alignItems: "center",
+    },
+
+    botoesCalendario: {
+        display: "flex",
+        alignItems: "center",
+        margin: 20,
+
+    },
+
+    modalCalendario: { //tentei mudar a cor do modal, mas nn rolou
+        background: 'red',
+    }
 })

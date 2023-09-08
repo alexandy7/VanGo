@@ -35,9 +35,9 @@ export default function Chat() {
                 <BarraDePesquisaChat placeholder={"Exemplo: Jonathan Joestar"}/>
             </View>
 
-            <CardChat foto={require("../../../assets/fazueli.jpg")} nome={"João L"} hora={"20:38"} ultmensagem={"Já pode fazer o L?"} qtde={8}/>
-            <CardChat foto={require("../../../assets/Ana.jpeg")} nome={"Ana Clara "} hora={"12:00"} ultmensagem={"Você: Certo, enviei o crac..."} qtde={""}/>
-            <CardChat foto={require("../../../assets/misericordia.jpg")} nome={"Misericórdia"} hora={"01:00"} ultmensagem={"Misericórdia"} qtde={42}/>
+            <CardChat foto={require("../../../assets/fazueli.jpg")} nome={"João L"} hora={"20:38"} ultmensagem={"Já pode fazer o L?"} QuantidadeMensagem={8}/>
+            <CardChat foto={require("../../../assets/Ana.jpeg")} nome={"Ana Clara "} hora={"12:00"} ultmensagem={"Você: Certo, enviei o crac..."} QuantidadeMensagem={""}/>
+            <CardChat foto={require("../../../assets/misericordia.jpg")} nome={"Misericórdia"} hora={"01:00"} ultmensagem={"Misericórdia"} QuantidadeMensagem={42}/>
 
              
                 

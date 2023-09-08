@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         borderColor: "#F7770D",
         borderWidth: 0.5,
         paddingLeft: 15,
-        placeholderTextColor: 'red'
+    
     },
 
     botao: {

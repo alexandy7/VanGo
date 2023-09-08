@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 
-export default function CardChat({foto, nome, hora, ultmensagem, qtde}) 
+export default function CardChat({foto, nome, hora, ultmensagem, QuantidadeMensagem}) 
 {
 
     return(
@@ -26,8 +26,8 @@ export default function CardChat({foto, nome, hora, ultmensagem, qtde})
                         <Text style={styles.mensagem}>{ultmensagem}</Text>
                     </View>
 
-                    <View style={styles.divqtde}>
-                        <Text style={styles.qtde}>{qtde}</Text>
+                    <View style={styles.divQuantidadeMensagem}>
+                        <Text style={styles.quantidadeMensagem}>{QuantidadeMensagem}</Text>
                     </View>
                 </View>
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         marginTop: 3
     },
 
-    divqtde: {
+    divQuantidadeMensagem: {
         height: "100%",
         width: "15%",
         display: "flex",
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
-    qtde: {
+    quantidadeMensagem: {
         fontSize: 16,
         marginRight: "5%",
         backgroundColor: "orange",

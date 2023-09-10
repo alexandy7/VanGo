@@ -6,7 +6,7 @@ import Notificacao from "../../Componentes/Notificacao";
 import ApiCliente from "../../services/Api/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
-import { AuthContext } from "../../services/Contexts/Contexts";
+import { UserData } from "../../services/Contexts/Contexts";
 
 export default function NotificacaoCliente() {
 
@@ -49,17 +49,12 @@ export default function NotificacaoCliente() {
     }
     const navigation = useNavigation();
 
-    const irPerfil = () => {
-        navigation.navigate('TabBarScreen')
-    }
-
-
     const hoje = new Date(); // Pegando o dia de hoje 
 
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 

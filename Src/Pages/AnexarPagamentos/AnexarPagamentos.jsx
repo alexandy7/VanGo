@@ -9,16 +9,12 @@ export default function AnexarPagamentos() {
 
     const navigation = useNavigation();
 
-    const irPerfil = () => {
-        navigation.navigate('TabBarScreen')
-    }
-
     const hoje = new Date();
 
     return(
         <ScrollView style={styles.principal}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 

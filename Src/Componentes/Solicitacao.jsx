@@ -20,7 +20,6 @@ export default function Solicitacao({imagem, nome, hora, turma, onAceitar, onRec
 
                 <View style={styles.divmeio}>
                     <Text style={styles.descricao}>Quer entrar na {turma}</Text>
-                    <Ionicons style={styles.icone} name='eye' size={18} color='orange'/>
                 </View>
 
                 <View style={styles.divinferior}>

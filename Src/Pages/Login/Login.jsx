@@ -1,35 +1,74 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from 'react';
 import Touchable from "../../Componentes/Touchable";
 import MeuText from "../../Componentes/MeuText";
-import Api from "../../services/Api/ApiCiente";
-import ConfigMoto from "../ConfiguracaoMotorista/ConfiguracaoMotorista"
 import styles from "./Login.modules";
-import { AuthContext } from "../../services/Contexts/Contexts";
+import { GuardarToken, VerificarLogin, UserData } from "../../services/Contexts/Contexts";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function Login() {
 
-  const { Consulta } = useContext(AuthContext);
+
 
   const [loading, setLoading] = useState(false);
   const [emailUsuario, setEmailUsuario] = useState('');
   const [senhaUsuario, setSenhaUsuario] = useState('');
 
-
   const navigation = useNavigation();
 
-  const data = {
-    email: emailUsuario,
-    senha: senhaUsuario
+  async function VerificarLoginUsuario(){
+    let usuarioLogado = await VerificarLogin();
+
+    if(usuarioLogado){
+      let usua = UserData();
+      console.log(usua.id_cliente);
+      navigation.navigate('TabBarCliente')
+    }
+
+   console.log(usuarioLogado);
+
   }
 
   async function login() {
+
+    if(emailUsuario === '' || senhaUsuario === ''){
+      console.log('todos os campos sao obrigatorios!');
+      return;
+    }
+
+    const data = new URLSearchParams();
+    data.append('Email', emailUsuario);
+    data.append('Senha', senhaUsuario);
+
     setLoading(true);
-    await Consulta({ data });
-    setLoading(false);
+
+    await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    })
+
+      .then((response) => {
+        GuardarToken(response.data.token);
+      })
+
+      .then(()=>{
+        setLoading(false);
+      })
+
+      .catch((error)=>{
+        console.log(`deu ruim aqui mane`, error);
+        setLoading(false);
+      })
   }
+
+  useEffect(()=>{
+    VerificarLoginUsuario();
+  }, [])
 
 
   return (

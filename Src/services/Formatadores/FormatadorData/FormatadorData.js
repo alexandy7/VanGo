@@ -1,5 +1,3 @@
-
-
 const hoje = new Date(); // Pegando o dia de hoje 
 
 export default function FormatadorData(DataComponente) {

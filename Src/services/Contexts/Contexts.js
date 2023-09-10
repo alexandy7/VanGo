@@ -1,52 +1,56 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { createContext, useState } from "react";
-import axios from "axios";
+import jwt from "jwt-decode";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const AuthContext = createContext({});
 
-function AuthProvider({ children }) {
-
-    const [user, setUser] = useState({});
-    const navigation = useNavigation();
-
-    async function Consulta({ data }) {
-
-        try {
-            const response = await axios.get(`https://apivango.azurewebsites.net/api/Auth/Login?email=${data.email}&senha=${data.senha}`);
-
-            if (response.status == 200) {
-                setUser(response.data)
-
-                Navegacao(response.data);
-            }
-
-        }
-        
-        catch (error) {
-            console.error('Erro na consulta:', error)
-        }
-
-    }
-
-    // Verifica quem fez login e direciona para a page certa
-    function Navegacao(userData){
-
-        if(userData.id_cliente !== undefined){
-            navigation.navigate('SolicitarTurma')
-        }
-
-        if(userData.email_motorista !== undefined){
-            navigation.navigate('SolicitacoesTurmaMotorista')
-        }
-    };
-
-    return (
-        
-        <AuthContext.Provider value={{ user, Consulta }}>
-            {children}
-        </AuthContext.Provider>
-    )
-
+export async function GuardarToken(jwtData) {
+    
+    const userData = jwt(jwtData);
+    
+    await AsyncStorage.setItem("@jwt", jwtData);
+    await AsyncStorage.setItem("@userData", JSON.stringify(userData));
+    
 };
 
-export default AuthProvider;
+
+export async function VerificarLogin() {
+
+    const token = await AsyncStorage.getItem("@jwt");
+    
+    if (!token) {
+        return false;
+    }
+
+    return true;
+};
+
+
+export async  function UserData(){
+    return JSON.parse(await AsyncStorage.getItem("@userData"))
+};
+
+
+// Verifica quem fez login e direciona para a pagina certa.
+function Navegacao(userData) {
+
+    if (userData.id_cliente !== undefined) {
+        if (userData.turma_cliente !== null) {
+
+            navigation.navigate('TabBarCliente')
+            return;
+        }
+        navigation.navigate('SolicitarTurma')
+        return;
+    }
+
+    if (userData.email_motorista !== undefined) {
+        navigation.navigate('SolicitacoesTurmaMotorista')
+        return;
+    }
+};
+
+
+
+
+

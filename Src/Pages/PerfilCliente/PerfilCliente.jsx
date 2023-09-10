@@ -3,9 +3,9 @@ import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import styles from "./PerfilCliente.modules.jsx"
-import { AuthContext } from "../../services/Contexts/Contexts";
+import { UserData } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
-import FormatadorTexto from "../../Formatadores/FormatadorTextos/FormatadorTextos";
+import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos";
 export default function PerfilCliente() {
 
     const { user } = useContext(AuthContext);
@@ -30,9 +30,9 @@ export default function PerfilCliente() {
         <ScrollView style={styles.geral}>
 
             <View>
-
+{/* 
                 <Perfil
-                    evento={() => { navigation.navigate('ConfigMotorista') }}
+                    evento={() => { navigation.navigate('ConfiguracaoCliente') }}
                     fotoUser={{ uri: user.foto_cliente}}
                     nomeUser={nomeUsuario}>
                 </Perfil>
@@ -74,14 +74,14 @@ export default function PerfilCliente() {
                             </PincelEditar>
                         </View>
 
-                    </View> */}
+                    </View> 
 
                     <View style={styles.regua}>
                         <CaixaPerfil responsavel={FormatadorTexto(user.responsavel_cliente, 2, 1)} 
                         horario={"18:30"} 
                         endereco={FormatadorTexto(user.endereco_cliente, 10, 1)} 
                         status={"Positivo"}></CaixaPerfil>
-                    </View>
+                    </View> */}
 
                 </View>
         </ScrollView>

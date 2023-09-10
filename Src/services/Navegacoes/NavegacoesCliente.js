@@ -8,6 +8,7 @@ import Cadastro from '../../Pages/Cadastro/Cadastro';
 import CadastroEscola from '../../Pages/CadastroEscola/CadastroEscola';
 import CadastroVeiculo from '../../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
 import ConfiguracaoMoto from "../../PagesMotorista/ConfiguracaoMotorista/ConfiguracaoMoto";
+import ConfiguracaoCliente from "../../Pages/ConfiguracaoCliente/ConfiguracaoCliente";
 import PerfilCliente from '../../Pages/PerfilCliente/PerfilCliente';
 import PagamentoCliente from "../../Pages/PagamentoCliente/PagamentoCliente";
 import NotificacaoMotorista from "../../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
@@ -190,6 +191,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
       <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>

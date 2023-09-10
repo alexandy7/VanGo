@@ -11,15 +11,11 @@ export default function Chat() {
 
     const navigation = useNavigation();
 
-    const irHome = () => {
-        navigation.navigate('TabBarScreen')
-    }
-
     return(
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
                 <View style={styles.alinhaseta}>
-                    <TouchableOpacity onPress={irHome}>
+                    <TouchableOpacity onPress={() => {navigation.goBack()}}>
                         <Ionicons name="chevron-back-outline" size={30} color={"white"}/>
                     </TouchableOpacity>
                 </View>  

@@ -1,7 +1,5 @@
 
-
 export default function FormatadorTexto(texto, limite, qntdPalavras){
-console.log(qntdPalavras);
 
     if(texto.length <= limite){
         return texto;
@@ -15,9 +13,6 @@ console.log(qntdPalavras);
     else{
         let textoSeparado = texto.split(' ');
 
-        return textoSeparado[0] + ' ' + textoSeparado[1].slice(0, -3) + '...';
-        
+        return textoSeparado[0] + ' ' + textoSeparado[1].slice(0, -3) + '...';   
     }
-
-
 }

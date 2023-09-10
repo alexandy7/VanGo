@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./PagamentoCliente.modules";
-import { AuthContext } from "../../services/Contexts/Contexts";
+import { UserData } from "../../services/Contexts/Contexts";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 

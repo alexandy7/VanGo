@@ -34,7 +34,7 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
                 <View style={styles.divinferior}>
 
                     <View style={styles.reguastatus}>
-                        <Ionicons style={styles.warning} name={icon} size={20} color={"black"}/>
+                        <Ionicons style={styles.warning} name={icon} size={20} color={"green"}/>
                         <Text style={styles.situacao}>{status}</Text>
                     </View>
 

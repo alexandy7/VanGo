@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput } from "react-native";
 import InserirTurma from "../../Componentes/InserirTurma";
 import ApiMotorista from "../../services/Api/ApiMotorista";
-import { AuthContext } from "../../services/Contexts/Contexts";
+import { UserData } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
@@ -14,7 +14,11 @@ export default function SolicitarTurma() {
     const navigation = useNavigation();
     const [solicitacaoenviada, setSolicitacaoenviada] = useState(false);
     const [codigo, setCodigo] = useState('');
-    const { user } = useContext(AuthContext);
+    
+    async function DadosUsuario(){
+
+        let user = await UserData();
+    }
 
     if (user.turma_cliente !== null) {
         navigation.navigate("TabBarCliente");
@@ -53,6 +57,10 @@ export default function SolicitarTurma() {
         }
 
     }
+
+    useEffect(()=>{
+        DadosUsuario();
+    })
 
     return (
 

@@ -56,14 +56,12 @@ export default function HomeCliente({ nomecliente, fotocliente }) {
 
                 <View style={styles.alinhabotao}>
                     <TouchableOpacity //botao para acessar o calendario
-                        onPress={() => setShowModal(true)}
-                    >
+                        onPress={() => setShowModal(true)}>
+
                         <BotaoHome icone={"calendar"} texto="Calendário"></BotaoHome>
 
-                        <Modal visible={showModal} animationType="fade" style={styles.modalCalendario}
-                        //o modal serve como uma "tela temporaria" ai nn precisa mudar de componente
-                        >
-
+                        <Modal visible={showModal} animationType="fade" transparent={true}>
+                        <View style={styles.modalCalendario}>
                             <TouchableOpacity style={styles.seta} onPress={() => setShowModal(false)}>
                                 <Ionicons name="chevron-back-outline" size={30} />
                             </TouchableOpacity>
@@ -80,6 +78,7 @@ export default function HomeCliente({ nomecliente, fotocliente }) {
                                     </TouchableOpacity>
                                 </View>
                             </View>
+                        </View>
                         </Modal>
                     </TouchableOpacity>
                 </View>
@@ -230,7 +229,10 @@ const styles = StyleSheet.create({
 
     },
 
-    modalCalendario: { //tentei mudar a cor do modal, mas nn rolou
-        background: 'red',
+    modalCalendario: { 
+        display:"flex",
+        justifyContent:"center",
+        backgroundColor: 'rgba(128, 128, 128, 0.60)',
+        height:"100%"
     }
 })

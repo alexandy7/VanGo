@@ -22,7 +22,9 @@ export async function VerificarLogin() {
         return false;
     }
 
-    return true;
+    const user = JSON.parse(await AsyncStorage.getItem("@userData"));
+
+    return user.Usuario;
 };
 
 
@@ -31,24 +33,28 @@ export async  function UserData(){
 };
 
 
+export async function RemoverToken(){
+    await AsyncStorage.removeItem("@jwt")
+}
+
 // Verifica quem fez login e direciona para a pagina certa.
-function Navegacao(userData) {
+// function Navegacao(userData) {
 
-    if (userData.id_cliente !== undefined) {
-        if (userData.turma_cliente !== null) {
+//     if (userData.id_cliente !== undefined) {
+//         if (userData.turma_cliente !== null) {
 
-            navigation.navigate('TabBarCliente')
-            return;
-        }
-        navigation.navigate('SolicitarTurma')
-        return;
-    }
+//             navigation.navigate('TabBarCliente')
+//             return;
+//         }
+//         navigation.navigate('SolicitarTurma')
+//         return;
+//     }
 
-    if (userData.email_motorista !== undefined) {
-        navigation.navigate('SolicitacoesTurmaMotorista')
-        return;
-    }
-};
+//     if (userData.email_motorista !== undefined) {
+//         navigation.navigate('SolicitacoesTurmaMotorista')
+//         return;
+//     }
+// };
 
 
 

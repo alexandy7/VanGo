@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
@@ -6,20 +6,31 @@ import BotaoHome from "../../Componentes/BotaoHome";
 import CardTurma from "../../Componentes/CardTurma";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
-// import { AuthContext } from "../../services/Contexts/Contexts";
+import { UserData } from "../../services/Contexts/Contexts";
 
 export default function HomeCliente() {
 
     const navigation = useNavigation();
+    const [user, setUser] = useState({});
 
-    // const { user } = useContext(AuthContext);
+    async function BuscarUsuario(){
+        const usuario = await UserData();
+        setUser(usuario)
+    }
 
-    // let name = user.nome_cliente;
-    // let PrimeiroNome = name.split(' ');
+    
+    useEffect(()=>{
+        BuscarUsuario();
+    }, [])
+
+    let primeiroNome = '';
+    if(user.nome_cliente){
+         primeiroNome = user.nome_cliente.split(' ')
+    }
     return (
 
         <View style={styles.main}>
-            {/* <View style={styles.header}>
+            <View style={styles.header}>
 
                 <View style={styles.alinhanomefoto}>
                     <View style={styles.divfoto}>
@@ -28,7 +39,7 @@ export default function HomeCliente() {
 
                     <View style={styles.divnome}>
                         <Text style={styles.nome}>Seja bem vindo(a),</Text>
-                        <Text style={styles.nome}>{PrimeiroNome[0]}</Text>
+                        <Text style={styles.nome}>{primeiroNome[0]}</Text>
                     </View>
                 </View>
 
@@ -49,16 +60,16 @@ export default function HomeCliente() {
             <View style={styles.divbotoes}>
 
                 <TouchableOpacity style={styles.alinhabotao}>
-                    <BotaoHome icone={"calendar"} texto="Calendário" />
+                    <BotaoHome icone={"calendar-outline"} texto="Calendário" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao}
                     onPress={() => { navigation.navigate('AnexarPagamentos') }}>
-                    <BotaoHome icone={"document-attach"} texto="Pagamento" />
+                    <BotaoHome icone={"document-attach-outline"} texto="Pagamento" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfiguracaoCliente') }}>
-                    <BotaoHome icone={"settings"} texto="Ajustes" />
+                    <BotaoHome icone={"settings-outline"} texto="Ajustes" />
                 </TouchableOpacity>
             </View>
 
@@ -67,7 +78,7 @@ export default function HomeCliente() {
             <View>
                 <Touchable texto={"Ausência"} onPress={""} />
 
-            </View> */}
+            </View> 
 
         </View>
     )

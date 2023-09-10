@@ -5,14 +5,12 @@ import { useState } from 'react';
 import Touchable from "../../Componentes/Touchable";
 import MeuText from "../../Componentes/MeuText";
 import styles from "./Login.modules";
-import { GuardarToken, VerificarLogin, UserData } from "../../services/Contexts/Contexts";
+import { GuardarToken, VerificarLogin, UserData, RemoverToken } from "../../services/Contexts/Contexts";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Login() {
-
-
 
   const [loading, setLoading] = useState(false);
   const [emailUsuario, setEmailUsuario] = useState('');
@@ -24,9 +22,7 @@ export default function Login() {
     let usuarioLogado = await VerificarLogin();
 
     if(usuarioLogado){
-      let usua = UserData();
-      console.log(usua.id_cliente);
-      navigation.navigate('TabBarCliente')
+      navigation.navigate('TabBar' + usuarioLogado)
     }
 
    console.log(usuarioLogado);
@@ -39,14 +35,14 @@ export default function Login() {
       console.log('todos os campos sao obrigatorios!');
       return;
     }
-
+    
     const data = new URLSearchParams();
     data.append('Email', emailUsuario);
     data.append('Senha', senhaUsuario);
-
+    
     setLoading(true);
 
-    await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data, {
+    await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -54,10 +50,15 @@ export default function Login() {
 
       .then((response) => {
         GuardarToken(response.data.token);
+        console.log(response.data.token)
       })
 
       .then(()=>{
         setLoading(false);
+      })
+
+      .then(()=>{
+        VerificarLoginUsuario();
       })
 
       .catch((error)=>{

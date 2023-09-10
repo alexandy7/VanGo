@@ -8,33 +8,33 @@ import CaixaPerfil from "../../Componentes/CaixaPerfil";
 import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos";
 export default function PerfilCliente() {
 
-    const { user } = useContext(AuthContext);
 
-    const [nomeUsuario, setNomeUsuario] = useState(user.nome_cliente)
+    const [user, setUser] = useState({});
 
     const navigation = useNavigation();
 
-    //Formata nome para aparecer somente nome e sobrenome
-     useEffect(() => {
-         const partesNome = nomeUsuario.split(' ') // Separa as palavras com o espaço
+    async function BuscarUsuario(){
+        const usuario = await UserData();
+        setUser(usuario);
+    }
 
-         if (partesNome.length >= 2) {
-             const nome1 = partesNome[0];
-             const nome2 = partesNome[1];
-             const NomeSobrenome = nome1 + ' ' + nome2;
-             setNomeUsuario(NomeSobrenome)
-         }
-     }, [])
-
+    useEffect(() => {
+        BuscarUsuario();
+    }, [])
+    
+    let nomeSeparado = user.nome_cliente.split(' ');
+    let nome1 = nomeSeparado[0];
+    let nome2 = nomeSeparado[1];
+    let nomeSobrenome = nome1 + ' ' + nome2;
     return (
         <ScrollView style={styles.geral}>
 
             <View>
-{/* 
+
                 <Perfil
                     evento={() => { navigation.navigate('ConfiguracaoCliente') }}
-                    fotoUser={{ uri: user.foto_cliente}}
-                    nomeUser={nomeUsuario}>
+                    fotoUser={{ uri: user.foto_cliente }}
+                    nomeUser={nomeSobrenome}>
                 </Perfil>
 
                 {/* <View style={styles.geral2}>
@@ -65,25 +65,23 @@ export default function PerfilCliente() {
                             titulo={'Positivo'}
                             subtitulo={'Status'}>
                             </InfoPerfil>
-                        </View>
 
-                        <View style={styles.pincel}>
-                            <PincelEditar img={require('../../../assets/pincel.png')}
-                                evento={() => { navigation.navigate("EditarCliente")}}>
+                <View style={styles.pincel}>
+                    <PincelEditar img={require('../../../assets/pincel.png')}
+                        evento={() => { navigation.navigate("EditarCliente") }}>
 
-                            </PincelEditar>
-                        </View>
-
-                    </View> 
-
-                    <View style={styles.regua}>
-                        <CaixaPerfil responsavel={FormatadorTexto(user.responsavel_cliente, 2, 1)} 
-                        horario={"18:30"} 
-                        endereco={FormatadorTexto(user.endereco_cliente, 10, 1)} 
-                        status={"Positivo"}></CaixaPerfil>
-                    </View> */}
-
+                    </PincelEditar>
                 </View>
+                </View>*/}
+
+                <View style={styles.regua}>
+                    <CaixaPerfil responsavel={FormatadorTexto(user.responsavel_cliente, 2, 1)}
+                        horario={"18:30"}
+                        endereco={FormatadorTexto(user.endereco_cliente, 10, 1)}
+                        status={"Positivo"}></CaixaPerfil>
+                </View>
+
+            </View>
         </ScrollView>
     )
 }

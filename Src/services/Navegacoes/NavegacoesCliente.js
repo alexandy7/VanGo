@@ -21,6 +21,8 @@ import SolicitarTurma from "../../Pages/SolicitarTurma/SolicitarTurma";
 import NotificacaoCliente from "../../Pages/NotificacaoCliente/NotificacaoCliente";
 import PagamentosMotorista from "../../PagesMotorista/PagamentosMotorista/PagamentosMotorista";
 import Chat from "../../Pages/Chat/Chat";
+import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
+import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFound";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -209,6 +211,7 @@ export default function AppNavigator() {
       <Stack.Screen name="SolicitacoesTurmaMotorista" component={SolicitacoesTurmaMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="Turmas" component={Turmas}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarMotorista" component={TabBarMotorista}  options={{headerShown: false}}/>
+      <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

@@ -6,18 +6,16 @@ import Notificacao from "../../Componentes/Notificacao";
 import ApiCliente from "../../services/Api/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
-import { UserData } from "../../services/Contexts/Contexts";
+import { Header, UserData } from "../../services/Contexts/Contexts";
 
 export default function NotificacaoCliente() {
 
-    const { user } = useContext(AuthContext);
-
+    const [usuario, setUsuario] = useState({})
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
 
     useEffect(() => {
         checkInternetConnection();
-        ListarNotificacoes();
         setCarregamento(true);
     }, [])
 
@@ -27,15 +25,32 @@ export default function NotificacaoCliente() {
 
         if (state.isConnected) {
             console.log('O dispositivo está conectado à internet.');
+            BuscarUsuario()
         } else {
             console.log('O dispositivo não está conectado à internet.');
         }
     }
 
+    async function BuscarUsuario(){
 
-    async function ListarNotificacoes() {
+        let user = await UserData()
+        setUsuario(user)
+        ListarNotificacoes(user.id_cliente)
+    }
+
+
+    async function ListarNotificacoes(id_cliente) {
         try {
-            const response = await ApiCliente.get(`ListarNotificacoes?id=${user.id_cliente}`);
+
+            const token = await Header()
+
+            console.log(id_cliente)
+            const response = await ApiCliente.get(`ListarNotificacoes?id=${id_cliente}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
 
             let json = response.data;
             setNotificacoes(json);

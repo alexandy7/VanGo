@@ -11,23 +11,46 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         height: 80,
+        width: "100%",
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
         marginBottom: 50
     },
 
+    divesquerda: {
+        height: 80,
+        width: "15%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end"
+    },
+
+    divmeio: {
+        height: 80,
+        width: "70%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    divdireita: {
+        height: 80,
+        width: "15%",   
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
     seta: {
         position: "relative",
-        right: "80%",
-        top: "5%"
+        top: "3%"
     },
 
     titulo: {
         fontSize: 26,
         position:"relative",
         alignSelf: "center",
-        top: "5%"
     },
 
     card: {
@@ -38,7 +61,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         backgroundColor: 'white',
         position: "relative",
-        marginBottom: "15%"
+        marginBottom: 50
     },
 
     titulocard: {

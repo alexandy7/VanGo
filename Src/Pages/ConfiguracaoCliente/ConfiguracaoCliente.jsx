@@ -12,10 +12,20 @@ export default function ConfiguracaoMoto() {
     return(
         <View style= {styles.main}>
             <View style={styles.header}>
-            <TouchableOpacity style={styles.seta} onPress={() => navigation.goBack()}>
-                    <Ionicons name="chevron-back-outline" size={30}/>
-            </TouchableOpacity>
-                <Text style={styles.titulo}>Configurações</Text>
+
+                <View style={styles.divesquerda}>
+                    <TouchableOpacity style={styles.seta} onPress={() => navigation.goBack()}>
+                            <Ionicons name="chevron-back-outline" size={30}/>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.divmeio}>
+                    <Text style={styles.titulo}>Configurações</Text>
+                </View>
+
+                <View style={styles.divdireita}>
+
+                </View>
             </View>
 
             <Text style={styles.titulocard}>Conta</Text>

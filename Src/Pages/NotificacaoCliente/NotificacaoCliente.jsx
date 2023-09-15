@@ -69,12 +69,19 @@ export default function NotificacaoCliente() {
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
-                    <Ionicons name="chevron-back-outline" size={30} />
-                </TouchableOpacity>
+                <View style={styles.divesquerda}>
+                    <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
+                        <Ionicons name="chevron-back-outline" size={30} />
+                    </TouchableOpacity>
+                </View>
 
-                <Text style={styles.titulo}>Notificações</Text>
+                <View style={styles.divmeio}>
+                    <Text style={styles.titulo}>Notificações</Text>
+                </View>
 
+                <View style={styles.divdireita}>
+
+                </View>
 
             </View>
 

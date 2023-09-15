@@ -10,16 +10,41 @@ const styles = StyleSheet.create({
     header: {
         display: "flex",
         flexDirection: "row",
+        height: 80,
+        width: "100%",
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 20,
-        marginTop: 50,
+        marginBottom: 10
+    },
+
+    divesquerda: {
+        height: 80,
+        width: "15%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "flex-end"
+    },
+
+    divmeio: {
+        height: 80,
+        width: "70%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+
+    divdireita: {
+        height: 80,
+        width: "15%",   
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
     seta: {
-        position: "absolute",
-        left: 30
+        position: "relative",
+        top: "3%"
     },
 
     titulo: {

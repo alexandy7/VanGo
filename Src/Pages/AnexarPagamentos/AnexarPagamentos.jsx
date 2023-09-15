@@ -14,11 +14,19 @@ export default function AnexarPagamentos() {
     return(
         <ScrollView style={styles.principal}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
-                    <Ionicons name="chevron-back-outline" size={30} />
-                </TouchableOpacity>
+                <View style={styles.divesquerda}>
+                    <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
+                        <Ionicons name="chevron-back-outline" size={30} />
+                    </TouchableOpacity>
+                </View>
 
-                <Text style={styles.titulo}>Anexar Comprovante</Text>
+                <View style={styles.divmeio}>
+                    <Text style={styles.titulo}>Anexar Comprovante</Text>
+                </View>
+
+                <View style={styles.divdireita}>
+
+                </View>
             </View>
 
             <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"}/>

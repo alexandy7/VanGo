@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
@@ -6,26 +6,34 @@ import styles from "./PerfilCliente.modules.jsx"
 import { UserData } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
 import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos";
+
+
 export default function PerfilCliente() {
 
+    const [usuario, setUsuario] = useState({})
+    const [nomeUsuario, setNomeUsuario] = useState()
 
-    const [user, setUser] = useState({});
-
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     async function BuscarUsuario(){
-        const usuario = await UserData();
-        setUser(usuario);
+            const response = await UserData();
+            setUsuario(response)
     }
 
-    useEffect(() => {
-        BuscarUsuario();
-    }, [])
-    
-    let nomeSeparado = user.nome_cliente.split(' ');
-    let nome1 = nomeSeparado[0];
-    let nome2 = nomeSeparado[1];
-    let nomeSobrenome = nome1 + ' ' + nome2;
+     useEffect(() => {
+        BuscarUsuario()
+     }, [])
+
+
+     let nomeSobrenome = '';
+     if(usuario.nome_cliente){
+
+        let nomeSeparado = usuario.nome_cliente.split(' ')
+        let nome1 = nomeSeparado[0]
+        let nome2 = nomeSeparado[1]
+        nomeSobrenome = nome1 + ' ' + nome2
+     }
+
     return (
         <ScrollView style={styles.geral}>
 
@@ -33,55 +41,20 @@ export default function PerfilCliente() {
 
                 <Perfil
                     evento={() => { navigation.navigate('ConfiguracaoCliente') }}
-                    fotoUser={{ uri: user.foto_cliente }}
+                    fotoUser={{ uri: usuario.foto_cliente}}
                     nomeUser={nomeSobrenome}>
                 </Perfil>
 
-                {/* <View style={styles.geral2}>
 
-                    <View style={styles.cima}>
-                        <InfoPerfil
-                            imagemtitulo="person-outline"
-                            titulo={user.responsavel_cliente}
-                            subtitulo={'Responsável'}>
-                        </InfoPerfil>
+                    <View style={styles.regua}>
+                        <CaixaPerfil responsavel={usuario.responsavel_cliente} 
+                        horario={"18:30"} 
+                        endereco={usuario.endereco_cliente} 
+                        status={"Positivo"}
+                        evento={()=> {navigation.navigate("EditarCliente")}}></CaixaPerfil>
+                    </View> 
 
-                        <InfoPerfil
-                            imagemtitulo="time-outline"
-                            titulo={'06:30 AM'}
-                            subtitulo={'Horário'}>
-                        </InfoPerfil>
-                    </View>
-
-                    <View style={styles.baixo}>
-                        <InfoPerfil
-                            imagemtitulo="location-outline"
-                            titulo={user.endereco_cliente}
-                            subtitulo={'Endereço'}>
-                        </InfoPerfil>
-
-                        <InfoPerfil
-                            imagemtitulo="hourglass-outline"
-                            titulo={'Positivo'}
-                            subtitulo={'Status'}>
-                            </InfoPerfil>
-
-                <View style={styles.pincel}>
-                    <PincelEditar img={require('../../../assets/pincel.png')}
-                        evento={() => { navigation.navigate("EditarCliente") }}>
-
-                    </PincelEditar>
-                </View>
-                </View>*/}
-
-                <View style={styles.regua}>
-                    <CaixaPerfil responsavel={FormatadorTexto(user.responsavel_cliente, 2, 1)}
-                        horario={"18:30"}
-                        endereco={FormatadorTexto(user.endereco_cliente, 10, 1)}
-                        status={"Positivo"}></CaixaPerfil>
-                </View>
-
-            </View>
+                </View> 
         </ScrollView>
     )
 }

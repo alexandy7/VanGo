@@ -1,6 +1,11 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+
+    container:{
+        backgroundColor: "white"
+    },
+
     titulo: {
         fontSize: 25,
         alignSelf: 'center',
@@ -16,12 +21,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         position: "relative",
         left: 42,
-        bottom: 5
+        bottom: 5,
+        marginTop: "5%"
     },
 
-    Comprovantes: {
-        marginBottom: 100
-    }
+
 })
 
 export default styles;

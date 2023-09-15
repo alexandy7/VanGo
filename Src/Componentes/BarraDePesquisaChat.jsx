@@ -20,9 +20,9 @@ export default function BarraDePesquisaChat({placeholder, valor}) {
 const styles = StyleSheet.create({
 
     container: {
-        height: 35,
-        width: "90%",
-        backgroundColor: "#cf6621",
+        height: 38,
+        width: "80%",
+        backgroundColor: "rgba(0, 0, 0, 0.08)",
         alignSelf: "center",
         borderRadius: 25,
         display: "flex",

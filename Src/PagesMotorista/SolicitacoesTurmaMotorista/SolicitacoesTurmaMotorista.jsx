@@ -12,27 +12,38 @@ export default function SolicitacoesTurmaMotorista() {
 
     const navigation = useNavigation();
 
+    const [usuario, setUsuario] = useState({})
     const [solicitacoes, setSolicitacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false)
-    const { user } = useContext(AuthContext);
+
 
     useEffect(() => {
-        BuscarSolicitacoes();
+        BuscarUsuario();
         setCarregamento(true);
     }, [])
 
-    async function BuscarSolicitacoes() {
-        var response = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${user.id_motorista}`)
+    async function BuscarUsuario() {
+        try {
 
-        var json = response.data;
-        setSolicitacoes(json);
-        setCarregamento(false);
+            const response = await UserData()
+            setUsuario(response)
+
+            var response2 = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${response.id_motorista}`)
+
+            var json = response2.data;
+            setSolicitacoes(json);
+            setCarregamento(false);
+        }
+
+        catch (error) {
+            console.error('Ocorreu um erro inesperado: ', error)
+        }
 
     }
 
     async function AceitarSolicitacao(id_turma, id_cliente, id_motorista, id_solicitacoesTurma) {
 
-       
+
         RemoverItemDaLista(id_solicitacoesTurma);
 
         await ApiMotorista.put("InserirClienteTurma", {
@@ -46,27 +57,27 @@ export default function SolicitacoesTurmaMotorista() {
     }
 
     async function RecusarSolicitacao(id_cliente, id_solicitacoesTurma) {
-        
+
         RemoverItemDaLista(id_solicitacoesTurma);
-        
+
         let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`)
-        
+
         if (!response.status) {
             Console.log("Desculpe, houve um erro interno");
         }
     }
-    
+
     function RemoverItemDaLista(itemid) {
         console.log("ItemID a ser removido:", itemid);
-        
+
         const updatedList = solicitacoes.filter(item => item.id_solicitacoesTurma !== itemid);
         setSolicitacoes(updatedList);
     }
-    
+
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={() => {navigation.navigate('TabBarScreen')}}>
+                <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack()}}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 

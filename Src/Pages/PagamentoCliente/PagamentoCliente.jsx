@@ -1,63 +1,127 @@
-import { ScrollView, StyleSheet, Text, View, Image, navigation } from "react-native";
-import { useContext, useEffect, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
+import { useEffect, useState } from "react";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./PagamentoCliente.modules";
-import { UserData } from "../../services/Contexts/Contexts";
+import { UserData, Header } from "../../services/Contexts/Contexts";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
+import NotFound from "../../Componentes/NotFound";
+import axios from "axios";
+import { ActivityIndicator } from "react-native";
 
 export default function PagamentoCliente() {
 
     const navigation = useNavigation();
-    const { user } = useContext(AuthContext);
 
+    const [usuario, setUsuario] = useState({});
+    const [primeiroNome, setPrimeiroNome] = useState(' ')
     const [comprovantes, setComprovantes] = useState([]);
+    const [encontrado, setEncontrado] = useState(false);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        BuscarComprovantes();
-    }, []) 
+        BuscarUsuario()
+    }, [])
 
-    async function BuscarComprovantes() {
 
+    async function BuscarUsuario() {
         try {
-            const response = await ApiCliente.get(`ListarPagamentos?id=${user.id_cliente}`)
-            let json = response.data;
-            setComprovantes(json);
+            const response = await UserData();
+            setUsuario(response)
+            BuscarComprovantes(response.id_cliente) // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
         }
 
         catch (error) {
-            console.error('Erro ao buscar os comprovantes:', error);
+            console.error('Houve um erro: ', error)
+        }
+    }
+
+    async function BuscarComprovantes(idCliente) {
+
+        try {
+
+            let header = await Header()
+
+            const response = await ApiCliente.get(`ListarPagamentos/${idCliente}`, {
+                headers: {
+                    Authorization: "Bearer " + header,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            let json = response.data
+            setComprovantes(json)
+            setLoading(false)
         }
 
+        catch (error) {
+            if (error.response) {
+                // Se for uma resposta de erro HTTP
+                console.error('Erro HTTP:', error.response.status, error.response.data);
+            } else if (error.request) {
+                // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
+                console.error('Erro na solicitação:', error.request);
+            } else {
+                // Se for um erro de outra natureza
+                console.error('Erro desconhecido:', error.message);
+            }
+
+            setEncontrado(true)
+        }
     };
+
+
+    useEffect(() => {
+        if (usuario.nome_cliente !== undefined) {
+            let nomeSeparado = usuario.nome_cliente.split(' ')
+            setPrimeiroNome(nomeSeparado[0])
+        }
+    }, [usuario])
+
+
 
     return (
 
-        <ScrollView>
-            <View>
-                <Text style={styles.titulo}>Pagamentos</Text>
+        <ScrollView style={styles.container}>
+            {
 
-                <CardPagamento imagem={{uri : user.foto_cliente}} nome={user.nome_cliente} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"} evento={()=> navigation.navigate("AnexarPagamentos")}/>
+                loading ? (
+                    <ActivityIndicator color="#F7770D" size={40} style={{ justifyContent: "center", marginTop: "90%" }} />
+                )
+                    :
+                    (
 
-                <View style={styles.pagamentoAtual}>
-                    <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
-                </View>
+                        <View>
+                            <Text style={styles.titulo}>Pagamentos</Text>
 
-                <View style={styles.Comprovantes}>
-                    {
-                        comprovantes.map((Comprovante) => (
+                            <CardPagamento imagem={{ uri: usuario.foto_cliente }} nome={primeiroNome} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"} evento={() => navigation.navigate("AnexarPagamentos")} />
+                            <View style={styles.pagamentoAtual}>
+                                <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
+                            </View>
 
-                            <CardComprovante 
-                            DataVencimento={Comprovante.vencimento.substring(0, 10)} 
-                            DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
-                            key={Comprovante.id_pagamento}
-                            ></CardComprovante>
-                            //substring limita a quantidade de caracteres que irá exibir
-                        ))
-                    }
-                </View>
-            </View>
+                            <View style={styles.Comprovantes}>
+                                {encontrado ? (
+
+                                    <NotFound></NotFound>
+                                )
+                                    :
+                                    (
+                                        comprovantes.map((Comprovante) => (
+
+                                            <CardComprovante
+                                                DataVencimento={Comprovante.vencimento.substring(0, 10)}
+                                                DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
+                                                key={Comprovante.id_pagamento}
+                                            ></CardComprovante>
+                                            //substring limita a quantidade de caracteres que irá exibir
+                                        ))
+                                    )
+                                }
+                            </View>
+                        </View>
+                    )
+            }
         </ScrollView>
     )
 }

@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
     },
 
     nome: {
-        fontSize: 20,
+        fontSize: 22,
         marginLeft: "5%"
     },
 
     fatura: {
-        fontSize: 20,
+        fontSize: 18,
         color: "black"
     },
 

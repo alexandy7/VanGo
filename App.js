@@ -7,11 +7,8 @@ export default function App() {
   return (
 
     <NavigationContainer>
-
         <AppNavigator/>
-        
         <StatusBar hidden={true} />
-
     </NavigationContainer>
 
 

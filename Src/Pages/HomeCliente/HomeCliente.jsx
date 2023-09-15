@@ -9,9 +9,13 @@ import styles from "./HomeCliente.modules";
 import { UserData } from "../../services/Contexts/Contexts";
 
 export default function HomeCliente() {
-
+    
     const navigation = useNavigation();
     const [user, setUser] = useState({});
+    
+    useEffect(()=>{
+        BuscarUsuario();
+    }, [])
 
     async function BuscarUsuario(){
         const usuario = await UserData();
@@ -19,9 +23,6 @@ export default function HomeCliente() {
     }
 
     
-    useEffect(()=>{
-        BuscarUsuario();
-    }, [])
 
     let primeiroNome = '';
     if(user.nome_cliente){

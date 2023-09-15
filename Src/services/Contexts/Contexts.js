@@ -17,20 +17,37 @@ export async function GuardarToken(jwtData) {
 export async function VerificarLogin() {
 
     const token = await AsyncStorage.getItem("@jwt");
-    
     if (!token) {
         return false;
     }
 
     const user = JSON.parse(await AsyncStorage.getItem("@userData"));
 
-    return user.Usuario;
+    let date = new Date()
+    let nowDate = date.getDate()
+
+    if(nowDate > user.exp){
+        RemoverToken()
+        return;
+    }
+
+    return user.Usuario; //Retorna o usuário para saber quem fez login
 };
 
 
 export async  function UserData(){
-    return JSON.parse(await AsyncStorage.getItem("@userData"))
+
+   return JSON.parse(await AsyncStorage.getItem("@userData"))
+
 };
+
+
+export async function Header(){
+
+    const token = await AsyncStorage.getItem("@jwt")
+
+    return token;
+}
 
 
 export async function RemoverToken(){

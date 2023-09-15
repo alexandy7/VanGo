@@ -17,7 +17,7 @@ export default function PagamentoCliente() {
     const [usuario, setUsuario] = useState({});
     const [primeiroNome, setPrimeiroNome] = useState(' ')
     const [comprovantes, setComprovantes] = useState([]);
-    const [encontrado, setEncontrado] = useState(false);
+    const [encontrado, setEncontrado] = useState(true);
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function PagamentoCliente() {
 
             let header = await Header()
 
-            const response = await ApiCliente.get(`ListarPagamentos/${idCliente}`, {
+            const response = await ApiCliente.get(`ListarPagamentswos/${idCliente}`, {
                 headers: {
                     Authorization: "Bearer " + header,
                     "Content-Type": "application/json",
@@ -56,6 +56,9 @@ export default function PagamentoCliente() {
         }
 
         catch (error) {
+
+            setLoading(false)
+
             if (error.response) {
                 // Se for uma resposta de erro HTTP
                 console.error('Erro HTTP:', error.response.status, error.response.data);
@@ -66,11 +69,9 @@ export default function PagamentoCliente() {
                 // Se for um erro de outra natureza
                 console.error('Erro desconhecido:', error.message);
             }
-
-            setEncontrado(true)
         }
+        
     };
-
 
     useEffect(() => {
         if (usuario.nome_cliente !== undefined) {
@@ -78,7 +79,6 @@ export default function PagamentoCliente() {
             setPrimeiroNome(nomeSeparado[0])
         }
     }, [usuario])
-
 
 
     return (
@@ -101,22 +101,26 @@ export default function PagamentoCliente() {
                             </View>
 
                             <View style={styles.Comprovantes}>
-                                {encontrado ? (
+                                {
 
-                                    <NotFound></NotFound>
-                                )
-                                    :
-                                    (
-                                        comprovantes.map((Comprovante) => (
+                                    encontrado ? (
 
-                                            <CardComprovante
-                                                DataVencimento={Comprovante.vencimento.substring(0, 10)}
-                                                DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
-                                                key={Comprovante.id_pagamento}
-                                            ></CardComprovante>
-                                            //substring limita a quantidade de caracteres que irá exibir
-                                        ))
+                                        <View style={{justifyContent: "center", alignItems: "flex-start", flex: 1,}}> 
+                                            <NotFound></NotFound>
+                                        </View>
                                     )
+                                        :
+                                        (
+                                            comprovantes.map((Comprovante) => (
+
+                                                <CardComprovante
+                                                    DataVencimento={Comprovante.vencimento.substring(0, 10)}
+                                                    DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
+                                                    key={Comprovante.id_pagamento}
+                                                ></CardComprovante>
+                                                //substring limita a quantidade de caracteres que irá exibir
+                                            ))
+                                        )
                                 }
                             </View>
                         </View>

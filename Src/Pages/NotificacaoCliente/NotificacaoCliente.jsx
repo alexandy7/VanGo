@@ -7,12 +7,14 @@ import ApiCliente from "../../services/Api/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
 import { Header, UserData } from "../../services/Contexts/Contexts";
+import NotFound from "../../Componentes/NotFound";
 
 export default function NotificacaoCliente() {
 
     const [usuario, setUsuario] = useState({})
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
+    const [encontrado, setEncontrado] = useState(false)
 
     useEffect(() => {
         checkInternetConnection();
@@ -31,7 +33,7 @@ export default function NotificacaoCliente() {
         }
     }
 
-    async function BuscarUsuario(){
+    async function BuscarUsuario() {
 
         let user = await UserData()
         setUsuario(user)
@@ -55,9 +57,12 @@ export default function NotificacaoCliente() {
             let json = response.data;
             setNotificacoes(json);
             setCarregamento(false);
+            setEncontrado(true)
         }
 
         catch (error) {
+            setCarregamento(false);
+            setEncontrado(false)
             console.log(error)
         }
 
@@ -70,7 +75,7 @@ export default function NotificacaoCliente() {
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={()=> {navigation.goBack()}}>
+                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
                         <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                 </View>
@@ -129,13 +134,18 @@ export default function NotificacaoCliente() {
 
 
                             return (
-                                <Notificacao
-                                    fotouser={require('../../../assets/UserPhoto.png')}
-                                    nomeuser={'Motorista'}
-                                    info={Notificacoes.mensagem_notificacao}
-                                    hora={horaOuData}
-                                    key={Notificacoes.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
-                                />
+                                <>
+                                    {encontrado ?
+                                        <Notificacao
+                                            fotouser={require('../../../assets/UserPhoto.png')}
+                                            nomeuser={'Motorista'}
+                                            info={Notificacoes.mensagem_notificacao}
+                                            hora={horaOuData}
+                                            key={Notificacoes.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
+                                        />
+                                        :
+                                        <Text>Meu pau</Text>}
+                                </>
                             )
                         })
                     )

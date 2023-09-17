@@ -43,7 +43,7 @@ export default function PagamentoCliente() {
 
             let token = await Token()
 
-            const response = await ApiCliente.get(`ListarPagamentswos/${idCliente}`, {
+            const response = await ApiCliente.get(`ListarPagamentos/${idCliente}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",

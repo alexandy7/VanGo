@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput } from "react-native";
 import InserirTurma from "../../Componentes/InserirTurma";
 import ApiMotorista from "../../services/Api/ApiMotorista";
-import { UserData, Header } from "../../services/Contexts/Contexts";
+import { UserData, Token } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
@@ -39,7 +39,7 @@ export default function SolicitarTurma() {
 
         try {
 
-            const token = await Header()
+            const token = await Token()
 
             let response = await axios.post('https://localhost:7149/api/Cliente/VerificarTurmaAndSolicitar', data, {
                 headers: {

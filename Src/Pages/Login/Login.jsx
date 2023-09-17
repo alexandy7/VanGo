@@ -24,11 +24,11 @@ export default function Login() {
 
     if(usuarioLogado){
       if(usuarioLogado.turma_cliente < 1){
-        navigation.navigate('SolicitarTurma')
+        navigation.navigate('NotificacaoMotorista')
         return;
       }
 
-      navigation.navigate('NotificacaoMotorista')
+      navigation.navigate('TabBar' + usuarioLogado.Usuario)
     }
 
   }

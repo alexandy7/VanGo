@@ -1,8 +1,17 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function Lista({icone, titulo, evento}){
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_400Regular,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
 
@@ -43,7 +52,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         margin: 10, //Dá o espaçamento entre os elementos (OBS: esse é o Titulo com "t" maiusculo)
         position: "absolute",
-        left: "15%"
+        left: "15%",
+        fontFamily: "Montserrat_400Regular"
     },
 
     seta: {

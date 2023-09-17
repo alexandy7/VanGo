@@ -3,8 +3,17 @@ import { View, StyleSheet, Text, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function CaixaPerfil({responsavel, horario, endereco, status, evento}) {
+
+        const [fonteLoaded] = useFonts({
+            Montserrat_500Medium,
+        });
+    
+        if (!fonteLoaded) {
+            return null;
+        }
 
     return (
         <View style={styles.container}>
@@ -135,7 +144,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: "10%",
         position: "relative",
-        top: 5
+        top: 5,
+        fontFamily: "Montserrat_500Medium"
     },
 
     texto2sup: {
@@ -143,7 +153,8 @@ const styles = StyleSheet.create({
         color: "darkgray",
         marginLeft: "10%",
         position: "relative",
-        top: 5
+        top: 5,
+        fontFamily: "Montserrat_400Regular"
     },
 
     divinferior: {
@@ -163,7 +174,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginLeft: "10%",
         position: "relative",
-        bottom: 5
+        bottom: 5,
+        fontFamily: "Montserrat_500Medium"
     },
 
     texto2inf: {
@@ -171,7 +183,8 @@ const styles = StyleSheet.create({
         color: "darkgray",
         marginLeft: "10%",
         position: "relative",
-        bottom: 5
+        bottom: 5,
+        fontFamily: "Montserrat_400Regular"
     },
 
     divpincel: {

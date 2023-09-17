@@ -2,17 +2,26 @@ import React from "react";
 import { View, StyleSheet, Text} from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
+import { useFonts, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
 export default function InputEdicao({icone, dado}) {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>
 
             <View style={styles.divicon}>
-                <Ionicons style={styles.icon} name={icone} size={25} color="#b1aeae"/>
+                <Ionicons style={styles.icon} name={icone} size={25} color="#b8b8b8"/>
             </View>
 
-                <TextInput placeholder={dado} placeholderTextColor= "lightgray" style={styles.input}></TextInput>
+                <TextInput placeholder={dado}  placeholderTextColor= "#b8b8b8" style={styles.input}></TextInput>
 
         </View>
     )
@@ -24,9 +33,8 @@ const styles = StyleSheet.create({
         width: "85%",
         borderWidth: 1,
         borderRadius: 10,
-        borderWidth: 1,
         borderColor: "lightgray",
-        backgroundColor: "white",
+        backgroundColor: "#fafafa",
         elevation: 3,
         display: "flex",
         paddingLeft: "3%",
@@ -45,7 +53,8 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: 14,
-        width: "90%"
+        width: "90%",
+        fontFamily: "Montserrat_400Regular"
     },
     
     icon: {

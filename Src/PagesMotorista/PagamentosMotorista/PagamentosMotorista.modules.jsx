@@ -1,35 +1,69 @@
+import { Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
 main: {
     flex: 1,
-    backgroundColor: '#EFEFEF',
+    backgroundColor: 'white',
 },
 
 scroll: {
+    flex: 1,
     backgroundColor: "white", 
 },
 
 header: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    height: 110,
+    width: "100%",
     position: "relative",
     justifyContent: "center",
-    marginBottom: 10,
-    marginTop: 50,
+    marginBottom: 20,
+    flexWrap: "wrap",
+},
+
+divesquerda: {
+    height: 60,
+    width: "15%",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+},
+
+divmeio: {
+    height: 60,
+    width: "70%",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center"
+},
+
+divdireita: {
+    height: 60,
+    width: "15%",   
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+},
+
+divbarra: {
+    height: 50,
+    width: "100%",   
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center"
 },
 
 alinhabotoes: {
     width: "90%",
     height: 50,
     alignSelf: "center",
-    marginTop: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
-    marginBottom: 20
+    marginBottom: 20,
 },
 
 botao: {
@@ -45,13 +79,15 @@ botao: {
 
 textobotao: {
     color: "white",
-    fontSize: 17
+    fontSize: 16,
+    fontFamily: "Montserrat_500Medium"
 },
 
 titulo: {
     fontSize: 26,
     position: "relative",
     alignSelf: "center",
+    fontFamily: "Montserrat_500Medium"
 },
 
 })

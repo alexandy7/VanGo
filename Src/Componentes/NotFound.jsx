@@ -1,7 +1,18 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { useFonts, Montserrat_600SemiBold} from "@expo-google-fonts/montserrat"
 
 export default function NotFound() {
+
+        
+
+        const [fonteLoaded] = useFonts({
+            Montserrat_600SemiBold,
+        });
+    
+        if (!fonteLoaded) {
+            return null;
+        }
 
     return(
         <View style={styles.container}>
@@ -29,8 +40,8 @@ const styles = StyleSheet.create({
 
     texto: {
         fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center"
+        textAlign: "center",
+        fontFamily: "Montserrat_600SemiBold"
     }
 
 })

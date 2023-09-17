@@ -1,9 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
 export default function CardAluno({foto, nome, escola}) 
 {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_600SemiBold,
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>
@@ -44,26 +54,29 @@ const styles = StyleSheet.create({
     },
 
     imagem: {
-        height: "80%",
-        width: "80%",
+        height: "70%",
+        width: "70%",
         borderRadius: 20,
     },
 
     divtexto: {
         width: "75%",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "flex-start",
+        paddingLeft: "3%"
     },
 
     nome: {
         fontSize: 22,
-        fontWeight: "bold",
         position: "relative",
-        bottom: "10%"
+        top: "10%",
+        fontFamily: "Montserrat_600SemiBold"
     },
 
     escola: {
-        fontSize: 14
+        fontSize: 14,
+        top: "10%",
+        fontFamily: "Montserrat_400Regular"
     }
 
 

@@ -6,15 +6,24 @@ import { Ionicons } from '@expo/vector-icons';
 import BarraDePesquisaChat from "../../Componentes/BarraDePesquisaChat";
 import CardChat from "../../Componentes/CardChat";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function Chat() {
 
     const navigation = useNavigation();
 
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
+
     return(
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <View style={styles.alinhaseta}>
+                <View style={styles.divesquerda}>
                     <TouchableOpacity onPress={() => {navigation.goBack()}}>
                         <Ionicons name="chevron-back-outline" size={30} color={"white"}/>
                     </TouchableOpacity>
@@ -22,9 +31,14 @@ export default function Chat() {
                 
                 {/* Foram criadas duas views separadas que formam o desenho de apenas uma,
                 o elemento do topo da página não se enquadra na lógica das flexbox */}
-                <View style={styles.alinhatexto}>
+                <View style={styles.divmeio}>
                     <Text style={styles.titulo}>Mensagem</Text>
                 </View>      
+
+                <View style={styles.divdireita}>
+
+                </View>
+
             </View>
 
             <View style={styles.alinhabarra}>

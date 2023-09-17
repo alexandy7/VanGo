@@ -1,16 +1,25 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
-export default function Touchable({texto, evento} ){
+export default function Touchable({ texto, evento }) {
 
-    return(
-      
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
+
+    return (
+
         <TouchableOpacity onPress={evento}>
-    <View style={styles.prosseguir}>
+            <View style={styles.prosseguir}>
                 <Text style={styles.textoProsseguir}>{texto}</Text>
-    </View>
-            </TouchableOpacity>
-    
+            </View>
+        </TouchableOpacity>
+
     )
 }
 
@@ -31,7 +40,8 @@ const styles = StyleSheet.create(
 
         textoProsseguir: {
             color: 'white',
-            fontSize: 20
+            fontSize: 20,
+            fontFamily: "Montserrat_500Medium"
         },
 
         container: {
@@ -39,7 +49,7 @@ const styles = StyleSheet.create(
             justifyContent: 'center',
             alignItems: 'center',
             marginBottom: -40
-          },
+        },
     }
 )
 

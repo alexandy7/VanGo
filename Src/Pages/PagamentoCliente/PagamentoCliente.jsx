@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import NotFound from "../../Componentes/NotFound";
 import { ActivityIndicator } from "react-native";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function PagamentoCliente() {
 
@@ -79,6 +80,13 @@ export default function PagamentoCliente() {
         }
     }, [usuario])
 
+        const [fonteLoaded] = useFonts({
+            Montserrat_500Medium,
+        });
+    
+        if (!fonteLoaded) {
+            return null;
+        }
 
     return (
 
@@ -96,7 +104,7 @@ export default function PagamentoCliente() {
 
                             <CardPagamento imagem={{ uri: usuario.foto_cliente }} nome={primeiroNome} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"} evento={() => navigation.navigate("AnexarPagamentos")} />
                             <View style={styles.pagamentoAtual}>
-                                <Text style={styles.nomeusuario}>Últimos Pagamentos</Text>
+                                <Text style={styles.ultimospagamentos}>Últimos Pagamentos</Text>
                             </View>
 
                             <View style={styles.Comprovantes}>

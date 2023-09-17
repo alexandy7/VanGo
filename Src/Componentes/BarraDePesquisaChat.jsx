@@ -2,8 +2,17 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function BarraDePesquisaChat({placeholder, valor}) {
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_400Regular,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>
@@ -47,6 +56,7 @@ const styles = StyleSheet.create({
         input: {
             fontSize: 15,
             height: "100%",
+            fontFamily: "Montserrat_400Regular"
         }
     
 })

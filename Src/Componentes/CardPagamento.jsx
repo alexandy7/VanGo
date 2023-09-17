@@ -2,9 +2,19 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
 export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, status, vencimento, evento}) 
 {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_500Medium,
+        Montserrat_400Regular, 
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style={[styles.container, Platform.OS === 'android' && styles.shadow]}>
@@ -50,19 +60,19 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '100%',
         height: 80,
         borderColor: 'grey',
-        borderRadius: 20,
+        borderRadius: 40,
         alignSelf: 'center',
-        marginBottom: 10,
+        marginBottom: 15,
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: 'white', // Adicione um fundo branco
       },
       
     shadow: {
-        elevation: 10, // Esta propriedade adiciona sombra no Android
+        elevation: 5, // Esta propriedade adiciona sombra no Android
     },
 
     divimagem: {
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
     imagem: {
         height: "80%",
         width: "80%",
-        borderRadius: 20,
+        borderRadius: 40,
     },
 
     containertexto: {
@@ -88,51 +98,55 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        height: 40,
+        height: 35,
         position: "relative",
+
     },
 
     reguanome: {
-        width: "45%",
+        width: "55%",
         height: "100%",
         display	: "flex",
-        justifyContent: "center"
+        justifyContent: "flex-end"
     },
 
     reguafatura: {
-        width: "35%",
+        width: "30%",
         height: "100%",
         display	: "flex",
-        justifyContent: "center"
+        justifyContent: "flex-end",
+        alignItems: "flex-end"
     },
 
     reguaicone: {
-        width: "20%",
+        width: "15%",
         height: "100%",
         display	: "flex",
-        justifyContent: "center",
-        alignItems: "center"
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
     },
 
     nome: {
-        fontSize: 22,
-        marginLeft: "5%"
+        fontSize: 19,
+        marginLeft: "5%",
+        fontFamily: "Montserrat_500Medium"
     },
 
     fatura: {
         fontSize: 18,
-        color: "black"
+        color: "black",
+        fontFamily: "Montserrat_400Regular"
     },
 
     seta: {
-        marginTop: 2
+        marginTop: 8
     },
 
     divinferior: {
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        height: 40,
+        height: 45,
         position: "relative",
     },
 
@@ -141,7 +155,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: "100%",
         width: "40%",
-        alignItems: "center"
+        alignItems: "flex-start"
     },
 
     warning: {
@@ -153,7 +167,8 @@ const styles = StyleSheet.create({
     situacao: {
         position: "relative",
         fontSize: 15,
-        marginBottom: 5
+        marginBottom: 5,
+        fontFamily: "Montserrat_400Regular"
     },
 
     reguavencimento: {
@@ -169,6 +184,7 @@ const styles = StyleSheet.create({
         position: "relative",
         fontSize: 15,
         marginRight: "15%",
-        marginBottom: 5
+        marginBottom: 5,
+        fontFamily: "Montserrat_400Regular"
     }
 })

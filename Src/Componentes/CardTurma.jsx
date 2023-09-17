@@ -1,8 +1,18 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
 export default function CardTurma({nome, chave, horarioinic,horariofin}) {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_500Medium,
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style={styles.container}>
@@ -64,19 +74,22 @@ const styles = StyleSheet.create({
     titulo: {
         fontSize: 21,
         marginLeft: "5%",
-        marginBottom: "1%"
+        marginBottom: "1%",
+        fontFamily: "Montserrat_500Medium"
     },
 
     txtsecundario: {
         fontSize: 18,
         color: "orange",
         marginRight: "5%",
-        marginBottom: "1%"
+        marginBottom: "1%",
+        fontFamily: "Montserrat_400Regular"
     },
 
     info: {
         fontSize: 17,
-        color: "gray"
+        color: "gray",
+        fontFamily: "Montserrat_400Regular"
     },
 
     juncao1: {

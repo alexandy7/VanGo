@@ -2,13 +2,14 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
-import { useFonts, Montserrat_100Thin } from "@expo-google-fonts/montserrat";
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 
 export default function Notificacao({ fotouser, nomeuser, info, hora, icone }) {
 
     const[fontsLoaded] = useFonts({
-        Montserrat_100Thin
+        Montserrat_500Medium,
+        Montserrat_400Regular
     })
     return (
         <View style={[styles.container, styles.shadow]}> 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
         marginRight: "5%",
         marginTop: "3%",
         color: "#252525",
-        fontWeight: '400'
+        fontFamily: "Montserrat_500Medium"
     },
     
     informacao: {
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
         position: "relative",
         marginLeft: "5%",
         marginBottom: "3%",
+        fontFamily: "Montserrat_400Regular"
     },
 
     horario: {
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
         position: "relative",
         marginLeft: "3%",
         marginRight: "8%",
+        fontFamily: "Montserrat_400Regular"
     },
 
     icon: {

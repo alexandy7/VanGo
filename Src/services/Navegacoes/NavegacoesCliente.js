@@ -188,17 +188,19 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
+      
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
       <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
+      
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PagamentoCliente" component={PagamentoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PerfilCliente" component={PerfilCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>

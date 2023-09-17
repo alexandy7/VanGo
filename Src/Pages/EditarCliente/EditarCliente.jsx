@@ -4,8 +4,18 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import InputEdicao from "../../Componentes/InputEdicao";
 import styles from "./EditarCliente.modules";
+import { useFonts, Montserrat_500Medium, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
 
 export default function EditarCliente() {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_500Medium,
+        Montserrat_600SemiBold
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     const navigation = useNavigation();
 
@@ -16,30 +26,39 @@ export default function EditarCliente() {
     return(
         <View style={styles.main}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
-                    <Ionicons name="chevron-back-outline" size={30}/>
-                 </TouchableOpacity>
+                <View style={styles.divesquerda}>
+                    <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
+                        <Ionicons name="chevron-back-outline" size={30}/>
+                    </TouchableOpacity>
+                </View>
 
-                <Text style={styles.titulo}>Editar Perfil</Text>
+                <View style={styles.divmeio}>
+                    <Text style={styles.titulo}>Editar Perfil</Text>
+                </View>
+
+                <View style={styles.divdireita}>
+
+                </View>
+
             </View>
 
             <Text style={styles.tituloform}>Nome do Aluno</Text>
-            <InputEdicao icone={"body"} dado={"Ex: Aline Silveira"}/>
+            <InputEdicao icone={"body-outline"} dado={"Ex: Aline Silveira"}/>
 
             <Text style={styles.tituloform}>Nome do Responsável</Text>
-            <InputEdicao icone={"person"} dado={"Ex: Marcelo de Oliveira"}/>
+            <InputEdicao icone={"person-outline"} dado={"Ex: Marcelo de Oliveira"}/>
 
             <Text style={styles.tituloform}>Endereço</Text>
-            <InputEdicao icone={"home"} dado={"Ex: Rua prata, 220, Vila Menck - Osasco"}/>
+            <InputEdicao icone={"home-outline"} dado={"Ex: Rua prata, 220, Vila Menck - Osasco"}/>
 
             <Text style={styles.tituloform}>Enredeço de contingência</Text>
-            <InputEdicao icone={"business"} dado={"Ex: Rua bronze, 122, Centro - Lapa"}/>
+            <InputEdicao icone={"business-outline"} dado={"Ex: Rua bronze, 122, Centro - Lapa"}/>
 
             <Text style={styles.tituloform}>Escola</Text>
-            <InputEdicao icone={"book"} dado={"Ex: Etec Ermelinda Giannini Teixeira"}/>
+            <InputEdicao icone={"book-outline"} dado={"Ex: Etec Ermelinda Giannini Teixeira"}/>
 
             <Text style={styles.tituloform}>Horário</Text>
-            <InputEdicao icone={"time"} dado={"Ex: 08:00 - 12:00"}/>
+            <InputEdicao icone={"time-outline"} dado={"Ex: 08:00 - 12:00"}/>
 
             <TouchableOpacity>
                 <View style={styles.botao}>

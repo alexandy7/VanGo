@@ -17,6 +17,7 @@ export async function GuardarToken(jwtData) {
 export async function VerificarLogin() {
 
     const token = await AsyncStorage.getItem("@jwt");
+    console.log(token)
     if (!token) {
         return false;
     }
@@ -42,7 +43,7 @@ export async  function UserData(){
 };
 
 
-export async function Header(){
+export async function Token(){
 
     const token = await AsyncStorage.getItem("@jwt")
 

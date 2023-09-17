@@ -27,7 +27,7 @@ export default function Login() {
         return;
       }
 
-      navigation.navigate('TabBar' + usuarioLogado.Usuario)
+      navigation.navigate('NotificacaoMotorista')
     }
 
   }
@@ -45,7 +45,7 @@ export default function Login() {
     
     setLoading(true);
 
-    await axios.post("https://localhost:7149/api/Auth/Login", data.toString(), {
+    await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },

@@ -6,7 +6,7 @@ import Notificacao from "../../Componentes/Notificacao";
 import ApiCliente from "../../services/Api/ApiCiente"
 import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
-import { Header, UserData } from "../../services/Contexts/Contexts";
+import { Token, UserData } from "../../services/Contexts/Contexts";
 import NotFound from "../../Componentes/NotFound";
 
 export default function NotificacaoCliente() {
@@ -44,7 +44,7 @@ export default function NotificacaoCliente() {
     async function ListarNotificacoes(id_cliente) {
         try {
 
-            const token = await Header()
+            const token = await Token()
 
             const response = await ApiCliente.get(`ListarNotificacoes?id=${id_cliente}`, {
                 headers: {

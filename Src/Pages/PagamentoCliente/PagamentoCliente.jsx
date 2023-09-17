@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
 import styles from "./PagamentoCliente.modules";
-import { UserData, Header } from "../../services/Contexts/Contexts";
+import { UserData, Token } from "../../services/Contexts/Contexts";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import NotFound from "../../Componentes/NotFound";
@@ -40,11 +40,11 @@ export default function PagamentoCliente() {
 
         try {
 
-            let header = await Header()
+            let token = await Token()
 
             const response = await ApiCliente.get(`ListarPagamentswos/${idCliente}`, {
                 headers: {
-                    Authorization: "Bearer " + header,
+                    Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
                 }
             });

@@ -6,17 +6,41 @@ import Notificacao from "../../Componentes/Notificacao";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';
+import { Token, UserData } from "../../services/Contexts/Contexts";
 
 export default function NotificacaoMotorista() {
 
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
-    const [refreshingg, setRefreshing] = useState(false);
 
     useEffect(() => {
         checkInternetConnection();
-        ListarNotificacoes();
         setCarregamento(true);
+        
+        async function BuscarUsuario(){
+            try{
+
+                const user = await UserData()
+
+                var token = await Token()
+                const response = await ApiMotorista.get(`LerNotificacao?idMotorista=${user.id_motorista}`, {
+                    headers: {
+                        Authorization: "Bearer " + token,
+                        "Content-Type": "application/json",
+                    }
+                });
+
+                let json = response.data;
+                setNotificacoes(json);
+                setCarregamento(false);
+            }
+
+            catch(error){
+                console.log('Houve um erro aqui', error)
+            }
+        }
+
+        BuscarUsuario()
     }, [])
 
     //Verifica se o usuário está conectado na internet
@@ -30,35 +54,14 @@ export default function NotificacaoMotorista() {
         }
     }
 
-
-    async function ListarNotificacoes() {
-        try {
-            const response = await ApiMotorista.get("LerNotificacao?idMotorista=2");
-
-            let json = response.data;
-            setNotificacoes(json);
-            setCarregamento(false);
-        }
-
-        catch (error) {
-            console.log(error)
-
-        }
-
-    }
     const navigation = useNavigation();
-
-    const irPerfil = () => {
-        navigation.navigate('TabBarScreen')
-    }
-
 
     const hoje = new Date(); // Pegando o dia de hoje 
 
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 

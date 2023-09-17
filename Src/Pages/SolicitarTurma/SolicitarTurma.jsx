@@ -2,20 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput } from "react-native";
 import InserirTurma from "../../Componentes/InserirTurma";
 import ApiMotorista from "../../services/Api/ApiMotorista";
-import { UserData } from "../../services/Contexts/Contexts";
+import { UserData, Header } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./SolicitarTurma.modules";
-
+import axios from "axios";
 export default function SolicitarTurma() {
 
     const navigation = useNavigation();
     const [solicitacaoenviada, setSolicitacaoenviada] = useState(false);
     const [codigo, setCodigo] = useState('');
     const [user, setUser] = useState({})
-    
+
     useEffect(() => {
         DadosUsuario();
     })
@@ -39,11 +39,13 @@ export default function SolicitarTurma() {
 
         try {
 
-            let response = await ApiCliente.post('VerificarTurmaAndSolicitar', data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            const token = await Header()
 
+            let response = await axios.post('https://localhost:7149/api/Cliente/VerificarTurmaAndSolicitar', data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
             });
 
             if (response.status == 200) {
@@ -96,7 +98,7 @@ export default function SolicitarTurma() {
                                 <TextInput
                                     placeholder={'Exemplo: #33782'}
                                     style={styles.input}
-                                    onChangeText={setCodigo}>
+                                    onChangeText={(text)=>{setCodigo(text)}}>
                                 </TextInput>
 
                                 <View style={styles.botao}>

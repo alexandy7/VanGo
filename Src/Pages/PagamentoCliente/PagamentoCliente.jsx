@@ -61,16 +61,15 @@ export default function PagamentoCliente() {
 
             if (error.response) {
                 // Se for uma resposta de erro HTTP
-                console.error('Erro HTTP:', error.response.status, error.response.data);
+                console.log('Erro HTTP:', error.response.status, error.response.data);
             } else if (error.request) {
                 // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
-                console.error('Erro na solicitação:', error.request);
+                console.log('Erro na solicitação:', error.request);
             } else {
                 // Se for um erro de outra natureza
-                console.error('Erro desconhecido:', error.message);
+                console.log('Erro desconhecido:', error.message);
             }
         }
-        
     };
 
     useEffect(() => {
@@ -105,9 +104,7 @@ export default function PagamentoCliente() {
 
                                     encontrado ? (
 
-                                        <View style={{justifyContent: "center", alignItems: "flex-start", flex: 1,}}> 
                                             <NotFound></NotFound>
-                                        </View>
                                     )
                                         :
                                         (

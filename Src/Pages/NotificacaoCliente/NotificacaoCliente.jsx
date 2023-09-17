@@ -14,7 +14,7 @@ export default function NotificacaoCliente() {
     const [usuario, setUsuario] = useState({})
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
-    const [encontrado, setEncontrado] = useState(false)
+    const [encontrado, setEncontrado] = useState(undefined)
 
     useEffect(() => {
         checkInternetConnection();
@@ -22,7 +22,7 @@ export default function NotificacaoCliente() {
     }, [])
 
     //Verifica se o usuário está conectado na internet
-    const checkInternetConnection = async () => {
+    async function checkInternetConnection() {
         const state = await NetInfo.fetch();
 
         if (state.isConnected) {
@@ -45,8 +45,8 @@ export default function NotificacaoCliente() {
         try {
 
             const token = await Header()
+            console.log(token)
 
-            console.log(id_cliente)
             const response = await ApiCliente.get(`ListarNotificacoes?id=${id_cliente}`, {
                 headers: {
                     Authorization: "Bearer " + token,
@@ -90,67 +90,60 @@ export default function NotificacaoCliente() {
 
             </View>
 
-            {
-                // Aparece enquanto aguarda a resposta da API
-                carregamento ? (
-                    <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
-                        <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
-                    </View>
-                )
-                    :
-                    (
+            <View style={styles.viewNotificacoes}>
 
-                        notificacoes.map((Notificacoes) => {
+                {
+                    carregamento ? (
+                        <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
+                            <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
+                        </View>
+                    ) : (
+                        notificacoes.length > 0 ? (
+                            notificacoes.map((Notificacoes) => {
+                                const dataNotificacao = new Date(Notificacoes.data_notificacao);
+                                const diaAnterior = hoje.getDate() - 1;
 
-                            const dataNotificacao = new Date(Notificacoes.data_notificacao);
-                            const diaAnterior = hoje.getDate() - 1;
+                                // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
+                                const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
+                                    dataNotificacao.getMonth() === hoje.getMonth() &&
+                                    dataNotificacao.getFullYear() === hoje.getFullYear();
 
-                            // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
-                            const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
-                                dataNotificacao.getMonth() === hoje.getMonth() &&
-                                dataNotificacao.getFullYear() === hoje.getFullYear();
+                                // Verifica se a notificação foi ontem 
+                                const ontem = dataNotificacao.getDate() === diaAnterior &&
+                                    dataNotificacao.getMonth() === hoje.getMonth() &&
+                                    dataNotificacao.getFullYear() === hoje.getFullYear();
 
-                            //Verifica se a notificação foi ontem 
-                            const ontem = dataNotificacao.getDate() === diaAnterior &&
-                                dataNotificacao.getMonth() === hoje.getMonth() &&
-                                dataNotificacao.getFullYear() === hoje.getFullYear();
+                                let horaOuData;
 
-                            let horaOuData;
+                                if (mesmoDia) {
+                                    // Caso seja o mesmo dia, mostra somente as horas
+                                    horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                                } else if (ontem) {
+                                    // Caso seja true, exibi "ontem" como data
+                                    horaOuData = "Ontem"
+                                } else {
+                                    // Caso seja diferente, mostra a data completa
+                                    horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                }
 
-                            if (mesmoDia) {
-                                // Caso seja o mesmo dia, mostra somente as horas
-                                horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-                            }
-                            else if (ontem) {
-
-                                //Caso seja true, exibi "ontem" como data
-                                horaOuData = "Ontem"
-
-                            }
-                            else {
-                                // Caso seja diferente, mostra a data completa
-                                horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                            }
-
-
-                            return (
-                                <>
-                                    {encontrado ?
-                                        <Notificacao
-                                            fotouser={require('../../../assets/UserPhoto.png')}
-                                            nomeuser={'Motorista'}
-                                            info={Notificacoes.mensagem_notificacao}
-                                            hora={horaOuData}
-                                            key={Notificacoes.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
-                                        />
-                                        :
-                                        <Text>Meu pau</Text>}
-                                </>
-                            )
-                        })
+                                return (
+                                    <Notificacao
+                                        fotouser={require('../../../assets/UserPhoto.png')}
+                                        nomeuser={'Motorista'}
+                                        info={Notificacoes.mensagem_notificacao}
+                                        hora={horaOuData}
+                                        key={Notificacoes.id_notificacao} // Key serve para dar uma identificação única ao elemento 
+                                    />
+                                );
+                            })
+                        ) : (
+                            <NotFound />
+                        )
                     )
-            }
+                }
 
+
+            </View>
         </ScrollView>
     )
 }

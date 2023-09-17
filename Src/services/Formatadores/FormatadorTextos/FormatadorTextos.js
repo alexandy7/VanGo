@@ -5,7 +5,7 @@ export default function FormatadorTexto(texto, limite, qntdPalavras){
         return texto;
     }
 
-    else if(qntdPalavras !== undefined){
+    else if(qntdPalavras === 1){
         let textoSeparado = texto.split(' ');
         return textoSeparado[0] + '...';
     }

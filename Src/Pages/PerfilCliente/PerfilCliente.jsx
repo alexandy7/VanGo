@@ -11,28 +11,38 @@ import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/Format
 export default function PerfilCliente() {
 
     const [usuario, setUsuario] = useState({})
-    const [nomeUsuario, setNomeUsuario] = useState()
+    const [nomeUsuario, setNomeUsuario] = useState(' ')
+    const [nomeResponsável, setNomeResponsavel] = useState(' ')
+    const [enderecoUsuario, setEnderecoUsuario] = useState(' ')
 
     const navigation = useNavigation()
 
-    async function BuscarUsuario(){
+    useEffect(() => {
+
+        async function BuscarUsuario() {
             const response = await UserData();
-            setUsuario(response)
-    }
+            setUsuario(response);
 
-     useEffect(() => {
+            if (response.nome_cliente) {
+                console.log(usuario)
+                let nomeSeparado = response.nome_cliente.split(' ')
+                let nome = nomeSeparado[0] + ' ' + nomeSeparado[1]
+                setNomeUsuario(nome)
+
+                let responsavelSeparado = response.responsavel_cliente.split(' ')
+                let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1]
+                setNomeResponsavel(nomeResponsavel + '...')
+
+                let enderecoSeparado = response.endereco_cliente.split(' ')
+                let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1]
+                setEnderecoUsuario(endereco + '...')
+            }
+
+        }
+
         BuscarUsuario()
-     }, [])
+    }, [])
 
-
-     let nomeSobrenome = '';
-     if(usuario.nome_cliente){
-
-        let nomeSeparado = usuario.nome_cliente.split(' ')
-        let nome1 = nomeSeparado[0]
-        let nome2 = nomeSeparado[1]
-        nomeSobrenome = nome1 + ' ' + nome2
-     }
 
     return (
         <ScrollView style={styles.geral}>
@@ -41,20 +51,20 @@ export default function PerfilCliente() {
 
                 <Perfil
                     evento={() => { navigation.navigate('ConfiguracaoCliente') }}
-                    fotoUser={{ uri: usuario.foto_cliente}}
-                    nomeUser={nomeSobrenome}>
+                    fotoUser={{ uri: usuario.foto_cliente }}
+                    nomeUser={nomeUsuario}>
                 </Perfil>
 
 
-                    <View style={styles.regua}>
-                        <CaixaPerfil responsavel={usuario.responsavel_cliente} 
-                        horario={"18:30"} 
-                        endereco={usuario.endereco_cliente} 
+                <View style={styles.regua}>
+                    <CaixaPerfil responsavel={nomeResponsável}
+                        horario={"18:30"}
+                        endereco={enderecoUsuario}
                         status={"Positivo"}
-                        evento={()=> {navigation.navigate("EditarCliente")}}></CaixaPerfil>
-                    </View> 
+                        evento={() => { navigation.navigate("EditarCliente") }}></CaixaPerfil>
+                </View>
 
-                </View> 
+            </View>
         </ScrollView>
     )
 }

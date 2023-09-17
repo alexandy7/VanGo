@@ -16,7 +16,7 @@ export default function EditarCliente() {
     return(
         <View style={styles.main}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
                     <Ionicons name="chevron-back-outline" size={30}/>
                  </TouchableOpacity>
 

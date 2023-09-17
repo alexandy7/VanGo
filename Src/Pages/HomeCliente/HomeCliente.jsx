@@ -7,6 +7,7 @@ import CardTurma from "../../Componentes/CardTurma";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
 import { UserData } from "../../services/Contexts/Contexts";
+import ApiCliente from "../../services/Api/ApiCiente";
 
 export default function HomeCliente() {
     
@@ -14,15 +15,14 @@ export default function HomeCliente() {
     const [user, setUser] = useState({});
     
     useEffect(()=>{
-        BuscarUsuario();
+        BuscarUsuario()
+        
     }, [])
 
     async function BuscarUsuario(){
         const usuario = await UserData();
         setUser(usuario)
-    }
-
-    
+    }   
 
     let primeiroNome = '';
     if(user.nome_cliente){
@@ -77,7 +77,7 @@ export default function HomeCliente() {
             <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
 
             <View>
-                <Touchable texto={"Ausência"} onPress={""} />
+                <Touchable texto={"Ausência"} onPress={""} />   
 
             </View> 
 

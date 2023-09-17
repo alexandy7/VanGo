@@ -27,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
+    "react-native-image-picker": "^7.0.0",
     "react-native-navigation-bar-color": "^2.0.2",
     "react-native-popup-menu": "^0.16.1",
     "react-native-refresh-control": "^2.1.0",

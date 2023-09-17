@@ -45,7 +45,6 @@ export default function NotificacaoCliente() {
         try {
 
             const token = await Header()
-            console.log(token)
 
             const response = await ApiCliente.get(`ListarNotificacoes?id=${id_cliente}`, {
                 headers: {

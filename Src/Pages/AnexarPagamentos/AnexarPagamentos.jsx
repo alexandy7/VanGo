@@ -8,7 +8,7 @@ import CardPagamento from "../../Componentes/CardPagamento";
 export default function AnexarPagamentos() {
 
     const navigation = useNavigation();
-
+    
     const hoje = new Date();
 
     return(
@@ -48,7 +48,7 @@ export default function AnexarPagamentos() {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.divanexo}>
+            <TouchableOpacity style={styles.divanexo} onPress={()=>{console.log('aaa')}}>
                 <Ionicons name="document-attach-outline" size={50} color='darkgray'/>
             </TouchableOpacity>
 

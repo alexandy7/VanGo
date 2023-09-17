@@ -14,14 +14,16 @@ export default function SolicitarTurma() {
     const navigation = useNavigation();
     const [solicitacaoenviada, setSolicitacaoenviada] = useState(false);
     const [codigo, setCodigo] = useState('');
+    const [user, setUser] = useState({})
     
-    async function DadosUsuario(){
+    useEffect(() => {
+        DadosUsuario();
+    })
+
+    async function DadosUsuario() {
 
         let user = await UserData();
-    }
-
-    if (user.turma_cliente !== null) {
-        navigation.navigate("TabBarCliente");
+        setUser(user)
     }
 
     const data = {
@@ -58,9 +60,6 @@ export default function SolicitarTurma() {
 
     }
 
-    useEffect(()=>{
-        DadosUsuario();
-    })
 
     return (
 
@@ -81,7 +80,7 @@ export default function SolicitarTurma() {
 
 
                             <View style={styles.MsgAguardando}>
-                                <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>Aguardando a resposta do motorista...</Text>
+                                <Text style={{ color: 'white', textAlign: 'center', fontSize: 20 }}>Aguardando a resposta do motorista...</Text>
                             </View>
 
                         </View>

@@ -22,10 +22,13 @@ export default function Login() {
     let usuarioLogado = await VerificarLogin();
 
     if(usuarioLogado){
-      navigation.navigate('TabBar' + usuarioLogado)
-    }
+      if(usuarioLogado.turma_cliente < 1){
+        navigation.navigate('SolicitarTurma')
+        return;
+      }
 
-   console.log(usuarioLogado);
+      navigation.navigate('TabBar' + usuarioLogado.Usuario)
+    }
 
   }
 
@@ -42,7 +45,7 @@ export default function Login() {
     
     setLoading(true);
 
-    await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
+    await axios.post("https://localhost:7149/api/Auth/Login", data.toString(), {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -54,15 +57,26 @@ export default function Login() {
       })
 
       .then(()=>{
-        setLoading(false);
-      })
-
-      .then(()=>{
         VerificarLoginUsuario();
       })
 
+      .then(()=>{
+        setLoading(false);
+      })
+
+
       .catch((error)=>{
         console.log(`deu ruim aqui mane`, error);
+        if (error.response) {
+          // Se for uma resposta de erro HTTP
+          console.log('Erro HTTP:', error.response.status, error.response.data);
+      } else if (error.request) {
+          // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
+          console.log('Erro na solicitação:', error.request);
+      } else {
+          // Se for um erro de outra natureza
+          console.log('Erro desconhecido:', error.message);
+      }
         setLoading(false);
       })
   }

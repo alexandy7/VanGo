@@ -31,7 +31,7 @@ export async function VerificarLogin() {
         return;
     }
 
-    return user.Usuario; //Retorna o usuário para saber quem fez login
+    return user;
 };
 
 

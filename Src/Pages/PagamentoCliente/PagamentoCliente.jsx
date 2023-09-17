@@ -7,7 +7,6 @@ import { UserData, Header } from "../../services/Contexts/Contexts";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import NotFound from "../../Componentes/NotFound";
-import axios from "axios";
 import { ActivityIndicator } from "react-native";
 
 export default function PagamentoCliente() {
@@ -58,6 +57,7 @@ export default function PagamentoCliente() {
         catch (error) {
 
             setLoading(false)
+            setEncontrado(false)
 
             if (error.response) {
                 // Se for uma resposta de erro HTTP
@@ -104,19 +104,20 @@ export default function PagamentoCliente() {
 
                                     encontrado ? (
 
-                                            <NotFound></NotFound>
+                                        comprovantes.map((Comprovante) => (
+
+                                            <CardComprovante
+                                                DataVencimento={Comprovante.vencimento.substring(0, 10)}
+                                                DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
+                                                key={Comprovante.id_pagamento}
+                                            ></CardComprovante>
+                                            //substring limita a quantidade de caracteres que irá exibir
+                                        ))
                                     )
                                         :
                                         (
-                                            comprovantes.map((Comprovante) => (
-
-                                                <CardComprovante
-                                                    DataVencimento={Comprovante.vencimento.substring(0, 10)}
-                                                    DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
-                                                    key={Comprovante.id_pagamento}
-                                                ></CardComprovante>
-                                                //substring limita a quantidade de caracteres que irá exibir
-                                            ))
+                                        <NotFound></NotFound>
+                                            
                                         )
                                 }
                             </View>

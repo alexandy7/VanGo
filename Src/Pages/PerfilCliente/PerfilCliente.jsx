@@ -5,7 +5,6 @@ import Perfil from "../../Componentes/Perfil";
 import styles from "./PerfilCliente.modules.jsx"
 import { UserData } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
-import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos";
 
 
 export default function PerfilCliente() {
@@ -23,8 +22,8 @@ export default function PerfilCliente() {
             const response = await UserData();
             setUsuario(response);
 
+            // Fazendo isto aqui pois se fizer fora da função, não vai dar tempo do `usuário` atualizar o valor
             if (response.nome_cliente) {
-                console.log(usuario)
                 let nomeSeparado = response.nome_cliente.split(' ')
                 let nome = nomeSeparado[0] + ' ' + nomeSeparado[1]
                 setNomeUsuario(nome)

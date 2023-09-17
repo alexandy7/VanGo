@@ -8,6 +8,7 @@ import styles from "./NotificacaoCliente.modules";
 import NetInfo from '@react-native-community/netinfo';
 import { Header, UserData } from "../../services/Contexts/Contexts";
 import NotFound from "../../Componentes/NotFound";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function NotificacaoCliente() {
 
@@ -70,6 +71,14 @@ export default function NotificacaoCliente() {
     const navigation = useNavigation();
 
     const hoje = new Date(); // Pegando o dia de hoje 
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return (
         <ScrollView style={styles.scroll}>

@@ -1,9 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function BotaoHome({icone, texto}) 
 {
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_400Regular
+    });
+    
+    if (!fonteLoaded) {
+        return null;
+    }
+
     return(
         <View style={styles.container}>
             <View style= {styles.bg}>
@@ -43,6 +53,7 @@ const styles = StyleSheet.create({
     },
 
     texto:{
-        fontSize: 14 
+        fontSize: 16,
+        fontFamily: "Montserrat_400Regular"
     }
 })

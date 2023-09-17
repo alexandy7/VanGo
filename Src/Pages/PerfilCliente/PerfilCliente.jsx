@@ -43,7 +43,6 @@ export default function PerfilCliente() {
         BuscarUsuario()
     }, [])
 
-
     return (
         <ScrollView style={styles.geral}>
 

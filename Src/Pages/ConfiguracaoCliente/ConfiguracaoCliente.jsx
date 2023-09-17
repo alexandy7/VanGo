@@ -4,10 +4,20 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Lista from "../../Componentes/Lista";
 import styles from "./ConfiguracaoCliente.modules"
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function ConfiguracaoMoto() {
 
     const navigation = useNavigation();
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <View style= {styles.main}>

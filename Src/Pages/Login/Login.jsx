@@ -8,6 +8,7 @@ import styles from "./Login.modules";
 import { GuardarToken, VerificarLogin, UserData, RemoverToken } from "../../services/Contexts/Contexts";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 
 export default function Login() {
@@ -71,6 +72,14 @@ export default function Login() {
     VerificarLoginUsuario();
   }, [])
 
+    const [fonteLoaded] = useFonts({
+      Montserrat_500Medium,
+      Montserrat_400Regular
+  });
+
+  if (!fonteLoaded) {
+      return null;
+  }
 
   return (
     <ScrollView>
@@ -106,7 +115,7 @@ export default function Login() {
 
             }
             <View style={styles.botaoNovaConta}>
-              <Text>Não é cadastrado? </Text>
+              <Text style={styles.naoecadastrado}>Não é cadastrado? </Text>
 
               <TouchableOpacity onPress={() => { navigation.navigate('Cadastro') }}>
 

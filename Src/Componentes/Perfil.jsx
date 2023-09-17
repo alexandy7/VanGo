@@ -1,8 +1,18 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function Perfil({ fotoUser, nomeUser, evento }) {
+
+        const [fonteLoaded] = useFonts({
+            Montserrat_500Medium,
+        });
+    
+        if (!fonteLoaded) {
+            return null;
+        }
+
     return (
         <View style={styles.geral}>
 
@@ -29,9 +39,6 @@ const styles = StyleSheet.create(
             borderBottomRightRadius: 40,
             borderBottomLeftRadius: 40,
             height: 300,
-
-            blurView: 10
-
         },
 
         config: {
@@ -57,7 +64,8 @@ const styles = StyleSheet.create(
         nome:{
             color: "white",
             fontSize: 25,
-            alignSelf: "center"
+            alignSelf: "center",
+            fontFamily: "Montserrat_500Medium"
         }
     }
 )

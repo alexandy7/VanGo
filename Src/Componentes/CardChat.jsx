@@ -1,9 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function CardChat({foto, nome, hora, ultmensagem, QuantidadeMensagem}) 
 {
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_600SemiBold,
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <TouchableOpacity style={styles.container}>
@@ -90,14 +100,15 @@ const styles = StyleSheet.create({
 
     nome: {
         fontSize: 20,
-        fontWeight: "bold",
-        marginTop: 3
+        marginTop: 3,
+        fontFamily: "Montserrat_600SemiBold"
     },
 
     tempo: {
         fontSize: 16,
         color: "#696969",
-        marginTop: 3
+        marginTop: 3,
+        fontFamily: "Montserrat_400Regular"
     },
 
     divmensagem: {
@@ -109,7 +120,8 @@ const styles = StyleSheet.create({
 
     mensagem: {
         fontSize: 15,
-        marginTop: 3
+        marginTop: 3,
+        fontFamily: "Montserrat_400Regular"
     },
 
     divQuantidadeMensagem: {
@@ -130,7 +142,7 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "center",
         color: "white",
-        fontWeight: "bold"
+        fontFamily: "Montserrat_600SemiBold"
     },
 
 })

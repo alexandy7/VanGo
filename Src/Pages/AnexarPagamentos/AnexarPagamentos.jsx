@@ -4,12 +4,21 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AnexarPagamentos.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function AnexarPagamentos() {
 
     const navigation = useNavigation();
 
     const hoje = new Date();
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return(
         <ScrollView style={styles.principal}>

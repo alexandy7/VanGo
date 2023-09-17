@@ -1,47 +1,69 @@
+import { Montserrat_100Thin, Montserrat_500Medium, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
     main: {
         flex: 1,
-        backgroundColor: '#EFEFEF',
+        backgroundColor: 'white',
     },
     
     header: {
         display: "flex",
         flexDirection: "row",
         height: 80,
+        width: "100%",
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 50
+        marginBottom: 30,
+    },
+
+    divesquerda: {
+        height: 80,
+        width: "15%",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "flex-end"
+    },
+
+    divmeio: {
+        height: 80,
+        width: "70%",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center"
+    },
+
+    divdireita: {
+        height: 80,
+        width: "15%",   
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
 
     seta: {
-        position: "absolute",
-        left: "5%",
-        top: '35%'
-       
+    
     },
 
     titulo: {
         fontSize: 26,
-        position:"relative",
-        alignSelf: "center",
-        top: "5%"
+        fontFamily: "Montserrat_500Medium"
     },
 
     tituloform: {
         fontSize: 18,
-        marginLeft: "10%"
+        marginLeft: "10%",
+        fontFamily: "Montserrat_500Medium"
     },
 
     botao: {
-        height: 50,
-        width: "85%",
+        height: 40,
+        width: "55%",
         alignSelf: "center",
         backgroundColor: "#F7770D",
-        marginTop: 50,
+        marginTop: 30,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -50,9 +72,9 @@ const styles = StyleSheet.create({
     },
 
     texto: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: "white"
+        fontSize: 17,
+        color: "white",
+        fontFamily: "Montserrat_600SemiBold"
     }
 })
 

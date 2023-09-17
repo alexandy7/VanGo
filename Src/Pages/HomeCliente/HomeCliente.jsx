@@ -8,6 +8,7 @@ import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
 import { UserData } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 export default function HomeCliente() {
     
@@ -28,6 +29,16 @@ export default function HomeCliente() {
     if(user.nome_cliente){
          primeiroNome = user.nome_cliente.split(' ')
     }
+
+    const [fonteLoaded] = useFonts ({
+        Montserrat_500Medium,
+
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
+
     return (
 
         <View style={styles.main}>

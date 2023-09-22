@@ -43,29 +43,35 @@ export default function HomeCliente() {
 
     async function EnviarAusencia() {
 
-        const token = await Token()
-        let dia = new Date()
+        try {
 
-        const data = {
-            Nome_cliente: user.nome_cliente,
-            Foto_cliente: user.foto_cliente,
-            Escola_cliente: user.escola_cliente,
-            Motivo_ausencia: "sou foda",
-            Data_ausencia: dia,
-            Id_cliente: user.id_cliente,
-            Id_motorista: user.id_motorista
+            const token = await Token()
+            let diaAusencia = new Date()
 
-        }
+            const data = {
+                Nome_cliente: user.nome_cliente,
+                Foto_cliente: user.foto_cliente,
+                Escola_cliente: user.escola_cliente,
+                Motivo_ausencia: "sou foada",
+                Data_ausencia: "2022-01-22T02:11:00",
+                Id_cliente: user.id_cliente,
+                Id_motorista: user.id_motorista
 
-        await ApiCliente.post("InformarAusencia", data, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
             }
-        })
+
+            await ApiCliente.post("InformarAusencia", data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
-    
+
     return (
 
         <View style={styles.main}>

@@ -29,7 +29,7 @@ export default function Login() {
         return;
       }
 
-      navigation.navigate('Turmas')
+      navigation.navigate('TabBarCliente')
     }
 
   }

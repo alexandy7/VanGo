@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
 import { useFonts, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
-export default function BarraDePesquisa({placeholder, valor}) {
+export default function BarraDePesquisa({placeholder, valor, change}) {
 
     const [fonteLoaded] = useFonts ({
         Montserrat_400Regular
@@ -20,7 +20,11 @@ export default function BarraDePesquisa({placeholder, valor}) {
                 <Ionicons style={styles.icon} name={"search"} size={30} color="#b1aeae"/>
         </TouchableOpacity>
             <View style={styles.alinhainput}>
-                <TextInput placeholder={placeholder} placeholderTextColor= "#b1aeae" style={styles.input} value={valor}></TextInput>
+                <TextInput placeholder={placeholder} 
+                placeholderTextColor="#b1aeae" 
+                style={styles.input} 
+                value={valor}
+                onChangeText={change}/>
             </View>
         </View>
     )

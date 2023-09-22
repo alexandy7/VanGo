@@ -11,6 +11,5 @@ export default function App() {
         <StatusBar hidden={true} />
     </NavigationContainer>
 
-
   );
 }

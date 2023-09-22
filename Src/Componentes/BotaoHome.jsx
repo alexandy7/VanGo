@@ -17,7 +17,7 @@ export default function BotaoHome({icone, texto})
     return(
         <View style={styles.container}>
             <View style= {styles.bg}>
-                <Ionicons style={styles.icone} name={icone} size={60} color='white'/>
+                <Ionicons style={styles.icone} name={icone} size={50} color='white'/>
             </View>
 
             <View style= {styles.divtexto}>
@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 100,
-        height: "65%",
-        width: "100%"
+        height: "55%",
+        width: "90%",
+        alignSelf: "center"
     },
 
     divtexto: {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     },
 
     texto:{
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: "Montserrat_400Regular"
     }
 })

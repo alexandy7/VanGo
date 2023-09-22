@@ -9,7 +9,7 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import NotFound from "../../Componentes/NotFound";
 import { ActivityIndicator } from "react-native";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
-
+import { BackHandler } from "react-native";
 export default function PagamentoCliente() {
 
     const navigation = useNavigation();
@@ -80,13 +80,19 @@ export default function PagamentoCliente() {
         }
     }, [usuario])
 
-        const [fonteLoaded] = useFonts({
-            Montserrat_500Medium,
-        });
-    
-        if (!fonteLoaded) {
-            return null;
-        }
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
+
+    // BackHandler.addEventListener(
+    //     "hardwareBackPress",
+    //    ()=> {navigation.navigate("TabBarCliente")}
+
+    // )
 
     return (
 
@@ -124,8 +130,8 @@ export default function PagamentoCliente() {
                                     )
                                         :
                                         (
-                                        <NotFound></NotFound>
-                                            
+                                            <NotFound></NotFound>
+
                                         )
                                 }
                             </View>

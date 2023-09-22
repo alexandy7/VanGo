@@ -19,12 +19,14 @@ const styles = StyleSheet.create({
       width: '50%',
       height: 120,
     },
+
     titulo: {
       textAlign: 'center',
       fontSize: 25,
       marginTop: 20,
       fontFamily: "Montserrat_500Medium"
     },
+    
     msg: {
       textAlign: 'center',
       fontSize: 13,

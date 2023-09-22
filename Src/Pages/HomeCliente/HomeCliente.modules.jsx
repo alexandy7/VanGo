@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     },
 
     nome: {
-        fontSize: 23,
+        fontSize: 20,
         marginLeft: "5%",
         color: "white",
         fontFamily: "Montserrat_500Medium"

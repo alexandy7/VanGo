@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
-export default function CardAluno({foto, nome, escola}) 
+export default function CardAluno({foto, nome, escola, borderColor}) 
 {
 
     const [fonteLoaded] = useFonts ({
@@ -16,7 +16,7 @@ export default function CardAluno({foto, nome, escola})
     }
 
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, { borderColor }]}>
             <View style={styles.divimagem}>
                 <Image source={foto} style={styles.imagem}></Image>
             </View>
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     container: {
         width: "90%",
         height: 80,
-        borderColor: 'green',
         borderRadius: 25,
         alignSelf: 'center',
         borderWidth: 1,

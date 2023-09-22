@@ -23,12 +23,13 @@ export default function Login() {
     let usuarioLogado = await VerificarLogin();
 
     if(usuarioLogado){
+
       if(usuarioLogado.turma_cliente < 1){
         navigation.navigate('NotificacaoMotorista')
         return;
       }
 
-      navigation.navigate('TabBar' + usuarioLogado.Usuario)
+      navigation.navigate('Turmas')
     }
 
   }

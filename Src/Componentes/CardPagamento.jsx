@@ -49,7 +49,7 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
                     </View>
 
                     <View style={styles.reguavencimento}>
-                        <Text style={styles.vencimento}>{"Venc.:" + vencimento}</Text>
+                        <Text style={styles.vencimento}>{"Vencimento: " + vencimento}</Text>
                     </View>
 
                 </View>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     },
 
     fatura: {
-        fontSize: 18,
+        fontSize: 16,
         color: "black",
         fontFamily: "Montserrat_400Regular"
     },
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
 
     vencimento: {
         position: "relative",
-        fontSize: 15,
+        fontSize: 11,
         marginRight: "15%",
         marginBottom: 5,
         fontFamily: "Montserrat_400Regular"

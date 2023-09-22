@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     },
 
     texto2sup: {
-        fontSize: 14,
+        fontSize: 12,
         color: "darkgray",
         marginLeft: "10%",
         position: "relative",
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     },
 
     texto2inf: {
-        fontSize: 14,
+        fontSize: 12,
         color: "darkgray",
         marginLeft: "10%",
         position: "relative",

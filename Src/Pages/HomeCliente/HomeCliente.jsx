@@ -6,31 +6,32 @@ import BotaoHome from "../../Componentes/BotaoHome";
 import CardTurma from "../../Componentes/CardTurma";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeCliente.modules";
-import { UserData } from "../../services/Contexts/Contexts";
+import { Token, UserData } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
-
+import { BackHandler } from "react-native";
+import { Alert } from "react-native";
 export default function HomeCliente() {
-    
+
     const navigation = useNavigation();
     const [user, setUser] = useState({});
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         BuscarUsuario()
-        
+
     }, [])
 
-    async function BuscarUsuario(){
+    async function BuscarUsuario() {
         const usuario = await UserData();
         setUser(usuario)
-    }   
-
-    let primeiroNome = '';
-    if(user.nome_cliente){
-         primeiroNome = user.nome_cliente.split(' ')
     }
 
-    const [fonteLoaded] = useFonts ({
+    let primeiroNome = '';
+    if (user.nome_cliente) {
+        primeiroNome = user.nome_cliente.split(' ')
+    }
+
+    const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
 
     });
@@ -39,6 +40,32 @@ export default function HomeCliente() {
         return null;
     }
 
+
+    async function EnviarAusencia() {
+
+        const token = await Token()
+        let dia = new Date()
+
+        const data = {
+            Nome_cliente: user.nome_cliente,
+            Foto_cliente: user.foto_cliente,
+            Escola_cliente: user.escola_cliente,
+            Motivo_ausencia: "sou foda",
+            Data_ausencia: dia,
+            Id_cliente: user.id_cliente,
+            Id_motorista: user.id_motorista
+
+        }
+
+        await ApiCliente.post("InformarAusencia", data, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
+        })
+    }
+
+    
     return (
 
         <View style={styles.main}>
@@ -88,9 +115,8 @@ export default function HomeCliente() {
             <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
 
             <View>
-                <Touchable texto={"Ausência"} onPress={""} />   
-
-            </View> 
+                <Touchable texto={"Ausência"} onPress={EnviarAusencia()} />
+            </View>
 
         </View>
     )

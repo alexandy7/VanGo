@@ -156,7 +156,7 @@ export default function Turmas({ nometurma, idTurma }) {
             </View>
 
             <FlatList
-                keyExtractor={(item) => item.nome_cliente + item.foto_cliente + item.motivo_ausencia}
+                keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
                 data={pesquisaFiltrada}
                 renderItem={({ item }) => {
 

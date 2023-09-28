@@ -6,7 +6,7 @@ import styles from "./SolicitacoesTurmaMotorista.modules";
 import Solicitacao from "../../Componentes/Solicitacao";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
-import { UserData } from "../../services/Contexts/Contexts";
+import { Token, UserData } from "../../services/Contexts/Contexts";
 import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos";
 export default function SolicitacoesTurmaMotorista() {
 
@@ -25,10 +25,17 @@ export default function SolicitacoesTurmaMotorista() {
     async function BuscarUsuario() {
         try {
 
-            const response = await UserData()
-            setUsuario(response)
+            const response = await UserData();
+            setUsuario(response);
 
-            var response2 = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${response.id_motorista}`)
+            const token = await Token();
+
+            var response2 = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${response.id_motorista}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
 
             var json = response2.data;
             setSolicitacoes(json);
@@ -45,13 +52,19 @@ export default function SolicitacoesTurmaMotorista() {
 
 
         RemoverItemDaLista(id_solicitacoesTurma);
+        const token = await Token();
 
-        await ApiMotorista.put("InserirClienteTurma", {
-
+        const data = {
             Id_cliente: id_cliente,
             Turma_cliente: id_turma,
             Id_motorista: id_motorista
+        }
 
+        await ApiMotorista.put("InserirClienteTurma", data, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
         })
 
     }
@@ -59,8 +72,14 @@ export default function SolicitacoesTurmaMotorista() {
     async function RecusarSolicitacao(id_cliente, id_solicitacoesTurma) {
 
         RemoverItemDaLista(id_solicitacoesTurma);
+        const token = await Token();
 
-        let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`)
+        let response = await ApiMotorista.delete(`ExcluirSolicitacaoCliente?id_cliente=${id_cliente}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
+        })
 
         if (!response.status) {
             Console.log("Desculpe, houve um erro interno");
@@ -77,7 +96,7 @@ export default function SolicitacoesTurmaMotorista() {
     return (
         <ScrollView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack()}}>
+                <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 

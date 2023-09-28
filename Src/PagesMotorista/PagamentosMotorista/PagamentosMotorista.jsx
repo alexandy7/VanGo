@@ -4,25 +4,72 @@ import styles from "./PagamentosMotorista.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
 import BarraDePesquisa from "../../Componentes/BarraDePesquisa";
 import { Ionicons } from '@expo/vector-icons';
-import { useFonts, Montserrat_500Medium} from "@expo-google-fonts/montserrat"
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
+import { Token, UserData } from "../../services/Contexts/Contexts";
+import ApiMotorista from "../../services/Api/ApiMotorista";
+import axios from "axios";
+import { FlatList } from "react-native";
 
 export default function PagamentosMotorista() {
 
-    const [fonteLoaded] = useFonts ({
+    useEffect(() => {
+        BuscarUsuario();
+    }, [])
+    
+    const [user, setUser] = useState({});
+    const [pagamentos, setPagamentos] = useState([]);
+    
+    const [fonteLoaded] = useFonts({
         Montserrat_500Medium
     });
-
+    
     if (!fonteLoaded) {
         return null;
     }
+    
+    async function BuscarUsuario() {
+        let usuario = await UserData();
+        
+        setUser(usuario);
+        
+        BuscarPagamentos();
+    }
+    
+    async function BuscarPagamentos() {
 
-    return(
+        try{
+
+            const token = await Token();
+            
+            let response = await axios.get(`https://localhost:7149/api/Motorista/ListarComprovantesPagamento?id_motorista=${1}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
+            
+            if(response.status !== 200){
+                console.log("Desculpe, não háa nenhum comprovante.");
+                return;
+            }
+            
+            let json = response.data;
+            setPagamentos(json);
+        }
+
+        catch(error){
+            console.log(error)
+        }
+    }
+
+
+    return (
 
         <View style={styles.main}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
-                        <Ionicons name="chevron-back-outline" size={30}/>
+                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
+                        <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                 </View>
 
@@ -35,42 +82,38 @@ export default function PagamentosMotorista() {
                 </View>
 
                 <View style={styles.divbarra}>
-                    <BarraDePesquisa placeholder={"Exemplo: Ana Clara"}/>
+                    <BarraDePesquisa placeholder={"Exemplo: Ana Clara"} />
                 </View>
             </View>
 
-                <View style={styles.alinhabotoes}>
+            <View style={styles.alinhabotoes}>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.textobotao}>Todos</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.botao}>
+                    <Text style={styles.textobotao}>Todos</Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.textobotao}>Em Atraso</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.botao}>
+                    <Text style={styles.textobotao}>Em Atraso</Text>
+                </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.textobotao}>Pagos</Text>
-                    </TouchableOpacity>
+                <TouchableOpacity style={styles.botao}>
+                    <Text style={styles.textobotao}>Pagos</Text>
+                </TouchableOpacity>
 
-                </View>
+            </View>
 
-            <ScrollView style={styles.scroll}>
-                
-                <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"}/>
-                <CardPagamento imagem={require('../../../assets/Ana.jpeg')} nome={"Ana Clara"} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-                <CardPagamento imagem={require('../../../assets/fazueli.jpg')} nome={"Celebrexon"} fatura={"80,00"} icon={"warning-outline"} status={"Amogus"} vencimento={"32/13/2026"}/>
-
-            </ScrollView>
+            <FlatList
+            keyExtractor={(item)=> item.id_pagamento}
+            data={pagamentos}
+            renderItem={({ item })=>{
+                const situacao = item.situacao_pagamento === "pago" ? "green" : "red";
+                const icon = situacao === "green" ? "checkmark-outline" : "warning-outline"
+                console.log(item.vencimento)
+                return(
+                    <CardPagamento imagem={{uri: item.foto_cliente}} nome={item.nome_cliente} fatura={item.valor_pagamento} icon={icon} status={item.situacao_pagamento} vencimento={item.vencimento} />
+                )
+            }}
+            />
         </View>
     )
 

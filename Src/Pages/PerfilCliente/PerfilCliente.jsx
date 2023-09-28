@@ -29,8 +29,12 @@ export default function PerfilCliente() {
                 setNomeUsuario(nome)
 
                 let responsavelSeparado = response.responsavel_cliente.split(' ')
-                let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1]
-                setNomeResponsavel(nomeResponsavel + '...')
+                setNomeResponsavel(responsavelSeparado);
+                if(responsavelSeparado.length > 1){
+
+                    let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1]
+                    setNomeResponsavel(nomeResponsavel + '...')
+                }
 
                 let enderecoSeparado = response.endereco_cliente.split(' ')
                 let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1]
@@ -40,7 +44,7 @@ export default function PerfilCliente() {
         }
 
         BuscarUsuario()
-    }, [])
+    }, [usuario])
 
     return (
         <ScrollView style={styles.geral}>

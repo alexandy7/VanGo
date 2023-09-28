@@ -36,7 +36,7 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
 
                     <View style={styles.reguaicone}>
                         <TouchableOpacity style={styles.seta} onPress={evento}>
-                            <Ionicons name="chevron-forward-outline" size={27} color='#F7770D'/>
+                            <Ionicons name="chevron-forward-outline" size={27} color={iconcolor}/>
                         </TouchableOpacity>
                     </View>      
                 </View>

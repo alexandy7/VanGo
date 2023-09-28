@@ -5,10 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import InputEdicao from "../../Componentes/InputEdicao";
 import styles from "./EditarCliente.modules";
 import { useFonts, Montserrat_500Medium, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
-import { Token, UserData } from "../../services/Contexts/Contexts";
+import { RemoverToken, Token, UserData, GuardarToken } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import axios from "axios";
-
+import { ActivityIndicator } from "react-native";
+import InputPrompt from "../../Componentes/Modal";
 export default function EditarCliente() {
 
     const navigation = useNavigation();
@@ -20,6 +21,9 @@ export default function EditarCliente() {
     const [enderecoReserva, setEnderecoReserva] = useState("")
     const [escolaCliente, setEscolaCliente] = useState("")
     const [hora, setHora] = useState("")
+
+    const [confirmarEdicao, setConfirmarEdicao] = useState(false)
+    const [senha, setSenha] = useState("")
 
 
     useEffect(() => {
@@ -63,7 +67,7 @@ export default function EditarCliente() {
 
             const token = await Token();
 
-            let response = await axios.put("https://localhost:7149/api/cliente/AlterarCliente", data, {
+            let response = await ApiCliente.put("AlterarCliente", data, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -74,113 +78,124 @@ export default function EditarCliente() {
                 Console.log("Desculpe, houve um problema interno.", response.statusText)
                 return;
             }
-
-            Atualizar()
         }
         catch (error) {
             console.log(error)
         }
+
+        finally {
+            AtualizarInformacoes()
+        }
     }
 
-    async function Atualizar() {
-        const dataLogin = new URLSearchParams();
-        data.append('Email', user.email_cliente);
-        data.append('Senha', user.senha_cliente);
+    async function AtualizarInformacoes() {
+        try {
 
-        await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", dataLogin.toString(), {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-        })
+            await RemoverToken();
 
-            .then((response) => {
-                GuardarToken(response.data.token);
-                console.log(response.data.token)
-            })
+            const data = new URLSearchParams();
+            data.append("Email", user.email_cliente);
+            data.append("Senha", senha);
 
-            .then(() => {
-                VerificarLoginUsuario();
-            })
+            console.log(user.email_cliente, senha)
+            let response = await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            });
 
-            .then(() => {
-                setLoading(false);
-            })
+            GuardarToken(response.data.token);
+            setConfirmarEdicao(false);
+            setSenha("");
+            navigation.goBack();
+        }
 
-
-            .catch((error) => {
-                console.log(`deu ruim aqui mane`, error);
-                if (error.response) {
-                    // Se for uma resposta de erro HTTP
-                    console.log('Erro HTTP:', error.response.status, error.response.data);
-                } else if (error.request) {
-                    // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
-                    console.log('Erro na solicitação:', error.request);
-                } else {
-                    // Se for um erro de outra natureza
-                    console.log('Erro desconhecido:', error.message);
-                }
-                setLoading(false);
-            })
+        catch (error) {
+            
+            if (error.response) {
+              // Se for uma resposta de erro HTTP
+              console.log('Erro HTTP:', error.response.status, error.response.data);
+          } else if (error.request) {
+              // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
+              console.log('Erro na solicitação:', error.request);
+          } else {
+              // Se for um erro de outra natureza
+              console.log('Erro desconhecido:', error.message);
+          }
+        }
     }
 
     return (
         <View style={styles.main}>
-            <View style={styles.header}>
-                <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
-                        <Ionicons name="chevron-back-outline" size={30} />
-                    </TouchableOpacity>
+
+            <View>
+
+                <InputPrompt
+                    visible={confirmarEdicao}
+                    onConfirm={() => Editar()}
+                    onCancel={() => setConfirmarEdicao(false)}
+                    change={(text) => setSenha(text)}
+                    valor={senha}
+                    
+                />
+
+                <View style={styles.header}>
+                    <View style={styles.divesquerda}>
+                        <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
+                            <Ionicons name="chevron-back-outline" size={30} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.divmeio}>
+                        <Text style={styles.titulo}>Editar Perfil</Text>
+                    </View>
+
+                    <View style={styles.divdireita}>
+
+                    </View>
+
                 </View>
 
-                <View style={styles.divmeio}>
-                    <Text style={styles.titulo}>Editar Perfil</Text>
-                </View>
+                <Text style={styles.tituloform}>Nome do Aluno</Text>
+                <InputEdicao
+                    icone={"body-outline"}
+                    valor={nomeCliente}
+                    mudou={(text) => { setNomeCliente(text) }}
+                />
 
-                <View style={styles.divdireita}>
+                <Text style={styles.tituloform}>Nome do Responsável</Text>
+                <InputEdicao
+                    icone={"person-outline"}
+                    valor={nomeResponsavel}
+                    mudou={(text) => { setNomeResponsavel(text) }}
+                />
 
-                </View>
+                <Text style={styles.tituloform}>Endereço</Text>
+                <InputEdicao
+                    icone={"home-outline"}
+                    valor={enderecoCliente}
+                    mudou={(text) => { setEnderecoCliente(text) }}
+                />
 
+                <Text style={styles.tituloform}>Endereço reserva</Text>
+                <InputEdicao
+                    icone={"business-outline"}
+                    valor={enderecoReserva}
+                    mudou={(text) => { setEnderecoReserva(text) }}
+                />
+
+                <Text style={styles.tituloform}>Escola</Text>
+                <InputEdicao icone={"book-outline"} valor={escolaCliente} mudou={(text) => setEscolaCliente(text)} />
+
+                <Text style={styles.tituloform}>Horário</Text>
+                <InputEdicao icone={"time-outline"} valor={hora} />
+
+                <TouchableOpacity onPress={() => { setConfirmarEdicao(true) }}>
+                    <View style={styles.botao}>
+                        <Text style={styles.texto}>Salvar Alterações</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
-
-            <Text style={styles.tituloform}>Nome do Aluno</Text>
-            <InputEdicao
-                icone={"body-outline"}
-                valor={nomeCliente}
-                mudou={(text) => { setNomeCliente(text) }}
-            />
-
-            <Text style={styles.tituloform}>Nome do Responsável</Text>
-            <InputEdicao
-                icone={"person-outline"}
-                valor={nomeResponsavel}
-                mudou={(text) => { setNomeResponsavel(text) }}
-            />
-
-            <Text style={styles.tituloform}>Endereço</Text>
-            <InputEdicao
-                icone={"home-outline"}
-                valor={enderecoCliente}
-                mudou={(text) => { setEnderecoCliente(text) }}
-            />
-
-            <Text style={styles.tituloform}>Endereço reserva</Text>
-            <InputEdicao
-                icone={"business-outline"}
-                valor={enderecoReserva}
-                mudou={(text) => { setEnderecoReserva(text) }}
-            />
-
-            <Text style={styles.tituloform}>Escola</Text>
-            <InputEdicao icone={"book-outline"} valor={escolaCliente} mudou={(text) => setEscolaCliente(text)} />
-
-            <Text style={styles.tituloform}>Horário</Text>
-            <InputEdicao icone={"time-outline"} valor={hora} />
-
-            <TouchableOpacity onPress={() => { Editar() }}>
-                <View style={styles.botao}>
-                    <Text style={styles.texto}>Salvar Alterações</Text>
-                </View>
-            </TouchableOpacity>
 
         </View>
     )

@@ -11,9 +11,6 @@ export default function CriarTurmas() {
 
     const navigation = useNavigation();
 
-    const irPerfil = () => {
-        navigation.navigate('TabBarScreen')
-    }
 
     return (
         <View style={styles.container}>
@@ -56,7 +53,7 @@ export default function CriarTurmas() {
                 </View>
 
                 <View style={styles.alinhameio}>
-                    <Text style={styles.textoconcluir}>Enviar Anexo</Text>
+                    <Text style={styles.textoconcluir}>Criar turma</Text>
                 </View>
 
                 <View style={styles.alinhafim}>

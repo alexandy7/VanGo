@@ -53,7 +53,7 @@ export default function HomeCliente() {
                 Foto_cliente: user.foto_cliente,
                 Escola_cliente: user.escola_cliente,
                 Motivo_ausencia: "sou foada",
-                Data_ausencia: "2022-01-22T02:11:00",
+                Data_ausencia: diaAusencia,
                 Id_cliente: user.id_cliente,
                 Id_motorista: user.id_motorista
 
@@ -121,7 +121,7 @@ export default function HomeCliente() {
             <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
 
             <View>
-                <Touchable texto={"Ausência"} onPress={EnviarAusencia()} />
+                <Touchable texto={"Ausência"} evento={()=>{EnviarAusencia()}} />
             </View>
 
         </View>

@@ -5,7 +5,11 @@ import MeuText from "../../Componentes/MeuText";
 import TituloCadastro from '../../Componentes/Titulocadastros';
 import Touchable from "../../Componentes/Touchable";
 import Api from "../../services/Api/ApiCiente";
-import styles from"./Cadastro.modules";
+import styles from "./Cadastro.modules";
+import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
+import ApiCliente from "../../services/Api/ApiCiente";
+
 
 export default function Cadastro() {
   const [loading, setLoading] = useState(false);
@@ -32,6 +36,7 @@ export default function Cadastro() {
   const [nomeOuHorario, setnomeOuHorario] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [base64, setBase64] = useState(null)
 
   const [motoristaOuCliente, setMotoristaOuCliente] = useState('cliente');
 
@@ -98,6 +103,27 @@ export default function Cadastro() {
   };
   //☝️ está fazendo a lógica para qual pagina navegar
 
+  async function selecionarImagem() {
+    try {
+
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+        aspect: [4, 4],
+        allowsEditing: true,
+        base64: true
+      });
+
+      if (result.canceled) {
+        return;
+      }
+      setBase64(result.assets[0].uri);
+
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
   async function CadastrarCliente() {
 
     setLoading(true);
@@ -105,10 +131,11 @@ export default function Cadastro() {
 
       try {
         // navigation.navigate('CadastroEscola');
-        const resposta = await Api.post('CadastrarCliente', {
+        const resposta = await ApiCliente.post('CadastrarCliente', {
           Email_cliente: email,
           Senha_cliente: senha,
           Nome_cliente: nome,
+          Base64: base64,
           Cpf_responsavel: cpf,
           Endereco_cliente: endereco,
           Responsavel_cliente: nomeOuHorario,
@@ -153,6 +180,7 @@ export default function Cadastro() {
   }
 
 
+
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
       <View style={styles.vieu}>
@@ -161,7 +189,7 @@ export default function Cadastro() {
           <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]} onPress={botaoCliente}>
             <Text style={[styles.texto, { color: button1letra }]}>Cliente</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={botaoMoto}>
+          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={selecionarImagem}>
             <Text style={[styles.texto, { color: button2letra }]}>Motorista</Text>
           </TouchableOpacity>
         </View>

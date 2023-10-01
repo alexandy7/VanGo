@@ -9,6 +9,7 @@ import { Token, UserData } from "../../services/Contexts/Contexts";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 import axios from "axios";
 import { FlatList } from "react-native";
+import ApiCliente from "../../services/Api/ApiCiente";
 
 export default function PagamentosMotorista() {
 
@@ -41,7 +42,7 @@ export default function PagamentosMotorista() {
 
             const token = await Token();
             
-            let response = await axios.get(`https://localhost:7149/api/Motorista/ListarComprovantesPagamento?id_motorista=${1}`, {
+            let response = await ApiMotorista.get(`ListarComprovantesPagamento?id_motorista=${1}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -106,11 +107,22 @@ export default function PagamentosMotorista() {
             keyExtractor={(item)=> item.id_pagamento}
             data={pagamentos}
             renderItem={({ item })=>{
-                const situacao = item.situacao_pagamento === "pago" ? "green" : "red";
-                const icon = situacao === "green" ? "checkmark-outline" : "warning-outline"
-                console.log(item.vencimento)
+
+                const Color = item.situacao_pagamento === "pago" ? "#00B383" : "#F71B0D";
+                const icon = Color === "#00B383" ? "checkmark" : "warning"
+
+                let dataFormatada = item.vencimento.substring(0, 10).replace(/-/g, "/");
                 return(
-                    <CardPagamento imagem={{uri: item.foto_cliente}} nome={item.nome_cliente} fatura={item.valor_pagamento} icon={icon} status={item.situacao_pagamento} vencimento={item.vencimento} />
+                    <CardPagamento 
+                    imagem={{uri: item.foto_cliente}} 
+                    nome={item.nome_cliente} 
+                    fatura={item.valor_pagamento}
+                    color={Color}
+                    vencimento={dataFormatada} 
+                    icon={icon}
+                    iconcolor={Color}
+                    status={item.situacao_pagamento} 
+                    />
                 )
             }}
             />

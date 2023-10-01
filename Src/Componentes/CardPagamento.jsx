@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
-export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, status, vencimento, evento}) 
+export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, color, status, vencimento, evento}) 
 {
 
     const [fonteLoaded] = useFonts ({
@@ -31,12 +31,12 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
                     </View>
 
                     <View style={styles.reguafatura}>
-                        <Text style={styles.fatura}>{"R$" + fatura}</Text>
+                        <Text style={[styles.fatura, {color}]}>{"R$" + fatura}</Text>
                     </View>
 
                     <View style={styles.reguaicone}>
                         <TouchableOpacity style={styles.seta} onPress={evento}>
-                            <Ionicons name="chevron-forward-outline" size={27} color={iconcolor}/>
+                            <Ionicons name="chevron-forward-outline" size={27} color={"black"}/>
                         </TouchableOpacity>
                     </View>      
                 </View>
@@ -44,8 +44,8 @@ export default function CardPagamento({imagem, nome, fatura,icon, iconcolor, sta
                 <View style={styles.divinferior}>
 
                     <View style={styles.reguastatus}>
-                        <Ionicons style={styles.warning} name={icon} size={20} color={"green"}/>
-                        <Text style={styles.situacao}>{status}</Text>
+                        <Ionicons style={styles.warning} name={icon} size={20} color={iconcolor}/>
+                        <Text style={[styles.situacao, {color}]}>{status}</Text>
                     </View>
 
                     <View style={styles.reguavencimento}>

@@ -23,6 +23,7 @@ import PagamentosMotorista from "../../PagesMotorista/PagamentosMotorista/Pagame
 import Chat from "../../Pages/Chat/Chat";
 import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
 import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFound";
+import AdcionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -188,7 +189,6 @@ export default function AppNavigator() {
    
 
     <Stack.Navigator>
-      
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
@@ -203,6 +203,7 @@ export default function AppNavigator() {
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
+      <Stack.Screen name="AdicionarFoto" component={AdcionarFoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>
 
 

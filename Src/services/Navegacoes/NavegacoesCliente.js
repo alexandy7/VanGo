@@ -24,6 +24,8 @@ import Chat from "../../Pages/Chat/Chat";
 import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
 import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFound";
 import AdcionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
+import CadastroConcluido from "../../Pages/CadastroConcluido/CadastroConcluido";
+import PerfilMotorista from "../../PagesMotorista/PerfilMotorista/PerfilMotorista";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -188,11 +190,12 @@ export default function AppNavigator() {
   return (
    
 
-    <Stack.Navigator>
+    <Stack.Navigator>      
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroConcluido" component={CadastroConcluido}  options={{headerShown: false}}/>
       <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
       
@@ -206,7 +209,7 @@ export default function AppNavigator() {
       <Stack.Screen name="AdicionarFoto" component={AdcionarFoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>
 
-
+      <Stack.Screen name="PerfilMotorista" component={PerfilMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoMoto" component={ConfiguracaoMoto}  options={{headerShown: false}}/>
       <Stack.Screen name="NotificacaoMotorista" component={NotificacaoMotorista}  options={{headerShown: false}}/>

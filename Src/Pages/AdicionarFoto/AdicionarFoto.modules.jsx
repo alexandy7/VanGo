@@ -115,7 +115,8 @@ const styles = StyleSheet.create({
 
     textoconcluir: {
         fontSize: 26,
-        color: "white"
+        color: "white",
+        fontFamily: "Montserrat_500Medium"
     },
 
     icon: {

@@ -1,3 +1,4 @@
+import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -20,10 +21,11 @@ const styles = StyleSheet.create({
         height: 200,
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
     },
 
     seta: {
-        marginTop: 10
+        marginTop: 0
     },
 
     divimagem: {
@@ -54,13 +56,14 @@ const styles = StyleSheet.create({
     },
 
     textosuperior: {
-        fontSize: 28,
-        fontWeight: "bold"
+        fontSize: 27,
+        fontFamily: "Montserrat_600SemiBold"
     },
 
     textoinferior: {
         fontSize: 17,
-        color: "#252525"
+        color: "#252525",
+        fontFamily: "Montserrat_400Regular"
     },
 
     divinputs: {
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
         height: 60,
         width: "80%",
         alignSelf: "center",
-        backgroundColor: "orange",
+        backgroundColor: "#F7770D",
         borderRadius: 15,
         marginTop: 20,
         display: "flex",
@@ -93,7 +96,8 @@ const styles = StyleSheet.create({
 
     textoconcluir: {
         fontSize: 26,
-        color: "white"
+        color: "white",
+        fontFamily: "Montserrat_500Medium"
     },
 
     icon: {

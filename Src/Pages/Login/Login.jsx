@@ -19,32 +19,37 @@ export default function Login() {
 
   const navigation = useNavigation();
 
-  async function VerificarLoginUsuario(){
+  async function VerificarLoginUsuario() {
     let usuarioLogado = await VerificarLogin();
 
-    if(usuarioLogado){
+    if (usuarioLogado) {
 
-      if(usuarioLogado.turma_cliente < 1){
-        navigation.navigate('NotificacaoMotorista')
+      if (usuarioLogado.id_cliente) {
+
+        if (!usuarioLogado.turma_cliente) {
+          navigation.navigate('SolicitarTurma');
+          return;
+        }
+
+        navigation.navigate('PagamentosMotorista');
         return;
       }
 
-      navigation.navigate('PagamentosMotorista')
+      navigation.navigate('TabBarMotorista');
     }
-
   }
 
   async function login() {
 
-    if(emailUsuario === '' || senhaUsuario === ''){
+    if (emailUsuario === '' || senhaUsuario === '') {
       console.log('todos os campos sao obrigatorios!');
       return;
     }
-    
+
     const data = new URLSearchParams();
     data.append('Email', emailUsuario);
     data.append('Senha', senhaUsuario);
-    
+
     setLoading(true);
 
     await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
@@ -55,45 +60,45 @@ export default function Login() {
 
       .then((response) => {
         GuardarToken(response.data.token);
-        console.log(response.data.token)
+        console.log(response.data.token);
       })
 
-      .then(()=>{
+      .then(() => {
         VerificarLoginUsuario();
       })
 
-      .then(()=>{
+      .then(() => {
         setLoading(false);
       })
 
 
-      .catch((error)=>{
+      .catch((error) => {
         console.log(`deu ruim aqui mane`, error);
         if (error.response) {
           // Se for uma resposta de erro HTTP
           console.log('Erro HTTP:', error.response.status, error.response.data);
-      } else if (error.request) {
+        } else if (error.request) {
           // Se a solicitação não puder ser feita (por exemplo, problemas de rede)
           console.log('Erro na solicitação:', error.request);
-      } else {
+        } else {
           // Se for um erro de outra natureza
           console.log('Erro desconhecido:', error.message);
-      }
+        }
         setLoading(false);
       })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     VerificarLoginUsuario();
   }, [])
 
-    const [fonteLoaded] = useFonts({
-      Montserrat_500Medium,
-      Montserrat_400Regular
+  const [fonteLoaded] = useFonts({
+    Montserrat_500Medium,
+    Montserrat_400Regular
   });
 
   if (!fonteLoaded) {
-      return null;
+    return null;
   }
 
   return (

@@ -131,7 +131,7 @@ export default function Cadastro() {
 
       try {
         // navigation.navigate('CadastroEscola');
-        const resposta = await ApiCliente.post('CadastrarCliente', {
+        const resposta = await axios.post('https://localhost:7149/api/Cliente/CadastrarCliente', {
           Email_cliente: email,
           Senha_cliente: senha,
           Nome_cliente: nome,

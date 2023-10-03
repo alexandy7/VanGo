@@ -53,7 +53,7 @@ export default function CaixaPerfil({responsavel, horario, endereco, status, eve
 
                     <View style={styles.divtexto}>
                         <Text style={styles.texto1inf}>{endereco}</Text>
-                        <Text style={styles.texto2inf}>Responsável</Text>
+                        <Text style={styles.texto2inf}>Endereço</Text>
                     </View>
 
                 </View>
@@ -66,7 +66,7 @@ export default function CaixaPerfil({responsavel, horario, endereco, status, eve
                     
                     <View style={styles.divtexto}>
                         <Text style={styles.texto1inf}>{status}</Text>
-                        <Text style={styles.texto2inf}>Estado geral</Text>
+                        <Text style={styles.texto2inf}>Endereço reserva</Text>
                     </View>
                 </View>
             </View>

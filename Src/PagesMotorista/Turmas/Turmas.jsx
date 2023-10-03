@@ -21,12 +21,14 @@ export default function Turmas({ nometurma, idTurma }) {
     const [searchCliente, setSearchCliente] = useState("");
 
     const [buttonTodos, setButtonTodos] = useState("#F7770D")
-    const [buttonPresentes, setButtonPresentes] = useState("#C4C4C433")
-    const [buttonAusentes, setButtonAusentes] = useState("#C4C4C433")
-
     const [textTodos, setTextTodos] = useState("white")
+    
+    const [buttonPresentes, setButtonPresentes] = useState("#C4C4C433")
     const [textPresentes, setTextPresentes] = useState("grey")
+    
+    const [buttonAusentes, setButtonAusentes] = useState("#C4C4C433")
     const [textAusentes, setTextAusentes] = useState("grey")
+
 
     useEffect(() => {
         BuscarUsuario()

@@ -92,112 +92,92 @@ export default function Cadastro() {
 
   const navigation = useNavigation();
 
-  const continuarCadastro = () => {
+  // const continuarCadastro = () => {
 
-    if (quemE == 'cliente') {
-      navigation.navigate('CadastroEscola');
-    }
+  //   if (quemE == 'cliente') {
+  //     navigation.navigate('CadastroEscola');
+  //   }
 
-    if (quemE == 'motorista') {
-      navigation.navigate('CadastroVeiculo');
-    };
-  };
-  //☝️ está fazendo a lógica para qual pagina navegar
-
-  async function selecionarImagem() {
-    try {
-
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.5,
-        aspect: [4, 4],
-        allowsEditing: true,
-        base64: true
-      });
-
-      if (result.canceled) {
-        return;
-      }
-      setBase64(result.assets[0].uri);
-
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
-  async function CadastrarCliente() {
-
-    setLoading(true);
-    if (motoristaOuCliente == 'cliente') {
-
-      try {
-        // navigation.navigate('CadastroEscola');
-        const resposta = await axios.post('https://localhost:7149/api/Cliente/CadastrarCliente', {
-          Email_cliente: email,
-          Senha_cliente: senha,
-          Nome_cliente: nome,
-          Base64: base64,
-          Cpf_responsavel: cpf,
-          Endereco_cliente: endereco,
-          Responsavel_cliente: nomeOuHorario,
-        });
+  //   if (quemE == 'motorista') {
+  //     navigation.navigate('CadastroVeiculo');
+  //   };
+  // };
+  // //☝️ está fazendo a lógica para qual pagina navegar
 
 
-        if (resposta != null) {
-          navigation.navigate('Login');
-        } else {
-          console.log('Usuário não encontrado');
-        }
-      }
+  // async function CadastrarCliente() {
 
-      catch (error) {
-        console.error('Erro na consulta:', error);
-      }
-    }
+  //   setLoading(true);
+  //   if (motoristaOuCliente == 'cliente') {
 
-    else {
-
-      try {
-        const resposta = await Api.post('InserirMotorista', {
-          NOME_MOTORISTA: nome,
-          ENDRECO_MOTORISTA: nomeOuHorario,
-          CPF_MOTORISTA: cpf,
-          ENDERECO_CLIENTE: endereco,
-          SENHA_CLIENTE: senha,
-          EMAIL_CLIENTE: email,
-        });
+  //     try {
+  //       // navigation.navigate('CadastroEscola');
+  //       const resposta = await axios.post('https://localhost:7149/api/Cliente/CadastrarCliente', {
+  //         Email_cliente: email,
+  //         Senha_cliente: senha,
+  //         Nome_cliente: nome,
+  //         Base64: base64,
+  //         Cpf_responsavel: cpf,
+  //         Endereco_cliente: endereco,
+  //         Responsavel_cliente: nomeOuHorario,
+  //       });
 
 
-        if (resposta != null) {
-          navigation.navigate('PerfilCliente');
-        }
-      }
+  //       if (resposta != null) {
+  //         navigation.navigate('Login');
+  //       } else {
+  //         console.log('Usuário não encontrado');
+  //       }
+  //     }
 
-      catch (error) {
-        console.error('Erro na consulta:', error);
-        setLoading(false);
-      }
-    }
-  }
+  //     catch (error) {
+  //       console.error('Erro na consulta:', error);
+  //     }
+  //   }
+
+  //   else {
+
+  //     try {
+  //       const resposta = await Api.post('InserirMotorista', {
+  //         NOME_MOTORISTA: nome,
+  //         ENDRECO_MOTORISTA: nomeOuHorario,
+  //         CPF_MOTORISTA: cpf,
+  //         ENDERECO_CLIENTE: endereco,
+  //         SENHA_CLIENTE: senha,
+  //         EMAIL_CLIENTE: email,
+  //       });
+
+
+  //       if (resposta != null) {
+  //         navigation.navigate('PerfilCliente');
+  //       }
+  //     }
+
+  //     catch (error) {
+  //       console.error('Erro na consulta:', error);
+  //       setLoading(false);
+  //     }
+  //   }
+  // }
 
   const [fonteLoaded] = useFonts({
     Montserrat_500Medium,
 
-});
+  });
 
-if (!fonteLoaded) {
+  if (!fonteLoaded) {
     return null;
-}
+  }
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
       <View style={styles.vieu}>
         <TituloCadastro textoh1={'Faça seu cadastro'} textoh2={'Insira as informações abaixo:'} />
         <View style={styles.botaoCM}>
-          <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]} onPress={botaoCliente}>
+          <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]} onPress={() => console.log(base64)}>
             <Text style={[styles.texto, { color: button1letra }]}>Cliente</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={selecionarImagem}>
+          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={console.log("")}>
             <Text style={[styles.texto, { color: button2letra }]}>Motorista</Text>
           </TouchableOpacity>
         </View>
@@ -217,7 +197,14 @@ if (!fonteLoaded) {
           )
             :
             (
-              <Touchable texto={"Prosseguir"} evento={()=> navigation.navigate("AdicionarFoto")} />
+              <Touchable texto={"Prosseguir"} evento={() => navigation.navigate("AdicionarFoto", {
+                email_cliente: email,
+                senha_cliente: senha,
+                nome_cliente: nome,
+                cpf_responsavel: cpf,
+                endereco_cliente: endereco,
+                responsavel_cliente: nomeOuHorario,
+              })} />
 
             )
 

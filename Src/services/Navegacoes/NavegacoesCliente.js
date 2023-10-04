@@ -23,7 +23,7 @@ import PagamentosMotorista from "../../PagesMotorista/PagamentosMotorista/Pagame
 import Chat from "../../Pages/Chat/Chat";
 import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
 import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFound";
-import AdcionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
+import AdicionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
 import CadastroConcluido from "../../Pages/CadastroConcluido/CadastroConcluido";
 import PerfilMotorista from "../../PagesMotorista/PerfilMotorista/PerfilMotorista";
 
@@ -206,7 +206,7 @@ export default function AppNavigator() {
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
-      <Stack.Screen name="AdicionarFoto" component={AdcionarFoto}  options={{headerShown: false}}/>
+      <Stack.Screen name="AdicionarFoto" component={AdicionarFoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>
 
       <Stack.Screen name="PerfilMotorista" component={PerfilMotorista}  options={{headerShown: false}}/>

@@ -6,13 +6,18 @@ import styles from "./AdicionarFoto.modules";
 import NotFound from "../../Componentes/NotFound";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import * as ImagePicker from 'expo-image-picker';
+import axios from "axios";
+import ApiCliente from "../../services/Api/ApiCiente";
 
-export default function AdcionarFoto() {
+const AdicionarFoto = ({ route }) => {
+
+    const { email_cliente, senha_cliente, nome_cliente, cpf_responsavel, endereco_cliente, responsavel_cliente } = route.params;
 
     const navigation = useNavigation();
 
-    const [base64, setBase64] = useState(null);
-    const [foto, setFoto] = useState(false);
+    const [_base64, setBase64] = useState("");
+    const [exibirFoto, setExibirFoto] = useState(false);
+    const [foto, setFoto] = useState(null)
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
@@ -22,70 +27,69 @@ export default function AdcionarFoto() {
         return null;
     }
 
-    
-  async function selecionarImagem() {
-    try {
 
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.5,
-        aspect: [4, 4],
-        allowsEditing: true,
-        base64: true
-      });
+    async function selecionarImagem() {
+        try {
 
-      if (result.canceled) {
-        return;
-      }
-      setBase64(result.assets[0].uri);
-      setFoto(true);
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 0.5,
+                aspect: [4, 4],
+                allowsEditing: true,
+                base64: true
+            });
 
-    }
-    catch (error) {
-      console.log(error)
-    }
-  }
+            if (result.canceled) {
+                return;
+            }
+            setBase64(result.assets[0].base64);
+            setFoto(result.assets[0].uri);
+            setExibirFoto(true);
 
-  async function CadastrarCliente() {
-
-    setLoading(true);
-    
-
-      try {
-        // navigation.navigate('CadastroEscola');
-        const resposta = await axios.post('https://localhost:7149/api/Cliente/CadastrarCliente', {
-          Email_cliente: email,
-          Senha_cliente: senha,
-          Nome_cliente: nome,
-          Base64: base64,
-          Cpf_responsavel: cpf,
-          Endereco_cliente: endereco,
-          Responsavel_cliente: nomeOuHorario,
-        });
-
-
-        if (resposta != null) {
-          navigation.navigate('Login');
-        } else {
-          console.log('Usuário não encontrado');
         }
-      }
+        catch (error) {
+            console.log(error)
+        }
+    }
 
-      catch (error) {
-        console.error('Erro na consulta:', error);
-      }
+    async function CadastrarCliente() {
+        const data = {
+            Email_cliente: email_cliente,
+            Senha_cliente: senha_cliente,
+            Nome_cliente: nome_cliente,
+            Base64: _base64,
+            Cpf_responsavel: cpf_responsavel,
+            Endereco_cliente: endereco_cliente,
+            Responsavel_cliente: responsavel_cliente,
+        }
+        console.log(_base64);
+        try {
+
+            const resposta = await ApiCliente.post('CadastrarCliente', data);
+
+
+            if (resposta != null) {
+                navigation.navigate('Login');
+            } else {
+                console.log('Usuário não encontrado');
+            }
+        }
+
+        catch (error) {
+            console.error('Erro na consulta:', error);
+        }
     }
     return (
         <View style={styles.main}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
                     <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
-                        <Ionicons name="chevron-back-outline" size={35} color={"gray"}/>
+                        <Ionicons name="chevron-back-outline" size={35} color={"gray"} />
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.divmeio}>
-            
+
                 </View>
 
                 <View style={styles.divdireita}>
@@ -96,7 +100,7 @@ export default function AdcionarFoto() {
 
             <View style={styles.divdados}>
                 <View style={styles.divimagem}>
-                    <Image style={styles.imagem} source={require("../../../assets/Logo.png")}/>
+                    <Image style={styles.imagem} source={require("../../../assets/Logo.png")} />
                 </View>
 
                 <View style={styles.divtexto}>
@@ -105,21 +109,21 @@ export default function AdcionarFoto() {
                 </View>
             </View>
 
-                {
-                    foto ? (
-                        <TouchableOpacity onPress={()=> selecionarImagem()}>
-                        <Image source={{ uri: base64 }} style={styles.foto} />
-                        </TouchableOpacity>
-                    )
+            {
+                exibirFoto ? (
+                    <TouchableOpacity onPress={() => selecionarImagem()}>
+                        <Image source={{ uri: foto }} style={styles.foto} />
+                    </TouchableOpacity>
+                )
                     :
                     (
-                        <TouchableOpacity style={styles.containerfoto} onPress={()=> selecionarImagem()}>
-                        <Ionicons name="camera-outline" size={55} color={"#F7770D"}/>
+                        <TouchableOpacity style={styles.containerfoto} onPress={() => selecionarImagem()}>
+                            <Ionicons name="camera-outline" size={55} color={"#F7770D"} />
                         </TouchableOpacity>
                     )
-                }
+            }
 
-            <TouchableOpacity style={styles.botaoconcluir}>
+            <TouchableOpacity style={styles.botaoconcluir} onPress={() => { CadastrarCliente() }}>
                 <View style={styles.alinhainicio}>
                     <Text></Text>
                 </View>
@@ -129,11 +133,13 @@ export default function AdcionarFoto() {
                 </View>
 
                 <View style={styles.alinhafim}>
-                    <Ionicons style={styles.icon} name={"chevron-forward-outline"} size={30} color="white"/>
+                    <Ionicons style={styles.icon} name={"chevron-forward-outline"} size={30} color="white" />
                 </View>
             </TouchableOpacity>
-            
+
         </View>
     )
 
 }
+
+export default AdicionarFoto;

@@ -31,7 +31,7 @@ export default function Login() {
           return;
         }
 
-        navigation.navigate('AnexarPagamentos');
+        navigation.navigate('Cadastro');
         return;
       }
 

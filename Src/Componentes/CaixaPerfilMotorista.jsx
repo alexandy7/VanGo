@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfil({responsavel, horario, endereco, endereco2, evento}) {
+export default function CaixaPerfilMotorista({veiculo, cor, cidade, horario, evento}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -22,11 +22,11 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
             <View style={styles.divsuperior}>
                 <View style={styles.ladoesquerdo}>
                     <View style={styles.divicone}>
-                        <Ionicons name="person-outline" size={30} color='#F7770D' style={styles.iconesup}/>
+                        <Ionicons name="car-outline" size={30} color='#F7770D' style={styles.iconesup}/>
                     </View>
 
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1sup}>{responsavel}</Text>
+                        <Text style={styles.texto1sup}>{veiculo}</Text>
                         <Text style={styles.texto2sup}>Responsável</Text>
                     </View>
 
@@ -35,12 +35,12 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
                 <View style={styles.ladodireito}>
 
                     <View style={styles.divicone}>
-                        <Ionicons name="time-outline" size={30} color='#F7770D' style={styles.iconesup}/>
+                        <Ionicons name="ellipse" size={30} color='gray' style={styles.iconesup}/>
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1sup}>{horario}</Text>
-                        <Text style={styles.texto2sup}>Horário</Text>
+                        <Text style={styles.texto1sup}>{cor}</Text>
+                        <Text style={styles.texto2sup}>Cor</Text>
                     </View>
 
                 </View>
@@ -53,8 +53,8 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
                     </View>
 
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{endereco}</Text>
-                        <Text style={styles.texto2inf}>Endereço</Text>
+                        <Text style={styles.texto1inf}>{cidade}</Text>
+                        <Text style={styles.texto2inf}>Cidade</Text>
                     </View>
 
                 </View>
@@ -62,12 +62,12 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
                 <View style={styles.ladodireito}>
 
                     <View style={styles.divicone}>
-                        <Ionicons name="cash-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
+                        <Ionicons name="time-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{endereco2}</Text>
-                        <Text style={styles.texto2inf}>2º Endereço</Text>
+                        <Text style={styles.texto1inf}>{horario}</Text>
+                        <Text style={styles.texto2inf}>Horário</Text>
                     </View>
                 </View>
             </View>

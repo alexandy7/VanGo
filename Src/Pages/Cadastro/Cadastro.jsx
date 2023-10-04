@@ -9,6 +9,7 @@ import styles from "./Cadastro.modules";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import ApiCliente from "../../services/Api/ApiCiente";
+import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 
 
 export default function Cadastro() {
@@ -179,7 +180,14 @@ export default function Cadastro() {
     }
   }
 
+  const [fonteLoaded] = useFonts({
+    Montserrat_500Medium,
 
+});
+
+if (!fonteLoaded) {
+    return null;
+}
 
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>

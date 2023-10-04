@@ -6,11 +6,21 @@ import styles from "./CriarTurmas.modules";
 import NotFound from "../../Componentes/NotFound";
 import { TextInput } from "react-native";
 import InputCriacao from "../../Componentes/InputCriacao";
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
 
 export default function CriarTurmas() {
 
     const navigation = useNavigation();
 
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+        Montserrat_400Regular,
+        Montserrat_600SemiBold
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
 
     return (
         <View style={styles.container}>

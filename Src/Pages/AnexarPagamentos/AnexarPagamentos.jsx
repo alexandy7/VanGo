@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AnexarPagamentos.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
-import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 export default function AnexarPagamentos() {
 
@@ -14,6 +14,7 @@ export default function AnexarPagamentos() {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
+        Montserrat_400Regular
     });
 
     if (!fonteLoaded) {
@@ -40,25 +41,10 @@ export default function AnexarPagamentos() {
 
             <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"}/>
 
-            <View style={styles.divopcoes}>
-
-                <View style={styles.divtexto}>
-                    <Text style={styles.texto}>Selecione o tipo</Text>
-                </View>
-
-                <View style={styles.divbotoes}>
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.textobotao}>Comprovante</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.botao}>
-                        <Text style={styles.textobotao}>Boleto</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
             <TouchableOpacity style={styles.divanexo} onPress={()=>{console.log('aaa')}}>
-                <Ionicons name="document-attach-outline" size={50} color='darkgray'/>
+                <Text style={styles.textodestacado}>Clique aqui</Text>
+                <Text style={styles.textoanexo}> para anexar o</Text>
+                <Text style={styles.textoanexo}>pagamento. (PNG, JPG)</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.botaoanexar}>

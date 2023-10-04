@@ -1,4 +1,4 @@
-import { Montserrat_500Medium } from "@expo-google-fonts/montserrat";
+import { Montserrat_400Regular, Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -16,14 +16,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 10
+        marginBottom: 30
     },
 
     divesquerda: {
         height: 80,
         width: "15%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignItems: "flex-end"
     },
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         height: 80,
         width: "70%",
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignItems: "center"
     },
 
@@ -55,68 +55,30 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat_500Medium"
     },
 
-    divopcoes: {
-        alignSelf: "center",
-        width: "90%",
-        height: 90,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        position: "relative",
-        bottom: 20
-    },
-
-    divtexto: {
-        width: "100%",
-        height: "40%",
-        display: "flex",
-        alignItems: "center",
-        marginTop: 50
-    },
-
-    texto: {
-        fontSize: 20,
-        fontFamily: "Montserrat_500Medium"
-    },
-
-    divbotoes: {
-        width: "100%",
-        height: "60%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-    },
-
-    botao: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "75%",
-        width: "40%",
-        backgroundColor: "white",
-        borderWidth: 1,
-        borderColor: "orange",
-        borderRadius: 15
-    },
-    
-    textobotao: {
-        fontSize: 16,
-        color: "orange",
-        fontFamily: "Montserrat_500Medium"
-    },
-
     divanexo: {
         width: "70%",
-        height: 250,
-        backgroundColor: "#e8e8e8",
+        height: 380,
+        backgroundColor: "#2525250F",
+        borderRadius: 20,
         alignSelf: "center",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 5,
-        borderColor: "darkgray",
-        marginTop: 40
+        marginTop: 15,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        alignContent: "center"
+    },
+
+    textodestacado: {
+        fontSize: 16,
+        fontFamily: "Montserrat_400Regular",
+        color: "#F7770D"
+    },
+
+    textoanexo: {
+        fontSize: 16,
+        fontFamily: "Montserrat_400Regular"
     },
 
     botaoanexar: {
@@ -126,7 +88,7 @@ const styles = StyleSheet.create({
         height: 50,
         width: "60%",
         alignSelf: "center",
-        backgroundColor: "orange",
+        backgroundColor: "#F7770D",
         borderRadius: 15,
         marginTop: 30
     },

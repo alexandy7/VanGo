@@ -1,3 +1,4 @@
+import { Montserrat_500Medium } from "@expo-google-fonts/montserrat";
 import {StyleSheet} from "react-native"
 
 const styles = StyleSheet.create({
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     texto: {
       color: 'white',
       textAlign: 'center',
+      fontFamily: "Montserrat_500Medium"
     },
   
   });

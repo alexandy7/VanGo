@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 10,
     },
 
     divesquerda: {
@@ -96,7 +95,22 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: 20
+        marginBottom: 20,
+        backgroundColor: "#e8e8e8"
+    },
+
+    foto:{
+        height: 250,
+        width: 250,
+        borderRadius: 250,
+        alignSelf: "center",
+        borderWidth: 1,
+        borderColor: "#F7770D",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 20,
+        backgroundColor: "#e8e8e8"
     },
 
     botaoconcluir: {
@@ -108,7 +122,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: "#F7770D",
         borderRadius: 15,
-        marginTop: 20,
+        marginTop: "20%",
         display: "flex",
         flexDirection: "row"
     },

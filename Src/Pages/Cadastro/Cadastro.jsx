@@ -209,7 +209,7 @@ export default function Cadastro() {
           )
             :
             (
-              <Touchable texto={"Prosseguir"} evento={CadastrarCliente} />
+              <Touchable texto={"Prosseguir"} evento={()=> navigation.navigate("AdicionarFoto")} />
 
             )
 

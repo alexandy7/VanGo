@@ -28,6 +28,8 @@ export default function PagamentosMotorista() {
     const [buttonVencido, setButtonVencido] = useState("#e0e0e0");
     const [buttonPago, setButtonPago] = useState("#e0e0e0")
 
+    const [loadingRefresh, setLoadingRefresh] = useState(false)
+
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium
     });
@@ -65,6 +67,7 @@ export default function PagamentosMotorista() {
             let json = response.data;
             setPagamentos(json);
             setListaFiltrada(json);
+            setLoadingRefresh(false);
         }
 
         catch (error) {
@@ -155,6 +158,11 @@ export default function PagamentosMotorista() {
             <FlatList
                 keyExtractor={(item) => item.id_pagamento}
                 data={lista}
+                refreshing={loadingRefresh}
+                onRefresh={() => {
+                    setLoadingRefresh(true);
+                    BuscarPagamentos();
+                }}
                 renderItem={({ item }) => {
 
                     const Color = item.situacao_pagamento === "pago" ? "#00B383" : "#F71B0D";

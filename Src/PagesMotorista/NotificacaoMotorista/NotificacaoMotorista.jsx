@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, RefreshControl, TouchableOpacity, SafeAreaView} from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Notificacao from "../../Componentes/Notificacao";
@@ -7,41 +7,42 @@ import ApiMotorista from "../../services/Api/ApiMotorista";
 import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';
 import { Token, UserData } from "../../services/Contexts/Contexts";
+import { FlatList } from "react-native";
 
 export default function NotificacaoMotorista() {
 
     const [notificacoes, setNotificacoes] = useState([]);
     const [carregamento, setCarregamento] = useState(false);
-
+    const [loadingRefresh, setLoadingRefresh] = useState(false)
     useEffect(() => {
         checkInternetConnection();
         setCarregamento(true);
-        
-        async function BuscarUsuario(){
-            try{
+        BuscarUsuario();
+    }, [])
 
-                const user = await UserData()
+    async function BuscarUsuario() {
+        try {
 
-                var token = await Token()
-                const response = await ApiMotorista.get(`LerNotificacao?idMotorista=${user.id_motorista}`, {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                        "Content-Type": "application/json",
-                    }
-                });
+            const user = await UserData()
 
-                let json = response.data;
-                setNotificacoes(json);
-                setCarregamento(false);
-            }
+            var token = await Token()
+            const response = await ApiMotorista.get(`LerNotificacao?idMotorista=${user.id_motorista}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
 
-            catch(error){
-                console.log('Houve um erro aqui', error)
-            }
+            let json = response.data;
+            setNotificacoes(json);
+            setCarregamento(false);
+            setLoadingRefresh(false);
         }
 
-        BuscarUsuario()
-    }, [])
+        catch (error) {
+            console.log('Houve um erro aqui', error)
+        }
+    }
 
     //Verifica se o usuário está conectado na internet
     const checkInternetConnection = async () => {
@@ -56,12 +57,12 @@ export default function NotificacaoMotorista() {
 
     const navigation = useNavigation();
 
-    const hoje = new Date(); // Pegando o dia de hoje 
+    const hoje = new Date();
 
     return (
-        <ScrollView style={styles.scroll}>
+        <SafeAreaView style={styles.scroll}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.seta} onPress={()=>{navigation.goBack()}}>
+                <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
                     <Ionicons name="chevron-back-outline" size={30} />
                 </TouchableOpacity>
 
@@ -79,54 +80,63 @@ export default function NotificacaoMotorista() {
                 )
                     :
                     (
+                        <FlatList
+                            keyExtractor={(Notificacoes) => Notificacoes.id_notificacao}
+                            data={notificacoes}
+                            refreshing={loadingRefresh}
+                            onRefresh={() => {
+                                setLoadingRefresh(true);
+                                BuscarUsuario();
+                            }}
+                            renderItem={({ item }) => {
 
-                        notificacoes.map((Notificacoes) => {
+                                const dataNotificacao = new Date(item.data_notificacao);
+                                const diaAnterior = hoje.getDate() - 1;
 
-                            const dataNotificacao = new Date(Notificacoes.data_notificacao);
-                            const diaAnterior = hoje.getDate() - 1;
+                                // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
+                                const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
+                                    dataNotificacao.getMonth() === hoje.getMonth() &&
+                                    dataNotificacao.getFullYear() === hoje.getFullYear();
 
-                            // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
-                            const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
-                                dataNotificacao.getMonth() === hoje.getMonth() &&
-                                dataNotificacao.getFullYear() === hoje.getFullYear();
+                                //Verifica se a notificação foi ontem 
+                                const ontem = dataNotificacao.getDate() === diaAnterior &&
+                                    dataNotificacao.getMonth() === hoje.getMonth() &&
+                                    dataNotificacao.getFullYear() === hoje.getFullYear();
 
-                            //Verifica se a notificação foi ontem 
-                            const ontem = dataNotificacao.getDate() === diaAnterior &&
-                                dataNotificacao.getMonth() === hoje.getMonth() &&
-                                dataNotificacao.getFullYear() === hoje.getFullYear();
+                                let horaOuData;
 
-                            let horaOuData;
+                                if (mesmoDia) {
+                                    // Caso seja o mesmo dia, mostra somente as horas
+                                    horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                                }
+                                else if (ontem) {
 
-                            if (mesmoDia) {
-                                // Caso seja o mesmo dia, mostra somente as horas
-                                horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-                            }
-                            else if (ontem) {
+                                    //Caso seja true, exibi "ontem" como data
+                                    horaOuData = "Ontem"
 
-                                //Caso seja true, exibi "ontem" como data
-                                horaOuData = "Ontem"
-
-                            }
-                            else {
-                                // Caso seja diferente, mostra a data completa
-                                horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                            }
+                                }
+                                else {
+                                    // Caso seja diferente, mostra a data completa
+                                    horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                }
 
 
-                            return (
-                                <Notificacao
-                                    fotouser={require('../../../assets/UserPhoto.png')}
-                                    nomeuser={Notificacoes.nome_cliente}
-                                    info={Notificacoes.mensagem_notificacao}
-                                    hora={horaOuData}
-                                    key={Notificacoes.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
-                                />
-                            )
-                        })
+                                return (
+                                    <Notificacao
+                                        fotouser={require('../../../assets/UserPhoto.png')}
+                                        nomeuser={item.nome_cliente}
+                                        info={item.mensagem_notificacao}
+                                        hora={horaOuData}
+                                        key={item.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
+                                    />
+                                )
+                            }}
+                        />
+
                     )
             }
 
-        </ScrollView>
+        </SafeAreaView>
     )
 }
 

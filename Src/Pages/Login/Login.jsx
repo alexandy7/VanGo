@@ -31,7 +31,7 @@ export default function Login() {
           return;
         }
 
-        navigation.navigate('PagamentosMotorista');
+        navigation.navigate('AnexarPagamentos');
         return;
       }
 

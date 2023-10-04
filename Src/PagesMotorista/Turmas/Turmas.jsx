@@ -20,15 +20,16 @@ export default function Turmas({ nometurma, idTurma }) {
     const [listaFiltrada, setListaFiltrada] = useState([]);
     const [searchCliente, setSearchCliente] = useState("");
 
-    const [buttonTodos, setButtonTodos] = useState("#F7770D")
-    const [textTodos, setTextTodos] = useState("white")
+    const [buttonTodos, setButtonTodos] = useState("#F7770D");
+    const [textTodos, setTextTodos] = useState("white");
     
-    const [buttonPresentes, setButtonPresentes] = useState("#C4C4C433")
-    const [textPresentes, setTextPresentes] = useState("grey")
+    const [buttonPresentes, setButtonPresentes] = useState("#C4C4C433");
+    const [textPresentes, setTextPresentes] = useState("grey");
     
-    const [buttonAusentes, setButtonAusentes] = useState("#C4C4C433")
-    const [textAusentes, setTextAusentes] = useState("grey")
+    const [buttonAusentes, setButtonAusentes] = useState("#C4C4C433");
+    const [textAusentes, setTextAusentes] = useState("grey");
 
+    const [loadingRefresh, setLoadingRefresh] = useState(false);
 
     useEffect(() => {
         BuscarUsuario()
@@ -113,6 +114,7 @@ export default function Turmas({ nometurma, idTurma }) {
         let json = response.data
         setClientes(json);
         setListaFiltrada(json)
+        setLoadingRefresh(false);
     }
 
 
@@ -160,6 +162,11 @@ export default function Turmas({ nometurma, idTurma }) {
             <FlatList
                 keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
                 data={pesquisaFiltrada}
+                refreshing={loadingRefresh}
+                onRefresh={()=> {
+                    setLoadingRefresh(true);
+                    BuscarClientesTurma();
+                }}
                 renderItem={({ item }) => {
 
                     const borderColor = item.status === "ausente" ? "red" : "green";
@@ -176,25 +183,6 @@ export default function Turmas({ nometurma, idTurma }) {
                 }}
             />
 
-
-
-            {/* <ScrollView style={styles.scroll}>
-
-                <CardAluno foto={require('../../../assets/fazueli.jpg')} nome={"João Silva Lino"} escola={"C.M Colaço"}></CardAluno>
-                <CardAluno foto={require('../../../assets/Ana.jpeg')} nome={"Ana Clara"} escola={"E.E Alguma outra"}></CardAluno>
-                <CardAluno foto={require('../../../assets/manoelgomes.jpg')} nome={"Manoel Gomes"} escola={"C.A Neta azul"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-                <CardAluno foto={require('../../../assets/gato.jpg')} nome={"Gato"} escola={"Porque gato é legal"}></CardAluno>
-
-            </ScrollView> */}
         </SafeAreaView>
     )
 }

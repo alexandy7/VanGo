@@ -18,7 +18,6 @@ export default function HomeCliente() {
 
     useEffect(() => {
         BuscarUsuario()
-
     }, [])
 
     async function BuscarUsuario() {

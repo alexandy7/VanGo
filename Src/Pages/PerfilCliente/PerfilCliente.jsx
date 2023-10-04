@@ -13,6 +13,7 @@ export default function PerfilCliente() {
     const [nomeUsuario, setNomeUsuario] = useState(' ')
     const [nomeResponsável, setNomeResponsavel] = useState(' ')
     const [enderecoUsuario, setEnderecoUsuario] = useState(' ')
+    const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ')
 
     const navigation = useNavigation()
 
@@ -22,23 +23,27 @@ export default function PerfilCliente() {
             const response = await UserData();
             setUsuario(response);
 
-            // Fazendo isto aqui pois se fizer fora da função, não vai dar tempo do `usuário` atualizar o valor
+            // Formatando as informações para caber na "caixa"
             if (response.nome_cliente) {
                 let nomeSeparado = response.nome_cliente.split(' ')
                 let nome = nomeSeparado[0] + ' ' + nomeSeparado[1]
-                setNomeUsuario(nome)
+                setNomeUsuario(nome);
 
                 let responsavelSeparado = response.responsavel_cliente.split(' ')
                 setNomeResponsavel(responsavelSeparado);
                 if(responsavelSeparado.length > 1){
 
-                    let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1]
-                    setNomeResponsavel(nomeResponsavel + '...')
+                    let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1];
+                    setNomeResponsavel(nomeResponsavel + '...');
                 }
 
-                let enderecoSeparado = response.endereco_cliente.split(' ')
-                let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1]
-                setEnderecoUsuario(endereco + '...')
+                let enderecoSeparado = response.endereco_cliente.split(' ');
+                let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1];
+                setEnderecoUsuario(endereco + '...');
+
+                let endereco2Separado = response.endereco_reserva.split(' ');
+                let endereco2 = endereco2Separado[0] + ' ' + endereco2Separado[1];
+                setEnderecoUsuario2(endereco2)
             }
 
         }
@@ -62,7 +67,7 @@ export default function PerfilCliente() {
                     <CaixaPerfil responsavel={nomeResponsável}
                         horario={"18:30"}
                         endereco={enderecoUsuario}
-                        status={"Positivo"}
+                        endereco2={"Positivo"}
                         evento={() => { navigation.navigate("EditarCliente") }}></CaixaPerfil>
                 </View>
 

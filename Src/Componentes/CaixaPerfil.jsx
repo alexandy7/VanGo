@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfil({responsavel, horario, endereco, status, evento}) {
+export default function CaixaPerfil({responsavel, horario, endereco, endereco2, evento}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -65,8 +65,8 @@ export default function CaixaPerfil({responsavel, horario, endereco, status, eve
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{status}</Text>
-                        <Text style={styles.texto2inf}>Endereço reserva</Text>
+                        <Text style={styles.texto1inf}>{endereco2}</Text>
+                        <Text style={styles.texto2inf}>2º Endereço</Text>
                     </View>
                 </View>
             </View>

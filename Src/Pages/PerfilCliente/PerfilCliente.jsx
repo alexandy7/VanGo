@@ -5,6 +5,7 @@ import Perfil from "../../Componentes/Perfil";
 import styles from "./PerfilCliente.modules.jsx"
 import { UserData } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
+import CardVerMotorista from "../../Componentes/CardVerMotorista";
 
 
 export default function PerfilCliente() {
@@ -69,9 +70,13 @@ export default function PerfilCliente() {
                         endereco={enderecoUsuario}
                         endereco2={"Positivo"}
                         evento={() => { navigation.navigate("EditarCliente") }}></CaixaPerfil>
+
+                    <CardVerMotorista/>
                 </View>
 
             </View>
+
+            
         </ScrollView>
     )
 }

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, ScrollView, ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import NotFound from "../../Componentes/NotFound";
+import SemWifi from "../../Componentes/SemWifi";
+import TurmaVazia from "../../Componentes/TurmaVazia";
+import SemNotificacao from "../../Componentes/SemNotificacao";
 
 export default function TesteDoNotFound() {
 
@@ -13,7 +16,7 @@ export default function TesteDoNotFound() {
 
     return (
         <View style={styles.container}>
-            <NotFound/>
+            <SemNotificacao/>
         </View>
     )
 }

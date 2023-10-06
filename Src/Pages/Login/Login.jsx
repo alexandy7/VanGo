@@ -31,11 +31,8 @@ export default function Login() {
           return;
         }
 
-        navigation.navigate('PerfilCliente');
+        navigation.navigate('Cadastro');
         return;
-
-        // navigation.navigate('Cadastro');
-        // return;
       }
 
       navigation.navigate('TabBarMotorista');

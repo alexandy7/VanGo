@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
     },
     
     alinha: {
-        height: 79,
+        height: 80,
         width: "75%"
     },
 
     divsuperior: {
         display: "flex",
         flexDirection: "row",
-        height: "50%",
+        height: "40%",
         alignItems: "center",
         justifyContent: "space-between"
     },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: "50%",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "flex-start"
     },
 
     nomedouser: {
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         position: "relative",
         marginLeft: "5%",
         marginBottom: "3%",
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
     },
 
     horario: {
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
         position: "relative",
         marginLeft: "3%",
         marginRight: "8%",
+        marginTop: "3%",
         fontFamily: "Montserrat_400Regular"
     },
 

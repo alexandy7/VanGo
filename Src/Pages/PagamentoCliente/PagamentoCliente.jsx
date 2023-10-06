@@ -50,9 +50,9 @@ export default function PagamentoCliente() {
                 }
             });
 
-            let json = response.data
-            setComprovantes(json)
-            setLoading(false)
+            let json = response.data;
+            setComprovantes(json);
+            setLoading(false);
         }
 
         catch (error) {
@@ -108,7 +108,7 @@ export default function PagamentoCliente() {
                         <View>
                             <Text style={styles.titulo}>Pagamentos</Text>
 
-                            <CardPagamento imagem={{ uri: usuario.foto_cliente }} nome={primeiroNome} fatura={"150,00"} icon={"checkmark-outline"} status={"Pago"} vencimento={"22/11/2023"} evento={() => navigation.navigate("AnexarPagamentos")} />
+                            
                             <View style={styles.pagamentoAtual}>
                                 <Text style={styles.ultimospagamentos}>Últimos Pagamentos</Text>
                             </View>
@@ -121,7 +121,7 @@ export default function PagamentoCliente() {
                                         comprovantes.map((Comprovante) => (
 
                                             <CardComprovante
-                                                DataVencimento={Comprovante.vencimento.substring(0, 10)}
+                                                DataVencimento={Comprovante.vencimento_mensalidade.substring(0, 10)}
                                                 DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
                                                 key={Comprovante.id_pagamento}
                                             ></CardComprovante>

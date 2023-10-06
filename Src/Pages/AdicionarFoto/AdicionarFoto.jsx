@@ -65,8 +65,7 @@ const AdicionarFoto = ({ route }) => {
         console.log(_base64);
         try {
 
-            const resposta = await ApiCliente.post('CadastrarCliente', data);
-
+            const resposta = await axios.post('https://apivango.azurewebsites.net/api/Auth/CadastrarCliente', data);
 
             if (resposta != null) {
                 navigation.navigate('Login');

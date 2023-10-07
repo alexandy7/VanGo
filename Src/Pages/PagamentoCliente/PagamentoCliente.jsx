@@ -10,15 +10,18 @@ import NotFound from "../../Componentes/NotFound";
 import { ActivityIndicator } from "react-native";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 import { BackHandler } from "react-native";
+import axios from "axios";
 export default function PagamentoCliente() {
 
     const navigation = useNavigation();
 
     const [usuario, setUsuario] = useState({});
-    const [primeiroNome, setPrimeiroNome] = useState(' ')
-    const [comprovantes, setComprovantes] = useState([]);
     const [encontrado, setEncontrado] = useState(true);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [pagamentos, setPagamentos] = useState(null);
+    const [mensalidades, setMensalidades] = useState(null);
+
+
 
     useEffect(() => {
         BuscarUsuario()
@@ -43,7 +46,7 @@ export default function PagamentoCliente() {
 
             let token = await Token()
 
-            const response = await ApiCliente.get(`ListarPagamentos/${idCliente}`, {
+            const response = await axios.get(`https://localhost:7149/api/Cliente/ListarPagamentosAndMensalidade/${1}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -51,7 +54,8 @@ export default function PagamentoCliente() {
             });
 
             let json = response.data;
-            setComprovantes(json);
+            setPagamentos(json.pagamentos);
+            setMensalidades(json.mensalidades)
             setLoading(false);
         }
 
@@ -73,13 +77,6 @@ export default function PagamentoCliente() {
         }
     };
 
-    useEffect(() => {
-        if (usuario.nome_cliente !== undefined) {
-            let nomeSeparado = usuario.nome_cliente.split(' ')
-            setPrimeiroNome(nomeSeparado[0])
-        }
-    }, [usuario])
-
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
     });
@@ -93,6 +90,21 @@ export default function PagamentoCliente() {
     //    ()=> {navigation.navigate("TabBarCliente")}
 
     // )
+
+    function formatarDataAmericana(dataAmericana) {
+        // Cria um objeto de data usando a string no formato americano
+        let dataObjeto = new Date(dataAmericana);
+    
+        // Extrai os componentes do ano, mês e dia
+        let dia = dataObjeto.getDate().toString().padStart(2, '0');
+        let mes = (dataObjeto.getMonth() + 1).toString().padStart(2, '0'); // Mês começa do zero
+        let ano = dataObjeto.getFullYear();
+    
+        // Formata a data no formato brasileiro
+        let dataBrasileira = `${dia}/${mes}/${ano}`;
+        
+        return dataBrasileira;
+    }
 
     return (
 
@@ -108,7 +120,20 @@ export default function PagamentoCliente() {
                         <View>
                             <Text style={styles.titulo}>Pagamentos</Text>
 
-                            
+                            <View>
+                                    
+                                    <CardPagamento
+                                        imagem={{ uri: usuario.foto_cliente }}
+                                        nome={usuario.nome_cliente}
+                                        valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
+                                        icon={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "checkmark" : "warning"}
+                                        color={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "green" : "red"}
+                                        status={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "pago" : "em atraso"}
+                                        vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
+                                    />
+                            </View>
+
+
                             <View style={styles.pagamentoAtual}>
                                 <Text style={styles.ultimospagamentos}>Últimos Pagamentos</Text>
                             </View>
@@ -117,12 +142,11 @@ export default function PagamentoCliente() {
                                 {
 
                                     encontrado ? (
-
-                                        comprovantes.map((Comprovante) => (
+                                        pagamentos.map((Comprovante) => (
 
                                             <CardComprovante
-                                                DataVencimento={Comprovante.vencimento_mensalidade.substring(0, 10)}
-                                                DataPagamento={Comprovante.data_pagamento.substring(0, 10)}
+                                            DataPagamento={formatarDataAmericana(Comprovante.data_pagamento.substring(0, 10))}
+                                            DataVencimento={formatarDataAmericana(Comprovante.vencimento_mensalidade.substring(0, 10))}
                                                 key={Comprovante.id_pagamento}
                                             ></CardComprovante>
                                             //substring limita a quantidade de caracteres que irá exibir

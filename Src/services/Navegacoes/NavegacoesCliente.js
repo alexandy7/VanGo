@@ -26,6 +26,7 @@ import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFoun
 import AdicionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
 import CadastroConcluido from "../../Pages/CadastroConcluido/CadastroConcluido";
 import PerfilMotorista from "../../PagesMotorista/PerfilMotorista/PerfilMotorista";
+import HomeMotorista from "../../PagesMotorista/HomeMotorista/HomeMotorista";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -192,7 +193,6 @@ export default function AppNavigator() {
 
     <Stack.Navigator>
       {/* <Stack.Screen name="TesteDoNotFound" component={TesteDoNotFound}  options={{headerShown: false}}/> */}
-      
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
@@ -220,6 +220,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Turmas" component={Turmas}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarMotorista" component={TabBarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
+      <Stack.Screen name="HomeMotorista" component={HomeMotorista}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

@@ -31,7 +31,8 @@ export default function Login() {
           return;
         }
 
-        navigation.navigate('TabBarCliente');
+        navigation.navigate('HomeMotorista');
+
         return;
       }
 

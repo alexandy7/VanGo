@@ -3,6 +3,11 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
 
+    scroll: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+
     main: {
         flex: 1,
         backgroundColor: 'white',
@@ -52,6 +57,40 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat_500Medium"
     },
 
+    containerfoto: {
+        width: "100%",
+        height: 180,
+        alignSelf: "center",
+        display: "flex",
+        alignItems: "center",
+    },
+
+    divfoto: {
+        width: 120,
+        height: 120,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 30
+    },
+
+    foto: {
+        height: "100%",
+        width: "100%",
+        borderRadius: 30
+    },
+
+    textofoto1: {
+        fontFamily: "Montserrat_400Regular",
+        color: "#F7770D",
+        fontSize: 15
+    },
+
+    textofoto2: {
+        fontFamily: "Montserrat_500Medium",
+        fontSize: 24
+    },
+
     tituloform: {
         fontSize: 18,
         marginLeft: "10%",
@@ -68,7 +107,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 20,
-        elevation: 5
+        elevation: 5,
+        marginBottom: 40
     },
 
     texto: {

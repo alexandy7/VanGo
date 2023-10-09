@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import InputEdicao from "../../Componentes/InputEdicao";
@@ -126,9 +126,9 @@ export default function EditarCliente() {
     }
 
     return (
-        <View style={styles.main}>
+        <ScrollView style={styles.scroll}>
 
-            <View>
+            <View style={styles.main}>
 
                 <InputPrompt
                     visible={confirmarEdicao}
@@ -154,6 +154,16 @@ export default function EditarCliente() {
 
                     </View>
 
+                </View>
+
+                <View style={styles.containerfoto}>
+                <TouchableOpacity style={styles.divfoto}>
+                    <Image style={styles.foto} source={require("../../../assets/Ana.jpeg")}/>
+                </TouchableOpacity>
+
+                <Text style={styles.textofoto1}>Clique para alterar a foto</Text>
+                
+                <Text style={styles.textofoto2}>Magnólia do Corsa</Text>
                 </View>
 
                 <Text style={styles.tituloform}>Nome do Aluno</Text>
@@ -197,7 +207,7 @@ export default function EditarCliente() {
                 </TouchableOpacity>
             </View>
 
-        </View>
+        </ScrollView>
     )
 
 }

@@ -168,37 +168,42 @@ export default function EditarCliente() {
 
                 <Text style={styles.tituloform}>Nome do Aluno</Text>
                 <InputEdicao
-                    icone={"body-outline"}
+                    // icone={"body-outline"}
                     valor={nomeCliente}
                     mudou={(text) => { setNomeCliente(text) }}
                 />
 
                 <Text style={styles.tituloform}>Nome do Responsável</Text>
                 <InputEdicao
-                    icone={"person-outline"}
+                    // icone={"person-outline"}
                     valor={nomeResponsavel}
                     mudou={(text) => { setNomeResponsavel(text) }}
                 />
 
                 <Text style={styles.tituloform}>Endereço</Text>
                 <InputEdicao
-                    icone={"home-outline"}
+                    // icone={"home-outline"}
                     valor={enderecoCliente}
                     mudou={(text) => { setEnderecoCliente(text) }}
                 />
 
                 <Text style={styles.tituloform}>Endereço reserva</Text>
                 <InputEdicao
-                    icone={"business-outline"}
+                    // icone={"business-outline"}
                     valor={enderecoReserva}
                     mudou={(text) => { setEnderecoReserva(text) }}
                 />
 
                 <Text style={styles.tituloform}>Escola</Text>
-                <InputEdicao icone={"book-outline"} valor={escolaCliente} mudou={(text) => setEscolaCliente(text)} />
+                <InputEdicao 
+                    // icone={"book-outline"} 
+                    valor={escolaCliente} 
+                    mudou={(text) => setEscolaCliente(text)} />
 
                 <Text style={styles.tituloform}>Horário</Text>
-                <InputEdicao icone={"time-outline"} valor={hora} />
+                <InputEdicao 
+                    // icone={"time-outline"} 
+                    valor={hora} />
 
                 <TouchableOpacity onPress={() => { setConfirmarEdicao(true) }}>
                     <View style={styles.botao}>

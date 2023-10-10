@@ -193,8 +193,7 @@ function TabBarMotorista() {
 
 export default function AppNavigator() {
   return (
-   
-
+  
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
       <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
@@ -208,8 +207,8 @@ export default function AppNavigator() {
       <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PagamentoCliente" component={PagamentoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista}  options={{headerShown: false}}/>
-
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
+      
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
       <Stack.Screen name="AdicionarFoto" component={AdicionarFoto}  options={{headerShown: false}}/>
@@ -226,8 +225,8 @@ export default function AppNavigator() {
       <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeMotorista" component={HomeMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="AceitarPagamento" component={AceitarPagamento}  options={{headerShown: false}}/>
-      <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
+      <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
     tituloform: {
         fontSize: 18,
         marginLeft: "10%",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
+        color: "#F7770D"
     },
 
     botao: {

@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
 import { useFonts, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
-export default function InputEdicao({icone, dado, valor, mudou}) {
+export default function InputEdicao({dado, valor, mudou}) {
 
     const [fonteLoaded] = useFonts ({
         Montserrat_400Regular
@@ -16,10 +16,6 @@ export default function InputEdicao({icone, dado, valor, mudou}) {
 
     return(
         <View style={styles.container}>
-
-            <View style={styles.divicon}>
-                <Ionicons style={styles.icon} name={icone} size={25} color="#b8b8b8"/>
-            </View>
 
                 <TextInput 
                 placeholder={dado}  
@@ -36,10 +32,8 @@ const styles = StyleSheet.create({
     container: {
         height: 40,
         width: "85%",
-        borderWidth: 1,
         borderRadius: 10,
-        borderColor: "lightgray",
-        backgroundColor: "#fafafa",
+        backgroundColor: "#f7f7f7",
         elevation: 3,
         display: "flex",
         paddingLeft: "3%",
@@ -50,15 +44,9 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
 
-    divicon: {
-        display: "flex",
-        justifyContent: "center",
-        width: "10%",
-    },
-
     input: {
         fontSize: 14,
-        width: "90%",
+        width: "100%",
         fontFamily: "Montserrat_400Regular"
     },
     

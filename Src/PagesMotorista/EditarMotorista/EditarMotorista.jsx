@@ -47,28 +47,28 @@ export default function EditarMotorista() {
 
             <Text style={styles.tituloform}>Nome</Text>
                 <InputEdicao
-                    icone={"person-outline"}
+                    // icone={"person-outline"}
                     valor={"nomeCliente"}
                     mudou={(text) => { setNomeCliente(text) }}
                 />
                 
                 <Text style={styles.tituloform}>Cor</Text>
                 <InputEdicao
-                    icone={"ellipse-outline"}
+                    // icone={"ellipse-outline"}
                     valor={"nomeCliente"}
                     mudou={(text) => { setNomeCliente(text) }}
                 />
 
                 <Text style={styles.tituloform}>Cidade</Text>
                 <InputEdicao
-                    icone={"business-outline"}
+                    // icone={"business-outline"}
                     valor={"nomeCliente"}
                     mudou={(text) => { setNomeCliente(text) }}
                 />
 
                 <Text style={styles.tituloform}>Horário</Text>
                 <InputEdicao
-                    icone={"time-outline"}
+                    // icone={"time-outline"}
                     valor={"nomeCliente"}
                     mudou={(text) => { setNomeCliente(text) }}
                 />

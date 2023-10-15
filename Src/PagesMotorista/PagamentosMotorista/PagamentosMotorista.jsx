@@ -20,13 +20,13 @@ export default function PagamentosMotorista() {
     }, [])
 
     const [user, setUser] = useState({});
-    const [pagamentos, setPagamentos] = useState([]);
+    const [mensalidade, setMensalidade] = useState([]);
     const [listaFiltrada, setListaFiltrada] = useState([]);
-    const [searchPagamento, setSearchPagamento] = useState("")
+    const [searchMensalidade, setSearchMensalidade] = useState("")
 
-    const [buttonTodos, setButtonTodos] = useState("#F7770D");
+    const [buttonPago, setButtonPago] = useState("#F7770D");
     const [buttonVencido, setButtonVencido] = useState("#e0e0e0");
-    const [buttonPago, setButtonPago] = useState("#e0e0e0")
+    const [buttonPendente, setButtonPendente] = useState("#e0e0e0")
 
     const [loadingRefresh, setLoadingRefresh] = useState(false)
 
@@ -52,7 +52,7 @@ export default function PagamentosMotorista() {
 
             const token = await Token();
 
-            let response = await ApiMotorista.get(`ListarComprovantesPagamento?id_motorista=${1}`, {
+            let response = await ApiMotorista.get(`ListarMensalidades?id_motorista=${1}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -65,8 +65,8 @@ export default function PagamentosMotorista() {
             }
 
             let json = response.data;
-            setPagamentos(json);
-            setListaFiltrada(json);
+            setMensalidade(json);
+            setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === "pago"));
             setLoadingRefresh(false);
         }
 
@@ -75,88 +75,80 @@ export default function PagamentosMotorista() {
         }
     }
 
-    function filtrarStatusPagamento(criterio) {
+    function filtrarStatusMensalidade(criterio) {
 
-        const filtrando = pagamentos.filter((pagamentos) => pagamentos.situacao_pagamento === criterio);
+        const filtrando = mensalidade.filter((mensalidades) => mensalidades.situacao_mensalidade === criterio);
         setListaFiltrada(filtrando);
 
         switch (criterio) {
-            case "vencido":
-                setButtonTodos("#e0e0e0");
-
-                setButtonVencido("#F7770D");
-
-                setButtonPago("#e0e0e0");
-                break;
-
             case "pago":
-                setButtonTodos("#e0e0e0");
+                setButtonPago("#F7770D");
 
                 setButtonVencido("#e0e0e0");
 
-                setButtonPago("#F7770D");
+                setButtonPendente("#e0e0e0");
                 break;
+
+            case "vencido":
+                setButtonPago("#e0e0e0");
+
+                setButtonVencido("#F7770D");
+
+                setButtonPendente("#e0e0e0");
+                break;
+
+            case "pendente": 
+                setButtonPago("#e0e0e0");
+
+                setButtonVencido("#e0e0e0");
+
+                setButtonPendente("#F7770D");
+                break;
+
         }
 
     }
 
-    function filtrarTodosPagamentos(){
-        const todosPagamentos = pagamentos;
-        setListaFiltrada(todosPagamentos);
 
-        setButtonTodos("#F7770D");
-
-        setButtonVencido("#e0e0e0");
-
-        setButtonPago("#e0e0e0");
-    }
-
-    const lista = listaFiltrada.filter((pesquisa) => pesquisa.nome_cliente.toLowerCase().includes(searchPagamento.toLocaleLowerCase()))
+    const lista = listaFiltrada.filter((pesquisa) => pesquisa.nome_cliente.toLowerCase().includes(searchMensalidade.toLocaleLowerCase()))
     return (
 
         <View style={styles.main}>
             <View style={styles.header}>
-                <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
-                        <Ionicons name="chevron-back-outline" size={30} />
-                    </TouchableOpacity>
-                </View>
+             
 
                 <View style={styles.divmeio}>
-                    <Text style={styles.titulo}>Pagamentos</Text>
+                    <Text style={styles.titulo}>Mensalidades</Text>
                 </View>
 
-                <View style={styles.divdireita}>
-
-                </View>
 
                 <View style={styles.divbarra}>
-                    <BarraDePesquisa 
-                    placeholder={"Exemplo: Ana Clara"} 
-                    valor={searchPagamento}
-                    change={(text)=>{setSearchPagamento(text)}}
+                    <BarraDePesquisa
+                        placeholder={"Exemplo: Ana Clara"}
+                        valor={searchMensalidade}
+                        change={(text) => { setSearchMensalidade(text) }}
                     />
                 </View>
             </View>
 
             <View style={styles.alinhabotoes}>
 
-                <TouchableOpacity style={[styles.botao, {backgroundColor: buttonTodos }]} onPress={()=>{filtrarTodosPagamentos()}}>
-                    <Text style={styles.textobotao}>Todos</Text>
+                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPago }]} onPress={() => { filtrarStatusMensalidade("pago") }}>
+                    <Text style={styles.textobotao}>Pago</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.botao, {backgroundColor: buttonVencido}]} onPress={()=>{filtrarStatusPagamento("vencido")}}>
+                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonVencido }]} onPress={() => { filtrarStatusMensalidade("vencido") }}>
                     <Text style={styles.textobotao}>Vencido</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.botao, {backgroundColor: buttonPago}]} onPress={()=>{filtrarStatusPagamento("pago")}}>
-                    <Text style={styles.textobotao}>Pagos</Text>
+                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPendente }]} onPress={() => { filtrarStatusMensalidade("pendente") }}>
+                    <Text style={styles.textobotao}>Pendente</Text>
                 </TouchableOpacity>
 
             </View>
 
             <FlatList
-                keyExtractor={(item) => item.id_pagamento}
+                keyExtractor={(item) => item.id_mensalidade}
                 data={lista}
                 refreshing={loadingRefresh}
                 onRefresh={() => {
@@ -165,20 +157,35 @@ export default function PagamentosMotorista() {
                 }}
                 renderItem={({ item }) => {
 
-                    const Color = item.situacao_pagamento === "pago" ? "#00B383" : "#F71B0D";
+                    const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
+                    const Seta = item.situacao_mensalidade === "pago" ? true : false;
+
                     const icon = Color === "#00B383" ? "checkmark" : "warning"
 
-                    let dataFormatada = item.vencimento.substring(0, 10).replace(/-/g, "/");
+                    let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
                     return (
                         <CardPagamento
                             imagem={{ uri: item.foto_cliente }}
                             nome={item.nome_cliente}
-                            fatura={item.valor_pagamento}
+                            valor={item.valor_mensalidade}
                             color={Color}
                             vencimento={dataFormatada}
                             icon={icon}
-                            iconcolor={Color}
-                            status={item.situacao_pagamento}
+                            status={item.situacao_mensalidade}
+                            seta={Seta}
+
+                            evento={()=> {navigation.navigate("AceitarPagamento", {
+                                imagem: item.foto_cliente,
+                                nome: item.nome_cliente,
+                                valor: item.valor_mensalidade,
+                                color: Color,
+                                vencimento: dataFormatada,
+                                icon: icon,
+                                status: item.situacao_mensalidade,
+                                comprovante: item.comprovante_pagamento,
+                                id_cliente : item.id_cliente,
+                                id_mensalidade: item.id_mensalidade
+                            })}}
                         />
                     )
                 }}

@@ -41,7 +41,7 @@ export default function SolicitarTurma() {
 
             const token = await Token()
 
-            let response = await axios.post('https://localhost:7149/api/Cliente/VerificarTurmaAndSolicitar', data, {
+            let response = await ApiCliente.post('VerificarTurmaAndSolicitar', data, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -49,7 +49,6 @@ export default function SolicitarTurma() {
             });
 
             if (response.status == 200) {
-
                 setSolicitacaoenviada(true);
             }
 

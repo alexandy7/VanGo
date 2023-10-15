@@ -62,7 +62,7 @@ const AdicionarFoto = ({ route }) => {
             Endereco_cliente: endereco_cliente,
             Responsavel_cliente: responsavel_cliente,
         }
-        console.log(_base64);
+       
         try {
 
             const resposta = await axios.post('https://apivango.azurewebsites.net/api/Auth/CadastrarCliente', data);

@@ -5,7 +5,7 @@ import { TextInput } from "react-native";
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
 
-export default function InputCriacao({icone, dado}) {
+export default function InputCriacao({icone, dado, mudou, valor}) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_400Regular,
@@ -23,7 +23,7 @@ export default function InputCriacao({icone, dado}) {
                 <Ionicons style={styles.icon} name={icone} size={30} color="#b1aeae"/>
             </View>
 
-                <TextInput placeholder={dado} placeholderTextColor= "lightgray" style={styles.input}></TextInput>
+                <TextInput onChangeText={mudou} value={valor} placeholder={dado} placeholderTextColor= "lightgray" style={styles.input}></TextInput>
 
         </View>
     )

@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AceitarPagamento.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import * as ImagePicker from 'expo-image-picker';
-import { Image } from "react-native";
+import ImageZoom from 'react-native-image-pan-zoom';
+import { Token } from "../../services/Contexts/Contexts";
+import ApiMotorista from "../../services/Api/ApiMotorista";
 
-export default function AceitarPagamento() {
+const AceitarPagamento = ({ route }) => {
 
     const navigation = useNavigation();
 
+    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade  } = route.params;
+
     const [base64, setBase64] = useState(null);
     const [foto, setFoto] = useState(null);
-    const [exibirFoto, setExibirFoto] = useState(false)
-
+    const [exibirFoto, setExibirFoto] = useState(false);
+    const [escala, setEscala] = useState(1)
     const hoje = new Date();
 
     const [fonteLoaded] = useFonts({
@@ -27,28 +31,33 @@ export default function AceitarPagamento() {
         return null;
     }
 
-    async function selecionarImagem() {
-        try {
 
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                quality: 1,
-                aspect: [5.5, 10],
-                allowsEditing: true,
-                base64: true
-            });
+    //Está recebendo um parametro para depois configurar para o motorista conseguir recusar
+    async function ConfirmarPagamento(status){
 
-            if (result.canceled) {
-                return;
+        try{
+
+            const token = await Token();
+            
+            const data = {
+                Id_cliente : id_cliente,
+                Id_mensalidade : id_mensalidade,
+                Vencimento_mensalidade: vencimento,
+                Valor_mensalidade: valor,
+                                                                                                                                    
             }
-            setBase64(result.assets[0].base64);
-            setFoto(result.assets[0].uri);
-            setExibirFoto(true);
-
+            
+            let response = await ApiMotorista.post("ConfirmarPagamento", data,  {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
         }
-        catch (error) {
-            console.log(error)
+        catch(error){
+            console.log(error);
         }
+            
     }
 
     return (
@@ -69,19 +78,44 @@ export default function AceitarPagamento() {
                 </View>
             </View>
 
-            <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"} />
+            <CardPagamento
+                imagem={{ uri: imagem }}
+                nome={nome}
+                valor={valor}
+                icon={icon}
+                status={status}
+                vencimento={vencimento}
+                color={color}
+            />
 
-            <TouchableOpacity style={styles.divanexo}>
+            <View style={styles.divanexo}>
 
-            </TouchableOpacity>
+                <ImageZoom cropWidth={300}
+                    cropHeight={350}
+                    imageWidth={300}
+                    imageHeight={350}
+                    minScale={1}
+                    doubleClickInterval={700}
+                    style={{
+                        borderRadius: 20,
+                        alignSelf: "center", justifyContent: "center", alignItems: "center",
+                    }}
+                >
+                    <Image style={styles.comprovante}
+                        source={{ uri: 'https://sampahosting.com.br/blog/wp-content/uploads/2021/02/09-pix-inter-sampahosting.jpeg' }} />
+                </ImageZoom>
 
-            <TouchableOpacity style={styles.botaoaceitar}>
+            </View>
+
+            <TouchableOpacity style={styles.botaoaceitar} onPress={()=> {ConfirmarPagamento()}}>
                 <Text style={styles.textobotaoaceitar}>Aceitar Pagamento</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.botaorecusar}>
+            <TouchableOpacity style={styles.botaorecusar} onPress={()=> {ConfirmarPagamento("recusado")}}>
                 <Text style={styles.textobotaorecusar}>Recusar Pagamento</Text>
             </TouchableOpacity>
         </ScrollView>
     )
 }
+
+export default AceitarPagamento;

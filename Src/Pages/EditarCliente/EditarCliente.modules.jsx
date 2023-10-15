@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         display: "flex",
         alignItems: "center",
+        marginBottom: "10%"
     },
 
     divfoto: {
@@ -82,20 +83,23 @@ const styles = StyleSheet.create({
 
     textofoto1: {
         fontFamily: "Montserrat_400Regular",
-        color: "#F7770D",
+        color: "#F99A4C",
         fontSize: 15
     },
 
     textofoto2: {
         fontFamily: "Montserrat_500Medium",
-        fontSize: 24
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "#F99A4C"
     },
 
     tituloform: {
         fontSize: 18,
         marginLeft: "10%",
         fontFamily: "Montserrat_500Medium",
-        color: "#F7770D"
+        color: "#F7770D",
+        marginBottom: "3%"
     },
 
     botao: {

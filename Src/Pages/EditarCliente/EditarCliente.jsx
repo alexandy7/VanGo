@@ -158,10 +158,10 @@ export default function EditarCliente() {
 
                 <View style={styles.containerfoto}>
                 <TouchableOpacity style={styles.divfoto}>
-                    <Image style={styles.foto} source={require("../../../assets/Ana.jpeg")}/>
+                    <Image style={styles.foto} source={{uri: user.foto_cliente}}/>
                 </TouchableOpacity>
 
-                <Text style={styles.textofoto1}>Clique para alterar a foto</Text>
+                <Text style={styles.textofoto1}>Alterar a foto</Text>
                 
                 <Text style={styles.textofoto2}>Magnólia do Corsa</Text>
                 </View>

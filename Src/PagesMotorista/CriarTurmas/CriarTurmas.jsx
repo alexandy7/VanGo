@@ -7,10 +7,29 @@ import NotFound from "../../Componentes/NotFound";
 import { TextInput } from "react-native";
 import InputCriacao from "../../Componentes/InputCriacao";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
+import { Token, UserData } from "../../services/Contexts/Contexts";
+import ApiMotorista from "../../services/Api/ApiMotorista";
+import axios from "axios";
 
 export default function CriarTurmas() {
 
     const navigation = useNavigation();
+
+    const [nomeTurma, setNomeTurma] = useState("");
+    const [periodoTurma, setPeriodoTurma] = useState("");
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+
+        async function buscarUsuario() {
+
+            let usuario = await UserData();
+            setUser(usuario);
+        };
+
+        buscarUsuario();
+    }, [])
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -22,18 +41,60 @@ export default function CriarTurmas() {
         return null;
     }
 
+
+    async function CriarTurma() {
+
+        try {
+
+            if(nomeTurma === "" || periodoTurma === ""){
+                console.log("Preencha todos os campos!");
+                return;
+            }
+
+            setLoading(true);
+
+            let token = await Token();
+
+            let data = {
+                Periodo_turma: periodoTurma,
+                Nome_turma: nomeTurma,
+                Id_motorista_turma: user.id_motorista
+            };
+
+            let response = await ApiMotorista.post("CriarTurma", data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (response.status != 200) {
+                console.log("Este nome já existe");
+                return;
+            }
+
+            setLoading(false);
+            navigation.navigate("TabBarMotorista")
+
+        }
+        catch (error) {
+            console.log(error);
+            setLoading(false);
+            return;
+        }
+    }
     return (
         <View style={styles.container}>
 
             <View style={styles.caixaheader}>
                 <View style={styles.divseta}>
-                    <Ionicons style={styles.seta} name={"chevron-back-outline"} size={50} color="orange"/>
+                    <Ionicons style={styles.seta} name={"chevron-back-outline"} size={50} color="black" />
                 </View>
 
                 <View style={styles.divimagem}>
-                    <Image style={styles.logo} source={require("../../../assets/Logo.png")}/>
+                    <Image style={styles.logo} source={require("../../../assets/Logo.png")} />
                 </View>
-            
+
 
                 {/* essa div é criada para manter a seta no mesmo nível do icone
                 sem empurrar a logo */}
@@ -50,28 +111,36 @@ export default function CriarTurmas() {
             </View>
 
             <View style={styles.divinputs}>
-                <InputCriacao icone={"grid"} dado={"Nome da Turma"}/>
-                <InputCriacao icone={"time-outline"} dado={"Horário"}/>
+                <InputCriacao mudou={(text) => setNomeTurma(text)} icone={"grid"} dado={"Nome da Turma"} />
+                <InputCriacao mudou={(text) => setPeriodoTurma(text)} icone={"time-outline"} dado={"Periodo"} />
             </View>
 
             <View style={styles.divbotoes}>
 
-            <TouchableOpacity style={styles.botaoconcluir}>
-                {/* esse espaço vazio é usado para alinhar texto do botão ao meio */}
-                <View style={styles.alinhainicio}>
-                    <Text></Text>
-                </View>
+                <TouchableOpacity style={styles.botaoconcluir} onPress={() => CriarTurma()}>
+                    {/* esse espaço vazio é usado para alinhar texto do botão ao meio */}
+                    <View style={styles.alinhainicio}>
+                        <Text></Text>
+                    </View>
 
-                <View style={styles.alinhameio}>
-                    <Text style={styles.textoconcluir}>Criar turma</Text>
-                </View>
+                    {
+                        loading ? (
+                            <View style={styles.alinhameio}>
+                            <Text style={styles.textoconcluir}><ActivityIndicator color="white"/></Text>
+                        </View>
 
-                <View style={styles.alinhafim}>
-                    <Ionicons style={styles.icon} name={"chevron-forward-outline"} size={30} color="white"/>
-                </View>
-            </TouchableOpacity>
+                        )
+                            :
+                            (
+                                <View style={styles.alinhameio}>
+                                    <Text style={styles.textoconcluir}>Criar turma</Text>
+                                </View>
 
-            {/* <TouchableOpacity style={styles.botaovoltar}>
+                            )
+                    }
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity style={styles.botaovoltar}>
                 <View style={styles.alinhainicio}>
                     <Ionicons style={styles.icon} name={"chevron-back-outline"} size={30} color="orange"/>
                 </View>

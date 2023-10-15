@@ -16,7 +16,7 @@ export default function NotFound() {
 
     return(
         <View style={styles.container}>
-            <Image style={styles.imagem} source={require("../../assets/Naoencontrado.jpeg")}/>  
+            <Image style={styles.imagem} source={require("../../assets/naoEncontrado.png")}/>  
             <Text style={styles.texto}>Ops, nada por aqui</Text>
         </View>
 
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     },
 
     imagem: {
-        height: "30%",
-        width: "45%",
+        height: "40%",
+        width: "70%",
         alignSelf: "center"
     },
 

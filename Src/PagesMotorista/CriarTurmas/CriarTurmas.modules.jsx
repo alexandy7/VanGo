@@ -103,19 +103,13 @@ const styles = StyleSheet.create({
     icon: {
         top: 0
     },
-
-    alinhainicio: {
-        width: "15%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "flex-end"
-    },
     
     alinhameio: {
         width: "70%",
         height: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        alignSelf: "center"
     },
 
     alinhafim: {

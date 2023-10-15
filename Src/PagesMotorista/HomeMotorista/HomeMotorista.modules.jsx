@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: "5%",
         color: "white",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
     },
 
     divicones: {

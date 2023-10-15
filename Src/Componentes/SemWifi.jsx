@@ -4,8 +4,6 @@ import { useFonts, Montserrat_600SemiBold} from "@expo-google-fonts/montserrat"
 
 export default function SemWifi() {
 
-        
-
         const [fonteLoaded] = useFonts({
             Montserrat_600SemiBold,
         });
@@ -30,6 +28,7 @@ const styles = StyleSheet.create({
         width: 300,
         alignSelf: "center",
         justifyContent: "center",
+        alignItems: "center",
     },
 
     imagem: {

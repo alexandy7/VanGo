@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/BotaoHome";
@@ -11,24 +11,50 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 import { BackHandler } from "react-native";
 import { Alert } from "react-native";
+import ApiMotorista from "../../services/Api/ApiMotorista";
 
 export default function HomeMotorista() {
 
     const navigation = useNavigation();
     const [user, setUser] = useState({});
+    const [turmas, setTurmas] = useState([]);
 
     useEffect(() => {
-        BuscarUsuario()
+        BuscarUsuario();
     }, [])
 
     async function BuscarUsuario() {
         const usuario = await UserData();
-        setUser(usuario)
+        setUser(usuario);
+        BuscarTurmas();
+    }
+
+    async function BuscarTurmas() {
+
+        try {
+
+            let token = await Token();
+
+            let response = await ApiMotorista.get(`ListarTurmas/${1}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            let json = response.data;
+            setTurmas(json);
+            console.log(json);
+        }
+
+        catch (error) {
+            console.log(error);
+        };
     }
 
     let primeiroNome = '';
-    if (user.nome_cliente) {
-        primeiroNome = user.nome_cliente.split(' ')
+    if (user.nome_motorista) {
+        primeiroNome = user.nome_motorista.split(' ')
     }
 
     const [fonteLoaded] = useFonts({
@@ -39,38 +65,7 @@ export default function HomeMotorista() {
     if (!fonteLoaded) {
         return null;
     }
-
-
-    async function EnviarAusencia() {
-
-        try {
-
-            const token = await Token()
-            let diaAusencia = new Date()
-
-            const data = {
-                Nome_cliente: user.nome_cliente,
-                Foto_cliente: user.foto_cliente,
-                Escola_cliente: user.escola_cliente,
-                Motivo_ausencia: "sou foada",
-                Data_ausencia: diaAusencia,
-                Id_cliente: user.id_cliente,
-                Id_motorista: user.id_motorista
-
-            }
-
-            await ApiCliente.post("InformarAusencia", data, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                }
-            })
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-
+    
 
     return (
 
@@ -79,7 +74,7 @@ export default function HomeMotorista() {
 
                 <View style={styles.alinhanomefoto}>
                     <View style={styles.divfoto}>
-                        <Image style={styles.foto} source={{ uri: user.foto_cliente }}></Image>
+                        <Image style={styles.foto} source={{ uri: user.foto_motorista }}></Image>
                     </View>
 
                     <View style={styles.divnome}>
@@ -104,12 +99,12 @@ export default function HomeMotorista() {
 
             <View style={styles.divbotoes}>
 
-                <TouchableOpacity style={styles.alinhabotao}>
+                <TouchableOpacity style={styles.alinhabotao} onPress={() => navigation.navigate("CriarTurmas")}>
                     <BotaoHome icone={"duplicate"} texto="Nova Turma" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao}
-                    onPress={() => { navigation.navigate('AnexarPagamentos') }}>
+                    onPress={() => { navigation.navigate('SolicitacoesTurmaMotorista') }}>
                     <BotaoHome icone={"mail"} texto="Solicitação" />
                 </TouchableOpacity>
 
@@ -118,9 +113,22 @@ export default function HomeMotorista() {
                 </TouchableOpacity>
             </View>
 
-            <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
-            <CardTurma nome={"Turma da tarde"} chave={user.turma_cliente} horarioinic={"13:00"} horariofin={"18:00"}></CardTurma>
+            <FlatList
+                style={{ flex: 1, height: 100}}
+                keyExtractor={(item) => item.id_turma}
+                data={turmas}
+                
+                renderItem={({ item }) => {
 
+                    return (
+                        <CardTurma
+                            nome={item.nome_turma}
+                            chave={item.id_turma}
+                            horarioinic={item.periodo_turma}
+                        />
+                    )
+                }}
+            />
 
         </View>
     )

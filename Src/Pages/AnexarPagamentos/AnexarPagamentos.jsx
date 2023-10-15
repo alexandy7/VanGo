@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
@@ -7,16 +7,28 @@ import CardPagamento from "../../Componentes/CardPagamento";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import * as ImagePicker from 'expo-image-picker';
 import { Image } from "react-native";
-
-export default function AnexarPagamentos() {
+import { Token, UserData } from "../../services/Contexts/Contexts";
+import axios from "axios";
+import ApiCliente from "../../services/Api/ApiCiente";
+import NetInfo from '@react-native-community/netinfo';
+import SemWifi from "../../Componentes/SemWifi";
+const AnexarPagamentos = ({ route }) => {
 
     const navigation = useNavigation();
 
+    const { valor, icon, color, status, vencimento, idMensalidade } = route.params;
+
     const [base64, setBase64] = useState(null);
     const [foto, setFoto] = useState(null);
-    const [exibirFoto, setExibirFoto] = useState(false)
-
+    const [exibirFoto, setExibirFoto] = useState(false);
+    const [usuario, setUsuario] = useState({});
+    const [conexao, setConexao] = useState(true)
     const hoje = new Date();
+
+
+    useEffect(() => {
+        ChecarConexao();
+    }, [])
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -27,24 +39,76 @@ export default function AnexarPagamentos() {
         return null;
     }
 
+    async function ChecarConexao() {
+        const state = await NetInfo.fetch();
+        console.log(state.isConnected)
+        if (state.isConnected) {
+            BuscarUsuario();
+        }
+        else {
+            setConexao(false)
+        }
+    }
+    async function BuscarUsuario() {
+        try {
+
+            let user = await UserData();
+            setUsuario(user);
+            // console.log(user)
+        }
+
+        catch (error) {
+            console.log(error)
+        }
+    }
+
     async function selecionarImagem() {
         try {
 
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 quality: 1,
-                aspect: [5.5, 10],
-                allowsEditing: true,
                 base64: true
             });
 
             if (result.canceled) {
                 return;
             }
+
             setBase64(result.assets[0].base64);
             setFoto(result.assets[0].uri);
             setExibirFoto(true);
 
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    async function EnviarPagamento() {
+
+        try {
+
+            let token = await Token();
+
+            let data = {
+                Id_mensalidade: idMensalidade,
+                Comprovante_pagamento_Base64: base64
+            }
+
+            let response = await ApiCliente.post("EnviarPagamento", data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
+
+            if (response.status !== 200) {
+                console.log("Houve um erro...");
+                return;
+            }
+
+            navigation.navigate("PagamentoCliente");
         }
         catch (error) {
             console.log(error)
@@ -69,28 +133,50 @@ export default function AnexarPagamentos() {
                 </View>
             </View>
 
-            <CardPagamento imagem={require('../../../assets/gato.jpg')} nome={"Matriona"} fatura={"80,00"} icon={"warning-outline"} status={"Em atraso"} vencimento={"10/12/2023"} />
 
             {
-                exibirFoto ? (
-                    <TouchableOpacity onPress={() => { selecionarImagem() }}>
-                        <Image source={{ uri: foto }} style={styles.divanexo} />
-                    </TouchableOpacity>
+                conexao ? (
+                    <View>
+                        <CardPagamento
+                            imagem={{ uri: usuario.foto_cliente }}
+                            nome={usuario.nome_cliente}
+                            valor={valor}
+                            icon={icon}
+                            status={status}
+                            vencimento={vencimento}
+                            color={color}
+                            seta={true}
+                        />
+
+
+                        {
+                            exibirFoto ? (
+                                <TouchableOpacity onPress={() => { selecionarImagem() }} style={[styles.divanexo, { borderColor: "black", borderWidth: 0.5 }]}>
+                                    <Image source={{ uri: foto }} style={styles.imagem} />
+                                </TouchableOpacity>
+                            )
+                                :
+                                (
+                                    <TouchableOpacity style={styles.divanexo} onPress={() => { selecionarImagem() }}>
+                                        <Text style={styles.textodestacado}>Clique aqui</Text>
+                                        <Text style={styles.textoanexo}> para anexar o</Text>
+                                        <Text style={styles.textoanexo}>pagamento. (PNG, JPG)</Text>
+                                    </TouchableOpacity>
+                                )
+                        }
+
+                        <TouchableOpacity style={styles.botaoanexar} onPress={() => { EnviarPagamento() }}>
+                            <Text style={styles.textoanexar}>Enviar Anexo</Text>
+                        </TouchableOpacity>
+                    </View>
                 )
                     :
                     (
-
-                        <TouchableOpacity style={styles.divanexo} onPress={() => { selecionarImagem() }}>
-                            <Text style={styles.textodestacado}>Clique aqui</Text>
-                            <Text style={styles.textoanexo}> para anexar o</Text>
-                            <Text style={styles.textoanexo}>pagamento. (PNG, JPG)</Text>
-                        </TouchableOpacity>
+                        <SemWifi></SemWifi>
                     )
             }
-
-            <TouchableOpacity style={styles.botaoanexar}>
-                <Text style={styles.textoanexar}>Enviar Anexo</Text>
-            </TouchableOpacity>
         </ScrollView>
     )
 }
+
+export default AnexarPagamentos;

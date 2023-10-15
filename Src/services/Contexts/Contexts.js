@@ -19,17 +19,17 @@ export async function VerificarLogin() {
     const token = await AsyncStorage.getItem("@jwt");
     if (!token) {
         return false;
-    }
+    };
 
     const user = JSON.parse(await AsyncStorage.getItem("@userData"));
 
-    let date = new Date()
-    let nowDate = date.getDate()
+    let date = new Date();
+    let nowDate = date.getDate();
 
     if(nowDate > user.exp){
-        RemoverToken()
+        RemoverToken();
         return;
-    }
+    };
 
     return user;
 };

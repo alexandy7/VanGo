@@ -26,12 +26,12 @@ export default function Login() {
 
       if (usuarioLogado.id_cliente) {
 
-        if (!usuarioLogado.turma_cliente) {
+        if (usuarioLogado.turma_cliente === "") {
           navigation.navigate('SolicitarTurma');
           return;
         }
 
-        navigation.navigate('HomeMotorista');
+        navigation.navigate('TabBarCliente');
 
         return;
       }
@@ -91,7 +91,7 @@ export default function Login() {
 
   useEffect(() => {
     VerificarLoginUsuario();
-  }, [])
+  }, []);
 
   const [fonteLoaded] = useFonts({
     Montserrat_500Medium,
@@ -100,7 +100,7 @@ export default function Login() {
 
   if (!fonteLoaded) {
     return null;
-  }
+  };
 
   return (
     <ScrollView>
@@ -130,7 +130,7 @@ export default function Login() {
               )
                 :
                 (
-                  <Touchable texto={"Continuar"} evento={login} />
+                  <Touchable texto={"Continuar"} evento={()=> login()} />
 
                 )
 

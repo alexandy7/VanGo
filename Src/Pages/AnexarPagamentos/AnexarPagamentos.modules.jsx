@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
     divanexo: {
         width: "70%",
-        height: 380,
+        height: 400,
         backgroundColor: "#2525250F",
         borderRadius: 20,
         alignSelf: "center",
@@ -67,7 +67,21 @@ const styles = StyleSheet.create({
         marginTop: 15,
         flexDirection: "row",
         flexWrap: "wrap",
-        alignContent: "center"
+        alignContent: "center",
+        
+    },
+    
+    divFoto:{
+        elevation: 10,
+        borderColor: "black",
+        borderWidth: 1
+    },
+
+    imagem:{
+        height: "100%",
+        width: "100%",
+        borderRadius: 20,
+        resizeMode: 'contain', //Faz para a foto ser exibida por completo dentro do Touchable
     },
 
     textodestacado: {
@@ -90,7 +104,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: "#F7770D",
         borderRadius: 15,
-        marginTop: 30
+        marginTop: 50
     },
 
     textoanexar: {

@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardVerMotorista({ imagem, nome, id_turma }) {
+export default function CardVerMotorista({ imagem, nome, id_turma, evento }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -16,13 +16,13 @@ export default function CardVerMotorista({ imagem, nome, id_turma }) {
     return (
         <View style={styles.container}>
             <View style={styles.divimagem}>
-                <Image style={styles.imagem} source={require("../../assets/fazueli.jpg")} />
+                <Image style={styles.imagem} source={imagem} />
             </View>
 
             <View style={styles.divinfos}>
-                <Text style={styles.nome}>{"Tio Barnabé"}</Text>
-                <Text style={styles.chave}>{"#214125"}</Text>
-                <TouchableOpacity style={styles.botao}>
+                <Text style={styles.nome}>{nome}</Text>
+                <Text style={styles.chave}>{id_turma}</Text>
+                <TouchableOpacity style={styles.botao} onPress={evento}>
                     <Text style={styles.textobotao}>Exibir Perfil</Text>
                 </TouchableOpacity>
             </View>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     container: {
         height: 100,
         width: "80%",
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 10,
         alignSelf: "center",
         marginTop: 30,

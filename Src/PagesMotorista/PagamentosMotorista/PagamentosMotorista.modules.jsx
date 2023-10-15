@@ -24,28 +24,10 @@ header: {
     flexWrap: "wrap",
 },
 
-divesquerda: {
-    height: 60,
-    width: "15%",
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-},
-
 divmeio: {
     height: 60,
-    width: "70%",
-    display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center"
-},
-
-divdireita: {
-    height: 60,
-    width: "15%",   
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    alignSelf: "center"
 },
 
 divbarra: {

@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { FlatList, ScrollView, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import CardPagamento from "../../Componentes/CardPagamento";
 import CardComprovante from "../../Componentes/CardComprovante";
@@ -20,7 +20,7 @@ export default function PagamentoCliente() {
     const [loading, setLoading] = useState(true);
     const [pagamentos, setPagamentos] = useState(null);
     const [mensalidades, setMensalidades] = useState(null);
-
+    const [semMensalidade, setSemMensalidade] = useState(true);
 
 
     useEffect(() => {
@@ -31,12 +31,12 @@ export default function PagamentoCliente() {
     async function BuscarUsuario() {
         try {
             const response = await UserData();
-            setUsuario(response)
-            BuscarComprovantes(response.id_cliente) // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
+            setUsuario(response);
+            BuscarComprovantes(response.id_cliente); // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
         }
 
         catch (error) {
-            console.error('Houve um erro: ', error)
+            console.error('Houve um erro: ', error);
         }
     }
 
@@ -46,7 +46,7 @@ export default function PagamentoCliente() {
 
             let token = await Token()
 
-            const response = await axios.get(`https://localhost:7149/api/Cliente/ListarPagamentosAndMensalidade/${1}`, {
+            const response = await ApiCliente.get(`ListarPagamentosAndMensalidade/${idCliente}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -54,15 +54,26 @@ export default function PagamentoCliente() {
             });
 
             let json = response.data;
+
             setPagamentos(json.pagamentos);
-            setMensalidades(json.mensalidades)
+            setMensalidades(json.mensalidades);
+    
+            if(json.mensalidades === 0){
+                setSemMensalidade(true);
+            };
+
+            if (json.pagamentos.length === 0) {
+                console.log("1sqswqqw1")
+                setEncontrado(false);
+            };
+            
             setLoading(false);
         }
 
         catch (error) {
 
-            setLoading(false)
-            setEncontrado(false)
+            setLoading(false);
+            setEncontrado(false);
 
             if (error.response) {
                 // Se for uma resposta de erro HTTP
@@ -74,7 +85,7 @@ export default function PagamentoCliente() {
                 // Se for um erro de outra natureza
                 console.log('Erro desconhecido:', error.message);
             }
-        }
+        };
     };
 
     const [fonteLoaded] = useFonts({
@@ -94,21 +105,22 @@ export default function PagamentoCliente() {
     function formatarDataAmericana(dataAmericana) {
         // Cria um objeto de data usando a string no formato americano
         let dataObjeto = new Date(dataAmericana);
-    
+
         // Extrai os componentes do ano, mês e dia
         let dia = dataObjeto.getDate().toString().padStart(2, '0');
         let mes = (dataObjeto.getMonth() + 1).toString().padStart(2, '0'); // Mês começa do zero
         let ano = dataObjeto.getFullYear();
-    
+
         // Formata a data no formato brasileiro
         let dataBrasileira = `${dia}/${mes}/${ano}`;
-        
+
         return dataBrasileira;
     }
 
     return (
 
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
+
             {
 
                 loading ? (
@@ -121,16 +133,52 @@ export default function PagamentoCliente() {
                             <Text style={styles.titulo}>Pagamentos</Text>
 
                             <View>
+
+                               { 
+                               semMensalidade ? (
+
+                                <CardPagamento
+                                imagem={{ uri: usuario.foto_cliente }}
+                                pago={true}
+                                />
+                                  
+                                    )
+                                    :
+                                    (
+                                        <CardPagamento
+                                   evento={() => navigation.navigate("AnexarPagamentos", {
+                                        valor: mensalidades[mensalidades.length - 1].valor_mensalidade,
+                                        
+                                        icon: (mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" || [mensalidades.length - 1].situacao_mensalidade === "pendente") ? "checkmark" : "warning",
+                                        
+                                        color: mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" ? "green" : "red",
+                                        
+                                        status: mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" ? "pago" : "em atraso",
+                                        
+                                        vencimento: formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10)),
+                                        
+                                        idMensalidade: mensalidades[mensalidades.length - 1].id_mensalidade
+                                    })}
+
+
+                                    imagem={{ uri: usuario.foto_cliente }}
+
+                                    nome={usuario.nome_cliente}
                                     
-                                    <CardPagamento
-                                        imagem={{ uri: usuario.foto_cliente }}
-                                        nome={usuario.nome_cliente}
-                                        valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
-                                        icon={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "checkmark" : "warning"}
-                                        color={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "green" : "red"}
-                                        status={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" ? "pago" : "em atraso"}
-                                        vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
+                                    valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
+                                    
+                                    icon={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "checkmark" : "warning"}
+                                    
+                                    color={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "green" : "red"}
+                                    
+                                    status={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "pago" : "em atraso"}
+                                    
+                                    vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
+                                    
+                                    seta={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? true : false}
                                     />
+                                    )
+                                }
                             </View>
 
 
@@ -140,29 +188,34 @@ export default function PagamentoCliente() {
 
                             <View style={styles.Comprovantes}>
                                 {
-
                                     encontrado ? (
-                                        pagamentos.map((Comprovante) => (
 
-                                            <CardComprovante
-                                            DataPagamento={formatarDataAmericana(Comprovante.data_pagamento.substring(0, 10))}
-                                            DataVencimento={formatarDataAmericana(Comprovante.vencimento_mensalidade.substring(0, 10))}
-                                                key={Comprovante.id_pagamento}
-                                            ></CardComprovante>
-                                            //substring limita a quantidade de caracteres que irá exibir
-                                        ))
+                                        <FlatList
+                                            keyExtractor={(item) => item.id_pagamento}
+                                            data={pagamentos}
+                                            renderItem={({ item }) => {
+
+                                                return (
+                                                    <CardComprovante
+                                                        DataPagamento={formatarDataAmericana(item.data_pagamento.substring(0, 10))}
+                                                        DataVencimento={formatarDataAmericana(item.vencimento_mensalidade.substring(0, 10))}
+                                                        key={item.id_pagamento}
+                                                    ></CardComprovante>
+                                                    //substring limita a quantidade de caracteres que irá exibir
+                                                )
+                                            }}
+                                        />
                                     )
                                         :
                                         (
                                             <NotFound></NotFound>
-
                                         )
                                 }
                             </View>
                         </View>
                     )
             }
-        </ScrollView>
+        </View>
     )
 }
 

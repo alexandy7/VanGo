@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfil({responsavel, horario, endereco, endereco2, evento}) {
+export default function CaixaPerfil({texto1, titulotexto1, icontexto1, texto2, titulotexto2, icontexto2, texto3, titulotexto3, icontexto3, texto4, titulotexto4, icontexto4, brushOrChat, evento}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -22,12 +22,12 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
             <View style={styles.divsuperior}>
                 <View style={styles.ladoesquerdo}>
                     <View style={styles.divicone}>
-                        <Ionicons name="person-outline" size={30} color='#F7770D' style={styles.iconesup}/>
+                        <Ionicons name={icontexto1} size={30} color='#F7770D' style={styles.iconesup}/>
                     </View>
 
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1sup}>{responsavel}</Text>
-                        <Text style={styles.texto2sup}>Responsável</Text>
+                        <Text style={styles.texto1sup}>{texto1}</Text>
+                        <Text style={styles.texto2sup}>{titulotexto1}</Text>
                     </View>
 
                 </View>
@@ -35,12 +35,12 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
                 <View style={styles.ladodireito}>
 
                     <View style={styles.divicone}>
-                        <Ionicons name="time-outline" size={30} color='#F7770D' style={styles.iconesup}/>
+                        <Ionicons name={icontexto2} size={30} color='#F7770D' style={styles.iconesup}/>
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1sup}>{horario}</Text>
-                        <Text style={styles.texto2sup}>Horário</Text>
+                        <Text style={styles.texto1sup}>{texto2}</Text>
+                        <Text style={styles.texto2sup}>{titulotexto2}</Text>
                     </View>
 
                 </View>
@@ -49,12 +49,12 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
             <View style={styles.divinferior}>
                 <View style={styles.ladoesquerdo}>
                     <View style={styles.divicone}>
-                        <Ionicons name="business-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
+                        <Ionicons name={icontexto3} size={30} color='#F7770D' style={styles.iconeinf}/>
                     </View>
 
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{endereco}</Text>
-                        <Text style={styles.texto2inf}>Endereço</Text>
+                        <Text style={styles.texto1inf}>{texto3}</Text>
+                        <Text style={styles.texto2inf}>{titulotexto3}</Text>
                     </View>
 
                 </View>
@@ -62,19 +62,19 @@ export default function CaixaPerfil({responsavel, horario, endereco, endereco2, 
                 <View style={styles.ladodireito}>
 
                     <View style={styles.divicone}>
-                        <Ionicons name="cash-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
+                        <Ionicons name={icontexto4} size={30} color='#F7770D' style={styles.iconeinf}/>
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{endereco2}</Text>
-                        <Text style={styles.texto2inf}>2º Endereço</Text>
+                        <Text style={styles.texto1inf}>{texto4}</Text>
+                        <Text style={styles.texto2inf}>{titulotexto4} </Text>
                     </View>
                 </View>
             </View>
 
             <View style={styles.divpincel}>
                 <TouchableOpacity onPress={evento}>
-                    <Ionicons name="brush" size={20} color='#F7770D' style={styles.iconepincel}/>
+                    <Ionicons name={brushOrChat} size={20} color='#F7770D' style={styles.iconepincel}/>
                 </TouchableOpacity>
             </View>
 

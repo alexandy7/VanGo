@@ -2,13 +2,11 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     
-    main: {
+    container: {
         flex: 1,
-    },
-
-    scroll: {
         backgroundColor: "white"
     },
+
 
     header: {
         display: "flex",

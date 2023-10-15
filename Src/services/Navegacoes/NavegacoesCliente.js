@@ -22,7 +22,6 @@ import NotificacaoCliente from "../../Pages/NotificacaoCliente/NotificacaoClient
 import PagamentosMotorista from "../../PagesMotorista/PagamentosMotorista/PagamentosMotorista";
 import Chat from "../../Pages/Chat/Chat";
 import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
-import TesteDoNotFound from "../../PagesMotorista/TesteDoNotFound/TesteDoNotFound";
 import AdicionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
 import CadastroConcluido from "../../Pages/CadastroConcluido/CadastroConcluido";
 import PerfilMotorista from "../../PagesMotorista/PerfilMotorista/PerfilMotorista";
@@ -117,7 +116,7 @@ function TabBarMotorista() {
   return (
     <Tab.Navigator
     /* Estilizando tudo do Tab.Navigator */
-    initialRouteName="HomeCliente"
+    initialRouteName="HomeMotorista"
     screenOptions={{
       tabBarShowLabel: false,
       tabBarStyle: {
@@ -134,8 +133,8 @@ function TabBarMotorista() {
     }}> 
         <Tab.Screen
           /* Estilizando cada elemento especifico do Tab.Navigator */
-          name="PagamentoCliente"
-          component={PagamentoCliente}
+          name="PagamentosMotorista"
+          component={PagamentosMotorista}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size, focused }) => {
@@ -154,8 +153,8 @@ function TabBarMotorista() {
           />
 
       <Tab.Screen
-        name="HomeCliente"
-        component={HomeCliente}
+        name="HomeMotorista"
+        component={HomeMotorista}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => {
@@ -171,8 +170,8 @@ function TabBarMotorista() {
 
 
       <Tab.Screen
-        name="PerfilCliente"
-        component={PerfilCliente}
+        name="PerfilMotorista"
+        component={PerfilMotorista}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => {

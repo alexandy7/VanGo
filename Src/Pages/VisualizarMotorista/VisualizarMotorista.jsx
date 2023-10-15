@@ -8,8 +8,9 @@ import CaixaVisualizacaoMotorista from "../../Componentes/CaixaVisualizacaoMotor
 import PerfilVisualizacao from "../../Componentes/PerfilVisualizacao";
 
 
-export default function VisualizarMotorista() {
+const VisualizarMotorista = ({ route }) => {
 
+    const { nome_motorista, foto_motorista, periodo_atuacao_motorista, endereco_motorista } = route.params;
     const navigation = useNavigation()
 
     return (
@@ -18,7 +19,6 @@ export default function VisualizarMotorista() {
             <View>
 
                 <PerfilVisualizacao
-                    
                     fotoUser={require("../../../assets/fazueli.jpg")}
                     nomeUser={"Tio Barnabé"}>
                 </PerfilVisualizacao>
@@ -29,10 +29,12 @@ export default function VisualizarMotorista() {
                         cor={"Cinza"}
                         cidade={"Vila dirce"}
                         horario={"08:00-12:00"}
-                        ></CaixaVisualizacaoMotorista>
+                    ></CaixaVisualizacaoMotorista>
                 </View>
 
             </View>
         </ScrollView>
     )
-}
+};
+
+export default VisualizarMotorista;

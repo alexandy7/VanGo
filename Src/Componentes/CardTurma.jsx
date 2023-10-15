@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
         display: "flex",
         backgroundColor: "white",
         elevation: 5,
-        marginBottom: 20
     },
 
     divsuperior: {

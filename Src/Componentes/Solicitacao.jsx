@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     botaoaceitar: {
         height: "70%",
         width: "40%",
-        backgroundColor: "orange",
+        backgroundColor: "#F7770D",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

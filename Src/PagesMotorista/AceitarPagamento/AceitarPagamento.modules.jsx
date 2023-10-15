@@ -58,16 +58,16 @@ const styles = StyleSheet.create({
     divanexo: {
         width: "75%",
         height: 340,
-        backgroundColor: "#2525250F",
-        borderRadius: 20,
         alignSelf: "center",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 15,
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignContent: "center"
+        marginTop: "5%",
+        marginBottom: "10%"
+    },
+
+    comprovante:{
+        width: "100%",
+        height: "100%",
+        resizeMode: 'contain', 
+        borderRadius: 20,
     },
 
     textodestacado: {

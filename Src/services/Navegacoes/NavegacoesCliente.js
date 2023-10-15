@@ -30,6 +30,7 @@ import AceitarPagamento from "../../PagesMotorista/AceitarPagamento/AceitarPagam
 import EditarMotorista from "../../PagesMotorista/EditarMotorista/EditarMotorista";
 import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotorista";
 import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/VisualizarCliente";
+import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -226,6 +227,7 @@ export default function AppNavigator() {
       <Stack.Screen name="AceitarPagamento" component={AceitarPagamento}  options={{headerShown: false}}/>
       <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
+      <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

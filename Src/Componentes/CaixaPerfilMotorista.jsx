@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfilMotorista({veiculo, cor, endereco, periodo, evento}) {
+export default function CaixaPerfilMotorista({veiculo, cor, endereco, periodo, evento, icone}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -74,7 +74,7 @@ export default function CaixaPerfilMotorista({veiculo, cor, endereco, periodo, e
 
             <View style={styles.divpincel}>
                 <TouchableOpacity onPress={evento}>
-                    <Ionicons name="brush" size={20} color='#F7770D' style={styles.iconepincel}/>
+                    <Ionicons name={icone} size={20} color='#F7770D' style={styles.iconepincel}/>
                 </TouchableOpacity>
             </View>
 

@@ -16,6 +16,12 @@ export default function PerfilVizualizacao({ fotoUser, nomeUser, evento }) {
     return (
         <View style={styles.geral}>
 
+            <View style={styles.seta}>
+                <TouchableOpacity onPress={evento}>
+                   <Ionicons name="chevron-back-outline" color={'white'} size={35}/>
+                </TouchableOpacity>
+            </View>
+
             <View style={styles.fotoNome}>
                 <Image source={fotoUser} style={styles.imagem} />
                 <Text style={styles.nome}>{nomeUser}</Text>
@@ -37,7 +43,7 @@ const styles = StyleSheet.create(
 
         fotoNome:{
             alignSelf: "center",
-            top: 55
+            top: 20
         },
 
         imagem:{
@@ -45,8 +51,6 @@ const styles = StyleSheet.create(
             width: 130,
             alignSelf: "center",
             borderRadius: 25,
-            
-            
         },
 
         nome:{
@@ -54,6 +58,12 @@ const styles = StyleSheet.create(
             fontSize: 25,
             alignSelf: "center",
             fontFamily: "Montserrat_500Medium"
+        },
+
+        seta: {
+            alignSelf: "flex-start",
+            top: 15,
+            left: 15,
         }
     }
 )

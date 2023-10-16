@@ -44,7 +44,6 @@ const styles = StyleSheet.create(
             right: "5%",
             bottom: 10
         },
-
     
     }
 )

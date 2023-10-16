@@ -4,13 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import styles from "./VisualizarMotorista.modules";
 import { UserData } from "../../services/Contexts/Contexts";
-import CaixaVisualizacaoMotorista from "../../Componentes/CaixaVisualizacaoMotorista";
 import PerfilVisualizacao from "../../Componentes/PerfilVisualizacao";
+import CaixaPerfil from "../../Componentes/CaixaPerfil";
 
 
 const VisualizarMotorista = ({ route }) => {
 
-    const { nome_motorista, foto_motorista, periodo_atuacao_motorista, endereco_motorista } = route.params;
+    // const { nome_motorista, foto_motorista, periodo_atuacao_motorista, endereco_motorista } = route.params;
     const navigation = useNavigation()
 
     return (
@@ -25,11 +25,22 @@ const VisualizarMotorista = ({ route }) => {
 
 
                 <View style={styles.regua}>
-                    <CaixaVisualizacaoMotorista veiculo={"Perua sla"}
-                        cor={"Cinza"}
-                        cidade={"Vila dirce"}
-                        horario={"08:00-12:00"}
-                    ></CaixaVisualizacaoMotorista>
+                    <CaixaPerfil 
+                        texto1={"5 Anos"}
+                        titulotexto1={"Tempo"}
+                        icontexto1={"hourglass-outline"}
+                        texto2={"69"}
+                        titulotexto2={"Alunos"}
+                        icontexto2={"person-outline"}
+                        texto3={"Santana"}
+                        titulotexto3={"Cidade"}
+                        icontexto3={"business-outline"}
+                        texto4={"08:00-12:00"}
+                        titulotexto4={"Horário"}
+                        icontexto4={"time-outline"}
+                        brushOrChat={"chatbubbles"}
+                        evento={() => { navigation.navigate("EditarCliente") }}
+                    ></CaixaPerfil>
                 </View>
 
             </View>

@@ -3,10 +3,10 @@ import { View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import { UserData } from "../../services/Contexts/Contexts";
-import CaixaVisualizacaoMotorista from "../../Componentes/CaixaVisualizacaoMotorista";
 import PerfilVisualizacao from "../../Componentes/PerfilVisualizacao";
 import styles from "./VisualizarCliente.modules";
-import CaixaVisualizacaoCliente from "../../Componentes/CaixaVisualizacaoCliente";
+import CaixaPerfil from "../../Componentes/CaixaPerfil";
+import { Ionicons } from '@expo/vector-icons'
 
 
 export default function VisualizarCliente() {
@@ -17,21 +17,29 @@ export default function VisualizarCliente() {
         <ScrollView style={styles.geral}>
 
             <View>
-
                 <PerfilVisualizacao
-                    
                     fotoUser={require("../../../assets/Ana.jpeg")}
                     nomeUser={"Magnólia do corsa"}>
                 </PerfilVisualizacao>
 
 
                 <View style={styles.regua}>
-                    <CaixaVisualizacaoCliente responsavel={"Pau"}
-                        horario={"18:30"}
-                        endereco={"Rua do anus"}
-                        endereco2={"Positivo"}
+                    <CaixaPerfil 
+                        texto1={"Noemia"}
+                        titulotexto1={"Responsável"}
+                        icontexto1={"person-outline"}
+                        texto2={"06:00-12:00"}
+                        titulotexto2={"Horário"}
+                        icontexto2={"time-outline"}
+                        texto3={"Rua da aids"}
+                        titulotexto3={"Endereço"}
+                        icontexto3={"home-outline"}
+                        texto4={"Positivo"}
+                        titulotexto4={"Status"}
+                        icontexto4={"calendar-outline"}
+                        brushOrChat={"chatbubbles"}
                         evento={() => { navigation.navigate("EditarCliente") }}
-                        ></CaixaVisualizacaoCliente>
+                        ></CaixaPerfil>
                 </View>
 
             </View>

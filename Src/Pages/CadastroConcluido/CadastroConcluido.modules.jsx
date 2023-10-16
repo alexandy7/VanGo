@@ -51,7 +51,7 @@ botaologin: {
     alignSelf: "center",
     backgroundColor: "#F7770D",
     borderRadius: 15,
-    marginTop: 20,
+    marginTop: 50,
     display: "flex",
     flexDirection: "row"
 },

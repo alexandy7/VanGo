@@ -72,6 +72,12 @@ titulo: {
     fontFamily: "Montserrat_500Medium"
 },
 
+// safe:{
+//     flex: 1,
+//     paddingTop: StatusBar.currentHeight,
+//     marginHorizontal: 16,
+// }
+
 })
 
 export default styles;

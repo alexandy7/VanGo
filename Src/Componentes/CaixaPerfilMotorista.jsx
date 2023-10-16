@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfilMotorista({veiculo, cor, cidade, horario, evento}) {
+export default function CaixaPerfilMotorista({veiculo, cor, endereco, periodo, evento}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -22,12 +22,12 @@ export default function CaixaPerfilMotorista({veiculo, cor, cidade, horario, eve
             <View style={styles.divsuperior}>
                 <View style={styles.ladoesquerdo}>
                     <View style={styles.divicone}>
-                        <Ionicons name="car-outline" size={30} color='#F7770D' style={styles.iconesup}/>
+                        <Ionicons name="hourglass-outline" size={30}  style={styles.iconesup}/>
                     </View>
 
                     <View style={styles.divtexto}>
                         <Text style={styles.texto1sup}>{veiculo}</Text>
-                        <Text style={styles.texto2sup}>Responsável</Text>
+                        <Text style={styles.texto2sup}>Tempo</Text>
                     </View>
 
                 </View>
@@ -49,12 +49,12 @@ export default function CaixaPerfilMotorista({veiculo, cor, cidade, horario, eve
             <View style={styles.divinferior}>
                 <View style={styles.ladoesquerdo}>
                     <View style={styles.divicone}>
-                        <Ionicons name="business-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
+                        <Ionicons name="business-outline" size={30}  style={styles.iconeinf}/>
                     </View>
 
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{cidade}</Text>
-                        <Text style={styles.texto2inf}>Cidade</Text>
+                        <Text style={styles.texto1inf}>{endereco}</Text>
+                        <Text style={styles.texto2inf}>Endereço</Text>
                     </View>
 
                 </View>
@@ -62,12 +62,12 @@ export default function CaixaPerfilMotorista({veiculo, cor, cidade, horario, eve
                 <View style={styles.ladodireito}>
 
                     <View style={styles.divicone}>
-                        <Ionicons name="time-outline" size={30} color='#F7770D' style={styles.iconeinf}/>
+                        <Ionicons name="time-outline" size={30}  style={styles.iconeinf}/>
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{horario}</Text>
-                        <Text style={styles.texto2inf}>Horário</Text>
+                        <Text style={styles.texto1inf}>{periodo}</Text>
+                        <Text style={styles.texto2inf}>Periodo</Text>
                     </View>
                 </View>
             </View>

@@ -11,6 +11,7 @@ import axios from "axios";
 import { FlatList } from "react-native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
+import { SectionList } from "react-native";
 
 export default function PagamentosMotorista() {
 
@@ -97,7 +98,7 @@ export default function PagamentosMotorista() {
                 setButtonPendente("#e0e0e0");
                 break;
 
-            case "pendente": 
+            case "pendente":
                 setButtonPago("#e0e0e0");
 
                 setButtonVencido("#e0e0e0");
@@ -109,13 +110,30 @@ export default function PagamentosMotorista() {
 
     }
 
-
     const lista = listaFiltrada.filter((pesquisa) => pesquisa.nome_cliente.toLowerCase().includes(searchMensalidade.toLocaleLowerCase()))
+
+    // Organizar os pagamentos em grupos por meses
+    const pagamentosPorMes = {};
+
+    lista.forEach(item => {
+        const data = new Date(item.vencimento_mensalidade);
+        const mes = data.toLocaleString('default', { month: 'long' });
+        if (!pagamentosPorMes[mes]) {
+            pagamentosPorMes[mes] = [];
+        }
+        pagamentosPorMes[mes].push(item);
+    });
+
+    const groupedData = Object.entries(pagamentosPorMes).map(([month, data]) => ({
+        title: month,
+        data: data,
+    }));
+
     return (
 
         <View style={styles.main}>
             <View style={styles.header}>
-             
+
 
                 <View style={styles.divmeio}>
                     <Text style={styles.titulo}>Mensalidades</Text>
@@ -147,7 +165,39 @@ export default function PagamentosMotorista() {
 
             </View>
 
-            <FlatList
+            <SectionList
+                sections={groupedData}
+                keyExtractor={(item) => item.id_mensalidade}
+                renderItem={({ item }) => {
+
+                    const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
+                    const Seta = item.situacao_mensalidade === "pago" ? true : false;
+
+                    const icon = Color === "#00B383" ? "checkmark" : "warning"
+
+                    let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
+
+                    return (
+                        <CardPagamento
+                            imagem={{ uri: item.foto_cliente }}
+                            nome={item.nome_cliente}
+                            valor={item.valor_mensalidade}
+                            color={Color}
+                            vencimento={dataFormatada}
+                            icon={icon}
+                            status={item.situacao_mensalidade}
+                            seta={Seta}
+                        />
+                    )
+                }}
+                renderSectionHeader={({ section: { title } }) => (
+                    <View style={styles.headerContainer}>
+                        <Text style={{ marginLeft: "10%", marginBottom: "1%" }}>{title}</Text>
+                    </View>
+                )}
+            />
+
+            {/* <FlatList
                 keyExtractor={(item) => item.id_mensalidade}
                 data={lista}
                 refreshing={loadingRefresh}
@@ -189,7 +239,7 @@ export default function PagamentosMotorista() {
                         />
                     )
                 }}
-            />
+            /> */}
         </View>
     )
 }

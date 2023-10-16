@@ -26,16 +26,16 @@ export default function HomeMotorista() {
     async function BuscarUsuario() {
         const usuario = await UserData();
         setUser(usuario);
-        BuscarTurmas();
+        BuscarTurmas(usuario.id_motorista);
     }
 
-    async function BuscarTurmas() {
+    async function BuscarTurmas(id_motorista) {
 
         try {
 
             let token = await Token();
 
-            let response = await ApiMotorista.get(`ListarTurmas/${1}`, {
+            let response = await ApiMotorista.get(`ListarTurmas/${id_motorista}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -44,7 +44,6 @@ export default function HomeMotorista() {
 
             let json = response.data;
             setTurmas(json);
-            console.log(json);
         }
 
         catch (error) {

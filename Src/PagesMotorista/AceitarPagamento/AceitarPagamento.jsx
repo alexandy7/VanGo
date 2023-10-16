@@ -14,7 +14,7 @@ const AceitarPagamento = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade  } = route.params;
+    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade } = route.params;
 
     const [base64, setBase64] = useState(null);
     const [foto, setFoto] = useState(null);
@@ -33,31 +33,31 @@ const AceitarPagamento = ({ route }) => {
 
 
     //Está recebendo um parametro para depois configurar para o motorista conseguir recusar
-    async function ConfirmarPagamento(status){
+    async function ConfirmarPagamento(status) {
 
-        try{
+        try {
 
             const token = await Token();
-            
+
             const data = {
-                Id_cliente : id_cliente,
-                Id_mensalidade : id_mensalidade,
+                Id_cliente: id_cliente,
+                Id_mensalidade: id_mensalidade,
                 Vencimento_mensalidade: vencimento,
                 Valor_mensalidade: valor,
-                                                                                                                                    
+
             }
-            
-            let response = await ApiMotorista.post("ConfirmarPagamento", data,  {
+
+            let response = await ApiMotorista.post("ConfirmarPagamento", data, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
                 }
             })
         }
-        catch(error){
+        catch (error) {
             console.log(error);
         }
-            
+
     }
 
     return (
@@ -107,13 +107,23 @@ const AceitarPagamento = ({ route }) => {
 
             </View>
 
-            <TouchableOpacity style={styles.botaoaceitar} onPress={()=> {ConfirmarPagamento()}}>
-                <Text style={styles.textobotaoaceitar}>Aceitar Pagamento</Text>
-            </TouchableOpacity>
+            {
+                status !== "pago" ? (
 
-            <TouchableOpacity style={styles.botaorecusar} onPress={()=> {ConfirmarPagamento("recusado")}}>
-                <Text style={styles.textobotaorecusar}>Recusar Pagamento</Text>
-            </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity style={styles.botaoaceitar} onPress={() => { ConfirmarPagamento() }}>
+                            <Text style={styles.textobotaoaceitar}>Aceitar Pagamento</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.botaorecusar} onPress={() => { ConfirmarPagamento("recusado") }}>
+                            <Text style={styles.textobotaorecusar}>Recusar Pagamento</Text>
+                        </TouchableOpacity>
+                    </View>
+                )
+               :
+            (
+            <View></View>
+            )
+            }
         </ScrollView>
     )
 }

@@ -1,10 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
+import { View, StyleSheet, Text, Image } from "react-native";
 import { useFonts, Montserrat_600SemiBold} from "@expo-google-fonts/montserrat"
 
-export default function NotFound() {
-
-        
+export default function SolicitacaoRecusada({turma}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_600SemiBold,
@@ -16,8 +14,8 @@ export default function NotFound() {
 
     return(
         <View style={styles.container}>
-            <Image style={styles.imagem} source={require("../../assets/naoEncontrado.png")}/>  
-            <Text style={styles.texto}>Ops, nada por aqui</Text>
+            <Image style={styles.imagem} source={require("../../assets/SolicitacaoRecusada.gif")}/>  
+            <Text style={styles.texto}>Sua solicitação de entrada para a {"turma exemplo"} foi recusada!</Text>
         </View>
 
     )
@@ -36,9 +34,10 @@ const styles = StyleSheet.create({
     },
 
     imagem: {
-        height: "40%",
-        width: "70%",
-        alignSelf: "center"
+        height: "60%",
+        width: "80%",
+        alignSelf: "center",
+
     },
 
     texto: {

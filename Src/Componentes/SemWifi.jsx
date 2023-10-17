@@ -14,7 +14,7 @@ export default function SemWifi() {
 
     return(
         <View style={styles.container}>
-            <Image style={styles.imagem} source={require("../../assets/TesteDeComponente.png")}/>  
+            <Image style={styles.imagem} source={require("../../assets/SemWifi.png")}/>  
             <Text style={styles.texto}>Sem internet, verifique sua conexão</Text>
         </View>
 
@@ -26,9 +26,11 @@ const styles = StyleSheet.create({
     container: {
         height: 300,
         width: 300,
+        position: "absolute",
         alignSelf: "center",
+        transform: [{ translateY: -170 }],
+        top: "50%",
         justifyContent: "center",
-        alignItems: "center",
     },
 
     imagem: {

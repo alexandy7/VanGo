@@ -31,6 +31,7 @@ import EditarMotorista from "../../PagesMotorista/EditarMotorista/EditarMotorist
 import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotorista";
 import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/VisualizarCliente";
 import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
+import TesteComponentes from "../../Pages/TesteComponentes/TesteComponentes";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

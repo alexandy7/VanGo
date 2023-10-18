@@ -136,7 +136,6 @@ export default function EditarCliente() {
                     onCancel={() => setConfirmarEdicao(false)}
                     change={(text) => setSenha(text)}
                     valor={senha}
-                    
                 />
 
                 <View style={styles.header}>

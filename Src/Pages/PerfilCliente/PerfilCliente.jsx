@@ -59,7 +59,7 @@ export default function PerfilCliente() {
 
         let token = await Token();
 
-        let response = await axios.get(`https://localhost:7149/api/Cliente/BuscarInfoMotorista/${1}`,{
+        let response = await ApiCliente.get(`BuscarInfoMotorista/${usuario.id_motorista}`,{
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -84,6 +84,7 @@ export default function PerfilCliente() {
 
                 <View style={styles.regua}>
                     <CaixaPerfil 
+                    brushOrChat={"brush"}
                     texto1={nomeResponsável}
                     titulotexto1={"Responsável"}
                     icontexto1={"person-outline"}
@@ -96,6 +97,7 @@ export default function PerfilCliente() {
                         texto4={enderecoUsuario2}
                         titulotexto4={"2° endereço"}
                         icontexto4={"business-outline"}
+                        
 
                         evento={() => { navigation.navigate("EditarCliente")}}
                         />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AceitarPagamento.modules";
@@ -14,13 +14,10 @@ const AceitarPagamento = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade } = route.params;
+    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade, Id_motorista } = route.params;
 
-    const [base64, setBase64] = useState(null);
-    const [foto, setFoto] = useState(null);
-    const [exibirFoto, setExibirFoto] = useState(false);
-    const [escala, setEscala] = useState(1)
-    const hoje = new Date();
+    const [clickAceitar, setClickAceitar] = useState(false);
+    const [clickRecusar, setClickRecusar] = useState(false);
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -29,12 +26,13 @@ const AceitarPagamento = ({ route }) => {
 
     if (!fonteLoaded) {
         return null;
-    }
+    };
 
 
     //Está recebendo um parametro para depois configurar para o motorista conseguir recusar
     async function ConfirmarPagamento(status) {
 
+        setClickAceitar(true);
         try {
 
             const token = await Token();
@@ -42,9 +40,8 @@ const AceitarPagamento = ({ route }) => {
             const data = {
                 Id_cliente: id_cliente,
                 Id_mensalidade: id_mensalidade,
-                Vencimento_mensalidade: vencimento,
-                Valor_mensalidade: valor,
-
+                Id_motorista: Id_motorista,
+                Nome_cliente: nome
             }
 
             let response = await ApiMotorista.post("ConfirmarPagamento", data, {
@@ -52,7 +49,11 @@ const AceitarPagamento = ({ route }) => {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
                 }
-            })
+            });
+
+            setClickAceitar(false);
+
+            navigation.goBack()
         }
         catch (error) {
             console.log(error);
@@ -86,6 +87,7 @@ const AceitarPagamento = ({ route }) => {
                 status={status}
                 vencimento={vencimento}
                 color={color}
+                seta={status !== "pago"}
             />
 
             <View style={styles.divanexo}>
@@ -111,18 +113,40 @@ const AceitarPagamento = ({ route }) => {
                 status !== "pago" ? (
 
                     <View>
-                        <TouchableOpacity style={styles.botaoaceitar} onPress={() => { ConfirmarPagamento() }}>
-                            <Text style={styles.textobotaoaceitar}>Aceitar Pagamento</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.botaorecusar} onPress={() => { ConfirmarPagamento("recusado") }}>
-                            <Text style={styles.textobotaorecusar}>Recusar Pagamento</Text>
-                        </TouchableOpacity>
+
+                        {
+                            clickAceitar ? (
+                                <TouchableOpacity style={styles.botaoaceitar} onPress={() => { ConfirmarPagamento() }}>
+                                    <Text style={styles.textobotaoaceitar}><ActivityIndicator color={"#F7770D"} /></Text>
+                                </TouchableOpacity>
+                            )
+                                :
+                                (
+                                    <TouchableOpacity style={styles.botaoaceitar} onPress={() => { ConfirmarPagamento() }}>
+                                        <Text style={styles.textobotaoaceitar}>Aceitar Pagamento</Text>
+                                    </TouchableOpacity>
+                                )
+                        }
+
+                        {
+                            clickRecusar ? (
+                                <TouchableOpacity style={styles.botaorecusar} onPress={() => { ConfirmarPagamento("recusado") }}>
+                                    <Text style={styles.textobotaorecusar}><ActivityIndicator color={"#F7770D"} /></Text>
+                                </TouchableOpacity>
+                            )
+                                :
+                                (
+                                    <TouchableOpacity style={styles.botaorecusar} onPress={() => { ConfirmarPagamento("recusado") }}>
+                                        <Text style={styles.textobotaorecusar}>Recusar Pagamento</Text>
+                                    </TouchableOpacity>
+                                )
+                        }
                     </View>
                 )
-               :
-            (
-            <View></View>
-            )
+                    :
+                    (
+                        <View></View>
+                    )
             }
         </ScrollView>
     )

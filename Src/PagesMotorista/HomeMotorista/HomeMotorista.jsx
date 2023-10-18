@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/BotaoHome";
@@ -18,7 +18,7 @@ export default function HomeMotorista() {
     const navigation = useNavigation();
     const [user, setUser] = useState({});
     const [turmas, setTurmas] = useState([]);
-
+    const [encontrado, setEncontrado] = useState(false);
     useEffect(() => {
         BuscarUsuario();
     }, [])
@@ -44,10 +44,12 @@ export default function HomeMotorista() {
 
             let json = response.data;
             setTurmas(json);
+            setEncontrado(true);
         }
 
         catch (error) {
             console.log(error);
+            
         };
     }
 
@@ -64,7 +66,7 @@ export default function HomeMotorista() {
     if (!fonteLoaded) {
         return null;
     }
-    
+
 
     return (
 
@@ -112,22 +114,36 @@ export default function HomeMotorista() {
                 </TouchableOpacity>
             </View>
 
-            <FlatList
-                style={{ flex: 1, height: 100}}
-                keyExtractor={(item) => item.id_turma}
-                data={turmas}
-                
-                renderItem={({ item }) => {
+            {
+                encontrado ? (
 
+                    <FlatList
+                    style={{ flex: 1, height: 100 }}
+                    keyExtractor={(item) => item.id_turma}
+                    data={turmas}
+                    ListFooterComponent={() => (
+                        // Componente criado para o TabBar não sobrepor as turmas
+                        <View style={{ height: 80 }}>
+                        <Text></Text>
+                    </View>
+                )}
+                renderItem={({ item }) => {
+                    
                     return (
                         <CardTurma
-                            nome={item.nome_turma}
-                            chave={item.id_turma}
-                            horarioinic={item.periodo_turma}
+                        nome={item.nome_turma}
+                        chave={item.id_turma}
+                        horarioinic={item.periodo_turma}
                         />
+                        )
+                    }}
+                    />
                     )
-                }}
-            />
+                    :
+                    (
+                        <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "30%" }} />
+                    )
+                }
 
         </View>
     )

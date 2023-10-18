@@ -72,6 +72,10 @@ titulo: {
     fontFamily: "Montserrat_500Medium"
 },
 
+footer:{
+    backgroundColor: "white",
+    height: 90
+}
 // safe:{
 //     flex: 1,
 //     paddingTop: StatusBar.currentHeight,

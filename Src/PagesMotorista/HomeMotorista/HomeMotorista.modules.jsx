@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         height: "70%",
         marginLeft: "10%",
         marginTop: "7%",
-        borderRadius: 30
+        borderRadius: 30,
     },
 
     divnome:{

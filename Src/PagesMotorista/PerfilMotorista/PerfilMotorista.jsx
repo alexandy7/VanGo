@@ -45,6 +45,7 @@ export default function PerfilMotorista() {
                                 cor={"Cinza"}
                                 endereco={FormatadorTexto(user.endereco_motorista, 1, 2)}
                                 periodo={"Manhã/Tard"}
+                                icone={"brush"}
                                 evento={() => { navigation.navigate("EditarMotorista") }}
                             />
                         </View>

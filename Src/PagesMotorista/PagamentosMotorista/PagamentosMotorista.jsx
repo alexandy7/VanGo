@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import styles from "./PagamentosMotorista.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
 import BarraDePesquisa from "../../Componentes/BarraDePesquisa";
@@ -12,6 +12,7 @@ import { FlatList } from "react-native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
 import { SectionList } from "react-native";
+import { refresh } from "@react-native-community/netinfo";
 
 export default function PagamentosMotorista() {
 
@@ -30,7 +31,7 @@ export default function PagamentosMotorista() {
     const [buttonPendente, setButtonPendente] = useState("#e0e0e0")
 
     const [loadingRefresh, setLoadingRefresh] = useState(false)
-
+    const [encontrado, setEncontrado] = useState(false);
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium
     });
@@ -69,6 +70,7 @@ export default function PagamentosMotorista() {
             setMensalidade(json);
             setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === "pago"));
             setLoadingRefresh(false);
+            setEncontrado(true);
         }
 
         catch (error) {
@@ -115,15 +117,21 @@ export default function PagamentosMotorista() {
     // Organizar os pagamentos em grupos por meses
     const pagamentosPorMes = {};
 
+
     lista.forEach(item => {
         const data = new Date(item.vencimento_mensalidade);
-        const mes = data.toLocaleString('default', { month: 'long' });
-        if (!pagamentosPorMes[mes]) {
-            pagamentosPorMes[mes] = [];
+        //Pegando o mês e ano. Estou formatando para a primeira letra do mês ficar maiuscula
+        const mesAno = `${data.toLocaleString('default', { month: 'long' }).charAt(0).toUpperCase() + data.toLocaleString('default', { month: 'long' }).slice(1)} ${data.getFullYear()}`;
+
+        if (!pagamentosPorMes[mesAno]) {
+            //Cria um array vazio para o `mesAno`
+            pagamentosPorMes[mesAno] = [];
         }
-        pagamentosPorMes[mes].push(item);
+        //Adiciona o valor de `item` ao array 
+        pagamentosPorMes[mesAno].push(item);
     });
 
+    //Converte o `pagamentosPorMes` em matriz de pares e cria grupos  
     const groupedData = Object.entries(pagamentosPorMes).map(([month, data]) => ({
         title: month,
         data: data,
@@ -165,37 +173,74 @@ export default function PagamentosMotorista() {
 
             </View>
 
-            <SectionList
-                sections={groupedData}
-                keyExtractor={(item) => item.id_mensalidade}
-                renderItem={({ item }) => {
+            {
+                encontrado ? (
 
-                    const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
-                    const Seta = item.situacao_mensalidade === "pago" ? true : false;
+                    <SectionList
+                        keyExtractor={(item) => item.id_mensalidade}
+                        refreshing={loadingRefresh}
+                        onRefresh={() => {
+                            setLoadingRefresh(true);
+                            BuscarPagamentos();
+                        }}
 
-                    const icon = Color === "#00B383" ? "checkmark" : "warning"
+                        renderItem={({ item }) => {
 
-                    let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
+                            const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
+                            // const Seta = item.situacao_mensalidade === "pago" ? true : false;
+                            const icon = Color === "#00B383" ? "checkmark" : "warning"
+                            let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
 
-                    return (
-                        <CardPagamento
-                            imagem={{ uri: item.foto_cliente }}
-                            nome={item.nome_cliente}
-                            valor={item.valor_mensalidade}
-                            color={Color}
-                            vencimento={dataFormatada}
-                            icon={icon}
-                            status={item.situacao_mensalidade}
-                            seta={Seta}
-                        />
+                            return (
+                                <CardPagamento
+                                    imagem={{ uri: item.foto_cliente }}
+                                    nome={item.nome_cliente}
+                                    valor={item.valor_mensalidade}
+                                    color={Color}
+                                    vencimento={dataFormatada}
+                                    icon={icon}
+                                    status={item.situacao_mensalidade}
+                                    seta={true}
+
+                                    evento={() => {
+                                        navigation.navigate("AceitarPagamento", {
+                                            imagem: item.foto_cliente,
+                                            nome: item.nome_cliente,
+                                            valor: item.valor_mensalidade,
+                                            color: Color,
+                                            vencimento: dataFormatada,
+                                            icon: icon,
+                                            status: item.situacao_mensalidade,
+                                            comprovante: item.comprovante_pagamento,
+                                            id_cliente: item.id_cliente,
+                                            id_mensalidade: item.id_mensalidade,
+                                            id_motorista : user.id_motorista
+                                        })
+                                    }}
+                                />
+                            )
+                        }}
+
+                        ListFooterComponent={() => (
+                            // Componente criado para o TabBar não sobrepor as mensalidades
+                            <View style={{ backgroundColor: "white", height: 90 }}>
+                                <Text></Text>
+                            </View>
+                        )}
+
+                        sections={groupedData}
+                        renderSectionHeader={({ section: { title } }) => (
+                            <View style={styles.headerContainer}>
+                                <Text style={{ marginLeft: "5%", marginBottom: "1%", fontWeight: "bold" }}>{title}</Text>
+                            </View>
+                        )}
+                    />
+                )
+                    :
+                    (
+                        <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "50%" }} />
                     )
-                }}
-                renderSectionHeader={({ section: { title } }) => (
-                    <View style={styles.headerContainer}>
-                        <Text style={{ marginLeft: "10%", marginBottom: "1%" }}>{title}</Text>
-                    </View>
-                )}
-            />
+            }
 
             {/* <FlatList
                 keyExtractor={(item) => item.id_mensalidade}

@@ -20,8 +20,11 @@ const VisualizarMotorista = ({ route }) => {
 
                 <PerfilVisualizacao
                     fotoUser={require("../../../assets/fazueli.jpg")}
-                    nomeUser={"Tio Barnabé"}>
-                </PerfilVisualizacao>
+                    nomeUser={"Tio Barnabé"}
+                    evento={()=> navigation.goBack()}
+                    />
+                        
+             
 
 
                 <View style={styles.regua}>

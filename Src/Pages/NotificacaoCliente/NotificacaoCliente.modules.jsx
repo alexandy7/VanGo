@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#EFEFEF',
     },
 
-    scroll: {
-        backgroundColor: "white"
+    container: {
+        backgroundColor: "white",
+        flex: 1
     },
 
     header: {

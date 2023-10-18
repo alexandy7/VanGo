@@ -82,6 +82,62 @@ const styles = StyleSheet.create({
         height: "100%",
     },
 
+    seta: {
+        alignSelf: "center"
+    },
+
+    viewCalendario: {
+        backgroundColor: "white",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: "center",
+        borderWidth: 3,
+        borderColor: '#F7770D',
+        margin: 20,
+        borderRadius: 15,
+    },
+
+    calendario: {
+        borderRadius: 15,
+        textDayFontWeight: '600',
+        arrowColor: 'red',
+        monthTextColor: 'black',
+        selected: true,
+        selectedColor: 'red',
+    },
+
+    botaoAusencia: {
+
+        borderRadius: 10,
+        margin: 5,
+        padding: 10,
+        width: "90%",
+        display: 'flex',
+        alignItems: "center",
+    },
+
+    botaoFalta: {
+        borderRadius: 10,
+        margin: 5,
+        padding: 10,
+        width: "90%",
+        display: 'flex',
+        alignItems: "center",
+    },
+
+    botoesCalendario: {
+        display: "flex",
+        alignItems: "center",
+        margin: 20,
+
+    },
+
+    modalCalendario: {
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: 'rgba(128, 128, 128, 0.60)',
+        height: "100%"
+    }
 
 
 })

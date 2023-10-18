@@ -4,9 +4,11 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
 import InputEdicao from "../../Componentes/InputEdicao";
+import { useNavigation } from "@react-navigation/native";
 
 export default function EditarMotorista() {
 
+    const navigation = useNavigation();
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular,

@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardPagamento({ imagem, nome, valor, icon, color, status, vencimento, evento, pago }) {
+export default function CardPagamento({ imagem, nome, valor, icon, color, status, vencimento, evento, pago, seta }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -13,7 +13,7 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
 
     if (!fonteLoaded) {
         return null;
-    }
+    };
 
     return (
         <View style={[styles.container, Platform.OS === 'android' && styles.shadow]}>
@@ -25,7 +25,7 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
 
                 pago ? (
 
-                    <View >
+                    <View>
 
 
                     </View>
@@ -43,11 +43,22 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
                                 <View style={styles.reguafatura}>
                                     <Text style={[styles.fatura, { color }]}>{"R$" + valor}</Text>
                                 </View>
-                                <View style={styles.reguaicone}>
-                                    <TouchableOpacity style={styles.seta} onPress={evento}>
-                                        <Ionicons name="chevron-forward-outline" size={27} color={"black"} />
-                                    </TouchableOpacity>
-                                </View>
+                                {
+                                    seta ? (
+
+                                        <View style={styles.reguaicone}>
+                                            <TouchableOpacity style={styles.seta} onPress={evento}>
+                                                <Ionicons name="chevron-forward-outline" size={27} color={"black"} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )
+                                        :
+                                        (
+                                            <View>
+
+                                            </View>
+                                        )
+                                }
                             </View>
 
                             <View style={styles.divinferior}>

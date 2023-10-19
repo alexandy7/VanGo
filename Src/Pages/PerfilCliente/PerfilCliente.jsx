@@ -23,9 +23,8 @@ export default function PerfilCliente() {
     
     useEffect(() => {
         BuscarUsuario();
-        BuscarInfoMotorista();
     }, [])
-
+    
     async function BuscarUsuario() {
         const response = await UserData();
         setUsuario(response);
@@ -47,19 +46,20 @@ export default function PerfilCliente() {
             let enderecoSeparado = response.endereco_cliente.split(' ');
             let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1];
             setEnderecoUsuario(endereco + '...');
-
+            
             let endereco2Separado = response.endereco_reserva.split(' ');
             let endereco2 = endereco2Separado[0] + ' ' + endereco2Separado[1];
             setEnderecoUsuario2(endereco2 + '...')
         }
-
+        
+        BuscarInfoMotorista(response.id_motorista);
     };
-
-    async function BuscarInfoMotorista(){
+    
+    async function BuscarInfoMotorista(id){
 
         let token = await Token();
 
-        let response = await ApiCliente.get(`BuscarInfoMotorista/${usuario.id_motorista}`,{
+        let response = await ApiCliente.get(`BuscarInfoMotorista/${id}`,{
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",

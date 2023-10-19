@@ -20,11 +20,11 @@ export default function PagamentoCliente() {
     const [loading, setLoading] = useState(true);
     const [pagamentos, setPagamentos] = useState(null);
     const [mensalidades, setMensalidades] = useState(null);
-    const [semMensalidade, setSemMensalidade] = useState(true);
+    const [semMensalidade, setSemMensalidade] = useState(false);
 
 
     useEffect(() => {
-        BuscarUsuario()
+        BuscarUsuario();
     }, [])
 
 
@@ -54,11 +54,13 @@ export default function PagamentoCliente() {
             });
 
             let json = response.data;
+            console.log(json.mensalidades[0])
 
             setPagamentos(json.pagamentos);
             setMensalidades(json.mensalidades);
     
-            if(json.mensalidades === 0){
+            if(!json.mensalidades[0]){
+                console.log(true)
                 setSemMensalidade(true);
             };
 
@@ -208,7 +210,8 @@ export default function PagamentoCliente() {
                                     )
                                         :
                                         (
-                                            <NotFound></NotFound>
+                                            <View>
+                                            </View>
                                         )
                                 }
                             </View>

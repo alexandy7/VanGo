@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./EditarMotorista.modules";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
 import InputEdicao from "../../Componentes/InputEdicao";
 import { useNavigation } from "@react-navigation/native";
+import { UserData } from "../../services/Contexts/Contexts";
 
 export default function EditarMotorista() {
 
     const navigation = useNavigation();
+    const [usuario, setUsuario] = useState({});
+    const [nome, setNome] = useState('');
+    const [foto, setFoto] = useState('');
+    const [endereco, setEndereco] = useState('');
+    const [periodo, setPeriodo] = useState('');
+
+
+    useEffect(()=>{
+        BuscarUsuario();
+    },[])
+
+    async function BuscarUsuario(){
+        let user = await UserData();
+        setUsuario(user);
+
+        setNome(user.nome_motorista);
+        setFoto(user.foto_motorista);
+        setEndereco(user.endereco_motorista);
+        setPeriodo(user.periodo_atuacao_motorista)
+    }
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular,
@@ -39,40 +60,36 @@ export default function EditarMotorista() {
 
             <View style={styles.containerfoto}>
                 <TouchableOpacity style={styles.divfoto}>
-                    <Image style={styles.foto} source={require("../../../assets/fazueli.jpg")}/>
+                    <Image style={styles.foto} source={{uri: usuario.foto_motorista}}/>
                 </TouchableOpacity>
 
                 <Text style={styles.textofoto1}>Clique para alterar a foto</Text>
                 
-                <Text style={styles.textofoto2}>Tio Barnabé</Text>
+                <Text style={styles.textofoto2}>{usuario.nome_motorista}</Text>
             </View>
 
             <Text style={styles.tituloform}>Nome</Text>
                 <InputEdicao
-                    // icone={"person-outline"}
-                    valor={"nomeCliente"}
-                    mudou={(text) => { setNomeCliente(text) }}
+                    valor={nome}
+                    mudou={(text) => { setNome(text) }}
                 />
                 
                 <Text style={styles.tituloform}>Cor</Text>
                 <InputEdicao
-                    // icone={"ellipse-outline"}
                     valor={"nomeCliente"}
                     mudou={(text) => { setNomeCliente(text) }}
                 />
 
                 <Text style={styles.tituloform}>Cidade</Text>
                 <InputEdicao
-                    // icone={"business-outline"}
-                    valor={"nomeCliente"}
-                    mudou={(text) => { setNomeCliente(text) }}
+                    valor={endereco}
+                    mudou={(text) => { setEndereco(text) }}
                 />
 
-                <Text style={styles.tituloform}>Horário</Text>
+                <Text style={styles.tituloform}>Período</Text>
                 <InputEdicao
-                    // icone={"time-outline"}
-                    valor={"nomeCliente"}
-                    mudou={(text) => { setNomeCliente(text) }}
+                    valor={periodo}
+                    mudou={(text) => { setPeriodo(text) }}
                 />
 
                 <TouchableOpacity onPress={() => { setConfirmarEdicao(true) }}>

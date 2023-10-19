@@ -120,7 +120,7 @@ export default function HomeCliente() {
 
                 <TouchableOpacity style={styles.alinhabotao}
                     onPress={() => { navigation.navigate('AnexarPagamentos') }}>
-                    <BotaoHome icone={"document-attach-outline"} texto="Pagamento" />
+                    <BotaoHome icone={"cash-outline"} texto="Pagamento"/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfiguracaoCliente') }}>

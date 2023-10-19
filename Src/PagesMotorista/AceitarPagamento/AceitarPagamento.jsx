@@ -9,12 +9,14 @@ import * as ImagePicker from 'expo-image-picker';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { Token } from "../../services/Contexts/Contexts";
 import ApiMotorista from "../../services/Api/ApiMotorista";
+import axios from "axios";
+import ApiCliente from "../../services/Api/ApiCiente";
 
 const AceitarPagamento = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade, Id_motorista } = route.params;
+    const { imagem, nome, valor, color, vencimento, icon, status, comprovante, id_cliente, id_mensalidade, id_motorista, dataDecorrente } = route.params;
 
     const [clickAceitar, setClickAceitar] = useState(false);
     const [clickRecusar, setClickRecusar] = useState(false);
@@ -38,11 +40,13 @@ const AceitarPagamento = ({ route }) => {
             const token = await Token();
 
             const data = {
-                Id_cliente: id_cliente,
+                Vencimento_mensalidade: vencimento,
+                Valor_mensalidade: 150.10,
                 Id_mensalidade: id_mensalidade,
-                Id_motorista: Id_motorista,
-                Nome_cliente: nome
-            }
+                Id_cliente: id_cliente,
+                Id_motorista: Number(id_motorista),
+            };
+            console.log(data);
 
             let response = await ApiMotorista.post("ConfirmarPagamento", data, {
                 headers: {
@@ -104,7 +108,7 @@ const AceitarPagamento = ({ route }) => {
                     }}
                 >
                     <Image style={styles.comprovante}
-                        source={{ uri: 'https://sampahosting.com.br/blog/wp-content/uploads/2021/02/09-pix-inter-sampahosting.jpeg' }} />
+                        source={{ uri: comprovante }} />
                 </ImageZoom>
 
             </View>

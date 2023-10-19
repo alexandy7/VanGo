@@ -208,13 +208,14 @@ export default function PagamentosMotorista() {
                                             nome: item.nome_cliente,
                                             valor: item.valor_mensalidade,
                                             color: Color,
-                                            vencimento: dataFormatada,
+                                            vencimento: item.vencimento_mensalidade,
                                             icon: icon,
                                             status: item.situacao_mensalidade,
                                             comprovante: item.comprovante_pagamento,
                                             id_cliente: item.id_cliente,
                                             id_mensalidade: item.id_mensalidade,
-                                            id_motorista : user.id_motorista
+                                            id_motorista : user.id_motorista,
+                                            dataDecorrente : mensalidade.Data_decorrente_mensalidade
                                         })
                                     }}
                                 />

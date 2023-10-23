@@ -22,10 +22,48 @@ export default function PagamentoCliente() {
     const [mensalidades, setMensalidades] = useState(null);
     const [semMensalidade, setSemMensalidade] = useState(false);
 
+    const [icone, setIcone] = useState('');
+    const [colorIcone, setColorIcone] = useState('');
+    const [setaComponente, setSetaComponente] = useState();
 
     useEffect(() => {
         BuscarUsuario();
-    }, [])
+         //Define oque será exibido na mensalidade
+    if (mensalidades) {
+        switch (mensalidades[mensalidades.length - 1].situacao_mensalidade) {
+            case 'prazo':
+                setIcone('time');
+                setColorIcone('black');
+                setSetaComponente(true);
+                break;
+
+            case 'pago':
+                setIcone('checkmark');
+                setColorIcone('green');
+                setSetaComponente(false);
+                break;
+
+            case 'pendente':
+                setIcone('refresh');
+                setColorIcone('green');
+                setSetaComponente(false);
+                break;
+
+            case 'vencido':
+                setIcone('warning');
+                setColorIcone('red');
+                setSetaComponente(true);
+                break;
+
+            case 'recusado':
+                setIcone('warning');
+                setColorIcone('red');
+                setSetaComponente(true);
+                break;
+
+        }
+    }
+    }, [mensalidades])
 
 
     async function BuscarUsuario() {
@@ -54,21 +92,14 @@ export default function PagamentoCliente() {
             });
 
             let json = response.data;
-            console.log(json.mensalidades[0])
 
             setPagamentos(json.pagamentos);
             setMensalidades(json.mensalidades);
-    
-            if(!json.mensalidades[0]){
-                console.log(true)
-                setSemMensalidade(true);
-            };
 
             if (json.pagamentos.length === 0) {
-                console.log("1sqswqqw1")
                 setEncontrado(false);
             };
-            
+
             setLoading(false);
         }
 
@@ -119,6 +150,7 @@ export default function PagamentoCliente() {
         return dataBrasileira;
     }
 
+
     return (
 
         <View style={styles.container}>
@@ -135,30 +167,18 @@ export default function PagamentoCliente() {
                             <Text style={styles.titulo}>Pagamentos</Text>
 
                             <View>
-
-                               { 
-                               semMensalidade ? (
-
                                 <CardPagamento
-                                imagem={{ uri: usuario.foto_cliente }}
-                                pago={true}
-                                />
-                                  
-                                    )
-                                    :
-                                    (
-                                        <CardPagamento
-                                   evento={() => navigation.navigate("AnexarPagamentos", {
+                                    evento={() => navigation.navigate("AnexarPagamentos", {
                                         valor: mensalidades[mensalidades.length - 1].valor_mensalidade,
-                                        
-                                        icon: (mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" || [mensalidades.length - 1].situacao_mensalidade === "pendente") ? "checkmark" : "warning",
-                                        
-                                        color: mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" ? "green" : "red",
-                                        
-                                        status: mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" ? "pago" : "em atraso",
-                                        
+
+                                        icon: icone,
+
+                                        color: colorIcone,
+
+                                        status: mensalidades[mensalidades.length - 1].situacao_mensalidade,
+
                                         vencimento: formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10)),
-                                        
+
                                         idMensalidade: mensalidades[mensalidades.length - 1].id_mensalidade
                                     })}
 
@@ -166,21 +186,19 @@ export default function PagamentoCliente() {
                                     imagem={{ uri: usuario.foto_cliente }}
 
                                     nome={usuario.nome_cliente}
-                                    
+
                                     valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
-                                    
-                                    icon={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "checkmark" : "warning"}
-                                    
-                                    color={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "green" : "red"}
-                                    
-                                    status={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? "pago" : "em atraso"}
-                                    
+
+                                    icon={icone}
+
+                                    color={colorIcone}
+
+                                    status={mensalidades[mensalidades.length - 1].situacao_mensalidade}
+
                                     vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
-                                    
-                                    seta={mensalidades[mensalidades.length - 1].situacao_mensalidade === "pago" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "prazo" || mensalidades[mensalidades.length - 1].situacao_mensalidade === "pendente" ? true : false}
-                                    />
-                                    )
-                                }
+
+                                    seta={setaComponente}
+                                />
                             </View>
 
 
@@ -210,8 +228,7 @@ export default function PagamentoCliente() {
                                     )
                                         :
                                         (
-                                            <View>
-                                            </View>
+                                            <NotFound />
                                         )
                                 }
                             </View>

@@ -14,12 +14,9 @@ export default async function VerificarLogin(){
     const infoUser = await AsyncStorage.getItem("@jwt")
 
     if (infoUser == null){
-
         return false;
     }
 
-    else{
-        
-    }
+    return true;
 
 }

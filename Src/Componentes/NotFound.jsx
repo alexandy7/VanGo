@@ -26,12 +26,12 @@ export default function NotFound() {
 const styles = StyleSheet.create({
 
     container: {
+        flex: 1,
         height: 300,
         width: 300,
         position: "absolute",
         alignSelf: "center",
-        transform: [{ translateY: -170 }],
-        top: "50%",
+        marginTop: "14%",
         justifyContent: "center",
     },
 

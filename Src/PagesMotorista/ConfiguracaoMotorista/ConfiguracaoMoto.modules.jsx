@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "relative",
         justifyContent: "center",
-        marginBottom: 50
+        marginBottom: 50,
     },
 
     divesquerda: {

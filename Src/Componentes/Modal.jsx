@@ -1,33 +1,60 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Modal, StyleSheet } from 'react-native';
 import MeuText from './MeuText';
+import * as Animatable from 'react-native-animatable';
+import { GuardarToken, RemoverToken, Token, UserData } from '../services/Contexts/Contexts';
+import ApiCliente from '../services/Api/ApiCiente';
+import axios from 'axios';
+export default function InputPrompt({visible, onCancel, mudouu, senha, erro, evento}) {
 
-export default function InputPrompt({ visible, onConfirm, onCancel, change, valor }) {
+    const [user, setUser] = useState({})    
 
+    const animatableRef = useRef(null); // Referência para a animação
+
+    const handleAnimation = () => {
+        console.log("aa")
+        if (animatableRef.current) {
+            animatableRef.current.animate('shake', 500); // Inicia a animação 'shake' com duração de 0.5 segundos
+        }
+
+    }
+    
+
+    useEffect(()=>{
+        if(erro){
+            handleAnimation();
+        };
+    }, [erro]);
+    
     return (
         <Modal visible={visible} transparent animationType="slide">
-            <View style={styles.container}>
+            <Animatable.View style={styles.container} ref={animatableRef}>
 
-                <View style={styles.modal}>
+                <View style={[styles.modal, { borderWidth: erro ? 1 : 0, borderColor: "grey"  }]}>
 
-                    <Text style={{alignSelf: "center", fontSize: 16}}>Digite sua senha para confirmar</Text>
-                    <MeuText nomePlaceholder={"Digite aqui"} mudou={change} valorInput={valor}/>
+                    <Text style={{ alignSelf: "center", fontSize: 16 }}>Digite sua senha para confirmar:</Text>
+                    <MeuText
+                        nomePlaceholder={"Digite aqui"}
+                        mudou={mudouu}
+                        valorInput={senha}
+                    />
+                   {erro && <View><Text style={{color: "red"}}>Senha incorreta</Text></View>}
 
                     <View style={styles.viewBotao}>
 
                         <TouchableOpacity onPress={onCancel} style={styles.botao}>
-                            <Text style={{color: "white", alignSelf: "center"}}>Cancelar</Text>
+                            <Text style={{ color: "white", alignSelf: "center" }}>Cancelar</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={onConfirm} style={styles.botao}>
-                            <Text style={{color: "white", alignSelf: "center"}}>Confirmar</Text>
+                        <TouchableOpacity onPress={evento} style={styles.botao}>
+                            <Text style={{ color: "white", alignSelf: "center" }}>Confirmar</Text>
                         </TouchableOpacity>
 
                     </View>
 
                 </View>
 
-            </View>
+            </Animatable.View>
         </Modal>
     );
 }
@@ -38,6 +65,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+
     },
 
     modal: {
@@ -54,7 +82,7 @@ const styles = StyleSheet.create({
         marginTop: "15%"
     },
 
-    botao:{
+    botao: {
         backgroundColor: "#F7770D",
         padding: 10,
         borderRadius: 10,

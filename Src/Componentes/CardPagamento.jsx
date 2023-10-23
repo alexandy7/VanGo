@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardPagamento({ imagem, nome, valor, icon, color, status, vencimento, evento, pago, seta }) {
+export default function CardPagamento({ imagem, nome, valor, icon, color, status, vencimento, evento, seta, clickImagem }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -17,65 +17,52 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
 
     return (
         <View style={[styles.container, Platform.OS === 'android' && styles.shadow]}>
-            <View style={styles.divimagem}>
+            <TouchableOpacity activeOpacity={0.8} style={styles.divimagem} onPress={clickImagem}>
                 <Image source={imagem} style={styles.imagem} />
-            </View>
-
-            {
-
-                pago ? (
-
-                    <View>
+            </TouchableOpacity>
 
 
+            <View style={styles.containertexto}>
+
+                <View style={styles.divsuperior}>
+                    <View style={styles.reguanome}>
+                        <Text style={styles.nome}>{nome}</Text>
                     </View>
-                )
 
-                    :
-                    (
-                        <View style={styles.containertexto}>
+                    <View style={styles.reguafatura}>
+                        <Text style={[styles.fatura, { color }]}>{"R$" + valor}</Text>
+                    </View>
+                    {
+                        seta ? (
 
-                            <View style={styles.divsuperior}>
-                                <View style={styles.reguanome}>
-                                    <Text style={styles.nome}>{nome}</Text>
-                                </View>
-
-                                <View style={styles.reguafatura}>
-                                    <Text style={[styles.fatura, { color }]}>{"R$" + valor}</Text>
-                                </View>
-                                {
-                                    seta ? (
-
-                                        <View style={styles.reguaicone}>
-                                            <TouchableOpacity style={styles.seta} onPress={evento}>
-                                                <Ionicons name="chevron-forward-outline" size={27} color={"black"} />
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                        :
-                                        (
-                                            <View>
-
-                                            </View>
-                                        )
-                                }
+                            <View style={styles.reguaicone}>
+                                <TouchableOpacity style={styles.seta} onPress={evento}>
+                                    <Ionicons name="chevron-forward-outline" size={27} color={"black"} />
+                                </TouchableOpacity>
                             </View>
+                        )
+                            :
+                            (
+                                <View>
 
-                            <View style={styles.divinferior}>
-
-                                <View style={styles.reguastatus}>
-                                    <Ionicons style={styles.warning} name={icon} size={20} color={color} />
-                                    <Text style={[styles.situacao, { color }]}>{status}</Text>
                                 </View>
+                            )
+                    }
+                </View>
 
-                                <View style={styles.reguavencimento}>
-                                    <Text style={styles.vencimento}>{"Vencimento: " + vencimento}</Text>
-                                </View>
+                <View style={styles.divinferior}>
 
-                            </View>
-                        </View>
-                    )
-            }
+                    <View style={styles.reguastatus}>
+                        <Ionicons style={styles.warning} name={icon} size={20} color={color} />
+                        <Text style={[styles.situacao, { color }]}>{status}</Text>
+                    </View>
+
+                    <View style={styles.reguavencimento}>
+                        <Text style={styles.vencimento}>{"Vencimento: " + vencimento}</Text>
+                    </View>
+
+                </View>
+            </View>
         </View>
     )
 }
@@ -126,7 +113,7 @@ const styles = StyleSheet.create({
     },
 
     reguanome: {
-        width: "55%",
+        width: "58%",
         height: "100%",
         display: "flex",
         justifyContent: "flex-end"
@@ -149,7 +136,7 @@ const styles = StyleSheet.create({
     },
 
     nome: {
-        fontSize: 19,
+        fontSize: 17,
         marginLeft: "5%",
         fontFamily: "Montserrat_500Medium"
     },
@@ -190,7 +177,8 @@ const styles = StyleSheet.create({
         position: "relative",
         fontSize: 15,
         marginBottom: 5,
-        fontFamily: "Montserrat_400Regular"
+        marginLeft: 3,
+        fontFamily: "Montserrat_400Regular",
     },
 
     reguavencimento: {

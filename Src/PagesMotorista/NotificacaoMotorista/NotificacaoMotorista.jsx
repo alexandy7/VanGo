@@ -8,6 +8,7 @@ import styles from "./NotificacaoMotorista.modules";
 import NetInfo, { refresh } from '@react-native-community/netinfo';
 import { Token, UserData } from "../../services/Contexts/Contexts";
 import { FlatList } from "react-native";
+import axios from "axios";
 
 export default function NotificacaoMotorista() {
 
@@ -23,10 +24,10 @@ export default function NotificacaoMotorista() {
     async function BuscarUsuario() {
         try {
 
-            const user = await UserData()
+            const user = await UserData();
 
-            var token = await Token()
-            const response = await ApiMotorista.get(`LerNotificacao?idMotorista=${user.id_motorista}`, {
+            let token = await Token();
+            const response = await ApiMotorista.get(`LerNotificacao/${user.id_motorista}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -120,14 +121,23 @@ export default function NotificacaoMotorista() {
                                     horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
                                 }
 
+                                let nomeSeparado = item.nome_cliente.split(' ');
+                                let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
 
+                                console.log(item.foto_cliente);
                                 return (
                                     <Notificacao
-                                        fotouser={require('../../../assets/UserPhoto.png')}
-                                        nomeuser={item.nome_cliente}
+                                        fotouser={{uri: item.foto_cliente}}
+                                        nomeuser={Nome}
                                         info={item.mensagem_notificacao}
                                         hora={horaOuData}
                                         key={item.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
+
+                                        clickImagem={()=> navigation.navigate("VisualizarCliente", {
+                                            nome: item.nome_cliente,
+                                            foto: item.foto_cliente,
+                                            id: item.id_cliente
+                                        })}
                                     />
                                 )
                             }}

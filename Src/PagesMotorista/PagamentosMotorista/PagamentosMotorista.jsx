@@ -190,11 +190,19 @@ export default function PagamentosMotorista() {
                             // const Seta = item.situacao_mensalidade === "pago" ? true : false;
                             const icon = Color === "#00B383" ? "checkmark" : "warning"
                             let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
+                        
+                            let nomeSeparado = item.nome_cliente.split(' ');
+                            let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
 
                             return (
                                 <CardPagamento
                                     imagem={{ uri: item.foto_cliente }}
-                                    nome={item.nome_cliente}
+                                    clickImagem={()=> navigation.navigate("VisualizarCliente", {
+                                        nome: item.nome_cliente,
+                                        foto: item.foto_cliente,
+                                        id: item.id_cliente
+                                    })}
+                                    nome={Nome}
                                     valor={item.valor_mensalidade}
                                     color={Color}
                                     vencimento={dataFormatada}

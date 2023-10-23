@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
@@ -41,10 +41,10 @@ const AceitarPagamento = ({ route }) => {
 
             const data = {
                 Vencimento_mensalidade: vencimento,
-                Valor_mensalidade: 150.10,
+                Valor_mensalidade: valor,
                 Id_mensalidade: id_mensalidade,
                 Id_cliente: id_cliente,
-                Id_motorista: Number(id_motorista),
+                Id_motorista: id_motorista,
             };
             console.log(data);
 
@@ -114,7 +114,7 @@ const AceitarPagamento = ({ route }) => {
             </View>
 
             {
-                status !== "pago" ? (
+                status === "pendente" ? (
 
                     <View>
 

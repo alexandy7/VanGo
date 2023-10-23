@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat_500Medium"
     },
 
+    viewNotificacoes:{
+        flex: 1,
+        alignSelf: "center", 
+        alignItems: "center"
+    }
 });
 
 export default styles;

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignSelf: "center",
-        marginBottom: 10
+        marginBottom: 18
     },
 
     input: {

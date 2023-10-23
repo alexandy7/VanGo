@@ -5,17 +5,18 @@ import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 
-export default function Notificacao({ fotouser, nomeuser, info, hora, icone }) {
+export default function Notificacao({ fotouser, nomeuser, info, hora, clickImagem }) {
 
     const[fontsLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
     })
     return (
-        <View style={[styles.container, styles.shadow]}> 
-            <View style={styles.divimagem}>
+        <View style={[styles.container, styles.shadow]}>
+
+            <TouchableOpacity activeOpacity={0.8} style={styles.divimagem} onPress={clickImagem}>
                 <Image source={fotouser} style={styles.imagem}></Image>
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.alinha}>
                 <View style={styles.divsuperior}>
@@ -33,7 +34,7 @@ export default function Notificacao({ fotouser, nomeuser, info, hora, icone }) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '90%',
+        width: '97%',
         height: 80,
         borderColor: '#F7770D',
         borderRadius: 20,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: "white",
-        fontStyle: "Montserrat_100Thin"        
+        fontStyle: "Montserrat_100Thin",     
 
     },
     
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     divinferior: {
         display: "flex",
         flexDirection: "row",
-        height: "50%",
+        height: "55%",
         alignItems: "center",
         justifyContent: "flex-start"
     },
@@ -88,19 +89,20 @@ const styles = StyleSheet.create({
     nomedouser: {
         fontSize: 18,
         position: "relative",
-        marginLeft: "5%",
+        marginLeft: "2%",
         marginRight: "5%",
         marginTop: "3%",
         color: "#252525",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
     },
     
     informacao: {
         fontSize: 14,
         position: "relative",
-        marginLeft: "5%",
+        marginLeft: "2%",
         marginBottom: "3%",
         fontFamily: "Montserrat_400Regular",
+        justifyContent: "center"
     },
 
     horario: {

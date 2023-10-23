@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function MeuText({ nomePlaceholder, icon, valorInput, mudou }) {
+export default function MeuText({ nomePlaceholder, icon, valorInput, mudou, borda, corBorda }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_400Regular,
@@ -15,7 +15,7 @@ export default function MeuText({ nomePlaceholder, icon, valorInput, mudou }) {
     }
 
     return (
-        <View style={styles.inpute}>
+        <View style={[styles.inpute, {borderWidth: borda, borderColor: corBorda}]}>
 
          <Ionicons name={icon} size={24} color="#b1aeae" />
 
@@ -23,8 +23,8 @@ export default function MeuText({ nomePlaceholder, icon, valorInput, mudou }) {
             placeholder={nomePlaceholder}
             style={styles.espacamento}
             value={valorInput}
-            onChangeText={mudou}>
-            </TextInput>
+            onChangeText={mudou}
+            />
 
         </View>
     )
@@ -36,16 +36,13 @@ const styles = StyleSheet.create(
             borderRadius: 10,
             width: 273,
             height: 45,
-            top: 30,
+            marginTop: "4%",
             backgroundColor: '#C4C4C433',
-            marginBottom: 15,
             paddingLeft: 10,
             alignItems: 'center',
             textAlign: 'center',
             flexDirection: 'row',
             alignSelf: 'center'
-            
-
         },
 
         espacamento:{

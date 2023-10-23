@@ -23,9 +23,6 @@ const VisualizarMotorista = ({ route }) => {
                     nomeUser={"Tio Barnabé"}
                     evento={()=> navigation.goBack()}
                     />
-                        
-             
-
 
                 <View style={styles.regua}>
                     <CaixaPerfil 

@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
 
     scroll: {
-        flex: 1,
         backgroundColor: 'white',
     },
 
@@ -16,45 +15,31 @@ const styles = StyleSheet.create({
     header: {
         display: "flex",
         flexDirection: "row",
-        height: 80,
         width: "100%",
-        alignItems: "center",
-        position: "relative",
         justifyContent: "center",
-        marginBottom: 30,
+        alignSelf: "center",
+        marginBottom: 20,
+        marginTop: "5%"
     },
 
     divesquerda: {
-        height: 80,
-        width: "15%",
         display: "flex",
         justifyContent: "flex-end",
-        alignItems: "flex-end"
+        alignItems: "flex-start",
+        position: "absolute",
+        left: 30
     },
 
     divmeio: {
-        height: 80,
-        width: "70%",
         display: "flex",
         justifyContent: "flex-end",
-        alignItems: "center"
-    },
-
-    divdireita: {
-        height: 80,
-        width: "15%",   
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
-    seta: {
-    
+        alignItems: "center",
+        alignSelf: "center",
     },
 
     titulo: {
         fontSize: 26,
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
     },
 
     containerfoto: {
@@ -63,7 +48,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         display: "flex",
         alignItems: "center",
-        marginBottom: "10%"
+        marginBottom: "5%"
     },
 
     divfoto: {
@@ -99,7 +84,7 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
         fontFamily: "Montserrat_500Medium",
         color: "#F7770D",
-        marginBottom: "3%"
+        marginBottom: "1%"
     },
 
     botao: {

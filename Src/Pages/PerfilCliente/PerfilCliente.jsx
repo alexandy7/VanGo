@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import styles from "./PerfilCliente.modules.jsx"
@@ -7,7 +7,6 @@ import { Token, UserData } from "../../services/Contexts/Contexts";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
 import CardVerMotorista from "../../Componentes/CardVerMotorista";
 import ApiCliente from "../../services/Api/ApiCiente";
-import axios from "axios";
 
 
 export default function PerfilCliente() {
@@ -18,6 +17,7 @@ export default function PerfilCliente() {
     const [nomeResponsável, setNomeResponsavel] = useState(' ')
     const [enderecoUsuario, setEnderecoUsuario] = useState(' ')
     const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ')
+    const [escola, setEscola] = useState(' ')
     
     const navigation = useNavigation()
     
@@ -28,7 +28,8 @@ export default function PerfilCliente() {
     async function BuscarUsuario() {
         const response = await UserData();
         setUsuario(response);
-
+        BuscarInfoMotorista(response.id_motorista);
+        
         // Formatando as informações para caber na "caixa"
         if (response.nome_cliente) {
             let nomeSeparado = response.nome_cliente.split(' ')
@@ -50,9 +51,12 @@ export default function PerfilCliente() {
             let endereco2Separado = response.endereco_reserva.split(' ');
             let endereco2 = endereco2Separado[0] + ' ' + endereco2Separado[1];
             setEnderecoUsuario2(endereco2 + '...')
+           
+            let escolaSeparado = response.escola_cliente.split(' ');
+            let escola = escolaSeparado[0] + ' ' + escolaSeparado[1];
+            setEscola(escola + '...')
         }
         
-        BuscarInfoMotorista(response.id_motorista);
     };
     
     async function BuscarInfoMotorista(id){
@@ -88,8 +92,8 @@ export default function PerfilCliente() {
                     texto1={nomeResponsável}
                     titulotexto1={"Responsável"}
                     icontexto1={"person-outline"}
-                        texto2={"18:30"}
-                        titulotexto2={"Horário"}
+                        texto2={escola}
+                        titulotexto2={"Escola"}
                         icontexto2={"time-outline"}
                         texto3={enderecoUsuario}
                         titulotexto3={"Endereço"}

@@ -146,7 +146,7 @@ export default function HomeCliente() {
                     <View style={styles.modalCalendario}>
 
                         <TouchableOpacity style={styles.seta} onPress={() => setModal(false)}>
-                            <Ionicons name="close-circle-outline" size={50} />
+                            <Ionicons name="close-circle-outline" color={"white"} size={50} />
                         </TouchableOpacity>
 
                         <View style={styles.viewCalendario}>

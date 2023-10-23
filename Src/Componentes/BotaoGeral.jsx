@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: "#F7770D",
         borderRadius: 15,
-        marginTop: "20%",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        marginTop: 20
     },
 
     texto: {

@@ -32,6 +32,7 @@ import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotor
 import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/VisualizarCliente";
 import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
 import TesteComponentes from "../../Pages/TesteComponentes/TesteComponentes";
+import CadastrarClienteTurma from "../../PagesMotorista/CadastrarClienteTurma/CadastrarClienteTurma";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -229,6 +230,7 @@ export default function AppNavigator() {
       <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

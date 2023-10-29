@@ -33,6 +33,8 @@ import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/Visualizar
 import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
 import TesteComponentes from "../../Pages/TesteComponentes/TesteComponentes";
 import CadastrarClienteTurma from "../../PagesMotorista/CadastrarClienteTurma/CadastrarClienteTurma";
+import CadastroTela1 from "../../Pages/CadastroTela1/CadastroTela1";
+import ConversaChat from "../../Pages/ConversaChat/ConversaChat";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -203,6 +205,7 @@ export default function AppNavigator() {
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroConcluido" component={CadastroConcluido}  options={{headerShown: false}}/>
       <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConversaChat" component={ConversaChat}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PerfilCliente" component={PerfilCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
@@ -211,11 +214,12 @@ export default function AppNavigator() {
       <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       
+      <Stack.Screen name="CadastroTela1" component={CadastroTela1}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
       <Stack.Screen name="AdicionarFoto" component={AdicionarFoto}  options={{headerShown: false}}/>
       <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>
-
+      <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PerfilMotorista" component={PerfilMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoMoto" component={ConfiguracaoMoto}  options={{headerShown: false}}/>
@@ -227,7 +231,7 @@ export default function AppNavigator() {
       <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeMotorista" component={HomeMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="AceitarPagamento" component={AceitarPagamento}  options={{headerShown: false}}/>
-      <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
+
       <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma}  options={{headerShown: false}}/>

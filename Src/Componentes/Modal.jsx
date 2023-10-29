@@ -5,32 +5,28 @@ import * as Animatable from 'react-native-animatable';
 import { GuardarToken, RemoverToken, Token, UserData } from '../services/Contexts/Contexts';
 import ApiCliente from '../services/Api/ApiCiente';
 import axios from 'axios';
-export default function InputPrompt({visible, onCancel, mudouu, senha, erro, evento}) {
-
-    const [user, setUser] = useState({})    
+import { ActivityIndicator } from 'react-native';
+export default function InputPrompt({ visible, onCancel, mudouu, senha, erro, evento, clicou }) {
 
     const animatableRef = useRef(null); // Referência para a animação
 
     const handleAnimation = () => {
-        console.log("aa")
         if (animatableRef.current) {
             animatableRef.current.animate('shake', 500); // Inicia a animação 'shake' com duração de 0.5 segundos
         }
 
     }
-    
-
-    useEffect(()=>{
-        if(erro){
+    useEffect(() => {
+        if (erro) {
             handleAnimation();
         };
     }, [erro]);
-    
+
     return (
         <Modal visible={visible} transparent animationType="slide">
             <Animatable.View style={styles.container} ref={animatableRef}>
 
-                <View style={[styles.modal, { borderWidth: erro ? 1 : 0, borderColor: "grey"  }]}>
+                <View style={[styles.modal, { borderWidth: erro ? 1 : 0, borderColor: "grey" }]}>
 
                     <Text style={{ alignSelf: "center", fontSize: 16 }}>Digite sua senha para confirmar:</Text>
                     <MeuText
@@ -38,7 +34,7 @@ export default function InputPrompt({visible, onCancel, mudouu, senha, erro, eve
                         mudou={mudouu}
                         valorInput={senha}
                     />
-                   {erro && <View><Text style={{color: "red"}}>Senha incorreta</Text></View>}
+                    {erro && <View><Text style={{ color: "red" }}>Senha incorreta</Text></View>}
 
                     <View style={styles.viewBotao}>
 
@@ -47,7 +43,15 @@ export default function InputPrompt({visible, onCancel, mudouu, senha, erro, eve
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={evento} style={styles.botao}>
-                            <Text style={{ color: "white", alignSelf: "center" }}>Confirmar</Text>
+                            {
+                                clicou ? (
+                                    <ActivityIndicator color={'white'}/>
+                                )
+                                    :
+                                    (
+                                        <Text style={{ color: "white", alignSelf: "center" }}>Confirmar</Text>
+                                    )
+                            }
                         </TouchableOpacity>
 
                     </View>

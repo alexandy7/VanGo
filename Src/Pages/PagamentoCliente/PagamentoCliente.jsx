@@ -16,11 +16,12 @@ export default function PagamentoCliente() {
     const navigation = useNavigation();
 
     const [usuario, setUsuario] = useState({});
+    const [nomeSobrenome, setNomeSobrenome] = useState('');
     const [encontrado, setEncontrado] = useState(true);
     const [loading, setLoading] = useState(true);
     const [pagamentos, setPagamentos] = useState(null);
     const [mensalidades, setMensalidades] = useState(null);
-    const [semMensalidade, setSemMensalidade] = useState(false);
+    const [recarregar, setRecarregar] = useState(false);
 
     const [icone, setIcone] = useState('');
     const [colorIcone, setColorIcone] = useState('');
@@ -28,41 +29,46 @@ export default function PagamentoCliente() {
 
     useEffect(() => {
         BuscarUsuario();
-         //Define oque será exibido na mensalidade
-    if (mensalidades) {
-        switch (mensalidades[mensalidades.length - 1].situacao_mensalidade) {
-            case 'prazo':
-                setIcone('time');
-                setColorIcone('black');
-                setSetaComponente(true);
-                break;
+        //Define oque será exibido na mensalidade
+        if (mensalidades) {
+            switch (mensalidades[mensalidades.length - 1].situacao_mensalidade) {
+                case 'prazo':
+                    setIcone('time');
+                    setColorIcone('black');
+                    setSetaComponente(true);
+                    break;
 
-            case 'pago':
-                setIcone('checkmark');
-                setColorIcone('green');
-                setSetaComponente(false);
-                break;
+                case 'pago':
+                    setIcone('checkmark');
+                    setColorIcone('green');
+                    setSetaComponente(false);
+                    break;
 
-            case 'pendente':
-                setIcone('refresh');
-                setColorIcone('green');
-                setSetaComponente(false);
-                break;
+                case 'pendente':
+                    setIcone('refresh');
+                    setColorIcone('green');
+                    setSetaComponente(false);
+                    break;
 
-            case 'vencido':
-                setIcone('warning');
-                setColorIcone('red');
-                setSetaComponente(true);
-                break;
+                case 'vencido':
+                    setIcone('warning');
+                    setColorIcone('red');
+                    setSetaComponente(true);
+                    break;
 
-            case 'recusado':
-                setIcone('warning');
-                setColorIcone('red');
-                setSetaComponente(true);
-                break;
+                case 'recusado':
+                    setIcone('warning');
+                    setColorIcone('red');
+                    setSetaComponente(true);
+                    break;
 
+                default:
+                    setIcone('time');
+                    setColorIcone('black');
+                    setSetaComponente(true);
+
+            }
         }
-    }
     }, [mensalidades])
 
 
@@ -71,6 +77,9 @@ export default function PagamentoCliente() {
             const response = await UserData();
             setUsuario(response);
             BuscarComprovantes(response.id_cliente); // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
+
+            let nomeSeparado = response.nome_cliente.split(' ');
+            setNomeSobrenome(nomeSeparado[0] + ' ' + nomeSeparado[1])
         }
 
         catch (error) {
@@ -101,6 +110,7 @@ export default function PagamentoCliente() {
             };
 
             setLoading(false);
+            setRecarregar(false);
         }
 
         catch (error) {
@@ -168,36 +178,24 @@ export default function PagamentoCliente() {
 
                             <View>
                                 <CardPagamento
+                                    imagem={{ uri: usuario.foto_cliente }}
+                                    nome={nomeSobrenome}
+                                    valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
+                                    icon={icone}
+                                    color={colorIcone}
+                                    status={mensalidades[mensalidades.length - 1].situacao_mensalidade}
+                                    vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
+                                    seta={setaComponente}
+
                                     evento={() => navigation.navigate("AnexarPagamentos", {
                                         valor: mensalidades[mensalidades.length - 1].valor_mensalidade,
-
                                         icon: icone,
-
                                         color: colorIcone,
-
                                         status: mensalidades[mensalidades.length - 1].situacao_mensalidade,
-
                                         vencimento: formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10)),
-
-                                        idMensalidade: mensalidades[mensalidades.length - 1].id_mensalidade
+                                        idMensalidade: mensalidades[mensalidades.length - 1].id_mensalidade,
+                                        nome: nomeSobrenome
                                     })}
-
-
-                                    imagem={{ uri: usuario.foto_cliente }}
-
-                                    nome={usuario.nome_cliente}
-
-                                    valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
-
-                                    icon={icone}
-
-                                    color={colorIcone}
-
-                                    status={mensalidades[mensalidades.length - 1].situacao_mensalidade}
-
-                                    vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
-
-                                    seta={setaComponente}
                                 />
                             </View>
 
@@ -213,6 +211,13 @@ export default function PagamentoCliente() {
                                         <FlatList
                                             keyExtractor={(item) => item.id_pagamento}
                                             data={pagamentos}
+                                            refreshing={recarregar}
+                                            onRefresh={() => {
+
+                                                setRecarregar(true);
+                                                BuscarComprovantes();
+                                            }
+                                            }
                                             renderItem={({ item }) => {
 
                                                 return (

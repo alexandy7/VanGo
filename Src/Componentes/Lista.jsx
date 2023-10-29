@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function Lista({icone, titulo, evento}){
+export default function Lista({icone, titulo, evento, cor}){
 
     const [fonteLoaded] = useFonts({
         Montserrat_400Regular,
@@ -20,9 +20,9 @@ export default function Lista({icone, titulo, evento}){
         <TouchableOpacity onPress={evento}>
 
             <View style={styles.geral}>
-                <Ionicons name={icone} color={'rgba(0, 0, 0, 0.4)'} size={28} style={styles.icone}/>
-                <Text style={styles.Titulo}>{titulo}</Text>
-                <Ionicons name="chevron-forward" color={'grey'} size={30} style={styles.seta}/>
+                <Ionicons name={icone} color={ cor ? `red`: 'rgba(0, 0, 0, 0.4)'} size={28} style={styles.icone}/>
+                <Text style={[styles.Titulo, {color: cor ? `red`: 'black'}]}>{titulo}</Text>
+                <Ionicons name="chevron-forward" color={cor ? 'red' : 'grey'} size={30} style={styles.seta}/>
             </View>
 
         </TouchableOpacity>

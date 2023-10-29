@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import Lista from "../../Componentes/Lista";
 import styles from "./ConfiguracaoMoto.modules";
+import { RemoverToken } from "../../services/Contexts/Contexts";
 
 export default function ConfiguracaoMoto() {
 
@@ -18,7 +19,7 @@ export default function ConfiguracaoMoto() {
             <View style={styles.header}>
 
                 <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={irPerfil}>
+                    <TouchableOpacity style={styles.seta} onPress={()=> navigation.goBack()}>
                         <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                 </View>
@@ -36,10 +37,15 @@ export default function ConfiguracaoMoto() {
 
             <View style={styles.card}>
                 <Lista icone='person' titulo="Conta"></Lista>
-                <Lista icone='lock-closed' titulo="Privacidade"></Lista>
+                <Lista icone='lock-closed' titulo="Privacidade"/>
                 <Lista icone='notifications' titulo="Notificações" evento={() => {
                     navigation.navigate('NotificaMoto')
-                }}></Lista>
+                }}/>
+                <Lista icone='exit-outline' titulo="Sair" cor={true} evento={()=> {
+                    RemoverToken();
+                    navigation.navigate("Login")
+                }}/>
+
             </View>
 
             <Text style={styles.titulocard}>Motorista</Text>

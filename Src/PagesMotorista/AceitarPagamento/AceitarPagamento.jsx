@@ -11,6 +11,7 @@ import { Token } from "../../services/Contexts/Contexts";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 import axios from "axios";
 import ApiCliente from "../../services/Api/ApiCiente";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 
 const AceitarPagamento = ({ route }) => {
 
@@ -46,7 +47,6 @@ const AceitarPagamento = ({ route }) => {
                 Id_cliente: id_cliente,
                 Id_motorista: id_motorista,
             };
-            console.log(data);
 
             let response = await ApiMotorista.post("ConfirmarPagamento", data, {
                 headers: {
@@ -56,13 +56,11 @@ const AceitarPagamento = ({ route }) => {
             });
 
             setClickAceitar(false);
-
-            navigation.goBack()
+            navigation.navigate('PagamentosMotorista')
         }
         catch (error) {
             console.log(error);
         }
-
     }
 
     return (
@@ -89,9 +87,9 @@ const AceitarPagamento = ({ route }) => {
                 valor={valor}
                 icon={icon}
                 status={status}
-                vencimento={vencimento}
+                vencimento={FormatadorData(vencimento)}
                 color={color}
-                seta={status !== "pago"}
+                seta={false}
             />
 
             <View style={styles.divanexo}>

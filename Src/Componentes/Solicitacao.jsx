@@ -2,15 +2,14 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 
-export default function Solicitacao({imagem, nome, hora, turma, onAceitar, onRecusar}) 
-{
+export default function Solicitacao({ imagem, nome, hora, turma, onAceitar, onRecusar, cancelar, onCancelar }) {
     return (
         <View style={styles.container}>
             <View style={styles.divimagem}>
                 <Image source={imagem} style={styles.imagem}></Image>
             </View>
 
-            <View style={styles.alinhamento}> 
+            <View style={styles.alinhamento}>
 
                 {/* São colocadas 3 camadas de Div para alinhar os componentes */}
                 <View style={styles.divsuperior}>
@@ -22,15 +21,28 @@ export default function Solicitacao({imagem, nome, hora, turma, onAceitar, onRec
                     <Text style={styles.descricao}>Quer entrar na {turma}</Text>
                 </View>
 
-                <View style={styles.divinferior}>
-            <TouchableOpacity style={styles.botaoaceitar} onPress={onAceitar}>
-                <Text style={styles.textoaceitar}>Aceitar</Text>
-            </TouchableOpacity>
-                    
-            <TouchableOpacity style={styles.botaorecusar} onPress={onRecusar}>
-                <Text style={styles.textorecusar}>Recusar</Text>
-            </TouchableOpacity>           
-        </View>
+                {
+                    cancelar ? (
+                        <View style={styles.viewCancelar}>
+                            <TouchableOpacity style={styles.BotaoCancelar} onPress={onCancelar}>
+                                <Text style={{textAlign: "center"}}>Cancelar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )
+                        :
+                        (
+
+                            <View style={styles.divinferior}>
+                                <TouchableOpacity style={styles.botaoaceitar} onPress={onAceitar}>
+                                    <Text style={styles.textoaceitar}>Aceitar</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.botaorecusar} onPress={onRecusar}>
+                                    <Text style={styles.textorecusar}>Recusar</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
+                }
             </View>
         </View>
     )
@@ -77,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
 
-    nome : {
+    nome: {
         fontSize: 24,
         marginLeft: "3%"
     },
@@ -141,8 +153,17 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: "white"
     },
-    
+
     textorecusar: {
         fontSize: 17
+    },
+
+    BotaoCancelar:{
+        borderWidth: 1,
+        width: "65%",
+        height: 30,
+        alignSelf: "center",
+        justifyContent: "center",
+        borderRadius: 10
     }
 })

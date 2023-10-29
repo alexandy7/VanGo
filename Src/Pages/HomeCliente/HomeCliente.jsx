@@ -15,6 +15,9 @@ import Calendario from "../../Componentes/Calendario";
 import { Calendar } from "react-native-calendars";
 import axios from "axios";
 import { ActivityIndicator } from "react-native";
+import SemWifi from "../../Componentes/SemWifi";
+import NetInfo from '@react-native-community/netinfo';
+
 export default function HomeCliente() {
 
     const navigation = useNavigation();
@@ -25,11 +28,24 @@ export default function HomeCliente() {
     const [corAgendado, setCorAgendado] = useState('#C4C4C4B5');
     const [agendar, setAgendar] = useState(false);
     const [hoje, setHoje] = useState(false);
+    const [internet, setInternet] = useState(true);
 
 
     useEffect(() => {
-        BuscarUsuario();
+        checkInternetConnection();
     }, []);
+
+
+    async function checkInternetConnection() {
+        const state = await NetInfo.fetch();
+
+        if (!state.isConnected) {
+            setInternet(false);
+            return;
+        }
+
+        BuscarUsuario();
+    }
 
     async function BuscarUsuario() {
         const usuario = await UserData();
@@ -114,115 +130,122 @@ export default function HomeCliente() {
 
             <View style={styles.divbotoes}>
 
-                <TouchableOpacity style={styles.alinhabotao}>
+                <TouchableOpacity style={styles.alinhabotao} activeOpacity={0.7}>
                     <BotaoHome icone={"calendar-outline"} texto="Calendário" />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao}
-                    onPress={() => { navigation.navigate('AnexarPagamentos') }}>
-                    <BotaoHome icone={"cash-outline"} texto="Pagamento"/>
+                    onPress={() => { navigation.navigate('AnexarPagamentos') }} activeOpacity={0.7}>
+                    <BotaoHome icone={"cash-outline"} texto="Pagamento" />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfiguracaoCliente') }}>
+                <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfiguracaoCliente') }} activeOpacity={0.7}>
                     <BotaoHome icone={"settings-outline"} texto="Ajustes" />
                 </TouchableOpacity>
             </View>
 
-            <CardTurma nome={"Turma da manhã"} chave={user.turma_cliente} horarioinic={"08:00"} horariofin={"12:00"}></CardTurma>
+            {
+                //Caso esteja conectado a internet, renderiza a tela
+                internet ? (
 
-            <View style={{ marginTop: "7%" }}>
-                <Touchable texto={"Ausência"} evento={() => setModal(true)} />
-            </View>
+                    <View>
+                        <CardTurma
+                            nome={"Turma da manhã"}
+                            chave={user.turma_cliente}
+                            horarioinic={"08:00"}
+                            horariofin={"12:00"}
+                            desativado={true}
+                        />
+                        <View style={{ marginTop: "7%" }}>
+                            <Touchable texto={"Ausência"} evento={() => setModal(true)} />
+                        </View>
 
-
-
-                                                {/*Calendário*/}
-            <View >
-                <Modal
-                    visible={modal}
-                    animationType="slide"
-                    transparent={true}
-                >
-                    <View style={styles.modalCalendario}>
-
-                        <TouchableOpacity style={styles.seta} onPress={() => setModal(false)}>
-                            <Ionicons name="close-circle-outline" color={"white"} size={50} />
-                        </TouchableOpacity>
-
-                        <View style={styles.viewCalendario}>
-                            <Calendar
-                                style={styles.calendario}
-                                markedDates={{
-                                    [currentDate]: { selected: true, selectedColor: '#F7770D' },
-                                }}
-
-                                onDayPress={day => {
-                                    //Caso clique sobre o dia que já esta selecionado, retira a seleção
-                                    if (day.dateString === currentDate) {
-                                        setCurrentDate('');
-                                        setCorAgendado('#C4C4C4B5');
-                                        setCorAusencia('#F7770D');
-                                        return;
-                                    };
-
-                                    setCurrentDate(day.dateString);
-                                    setCorAgendado('#F7770D');
-                                    setCorAusencia('#C4C4C4B5');
-                                }}
-
-                            />
-                            <View style={styles.botoesCalendario}>
-
-                                <TouchableOpacity
-                                    disabled={currentDate !== '' ? true : false}
-                                    onPress={() => {
-
-                                        let data = new Date();
-                                        let ano = data.getFullYear();
-                                        let mes = String(data.getMonth() + 1).padStart(2, '0');
-                                        let dia = String(data.getDate()).padStart(2, '0');
-                                        let dataFormatada = `${ano}-${mes}-${dia}`;
-
-                                        EnviarAusencia(dataFormatada);
-                                        setHoje(true);
-                                    }}
-                                    style={[styles.botaoAusencia, { backgroundColor: corAusencia }]}
-                                >
-
-                                    {
-                                        hoje ? (
-                                            <ActivityIndicator color={'white'} />
-                                        )
-                                            :
-                                            (
-                                                <Text style={{ color: "white" }}>Ausência hoje</Text>
-                                            )
-                                    }
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={[styles.botaoFalta, { backgroundColor: corAgendado }]}
-                                    disabled={currentDate === '' ? true : false}
-                                    onPress={() => {
-                                        EnviarAusencia(currentDate);
-                                        setAgendar(true);
-                                    }}
-                                >
-                                    {
-                                        agendar ? (
-                                            <ActivityIndicator color={`white`} />
-                                        )
-                                            :
-                                            (
-                                                <Text style={{ color: "white" }}>Agendar falta</Text>
-                                            )
-                                    }
-                                </TouchableOpacity>
-                            </View>
+                        <View >
+                            <Modal
+                                visible={modal}
+                                animationType="slide"
+                                transparent={true}
+                            >
+                                <View style={styles.modalCalendario}>
+                                    <TouchableOpacity style={styles.seta} onPress={() => setModal(false)}>
+                                        <Ionicons name="close-circle-outline" color={"white"} size={50} />
+                                    </TouchableOpacity>
+                                    <View style={styles.viewCalendario}>
+                                        <Calendar
+                                            style={styles.calendario}
+                                            markedDates={{
+                                                [currentDate]: { selected: true, selectedColor: '#F7770D' },
+                                            }}
+                                            onDayPress={day => {
+                                                //Caso clique sobre o dia que já esta selecionado, retira a seleção
+                                                if (day.dateString === currentDate) {
+                                                    setCurrentDate('');
+                                                    setCorAgendado('#C4C4C4B5');
+                                                    setCorAusencia('#F7770D');
+                                                    return;
+                                                };
+                                                setCurrentDate(day.dateString);
+                                                setCorAgendado('#F7770D');
+                                                setCorAusencia('#C4C4C4B5');
+                                            }}
+                                        />
+                                        <View style={styles.botoesCalendario}>
+                                            <TouchableOpacity
+                                                disabled={currentDate !== '' ? true : false}
+                                                onPress={() => {
+                                                    let data = new Date();
+                                                    let ano = data.getFullYear();
+                                                    let mes = String(data.getMonth() + 1).padStart(2, '0');
+                                                    let dia = String(data.getDate()).padStart(2, '0');
+                                                    let dataFormatada = `${ano}-${mes}-${dia}`;
+                                                    EnviarAusencia(dataFormatada);
+                                                    setHoje(true);
+                                                }}
+                                                style={[styles.botaoAusencia, { backgroundColor: corAusencia }]}
+                                            >
+                                                {
+                                                    hoje ? (
+                                                        <ActivityIndicator color={'white'} />
+                                                    )
+                                                        :
+                                                        (
+                                                            <Text style={{ color: "white" }}>Ausência hoje</Text>
+                                                        )
+                                                }
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={[styles.botaoFalta, { backgroundColor: corAgendado }]}
+                                                disabled={currentDate === '' ? true : false}
+                                                onPress={() => {
+                                                    EnviarAusencia(currentDate);
+                                                    setAgendar(true);
+                                                }}
+                                            >
+                                                {
+                                                    agendar ? (
+                                                        <ActivityIndicator color={`white`} />
+                                                    )
+                                                        :
+                                                        (
+                                                            <Text style={{ color: "white" }}>Agendar falta</Text>
+                                                        )
+                                                }
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Modal>
                         </View>
                     </View>
-                </Modal>
-            </View>
+                )
+                    :
+                    (
+                        //Fazendo isso para ajustar a posição do componente na tela
+                        <View style={{bottom: 50, flex: 1}}>
+                            <SemWifi />
+                        </View>
+                    )
+            }
         </View>
     )
 

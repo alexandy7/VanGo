@@ -9,6 +9,7 @@ import NetInfo, { refresh } from '@react-native-community/netinfo';
 import { Token, UserData } from "../../services/Contexts/Contexts";
 import { FlatList } from "react-native";
 import axios from "axios";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 
 export default function NotificacaoMotorista() {
 
@@ -91,36 +92,6 @@ export default function NotificacaoMotorista() {
                             }}
                             renderItem={({ item }) => {
 
-                                const dataNotificacao = new Date(item.data_notificacao);
-                                const diaAnterior = hoje.getDate() - 1;
-
-                                // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
-                                const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
-                                    dataNotificacao.getMonth() === hoje.getMonth() &&
-                                    dataNotificacao.getFullYear() === hoje.getFullYear();
-
-                                //Verifica se a notificação foi ontem 
-                                const ontem = dataNotificacao.getDate() === diaAnterior &&
-                                    dataNotificacao.getMonth() === hoje.getMonth() &&
-                                    dataNotificacao.getFullYear() === hoje.getFullYear();
-
-                                let horaOuData;
-
-                                if (mesmoDia) {
-                                    // Caso seja o mesmo dia, mostra somente as horas
-                                    horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-                                }
-                                else if (ontem) {
-
-                                    //Caso seja true, exibi "ontem" como data
-                                    horaOuData = "Ontem"
-
-                                }
-                                else {
-                                    // Caso seja diferente, mostra a data completa
-                                    horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                                }
-
                                 let nomeSeparado = item.nome_cliente.split(' ');
                                 let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
 
@@ -130,7 +101,7 @@ export default function NotificacaoMotorista() {
                                         fotouser={{uri: item.foto_cliente}}
                                         nomeuser={Nome}
                                         info={item.mensagem_notificacao}
-                                        hora={horaOuData}
+                                        hora={FormatadorData(item.data_notificacao)}
                                         key={item.id_notificacao} //Key serve para dar uma identificação unica ao elemento 
 
                                         clickImagem={()=> navigation.navigate("VisualizarCliente", {

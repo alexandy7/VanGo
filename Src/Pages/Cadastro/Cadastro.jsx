@@ -10,6 +10,8 @@ import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
+import { Alert } from "react-native";
+import ListEscolas from "../../Componentes/ListEscolas";
 
 
 export default function Cadastro() {
@@ -37,6 +39,7 @@ export default function Cadastro() {
   const [nomeOuHorario, setnomeOuHorario] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [escola, setEscola] = useState('');
   const [base64, setBase64] = useState(null)
 
   const [motoristaOuCliente, setMotoristaOuCliente] = useState('cliente');
@@ -169,6 +172,12 @@ export default function Cadastro() {
     return null;
   }
 
+  function validarEmail(email) {
+    // Expressão regular para validar o formato do email
+    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.container}>
       <View style={styles.vieu}>
@@ -177,7 +186,7 @@ export default function Cadastro() {
           <TouchableOpacity style={[styles.clienteMotorista1, { backgroundColor: button1Color }]} onPress={() => botaoCliente()}>
             <Text style={[styles.texto, { color: button1letra }]}>Cliente</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={()=>botaoMoto()}>
+          <TouchableOpacity style={[styles.clienteMotorista, { backgroundColor: button2Color }]} onPress={() => botaoMoto()}>
             <Text style={[styles.texto, { color: button2letra }]}>Motorista</Text>
           </TouchableOpacity>
         </View>
@@ -198,20 +207,25 @@ export default function Cadastro() {
             :
             (
               <Touchable texto={"Prosseguir"} evento={() => {
-                if(email === '' || senha === '' || nome === '' || cpf === '' || endereco === '' || nomeOuHorario === ''){
-                  console.log("Por favor, preencha todos os campos!")
+                console.log(escola + 'a')
+                if (email === '' || senha === '' || nome === '' || cpf === '' || endereco === '' || nomeOuHorario === '') {
+                  alert("Por favor, preencha todos os campos!")
                 }
-                else{
-                  navigation.navigate("AdicionarFoto", {
+                else if (!validarEmail(email)) {
+                  alert('Insira um E-mail válido!')
+                }
+                else {
+                  navigation.navigate("CadastroEscola", {
                     email_cliente: email,
                     senha_cliente: senha,
                     nome_cliente: nome,
                     cpf_responsavel: cpf,
                     endereco_cliente: endereco,
                     responsavel_cliente: nomeOuHorario,
+                    escolaCliente: escola
                   })
                 }
-            }} />
+              }} />
 
             )
 

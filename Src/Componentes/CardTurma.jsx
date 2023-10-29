@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
 
-export default function CardTurma({nome, chave, horarioinic,horariofin}) {
+export default function CardTurma({nome, chave, horarioinic, horariofin, evento, desativado}) {
 
     const [fonteLoaded] = useFonts ({
         Montserrat_500Medium,
@@ -15,25 +15,24 @@ export default function CardTurma({nome, chave, horarioinic,horariofin}) {
     }
 
     return(
-        <View style={styles.container}>
-            <View style={styles.divsuperior}>
-                <Text style={styles.titulo}>{nome}</Text>
-                <Text style={styles.txtsecundario}></Text>
-            </View>
-
-            <View style={styles.divinferior}>
-                <View style={styles.juncao1}>
-                    <Ionicons name='time' size={20} color='orange'/>
-                    <Text style={styles.info}>{horarioinic} - {horariofin}</Text>
+        <TouchableOpacity activeOpacity={0.9} onPress={evento} disabled={desativado ? true : false}>
+            <View style={styles.container}>
+                <View style={styles.divsuperior}>
+                    <Text style={styles.titulo}>{nome}</Text>
+                    <Text style={styles.txtsecundario}></Text>
                 </View>
-
-                <View style={styles.juncao2}>
-                    <Ionicons name='key' size={20} color='orange'/>
-                    <Text style={styles.info}>#{chave}</Text>
+                <View style={styles.divinferior}>
+                    <View style={styles.juncao1}>
+                        <Ionicons name='time' size={20} color='orange'/>
+                        <Text style={styles.info}>{horarioinic} - {horariofin}</Text>
+                    </View>
+                    <View style={styles.juncao2}>
+                        <Ionicons name='key' size={20} color='orange'/>
+                        <Text style={styles.info}>#{chave}</Text>
+                    </View>
                 </View>
             </View>
-
-        </View>
+        </TouchableOpacity>
     )
 }
 

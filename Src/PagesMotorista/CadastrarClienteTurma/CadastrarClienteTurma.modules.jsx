@@ -13,13 +13,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        display: "flex",
         flexDirection: "row",
-        height: 80,
-        width: "100%",
-        alignItems: "center",
-        position: "relative",
-        justifyContent: "center",
     },
 
     divesquerda: {
@@ -56,15 +50,17 @@ const styles = StyleSheet.create({
         position: "relative",
         fontFamily: "Montserrat_500Medium",
         bottom: 6,
-        color: "#F7770D"
+        color: "#F7770D",
+        fontWeight: 600
     },
 
     numerostitulo: {
-        fontSize: 15,
+        fontSize: 16,
         position: "relative",
         fontFamily: "Montserrat_500Medium",
         bottom: 7,
-        color: "#F7770D"
+        color: "#F7770D",
+        fontWeight: 600
     },
 
     divtextosup: {
@@ -115,12 +111,13 @@ const styles = StyleSheet.create({
         paddingLeft: "7%",
         paddingRight: "7%",
         fontFamily: "Montserrat_500Medium",
-        marginTop: 10,
-        marginBottom: 20
+        marginTop: 5,
+        marginBottom: 30,
+        color: "#F7770D"
     },
 
     tituloform: {
-        fontSize: 18,
+        fontSize: 16,
         marginLeft: "10%",
         fontFamily: "Montserrat_500Medium",
         color: "#F7770D",

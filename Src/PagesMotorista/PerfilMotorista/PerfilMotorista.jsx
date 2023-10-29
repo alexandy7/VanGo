@@ -38,7 +38,9 @@ export default function PerfilMotorista() {
             <View>
                 <Perfil
                     fotoUser={{uri: user.foto_motorista}}
-                    nomeUser={nome}>
+                    nomeUser={nome}
+                    evento={()=> navigation.navigate('ConfiguracaoMoto')}
+                    >
                 </Perfil>
 
                 {

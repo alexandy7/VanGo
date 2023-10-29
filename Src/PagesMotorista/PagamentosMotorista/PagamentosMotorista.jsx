@@ -13,6 +13,8 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
 import { SectionList } from "react-native";
 import { refresh } from "@react-native-community/netinfo";
+import NotFound from "../../Componentes/NotFound";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 
 export default function PagamentosMotorista() {
 
@@ -26,12 +28,14 @@ export default function PagamentosMotorista() {
     const [listaFiltrada, setListaFiltrada] = useState([]);
     const [searchMensalidade, setSearchMensalidade] = useState("")
 
-    const [buttonPago, setButtonPago] = useState("#F7770D");
+    const [buttonPendente, setButtonPendente] = useState("#F7770D")
     const [buttonVencido, setButtonVencido] = useState("#e0e0e0");
-    const [buttonPendente, setButtonPendente] = useState("#e0e0e0")
+    const [buttonPago, setButtonPago] = useState("#e0e0e0");
 
     const [loadingRefresh, setLoadingRefresh] = useState(false)
     const [encontrado, setEncontrado] = useState(false);
+    const [vazio, setVazio] = useState(false);
+
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium
     });
@@ -45,16 +49,16 @@ export default function PagamentosMotorista() {
 
         setUser(usuario);
 
-        BuscarPagamentos();
+        BuscarPagamentos(usuario.id_motorista);
     }
 
-    async function BuscarPagamentos() {
+    async function BuscarPagamentos(id_motorista) {
 
         try {
 
             const token = await Token();
 
-            let response = await ApiMotorista.get(`ListarMensalidades?id_motorista=${1}`, {
+            let response = await ApiMotorista.get(`ListarMensalidades?id_motorista=${id_motorista}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -68,13 +72,14 @@ export default function PagamentosMotorista() {
 
             let json = response.data;
             setMensalidade(json);
-            setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === "pago"));
+            setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === "pendente"));
             setLoadingRefresh(false);
             setEncontrado(true);
         }
 
         catch (error) {
-            console.log(error)
+            console.log(error);
+            setVazio(true);
         }
     }
 
@@ -85,27 +90,27 @@ export default function PagamentosMotorista() {
 
         switch (criterio) {
             case "pago":
-                setButtonPago("#F7770D");
-
-                setButtonVencido("#e0e0e0");
-
                 setButtonPendente("#e0e0e0");
+                
+                setButtonPago("#F7770D");
+                
+                setButtonVencido("#e0e0e0");
                 break;
 
             case "vencido":
-                setButtonPago("#e0e0e0");
-
-                setButtonVencido("#F7770D");
-
                 setButtonPendente("#e0e0e0");
+                
+                setButtonVencido("#F7770D");
+                
+                setButtonPago("#e0e0e0");
                 break;
 
             case "pendente":
-                setButtonPago("#e0e0e0");
-
-                setButtonVencido("#e0e0e0");
-
                 setButtonPendente("#F7770D");
+                
+                setButtonPago("#e0e0e0");
+                
+                setButtonVencido("#e0e0e0");
                 break;
 
         }
@@ -159,16 +164,16 @@ export default function PagamentosMotorista() {
 
             <View style={styles.alinhabotoes}>
 
+                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPendente}]} onPress={() => { filtrarStatusMensalidade("pendente") }}>
+                    <Text style={styles.textobotao}>Pendente</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPago }]} onPress={() => { filtrarStatusMensalidade("pago") }}>
                     <Text style={styles.textobotao}>Pago</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.botao, { backgroundColor: buttonVencido }]} onPress={() => { filtrarStatusMensalidade("vencido") }}>
                     <Text style={styles.textobotao}>Vencido</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPendente }]} onPress={() => { filtrarStatusMensalidade("pendente") }}>
-                    <Text style={styles.textobotao}>Pendente</Text>
                 </TouchableOpacity>
 
             </View>
@@ -181,7 +186,7 @@ export default function PagamentosMotorista() {
                         refreshing={loadingRefresh}
                         onRefresh={() => {
                             setLoadingRefresh(true);
-                            BuscarPagamentos();
+                            BuscarPagamentos(user.id_motorista);
                         }}
 
                         renderItem={({ item }) => {
@@ -189,23 +194,22 @@ export default function PagamentosMotorista() {
                             const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
                             // const Seta = item.situacao_mensalidade === "pago" ? true : false;
                             const icon = Color === "#00B383" ? "checkmark" : "warning"
-                            let dataFormatada = item.vencimento_mensalidade.substring(0, 10).replace(/-/g, "/");
-                        
+
                             let nomeSeparado = item.nome_cliente.split(' ');
                             let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
 
                             return (
                                 <CardPagamento
                                     imagem={{ uri: item.foto_cliente }}
-                                    clickImagem={()=> navigation.navigate("VisualizarCliente", {
+                                    clickImagem={() => navigation.navigate("VisualizarCliente", {
                                         nome: item.nome_cliente,
                                         foto: item.foto_cliente,
                                         id: item.id_cliente
                                     })}
                                     nome={Nome}
                                     valor={item.valor_mensalidade}
-                                    color={Color}
-                                    vencimento={dataFormatada}
+                                    color={'#6A5ACD'}
+                                    vencimento={FormatadorData(item.vencimento_mensalidade)}
                                     icon={icon}
                                     status={item.situacao_mensalidade}
                                     seta={true}
@@ -222,8 +226,8 @@ export default function PagamentosMotorista() {
                                             comprovante: item.comprovante_pagamento,
                                             id_cliente: item.id_cliente,
                                             id_mensalidade: item.id_mensalidade,
-                                            id_motorista : user.id_motorista,
-                                            dataDecorrente : mensalidade.Data_decorrente_mensalidade
+                                            id_motorista: user.id_motorista,
+                                            dataDecorrente: mensalidade.Data_decorrente_mensalidade
                                         })
                                     }}
                                 />
@@ -247,7 +251,15 @@ export default function PagamentosMotorista() {
                 )
                     :
                     (
-                        <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "50%" }} />
+                        vazio ? (
+                            <View style={{JustifyContent: "center"}}>
+                                <NotFound />
+                            </View>
+                        )
+                            :
+                            (
+                                <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "50%" }} />
+                            )
                     )
             }
 

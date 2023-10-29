@@ -21,31 +21,19 @@ const styles = StyleSheet.create({
 
     divesquerda: {
         height: 80,
-        width: "15%",
-        display: "flex",
         justifyContent: "flex-end",
         alignItems: "flex-end"
     },
 
     divmeio: {
         height: 80,
-        width: "70%",
         display: "flex",
         justifyContent: "flex-end",
         alignItems: "center"
     },
 
-    divdireita: {
-        height: 80,
-        width: "15%",   
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-
     seta: {
-        position: "relative",
-        top: "3%"
+        right: 20
     },
 
     titulo: {

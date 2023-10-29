@@ -19,6 +19,10 @@ export default function HomeMotorista() {
     const [user, setUser] = useState({});
     const [turmas, setTurmas] = useState([]);
     const [encontrado, setEncontrado] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [numColumns, setNumColumns] = useState(2);
+    const [semTurma, setSemTurma] = useState(false);
+
     useEffect(() => {
         BuscarUsuario();
     }, [])
@@ -45,11 +49,12 @@ export default function HomeMotorista() {
             let json = response.data;
             setTurmas(json);
             setEncontrado(true);
+            setLoading(false);
         }
 
         catch (error) {
             console.log(error);
-            
+            setSemTurma(true);
         };
     }
 
@@ -118,32 +123,70 @@ export default function HomeMotorista() {
                 encontrado ? (
 
                     <FlatList
-                    style={{ flex: 1, height: 100 }}
-                    keyExtractor={(item) => item.id_turma}
-                    data={turmas}
-                    ListFooterComponent={() => (
-                        // Componente criado para o TabBar não sobrepor as turmas
-                        <View style={{ height: 80 }}>
-                        <Text></Text>
-                    </View>
-                )}
-                renderItem={({ item }) => {
-                    
-                    return (
-                        <CardTurma
-                        nome={item.nome_turma}
-                        chave={item.id_turma}
-                        horarioinic={item.periodo_turma}
-                        />
-                        )
-                    }}
+                        style={{ flex: 1, height: 100 }}
+                        keyExtractor={(item) => item.id_turma}
+                        data={turmas.slice(0, numColumns)}
+                        refreshing={loading}
+                        onRefresh={() => {
+                            BuscarTurmas(user.id_motorista);
+                            setLoading(true);
+                            setNumColumns(2)
+                        }}
+                        ListFooterComponent={() => {
+                            // Componente criado para o TabBar não sobrepor as turmas
+                            return (
+                                turmas.length > numColumns ? (
+                                    <TouchableOpacity onPress={() => setNumColumns(numColumns + 3)} style={{ marginBottom: "28%" }}>
+                                        <View>
+                                            <Text style={{ color: "#F7770D", alignSelf: "center", fontWeight: "bold", fontSize: 18 }}>
+                                                Exibir mais
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                                    :
+                                    (
+                                        <View style={{ marginBottom: "28%" }}></View>
+                                    )
+                            )
+                        }}
+                        
+                        renderItem={({ item }) => {
+
+                            return (
+                                <CardTurma
+                                    nome={item.nome_turma}
+                                    chave={item.id_turma}
+                                    horarioinic={item.periodo_turma}
+                                    evento={() => {
+                                        navigation.navigate('Turmas', {
+                                            idTurma: item.id_turma,
+                                            nomeTurma: item.nome_turma
+                                        })
+                                    }}
+
+                                />
+                            )
+                        }}
                     />
-                    )
+                )
                     :
                     (
-                        <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "30%" }} />
+                        <View>
+                            {
+                                semTurma ? (
+                                    <View></View>
+                                )
+                                    :
+                                    (
+
+                                        <ActivityIndicator color={"#F7770D"} size={35} style={{ marginTop: "30%" }} />
+                                    )
+                            }
+                        </View>
+
                     )
-                }
+            }
 
         </View>
     )

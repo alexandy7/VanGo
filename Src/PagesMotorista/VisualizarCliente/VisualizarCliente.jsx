@@ -17,14 +17,18 @@ const VisualizarCliente = ({ route }) => {
     const { nome, foto, id } = route.params;
     const [cliente, setCliente] = useState({});
 
-    const [nomeUsuario, setNomeUsuario] = useState(' ')
+    const [nomeSobrenome, setNomeSobrenome] = useState(' ')
     const [nomeResponsável, setNomeResponsavel] = useState(' ')
     const [enderecoUsuario, setEnderecoUsuario] = useState(' ')
     const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ')
     const [escola, setEscola] = useState(' ')
 
     useEffect(() => {
+        console.log(nome, foto, id)
         BuscarCliente();
+
+        let nomeSeparado = nome.split(' ');
+        setNomeSobrenome(nomeSeparado[0] + ' ' + nomeSeparado[1])
     }, []);
 
     async function BuscarCliente() {
@@ -78,7 +82,7 @@ const VisualizarCliente = ({ route }) => {
             <View>
                 <PerfilVisualizacao
                     fotoUser={{ uri: foto }}
-                    nomeUser={nome}
+                    nomeUser={nomeSobrenome}
                     evento={() => navigation.goBack()}
                 />
 

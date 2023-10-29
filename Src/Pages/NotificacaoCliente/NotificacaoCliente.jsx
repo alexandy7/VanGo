@@ -9,6 +9,8 @@ import NetInfo from '@react-native-community/netinfo';
 import { Token, UserData } from "../../services/Contexts/Contexts";
 import NotFound from "../../Componentes/NotFound";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
+import SemWifi from "../../Componentes/SemWifi";
 
 export default function NotificacaoCliente() {
 
@@ -17,22 +19,22 @@ export default function NotificacaoCliente() {
     const [carregamento, setCarregamento] = useState(false);
     const [encontrado, setEncontrado] = useState(undefined);
     const [loadingRefresh, setLoadingRefresh] = useState(false);
+    const [internet, setInternet] = useState(true);
 
     useEffect(() => {
         checkInternetConnection();
         setCarregamento(true);
     }, [])
 
-    //Verifica se o usuário está conectado na internet
     async function checkInternetConnection() {
         const state = await NetInfo.fetch();
 
-        if (state.isConnected) {
-            console.log('O dispositivo está conectado à internet.');
-            BuscarUsuario()
-        } else {
-            console.log('O dispositivo não está conectado à internet.');
+        if (!state.isConnected) {
+            setInternet(false);
+            return;
         }
+
+        BuscarUsuario();
     }
 
     async function BuscarUsuario() {
@@ -96,59 +98,48 @@ export default function NotificacaoCliente() {
                 </View>
             </View>
             {
-                carregamento ? (
-                    <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
-                        <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
-                    </View>
-                ) : (
-                    false ? (
-                        <FlatList
-                            keyExtractor={(item) => item.id_notificacao}
-                            data={notificacoes}
-                            refresh={loadingRefresh}
-                            onRefreshing={() => {
-                                setLoadingRefresh(true);
-                                ListarNotificacoes();
-                            }}
-                            renderItem={({ item }) => {
-                                const dataNotificacao = new Date(item.data_notificacao);
-                                const diaAnterior = hoje.getDate() - 1;
-                                // Verifica se o dia da notificação é o mesmo dia de hoje (Compara dia, mês e ano)
-                                const mesmoDia = dataNotificacao.getDate() === hoje.getDate() &&
-                                    dataNotificacao.getMonth() === hoje.getMonth() &&
-                                    dataNotificacao.getFullYear() === hoje.getFullYear();
-                                // Verifica se a notificação foi ontem
-                                const ontem = dataNotificacao.getDate() === diaAnterior &&
-                                    dataNotificacao.getMonth() === hoje.getMonth() &&
-                                    dataNotificacao.getFullYear() === hoje.getFullYear();
-                                let horaOuData;
-                                if (mesmoDia) {
-                                    // Caso seja o mesmo dia, mostra somente as horas
-                                    horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-                                } else if (ontem) {
-                                    // Caso seja true, exibi "ontem" como data
-                                    horaOuData = "Ontem"
-                                } else {
-                                    // Caso seja diferente, mostra a data completa
-                                    horaOuData = dataNotificacao.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-                                }
-                                return (
-                                    <Notificacao
-                                        fotouser={{ uri: item.foto_motorista }}
-                                        nomeuser={'Motorista'}
-                                        info={item.mensagem_notificacao}
-                                        hora={horaOuData}
-                                    />
-                                );
-                            }}
-                        />
+                internet ? (
 
-                    ) : (
-                        <View style={styles.viewNotificacoes}>
-                            <NotFound />
-                        </View>
-                    )
+                    <View>
+                        {
+                            carregamento ? (
+                                <View style={{ display: 'flex', alignSelf: 'center', marginBottom: 400, top: 200 }}>
+                                    <ActivityIndicator size="large" color="orange" style={{ alignItems: "center", justifyContent: "center" }} />
+                                </View>
+                            ) : (
+                                encontrado ? (
+                                    <FlatList
+                                        keyExtractor={(item) => item.id_notificacao}
+                                        data={notificacoes}
+                                        refresh={loadingRefresh}
+                                        onRefreshing={() => {
+                                            setLoadingRefresh(true);
+                                            ListarNotificacoes();
+                                        }}
+                                        renderItem={({ item }) => {
+                                            return (
+                                                <Notificacao
+                                                    fotouser={{ uri: item.foto_motorista }}
+                                                    nomeuser={'Motorista'}
+                                                    info={item.mensagem_notificacao}
+                                                    hora={FormatadorData(item.data_notificacao)}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                ) : (
+                                    <View style={styles.viewNotificacoes}>
+                                        <NotFound />
+                                    </View>
+                                )
+                            )
+                        }
+                    </View>
                 )
+                    :
+                    (
+                        <SemWifi />
+                    )
             }
         </View>
     )

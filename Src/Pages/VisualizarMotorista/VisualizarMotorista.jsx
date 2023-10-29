@@ -3,15 +3,35 @@ import { View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Perfil from "../../Componentes/Perfil";
 import styles from "./VisualizarMotorista.modules";
-import { UserData } from "../../services/Contexts/Contexts";
+import { Token, UserData } from "../../services/Contexts/Contexts";
 import PerfilVisualizacao from "../../Componentes/PerfilVisualizacao";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
+import ApiCliente from "../../services/Api/ApiCiente";
 
 
 const VisualizarMotorista = ({ route }) => {
 
-    // const { nome_motorista, foto_motorista, periodo_atuacao_motorista, endereco_motorista } = route.params;
-    const navigation = useNavigation()
+    const { nome_motorista, foto_motorista, id_motorista, quantidadeclientes, endereco_motorista, periodo_motorista } = route.params;
+    const [motorista, setMotorista] = useState({});
+    const navigation = useNavigation();
+
+    // useEffect(()=>{
+    //     BuscarMotorista();
+    // });
+
+    // async function BuscarMotorista(){
+
+    //     let token = await Token();
+
+    //     let response = await ApiCliente(`BuscarInfoMotorista/${id_motorista}`, {
+    //         headers: {
+    //             Authorization: "Bearer " + token,
+    //             "Content-Type": "application/json",
+    //         }
+    //     });
+
+    //     setMotorista(response.data);
+    // }
 
     return (
         <ScrollView style={styles.geral}>
@@ -19,27 +39,27 @@ const VisualizarMotorista = ({ route }) => {
             <View>
 
                 <PerfilVisualizacao
-                    fotoUser={require("../../../assets/fazueli.jpg")}
-                    nomeUser={"Tio Barnabé"}
-                    evento={()=> navigation.goBack()}
-                    />
+                    fotoUser={{uri: foto_motorista}}
+                    nomeUser={nome_motorista}
+                    evento={() => navigation.goBack()}
+                />
 
                 <View style={styles.regua}>
-                    <CaixaPerfil 
+                    <CaixaPerfil
                         texto1={"5 Anos"}
                         titulotexto1={"Tempo"}
                         icontexto1={"hourglass-outline"}
-                        texto2={"69"}
+                        texto2={quantidadeclientes}
                         titulotexto2={"Alunos"}
                         icontexto2={"person-outline"}
-                        texto3={"Santana"}
+                        texto3={endereco_motorista}
                         titulotexto3={"Cidade"}
                         icontexto3={"business-outline"}
-                        texto4={"08:00-12:00"}
-                        titulotexto4={"Horário"}
+                        texto4={periodo_motorista}
+                        titulotexto4={"Periodo"}
                         icontexto4={"time-outline"}
                         brushOrChat={"chatbubbles"}
-                        evento={() => { navigation.navigate("EditarCliente") }}
+                        evento={() => { navigation.navigate("Chat") }}
                     ></CaixaPerfil>
                 </View>
 

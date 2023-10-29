@@ -12,19 +12,18 @@ import axios from "axios";
 import ApiCliente from "../../services/Api/ApiCiente";
 import NetInfo from '@react-native-community/netinfo';
 import SemWifi from "../../Componentes/SemWifi";
+
 const AnexarPagamentos = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const { valor, icon, color, status, vencimento, idMensalidade } = route.params;
+    const { valor, icon, color, status, vencimento, idMensalidade, nome } = route.params;
 
     const [base64, setBase64] = useState(null);
     const [foto, setFoto] = useState(null);
     const [exibirFoto, setExibirFoto] = useState(false);
     const [usuario, setUsuario] = useState({});
     const [conexao, setConexao] = useState(true)
-    const hoje = new Date();
-
 
     useEffect(() => {
         ChecarConexao();
@@ -41,7 +40,6 @@ const AnexarPagamentos = ({ route }) => {
 
     async function ChecarConexao() {
         const state = await NetInfo.fetch();
-        console.log(state.isConnected)
         if (state.isConnected) {
             BuscarUsuario();
         }
@@ -127,25 +125,22 @@ const AnexarPagamentos = ({ route }) => {
                 <View style={styles.divmeio}>
                     <Text style={styles.titulo}>Anexar Comprovante</Text>
                 </View>
-
-                <View style={styles.divdireita}>
-
-                </View>
             </View>
 
 
             {
+                //Caso esteja conectado a internet renderiza a tela
                 conexao ? (
                     <View>
                         <CardPagamento
                             imagem={{ uri: usuario.foto_cliente }}
-                            nome={usuario.nome_cliente}
+                            nome={nome}
                             valor={valor}
                             icon={icon}
                             status={status}
                             vencimento={vencimento}
                             color={color}
-                            seta={true}
+                            seta={false}
                         />
 
 
@@ -172,7 +167,9 @@ const AnexarPagamentos = ({ route }) => {
                 )
                     :
                     (
-                        <SemWifi></SemWifi>
+                        <View style={{marginTop: 100, flex: 1}}>
+                            <SemWifi/>
+                        </View>
                     )
             }
         </ScrollView>

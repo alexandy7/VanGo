@@ -17,7 +17,7 @@ export default function NotFound() {
     return(
         <View style={styles.container}>
             <Image style={styles.imagem} source={require("../../assets/naoEncontrado.png")}/>  
-            <Text style={styles.texto}>Ops, nada por aqui</Text>
+            <Text style={styles.texto}>Nada por aqui</Text>
         </View>
 
     )

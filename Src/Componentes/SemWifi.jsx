@@ -15,7 +15,7 @@ export default function SemWifi() {
     return(
         <View style={styles.container}>
             <Image style={styles.imagem} source={require("../../assets/SemWifi.png")}/>  
-            <Text style={styles.texto}>Sem internet, verifique sua conexão</Text>
+            <Text style={styles.texto}>Verifique sua conexão.</Text>
         </View>
 
     )
@@ -24,23 +24,19 @@ export default function SemWifi() {
 const styles = StyleSheet.create({
 
     container: {
-        height: 300,
-        width: 300,
-        position: "absolute",
+        flex: 1,
         alignSelf: "center",
-        transform: [{ translateY: -170 }],
-        top: "50%",
-        justifyContent: "center",
+        marginTop: "20%"
     },
 
     imagem: {
-        height: "30%",
-        width: "45%",
-        alignSelf: "center"
+        alignSelf: "center",
+        resizeMode: "contain",
+        height: 180
     },
 
     texto: {
-        fontSize: 20,
+        fontSize: 17,
         textAlign: "center",
         fontFamily: "Montserrat_600SemiBold"
     }

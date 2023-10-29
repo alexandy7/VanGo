@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import Lista from "../../Componentes/Lista";
 import styles from "./ConfiguracaoCliente.modules"
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
+import { RemoverToken } from "../../services/Contexts/Contexts";
 
 export default function ConfiguracaoMoto() {
 
@@ -41,14 +42,19 @@ export default function ConfiguracaoMoto() {
             <Text style={styles.titulocard}>Conta</Text>
 
             <View style={styles.card}>
-                <Lista icone='person' titulo="Conta"></Lista>
-                <Lista icone='lock-closed' titulo="Privacidade"></Lista>
+                <Lista icone='person' titulo="Conta"/>
+                <Lista icone='lock-closed' titulo="Privacidade"/>
                 <Lista icone='notifications' titulo="Notificações" evento={()=>{
-                    navigation.navigate('NotificacaoCliente')
-                }}></Lista>
+                    navigation.navigate('NotificacaoCliente');
+                }}/>
+                <Lista icone='exit-outline' titulo="Sair" cor={true} evento={()=>{
+                    navigation.navigate('Login');
+                    RemoverToken();
+                }}/>
+
             </View>
 
-            <Text style={styles.titulocard}>Motorista</Text>
+            {/* <Text style={styles.titulocard}>Motorista</Text>
 
             <View style={styles.card}>
                 <Lista icone='eye'titulo="Ver motorista"></Lista>
@@ -56,7 +62,7 @@ export default function ConfiguracaoMoto() {
                 <Lista icone='chatbubbles' titulo="Chat" evento={()=>{
                     navigation.navigate('ListaChat')
                 }}></Lista>
-            </View>
+            </View> */}
         </View>
     )
 }

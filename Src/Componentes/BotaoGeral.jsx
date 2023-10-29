@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function BotaoGeral({icone, texto, evento}) 
+export default function BotaoGeral({icone, texto, evento, tamanho}) 
 {
 
     const [fonteLoaded] = useFonts ({
@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
 
     container: {
         display: "flex",
+        width: "80%",
+        height: 50,
         justifyContent: "center",
         alignItems: "center",
-        height: 60,
-        width: "80%",
         alignSelf: "center",
         backgroundColor: "#F7770D",
         borderRadius: 15,

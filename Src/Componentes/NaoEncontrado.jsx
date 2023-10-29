@@ -26,10 +26,7 @@ const styles = StyleSheet.create({
     container: {
         height: 300,
         width: 300,
-        position: "absolute",
         alignSelf: "center",
-        transform: [{ translateY: -170 }],
-        top: "50%",
         justifyContent: "center",
     },
 

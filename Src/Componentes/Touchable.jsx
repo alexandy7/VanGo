@@ -1,8 +1,9 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
+import { ActivityIndicator } from "react-native";
 
-export default function Touchable({ texto, evento }) {
+export default function Touchable({ texto, evento, clicado }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -15,10 +16,21 @@ export default function Touchable({ texto, evento }) {
     return (
 
         <TouchableOpacity onPress={evento}>
-            <View style={styles.prosseguir}>
-                <Text style={styles.textoProsseguir}>{texto}</Text>
-            </View>
-        </TouchableOpacity>
+            {
+                clicado ? (
+                    <View style={styles.prosseguir}>
+                        <Text style={styles.textoProsseguir}><ActivityIndicator color={`white`}/></Text>
+                    </View>
+                )
+                    :
+                    (
+
+                        <View style={styles.prosseguir}>
+                            <Text style={styles.textoProsseguir}>{texto}</Text>
+                        </View>
+                    )
+            }
+        </TouchableOpacity >
 
     )
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import styles from "./CadastrarClienteTurma.modules";
@@ -6,8 +6,32 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import InputEdicao from "../../Componentes/InputEdicao";
 import BotaoGeral from "../../Componentes/BotaoGeral"
+import { Token, UserData } from "../../services/Contexts/Contexts";
+import ApiMotorista from "../../services/Api/ApiMotorista";
+import axios from "axios";
 
-export default function CadastrarClienteTurma({foto, nome}){
+const CadastrarClienteTurma = ({ route }) => {
+
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        BuscarUsuario();
+
+        Clientes.map((item) => {
+            let nomeSeparado = item.nomeCliente.split(' ');
+
+            item.nomeCliente = nomeSeparado[0] + ' ' + nomeSeparado[1];
+        });
+    }, [Clientes])
+
+    const { Clientes } = route.params;
+
+    const [usuario, setUsuario] = useState({});
+    const [nomeCliente, setNomeCliente] = useState('');
+    const [clienteAtual, setClienteAtual] = useState(1);
+    const [valorMensalidade, setValorMensalidade] = useState(null);
+    const [vencimentoMensalidade, setVencimentoMensalidade] = useState(null);
+    const [utilizacao, setUtilizacao] = useState('');
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -18,7 +42,34 @@ export default function CadastrarClienteTurma({foto, nome}){
         return null;
     }
 
-    return(
+    async function BuscarUsuario() {
+        let user = await UserData();
+        setUsuario(user);
+    }
+
+    async function AceitarSolicitacao() {
+
+        let partes = vencimentoMensalidade.split('/');
+        let vencimento = partes[2] + '/' + partes[1] + '/' + partes[0];
+
+        const data = {
+            Id_cliente: Clientes[clienteAtual - 1].idCliente,
+            Id_turma: Clientes[clienteAtual - 1].idTurma,
+            Id_motorista: usuario.id_motorista,
+            Vencimento_mensalidade: vencimento.replace(/\//g, '-'),
+            Valor_mensalidade: Number(valorMensalidade)
+        }
+
+        const token = await Token();
+        await ApiMotorista.put("InserirClienteTurma", data, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
+        })
+    }
+
+    return (
         <ScrollView style={styles.main}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
@@ -32,7 +83,7 @@ export default function CadastrarClienteTurma({foto, nome}){
                 </View>
 
                 <View style={styles.divdireita}>
-                    <Text style={styles.numerostitulo}>01/10</Text>
+                    <Text style={styles.numerostitulo}>{`${clienteAtual}/${Clientes.length}`}</Text>
                 </View>
             </View>
 
@@ -42,23 +93,42 @@ export default function CadastrarClienteTurma({foto, nome}){
             </View>
 
             <TouchableOpacity style={styles.containerfoto}>
-                <Image style={styles.foto} source={require("../../../assets/Ana.jpeg")}/>
+                <Image style={styles.foto} source={{ uri: Clientes[clienteAtual - 1].fotoCliente }} />
             </TouchableOpacity>
-            
-            <Text style={styles.nomecliente}>{"A pessoa menos provável do mundo"}</Text>
+
+            <Text style={styles.nomecliente}>{Clientes[clienteAtual - 1].nomeCliente}</Text>
 
             <Text style={styles.tituloform}>Valor da mensalidade</Text>
-                <InputEdicao dado={"Ex: R$200,00"}/>
-            
+            <InputEdicao dado={"Ex: R$200,00"} sombra={true} mudou={(text) => { setValorMensalidade(text) }} />
+
             <Text style={styles.tituloform}>Vencimento da mensalidade</Text>
-                <InputEdicao dado={"Ex: 10/12/2023"}/>
-            
+            <InputEdicao dado={"Ex: 10/12/2023"} sombra={true} mudou={(text) => { setVencimentoMensalidade(text) }} />
+
             <Text style={styles.tituloform}>Utilização dos serviços</Text>
-                <InputEdicao dado={"Ex: Ida e volta"}/>
+            <InputEdicao dado={"Ex: Ida e volta"} sombra={true} />
 
-            <BotaoGeral texto={"Próximo"} icone={"chevron-forward-outline"}/>
-
+            <View style={{ marginTop: "10%" }}>
+                <BotaoGeral
+                    texto={"Próximo"}
+                    icone={"chevron-forward-outline"}
+                    tamanho={true}
+                    evento={() => {
+                        if (clienteAtual === Clientes.length) {
+                            AceitarSolicitacao();
+                            navigation.navigate('TabBarMotorista');
+                            return;
+                        }
+                        setClienteAtual(clienteAtual + 1);
+                        setValorMensalidade('');
+                        setVencimentoMensalidade('');
+                        setUtilizacao('');
+                        AceitarSolicitacao();
+                    }}
+                />
+            </View>
         </ScrollView>
     )
 
 }
+
+export default CadastrarClienteTurma;

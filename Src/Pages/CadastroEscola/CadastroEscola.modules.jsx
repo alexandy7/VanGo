@@ -1,17 +1,17 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    geral: {
+   
+    geral:{
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
-    inputes: {
-      marginTop: 20,
+
+    inputes:{
+      marginTop: "20%",
+      flex: 1,
+      height: "100%"
     },
-    concluir: {
-      marginTop: '50%',
-    },
+
   });
 
   export default styles;

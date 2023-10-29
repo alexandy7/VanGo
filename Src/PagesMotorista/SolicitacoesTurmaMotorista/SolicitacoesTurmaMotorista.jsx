@@ -15,10 +15,15 @@ export default function SolicitacoesTurmaMotorista() {
 
     const navigation = useNavigation();
 
-    const [usuario, setUsuario] = useState({})
+    const [usuario, setUsuario] = useState({});
     const [solicitacoes, setSolicitacoes] = useState([]);
-    const [carregamento, setCarregamento] = useState(false)
-    const [encontrado, setEncontrado] = useState(true)
+    const [carregamento, setCarregamento] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [encontrado, setEncontrado] = useState(true);
+
+    const [solicitacoesAceitas, setSolicitacoesAceitas] = useState([]);
+
+    const [cancelar, setCancelar] = useState([]);
 
     useEffect(() => {
         BuscarUsuario();
@@ -30,7 +35,7 @@ export default function SolicitacoesTurmaMotorista() {
 
             const user = await UserData();
             setUsuario(user);
-            BuscarSolicitacoes();
+            BuscarSolicitacoes(user.id_motorista);
         }
 
         catch (error) {
@@ -39,52 +44,32 @@ export default function SolicitacoesTurmaMotorista() {
 
     };
 
-    async function BuscarSolicitacoes(){
+    async function BuscarSolicitacoes(id) {
 
-        try{
+        try {
 
             const token = await Token();
-            
-            
-            var response = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${1}`, {
+
+
+            var response = await ApiMotorista.get(`ListarSolicitacoesTurma?id_motorista=${id}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
                 }
             })
-            
+
             var json = response.data;
             setSolicitacoes(json);
             setCarregamento(false);
         }
 
-        catch(error){
+        catch (error) {
             console.log(error);
             setCarregamento(false);
             setEncontrado(false);
         }
     };
 
-    async function AceitarSolicitacao(id_turma, id_cliente, id_motorista, id_solicitacoesTurma) {
-
-
-        RemoverItemDaLista(id_solicitacoesTurma);
-        const token = await Token();
-
-        const data = {
-            Id_cliente: id_cliente,
-            Turma_cliente: id_turma,
-            Id_motorista: id_motorista
-        }
-
-        await ApiMotorista.put("InserirClienteTurma", data, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            }
-        })
-
-    }
 
     async function RecusarSolicitacao(id_cliente, id_solicitacoesTurma) {
 
@@ -104,8 +89,15 @@ export default function SolicitacoesTurmaMotorista() {
     };
 
     function RemoverItemDaLista(itemid) {
-        const updatedList = solicitacoes.filter(item => item.id_solicitacoesTurma !== itemid);
-        setSolicitacoes(updatedList);
+        const novoCancelar = { ...cancelar };
+        delete novoCancelar[itemid];
+
+        const novaLista = { ...solicitacoesAceitas };
+        delete novaLista[itemid];
+
+        setSolicitacoesAceitas(novaLista);
+        setCancelar(novoCancelar);
+        console.log(novaLista)
     };
 
     return (
@@ -119,6 +111,28 @@ export default function SolicitacoesTurmaMotorista() {
                 <Text style={styles.titulo}>Solicitações</Text>
             </View>
 
+            {
+                solicitacoesAceitas.length > 0 && (
+
+                    <View style={{ alignSelf: 'flex-end', bottom: 20, right: 25 }}>
+                        <TouchableOpacity 
+                        style={{ backgroundColor: 'green', width: 110, height: 30, justifyContent: 'center', borderRadius: 10 }}
+                        onPress={()=>{
+                            navigation.navigate('CadastrarClienteTurma', {
+                            Clientes: solicitacoesAceitas
+                        })}}
+                        >
+                            <Text style={{ color: 'white', textAlign: 'center' }}>Próxima ➔</Text>
+                        </TouchableOpacity>
+                        {/* Círculo para representar o número de notificações */}
+                        {solicitacoesAceitas.length > 0 && (
+                            <View style={styles.circleContainer}>
+                                <Text style={styles.circleText}>{solicitacoesAceitas.length}</Text>
+                            </View>
+                        )}
+                    </View>
+                )
+            }
             <View>
                 {
                     carregamento ? (
@@ -129,37 +143,75 @@ export default function SolicitacoesTurmaMotorista() {
                     )
                         :
                         (
-                           
-                           encontrado ? (
 
-                               <FlatList
-                               keyExtractor={(item) => item.id_solicitacoesTurma}
-                               data={solicitacoes}
+                            encontrado ? (
 
-                               renderItem={({ item }) => {
+                                <FlatList
+                                    keyExtractor={(item) => item.id_solicitacoesTurma}
+                                    data={solicitacoes}
+                                    refresh={loading}
+                                    onRefreshing={()=> {
+                                        setLoading(true);
+                                        BuscarSolicitacoes(usuario.id_motorista);
+                                    }
+                                    }
+                                    renderItem={({ item }) => {
 
-                                    let dataSolicitacao = item.data_solicitacao;
-                                    let dataFormatada = FormatadorData(dataSolicitacao);
+                                        let dataSolicitacao = item.data_solicitacao;
+                                        let dataFormatada = FormatadorData(dataSolicitacao);
 
-                                    return (
-                                        <Solicitacao
-                                            imagem={{ uri: item.foto_cliente }}
-                                            nome={FormatadorTexto(item.nome_cliente, 14)}
-                                            hora={dataFormatada}
-                                            turma={item.nome_turma}
-                                            key={item.id_solicitacoesTurma}
-                                            
-                                            onAceitar={() => AceitarSolicitacao(item.id_turma, item.id_cliente, item.id_motorista, item.id_solicitacoesTurma)}
-                                            onRecusar={() => RecusarSolicitacao(item.id_cliente, item.id_solicitacoesTurma)}
-                                        />
+                                        return (
+                                            <Solicitacao
+                                                imagem={{ uri: item.foto_cliente }}
+                                                nome={FormatadorTexto(item.nome_cliente, 14)}
+                                                hora={dataFormatada}
+                                                turma={item.nome_turma}
+                                                key={item.id_solicitacoesTurma}
+                                                cancelar={cancelar[item.id_solicitacoesTurma]}
+
+                                                onAceitar={() => {
+                                                    let tamanho = Object.values(cancelar)
+                                                    if (tamanho.length > 0) {
+                                                        setCancelar(pervState => ({
+                                                            ...pervState, [item.id_solicitacoesTurma]: true
+                                                        }))
+                                                    }
+                                                    else {
+                                                        setCancelar(({ [item.id_solicitacoesTurma]: true }))
+                                                    }
+
+
+                                                    const objeto = {
+                                                        idTurma: item.id_turma,
+                                                        idCliente: item.id_cliente,
+                                                        nomeCliente: item.nome_cliente,
+                                                        fotoCliente: item.foto_cliente,
+                                                        idMotorista: item.id_motorista,
+                                                        idSolicitacao: item.id_solicitacoesTurma
+                                                    };
+
+                                                    let tamanho2 = Object.values(solicitacoesAceitas);
+                                                    if (tamanho2.length > 0) {
+                                                        setSolicitacoesAceitas([...solicitacoesAceitas, objeto])
+                                                    }
+                                                    else {
+                                                        setSolicitacoesAceitas([objeto])
+                                                    }
+                                                }}
+
+                                                onRecusar={() => RecusarSolicitacao(item.id_cliente, item.id_solicitacoesTurma)}
+                                                onCancelar={() => {
+                                                    RemoverItemDaLista(item.id_solicitacoesTurma)
+                                                }}
+                                            />
                                         )
                                     }}
-                                    />
-                                    )
-                                    :
-                                    (
-                                        <NaoEncontrado mensagem={"Não ha nenhuma solicitação"}></NaoEncontrado>
-                                    )
+                                />
+                            )
+                                :
+                                (
+                                    <NaoEncontrado mensagem={"Não ha nenhuma solicitação"}></NaoEncontrado>
+                                )
                         )
                 }
 

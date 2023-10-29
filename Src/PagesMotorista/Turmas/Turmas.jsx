@@ -9,11 +9,15 @@ import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 import { Token, UserData } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import ApiMotorista from "../../services/Api/ApiMotorista";
+import { ActivityIndicator } from "react-native";
+import axios from "axios";
 
 
-export default function Turmas({ nometurma, idTurma }) {
+const Turmas = ({ route }) => {
 
     const navigation = useNavigation();
+
+    const {idTurma, nomeTurma} = route.params;
 
     const [user, setUser] = useState({});
     const [clientes, setClientes] = useState([]);
@@ -30,9 +34,10 @@ export default function Turmas({ nometurma, idTurma }) {
     const [textAusentes, setTextAusentes] = useState("grey");
 
     const [loadingRefresh, setLoadingRefresh] = useState(false);
+    const [encontrado, setEncontrado] = useState(false);
 
     useEffect(() => {
-        BuscarUsuario()
+        BuscarUsuario();
     }, [])
 
     const [fonteLoaded] = useFonts({
@@ -47,8 +52,8 @@ export default function Turmas({ nometurma, idTurma }) {
     async function BuscarUsuario() {
         const response = await UserData()
         setUser(response);
-        BuscarClientesTurma()
-    }
+        BuscarClientesTurma(response.id_motorista);
+    };
 
 
     function filtrarStatusCliente(criterio) {
@@ -100,11 +105,11 @@ export default function Turmas({ nometurma, idTurma }) {
     // o valor inicial de "pesquisaFiltrada" é "listaFiltrada", pois o "searchCliente" é uma string vazia
     const pesquisaFiltrada = listaFiltrada.filter((lista) => lista.nome_cliente.toLowerCase().includes(searchCliente.toLocaleLowerCase()))
 
-    async function BuscarClientesTurma() {
+    async function BuscarClientesTurma(id_motorista) {
 
         const token = await Token();
 
-        let response = await ApiMotorista.get(`ListarClientesTurmas?id_motorista=${1}&id_turma=${33720}`, {
+        let response = await ApiMotorista.get(`ListarClientesTurmas?id_motorista=${id_motorista}&id_turma=${idTurma}`, {
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -115,6 +120,7 @@ export default function Turmas({ nometurma, idTurma }) {
         setClientes(json);
         setListaFiltrada(json)
         setLoadingRefresh(false);
+        setEncontrado(true);
     }
 
 
@@ -129,7 +135,7 @@ export default function Turmas({ nometurma, idTurma }) {
                 </View>
 
                 <View style={styles.divmeio}>
-                    <Text style={styles.titulo}>Turma Exemplo</Text>
+                    <Text style={styles.titulo}>{nomeTurma}</Text>
                 </View>
 
                 <View style={styles.divdireita}>
@@ -159,30 +165,48 @@ export default function Turmas({ nometurma, idTurma }) {
                 </TouchableOpacity>
             </View>
 
-            <FlatList
+           {
+            encontrado ? (
+
+                <FlatList
                 keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
                 data={pesquisaFiltrada}
                 refreshing={loadingRefresh}
                 onRefresh={()=> {
                     setLoadingRefresh(true);
-                    BuscarClientesTurma();
+                    BuscarClientesTurma(user.id_motorista);
                 }}
                 renderItem={({ item }) => {
-
+                    
                     const borderColor = item.status === "ausente" ? "red" : "green";
-
+                    
                     return (
                         <CardAluno
-                            foto={{ uri: item.foto_cliente }}
-                            nome={item.nome_cliente}
-                            escola={item.escola_cliente}
-                            status={item.status}
-                            borderColor={borderColor} // Passamos a cor da borda como prop
+                        foto={{ uri: item.foto_cliente }}
+                        nome={item.nome_cliente}
+                        escola={item.escola_cliente}
+                        status={item.status}
+                        borderColor={borderColor}
+                        evento={()=> {
+                            navigation.navigate('VisualizarCliente', {
+                                nome: item.nome_cliente,
+                                foto: item.foto_cliente,
+                                id: item.id_cliente
+                            })
+                        }}
                         />
-                    );
-                }}
-            />
+                        );
+                    }}
+                    />
+                    )
+                    :
+                    (
+                        <ActivityIndicator color={'orange'} style={{justifyContent: "center"}}/>
+                    )
+                }
 
         </SafeAreaView>
     )
 }
+
+export default Turmas;

@@ -1,12 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
-import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
+import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardAluno({foto, nome, escola, borderColor}) 
-{
+export default function CardAluno({ foto, nome, escola, borderColor, evento }) {
 
-    const [fonteLoaded] = useFonts ({
+    const [fonteLoaded] = useFonts({
         Montserrat_600SemiBold,
         Montserrat_400Regular
     });
@@ -15,11 +14,11 @@ export default function CardAluno({foto, nome, escola, borderColor})
         return null;
     }
 
-    return(
+    return (
         <View style={[styles.container, { borderColor }]}>
-            <View style={styles.divimagem}>
-                <Image source={foto} style={styles.imagem}></Image>
-            </View>
+            <TouchableOpacity onPress={evento} style={styles.divimagem}>
+                <Image source={foto} style={styles.imagem} />
+            </TouchableOpacity>
 
             <View style={styles.divtexto}>
                 <Text style={styles.nome}>{nome}</Text>

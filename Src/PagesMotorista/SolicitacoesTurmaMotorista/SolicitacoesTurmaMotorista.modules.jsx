@@ -29,6 +29,22 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
 
+    circleContainer: {
+        position: 'absolute',
+        backgroundColor: 'red', // Cor do círculo
+        width: 20, // Largura do círculo
+        height: 20, // Altura do círculo
+        borderRadius: 10, // Metade da largura para fazer um círculo
+        justifyContent: 'center',
+        alignItems: 'center',
+        right: -10, // Posicionamento em relação à borda direita da View pai
+        top: -10, // Posicionamento em relação à borda superior da View pai
+      },
+      circleText: {
+        color: 'white', // Cor do texto dentro do círculo
+        fontWeight: 'bold',
+      },
+
 });
 
 export default styles;

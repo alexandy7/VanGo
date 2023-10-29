@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, Text, Image, TextInput } from "react-native";
-import InserirTurma from "../../Componentes/InserirTurma";
-import ApiMotorista from "../../services/Api/ApiMotorista";
 import { UserData, Token } from "../../services/Contexts/Contexts";
 import ApiCliente from "../../services/Api/ApiCiente";
 import { useNavigation } from "@react-navigation/native";
@@ -9,6 +7,9 @@ import { ScrollView } from "react-native";
 import Touchable from "../../Componentes/Touchable";
 import styles from "./SolicitarTurma.modules";
 import axios from "axios";
+import MeuText from "../../Componentes/MeuText";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import TituloCadastro from "../../Componentes/Titulocadastros";
 export default function SolicitarTurma() {
 
     const navigation = useNavigation();
@@ -17,27 +18,37 @@ export default function SolicitarTurma() {
     const [user, setUser] = useState({})
 
     useEffect(() => {
+        async function DadosUsuario() {
+            let user = await UserData();
+            setUser(user);
+
+            const visitouTela = await AsyncStorage.getItem('TelaVisitada');
+            if (visitouTela) {
+                setSolicitacaoenviada(true);
+            };
+        };
         DadosUsuario();
-    })
 
-    async function DadosUsuario() {
+        const intervalId = setInterval(() => {
+            VerificarSolicitacao();
+        }, 20000);
 
-        let user = await UserData();
-        setUser(user)
-    }
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
+    }, []);
 
-    const data = {
 
-        Nome_cliente: user.nome_cliente,
-        Foto_cliente: user.foto_cliente,
-        Id_cliente: user.id_cliente,
-        Id_turma: Number(codigo)
 
-    }
 
     async function EnviarSolicitacao() {
 
         try {
+            const data = {
+                Nome_cliente: user.nome_cliente,
+                Foto_cliente: user.foto_cliente,
+                Id_cliente: user.id_cliente,
+                Id_turma: Number(codigo)
+            };
 
             const token = await Token()
 
@@ -50,6 +61,7 @@ export default function SolicitarTurma() {
 
             if (response.status == 200) {
                 setSolicitacaoenviada(true);
+                await AsyncStorage.setItem('TelaVisitada', 'true');
             }
 
         }
@@ -58,10 +70,29 @@ export default function SolicitarTurma() {
 
             console.error("Houve um erro aqui: ", error);
         }
-
     }
 
 
+    async function VerificarSolicitacao() {
+        try {
+            console.log('aa')
+            let token = await Token();
+            console.log(user)
+            let response = await ApiCliente.get(`VerificarSolicitacao/${user.id_cliente}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (response.status === 200) {
+                navigation.goBack();
+            };
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
     return (
 
         <View style={styles.container}>
@@ -72,12 +103,15 @@ export default function SolicitarTurma() {
 
                         <View>
 
-                            <View style={styles.SolicitacaoEnviada}>
-                                <Image source={require('../../../assets/Ok.png')} style={styles.ok} />
-                                <Text style={{ fontSize: 30 }}>Solicitação enviada!</Text>
+                            <View style={{marginTop: "10%"}}>
+                                <TituloCadastro
+                                textoh1={'Solicitação enviada!'}
+                                />
                             </View>
 
-                            <Image source={require('../../../assets/waiting.gif')} style={styles.gif} />
+                            <View style={styles.viewGif} >
+                                <Image source={require('../../../assets/SolicitacaoEnviada.gif')} style={styles.gif} />
+                            </View>
 
 
                             <View style={styles.MsgAguardando}>
@@ -94,14 +128,15 @@ export default function SolicitarTurma() {
                                     <Text style={styles.textoTitulo}>Digite o código do motorista</Text>
                                 </View>
 
-                                <TextInput
-                                    placeholder={'Exemplo: #33782'}
-                                    style={styles.input}
-                                    onChangeText={(text)=>{setCodigo(text)}}>
-                                </TextInput>
+                                <MeuText
+                                    nomePlaceholder={'Exemplo: #33782'}
+                                    icon={'key'}
+                                    mudou={(text) => { setCodigo(text) }}
+                                // keyboardType="numeric"
+                                />
 
                                 <View style={styles.botao}>
-                                    <Touchable texto={'Enviar'} evento={EnviarSolicitacao}></Touchable>
+                                    <Touchable texto={'Enviar'} evento={() => EnviarSolicitacao()}></Touchable>
                                 </View>
                             </View>
                         )

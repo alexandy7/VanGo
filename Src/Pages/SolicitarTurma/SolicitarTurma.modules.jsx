@@ -52,29 +52,28 @@ const styles = StyleSheet.create({
     MsgAguardando: {
         alignSelf: "center",
         backgroundColor: "#F7770D",
-        marginTop: '25%',
         width: '95%',
         height: '9%',
         borderRadius: 10,
-        marginBottom: '10%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flex: 1,
+        marginTop: "30%"
         
     },
 
-    gif: {
+    viewGif: {
         alignSelf: "center",
-        marginTop: "15%"
+        top: 50
     },
 
-    ok:{
-        alignSelf: "center",
-        marginBottom: "5%"
+    gif:{
+        resizeMode: 'contain',
+        height: 350
     },
 
     SolicitacaoEnviada: {
         alignSelf: "center",
         flexDirection: "column",
-        marginTop: "20%"
     }
 })
 

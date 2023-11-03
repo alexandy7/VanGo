@@ -11,13 +11,14 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 import { ActivityIndicator } from "react-native";
 import axios from "axios";
+import NotFound from "../../Componentes/NotFound";
 
 
 const Turmas = ({ route }) => {
 
     const navigation = useNavigation();
 
-    const {idTurma, nomeTurma} = route.params;
+    const { idTurma, nomeTurma } = route.params;
 
     const [user, setUser] = useState({});
     const [clientes, setClientes] = useState([]);
@@ -26,15 +27,16 @@ const Turmas = ({ route }) => {
 
     const [buttonTodos, setButtonTodos] = useState("#F7770D");
     const [textTodos, setTextTodos] = useState("white");
-    
+
     const [buttonPresentes, setButtonPresentes] = useState("#C4C4C433");
     const [textPresentes, setTextPresentes] = useState("grey");
-    
+
     const [buttonAusentes, setButtonAusentes] = useState("#C4C4C433");
     const [textAusentes, setTextAusentes] = useState("grey");
 
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [encontrado, setEncontrado] = useState(false);
+    const [semCliente, setSemCliente] = useState(false);
 
     useEffect(() => {
         BuscarUsuario();
@@ -107,20 +109,26 @@ const Turmas = ({ route }) => {
 
     async function BuscarClientesTurma(id_motorista) {
 
-        const token = await Token();
+        try {
+            const token = await Token();
 
-        let response = await ApiMotorista.get(`ListarClientesTurmas?id_motorista=${id_motorista}&id_turma=${idTurma}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            }
-        });
+            let response = await ApiMotorista.get(`ListarClientesTurmas?id_motorista=${id_motorista}&id_turma=${idTurma}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
 
-        let json = response.data
-        setClientes(json);
-        setListaFiltrada(json)
-        setLoadingRefresh(false);
-        setEncontrado(true);
+            let json = response.data
+            setClientes(json);
+            setListaFiltrada(json)
+            setLoadingRefresh(false);
+            setEncontrado(true);
+        }
+        catch (error) {
+            console.log(error);
+            setSemCliente(true);
+        }
     }
 
 
@@ -165,47 +173,63 @@ const Turmas = ({ route }) => {
                 </TouchableOpacity>
             </View>
 
-           {
-            encontrado ? (
-
-                <FlatList
-                keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
-                data={pesquisaFiltrada}
-                refreshing={loadingRefresh}
-                onRefresh={()=> {
-                    setLoadingRefresh(true);
-                    BuscarClientesTurma(user.id_motorista);
-                }}
-                renderItem={({ item }) => {
-                    
-                    const borderColor = item.status === "ausente" ? "red" : "green";
-                    
-                    return (
-                        <CardAluno
-                        foto={{ uri: item.foto_cliente }}
-                        nome={item.nome_cliente}
-                        escola={item.escola_cliente}
-                        status={item.status}
-                        borderColor={borderColor}
-                        evento={()=> {
-                            navigation.navigate('VisualizarCliente', {
-                                nome: item.nome_cliente,
-                                foto: item.foto_cliente,
-                                id: item.id_cliente
-                            })
-                        }}
-                        />
-                        );
-                    }}
-                    />
-                    )
+            {
+                semCliente ? (
+                    <View>
+                        <NotFound/>
+                    </View>
+                )
                     :
                     (
-                        <ActivityIndicator color={'orange'} style={{justifyContent: "center"}}/>
-                    )
-                }
 
-        </SafeAreaView>
+
+                        <View>
+                            {
+                                encontrado ? (
+                                    <FlatList
+                                        keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
+                                        data={pesquisaFiltrada}
+                                        refreshing={loadingRefresh}
+                                        onRefresh={() => {
+                                            setLoadingRefresh(true);
+                                            BuscarClientesTurma(user.id_motorista);
+                                        }}
+                                        renderItem={({ item }) => {
+
+                                            const borderColor = item.status === "ausente" ? "red" : "green";
+
+                                            return (
+                                                <CardAluno
+                                                    foto={{ uri: item.foto_cliente }}
+                                                    nome={item.nome_cliente}
+                                                    escola={item.escola_cliente}
+                                                    status={item.status}
+                                                    borderColor={borderColor}
+                                                    evento={() => {
+                                                        navigation.navigate('VisualizarCliente', {
+                                                            nome: item.nome_cliente,
+                                                            foto: item.foto_cliente,
+                                                            id: item.id_cliente
+                                                        })
+                                                    }}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                )
+                                    :
+                                    (
+                                        <ActivityIndicator 
+                                        color={'orange'} 
+                                        size={35}
+                                        style={{ justifyContent: "center", alignSelf: "center", marginTop: "50%" }} />
+                                    )
+                            }
+                        </View>
+                    )
+            }
+
+        </SafeAreaView >
     )
 }
 

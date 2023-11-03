@@ -42,7 +42,7 @@ export default function App() {
         <AppNavigator />
         <StatusBar hidden={true} />
       </NavigationContainer>
-      <Toast  config={toastConfig}/>
+      <Toast config={toastConfig}/>
     </>
   );
 }

@@ -4,13 +4,9 @@ import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import BotaoHome from "../../Componentes/BotaoHome";
 import CardTurma from "../../Componentes/CardTurma";
-import Touchable from "../../Componentes/Touchable";
 import styles from "./HomeMotorista.modules";
 import { Token, UserData } from "../../services/Contexts/Contexts";
-import ApiCliente from "../../services/Api/ApiCiente";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
-import { BackHandler } from "react-native";
-import { Alert } from "react-native";
 import ApiMotorista from "../../services/Api/ApiMotorista";
 
 export default function HomeMotorista() {
@@ -34,9 +30,7 @@ export default function HomeMotorista() {
     }
 
     async function BuscarTurmas(id_motorista) {
-
         try {
-
             let token = await Token();
 
             let response = await ApiMotorista.get(`ListarTurmas/${id_motorista}`, {
@@ -91,7 +85,7 @@ export default function HomeMotorista() {
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
-                        <TouchableOpacity onPress={() => { navigation.navigate('Chat') }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatMotorista') }}>
                             <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
                         </TouchableOpacity>
 
@@ -150,7 +144,7 @@ export default function HomeMotorista() {
                                     )
                             )
                         }}
-                        
+
                         renderItem={({ item }) => {
 
                             return (

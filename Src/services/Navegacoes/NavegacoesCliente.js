@@ -2,39 +2,40 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from '@expo/vector-icons'
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Login from "../../Pages/Login/Login";
-import RecuperarSenha from '../../Pages/RecuperarSenha/RecuperarSenha';
-import Cadastro from '../../Pages/Cadastro/Cadastro';
-import CadastroEscola from '../../Pages/CadastroEscola/CadastroEscola';
+import Login from "../../PagesGeral/Login/Login";
+import RecuperarSenha from '../../PagesCliente/RecuperarSenha/RecuperarSenha';
+import Cadastro from '../../PagesCliente/Cadastro/Cadastro';
+import CadastroEscola from '../../PagesCliente/CadastroEscola/CadastroEscola';
+import PerfilCliente from '../../PagesCliente/PerfilCliente/PerfilCliente';
+import ConfiguracaoCliente from "../../PagesCliente/ConfiguracaoCliente/ConfiguracaoCliente";
+import PagamentoCliente from "../../PagesCliente/PagamentoCliente/PagamentoCliente";
+import EditarCliente from "../../PagesCliente/EditarCliente/EditarCliente";
+import HomeCliente from "../../PagesCliente/HomeCliente/HomeCliente";
+import AnexarPagamentos from "../../PagesCliente/AnexarPagamentos/AnexarPagamentos";
+import SolicitarTurma from "../../PagesCliente/SolicitarTurma/SolicitarTurma";
+import NotificacaoCliente from "../../PagesCliente//NotificacaoCliente/NotificacaoCliente";
+import Chat from "../../PagesMotorista/Chat/Chat";
+import AdicionarFoto from "../../PagesGeral/AdicionarFoto/AdicionarFoto";
+import CadastroConcluido from "../../PagesGeral/CadastroConcluido/CadastroConcluido";
+import CadastroTela1 from "../../PagesGeral/CadastroTela1/CadastroTela1";
+import ConversaChatCliente from "../../PagesCliente/ConversaChatCliente/ConversaChatCliente";
+import VisualizarMotorista from "../../PagesCliente/VisualizarMotorista/VisualizarMotorista";
+
+import CadastrarClienteTurma from "../../PagesMotorista/CadastrarClienteTurma/CadastrarClienteTurma";
 import CadastroVeiculo from '../../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
 import ConfiguracaoMoto from "../../PagesMotorista/ConfiguracaoMotorista/ConfiguracaoMoto";
-import ConfiguracaoCliente from "../../Pages/ConfiguracaoCliente/ConfiguracaoCliente";
-import PerfilCliente from '../../Pages/PerfilCliente/PerfilCliente';
-import PagamentoCliente from "../../Pages/PagamentoCliente/PagamentoCliente";
 import NotificacaoMotorista from "../../PagesMotorista/NotificacaoMotorista/NotificacaoMotorista";
-import HomeCliente from "../../Pages/HomeCliente/HomeCliente";
-import EditarCliente from "../../Pages/EditarCliente/EditarCliente";
 import SolicitacoesTurmaMotorista from "../../PagesMotorista/SolicitacoesTurmaMotorista/SolicitacoesTurmaMotorista";
-import AnexarPagamentos from "../../Pages/AnexarPagamentos/AnexarPagamentos";
 import Turmas from "../../PagesMotorista/Turmas/Turmas";
-import SolicitarTurma from "../../Pages/SolicitarTurma/SolicitarTurma";
-import NotificacaoCliente from "../../Pages/NotificacaoCliente/NotificacaoCliente";
 import PagamentosMotorista from "../../PagesMotorista/PagamentosMotorista/PagamentosMotorista";
-import Chat from "../../Pages/Chat/Chat";
 import CriarTurmas from "../../PagesMotorista/CriarTurmas/CriarTurmas";
-import AdicionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
-import CadastroConcluido from "../../Pages/CadastroConcluido/CadastroConcluido";
 import PerfilMotorista from "../../PagesMotorista/PerfilMotorista/PerfilMotorista";
 import HomeMotorista from "../../PagesMotorista/HomeMotorista/HomeMotorista";
 import AceitarPagamento from "../../PagesMotorista/AceitarPagamento/AceitarPagamento";
 import EditarMotorista from "../../PagesMotorista/EditarMotorista/EditarMotorista";
-import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotorista";
 import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/VisualizarCliente";
 import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
-import TesteComponentes from "../../Pages/TesteComponentes/TesteComponentes";
-import CadastrarClienteTurma from "../../PagesMotorista/CadastrarClienteTurma/CadastrarClienteTurma";
-import CadastroTela1 from "../../Pages/CadastroTela1/CadastroTela1";
-import ConversaChat from "../../Pages/ConversaChat/ConversaChat";
+import ConversaChatMotorista from "../../PagesMotorista/ConversaChatMotorista/ConversaChatMotorista";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -77,7 +78,7 @@ function TabBarCliente() {
               return <Icon name="attach-money" color="rgba(0, 0, 0, 0.4)" size={33}/>//Modo quando não estiver clicado
             },
           }} 
-          />
+          />  
 
       <Tab.Screen
         name="HomeCliente"
@@ -205,7 +206,7 @@ export default function AppNavigator() {
       <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroConcluido" component={CadastroConcluido}  options={{headerShown: false}}/>
       <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConversaChat" component={ConversaChat}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConversaChatCliente" component={ConversaChatCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="PerfilCliente" component={PerfilCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
@@ -231,10 +232,10 @@ export default function AppNavigator() {
       <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
       <Stack.Screen name="HomeMotorista" component={HomeMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="AceitarPagamento" component={AceitarPagamento}  options={{headerShown: false}}/>
-
       <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma}  options={{headerShown: false}}/>
+      <Stack.Screen name="ConversaChatMotorista" component={ConversaChatMotorista}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

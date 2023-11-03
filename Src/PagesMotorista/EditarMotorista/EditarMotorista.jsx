@@ -167,24 +167,28 @@ export default function EditarMotorista() {
             <Text style={styles.tituloform}>Nome</Text>
             <InputEdicao
                 valor={nome}
+                largura={"86%"}
                 mudou={(text) => { setNome(text) }}
             />
 
             <Text style={styles.tituloform}>Cor</Text>
             <InputEdicao
                 valor={"nomeCliente"}
+                largura={"86%"}
                 mudou={(text) => { setNomeCliente(text) }}
             />
 
             <Text style={styles.tituloform}>Cidade</Text>
             <InputEdicao
                 valor={endereco}
+                largura={"86%"}
                 mudou={(text) => { setEndereco(text) }}
             />
 
             <Text style={styles.tituloform}>Período</Text>
             <InputEdicao
                 valor={periodo}
+                largura={"86%"}
                 mudou={(text) => { setPeriodo(text) }}
             />
 

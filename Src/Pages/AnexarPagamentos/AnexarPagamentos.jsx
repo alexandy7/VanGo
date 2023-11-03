@@ -23,11 +23,11 @@ const AnexarPagamentos = ({ route }) => {
     const [foto, setFoto] = useState(null);
     const [exibirFoto, setExibirFoto] = useState(false);
     const [usuario, setUsuario] = useState({});
-    const [conexao, setConexao] = useState(true)
+    const [conexao, setConexao] = useState(true);
 
     useEffect(() => {
         ChecarConexao();
-    }, [])
+    }, []);
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -44,20 +44,21 @@ const AnexarPagamentos = ({ route }) => {
             BuscarUsuario();
         }
         else {
-            setConexao(false)
-        }
-    }
+            setConexao(false);
+        };
+    };
+
+
     async function BuscarUsuario() {
         try {
 
             let user = await UserData();
             setUsuario(user);
-            // console.log(user)
         }
 
         catch (error) {
-            console.log(error)
-        }
+            console.log(error);
+        };
     }
 
     async function selecionarImagem() {
@@ -71,7 +72,7 @@ const AnexarPagamentos = ({ route }) => {
 
             if (result.canceled) {
                 return;
-            }
+            };
 
             setBase64(result.assets[0].base64);
             setFoto(result.assets[0].uri);
@@ -79,9 +80,9 @@ const AnexarPagamentos = ({ route }) => {
 
         }
         catch (error) {
-            console.log(error)
-        }
-    }
+            console.log(error);
+        };
+    };
 
     async function EnviarPagamento() {
 
@@ -99,19 +100,19 @@ const AnexarPagamentos = ({ route }) => {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
                 }
-            })
+            });
 
             if (response.status !== 200) {
                 console.log("Houve um erro...");
                 return;
-            }
+            };
 
             navigation.navigate("PagamentoCliente");
         }
         catch (error) {
-            console.log(error)
-        }
-    }
+            console.log(error);
+        };
+    };
 
     return (
         <ScrollView style={styles.principal}>

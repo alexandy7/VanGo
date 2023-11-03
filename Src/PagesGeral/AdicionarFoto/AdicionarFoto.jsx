@@ -13,39 +13,40 @@ import SemWifi from "../../Componentes/SemWifi";
 import NetInfo from '@react-native-community/netinfo';
 
 const AdicionarFoto = ({ route }) => {
-
+    
     const { email_cliente, senha_cliente, nome_cliente, cpf_responsavel, endereco_cliente, responsavel_cliente, escolaCliente } = route.params;
-
+    
     const navigation = useNavigation();
-
+    
     const [_base64, setBase64] = useState("");
     const [exibirFoto, setExibirFoto] = useState(false);
     const [foto, setFoto] = useState(null);
     const [clicado, setClicado] = useState(false);
     const [internet, setInternet] = useState(true);
-
+    
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
     });
+    
+        useEffect(() => {
+            checkInternetConnection();
+        }, [internet]);
 
     if (!fonteLoaded) {
         return null;
-    }
-
-
-    useEffect(() => {
-        checkInternetConnection();
-    }, [])
-
-
+    };
+    
     async function checkInternetConnection() {
         const state = await NetInfo.fetch();
-
+        
         if (!state.isConnected) {
             console.log('O dispositivo está conectado à internet.');
-        }
-    }
+            return;
+        };
+
+        setInternet(true);
+    };
 
 
     async function selecionarImagem() {
@@ -61,7 +62,7 @@ const AdicionarFoto = ({ route }) => {
 
             if (result.canceled) {
                 return;
-            }
+            };
             setBase64(result.assets[0].base64);
             setFoto(result.assets[0].uri);
             setExibirFoto(true);
@@ -69,8 +70,8 @@ const AdicionarFoto = ({ route }) => {
         }
         catch (error) {
             console.log(error)
-        }
-    }
+        };
+    };
 
     async function CadastrarCliente() {
         const data = {
@@ -83,7 +84,7 @@ const AdicionarFoto = ({ route }) => {
             Endereco_reserva: 'endereco teste',
             Responsavel_cliente: responsavel_cliente,
             Escola_cliente: escolaCliente
-        }
+        };
 
         try {
 
@@ -93,14 +94,14 @@ const AdicionarFoto = ({ route }) => {
                 navigation.navigate('Login');
             } else {
                 console.log('Usuário não encontrado');
-            }
+            };
         }
 
         catch (error) {
             console.error('Erro na consulta:', error);
             setClicado(false);
-        }
-    }
+        };
+    };
     return (
         <View style={styles.main}>
             <View style={styles.header}>

@@ -41,6 +41,8 @@ export default function Login() {
 
       navigation.replace('TabBarMotorista');
     }
+
+
   }
 
   async function login() {
@@ -57,6 +59,7 @@ export default function Login() {
       data.append('Senha', senhaUsuario);
 
       setLoading(true);
+      const inicio = performance.now();
 
       await axios.post("https://apivango.azurewebsites.net/api/Auth/Login", data.toString(), {
         headers: {
@@ -65,14 +68,17 @@ export default function Login() {
       })
 
         .then((response) => {
+          const fim = performance.now();
+
+          console.log(fim - inicio);
           GuardarToken(response.data.token);
         })
 
         .then(() => {
-        showToast("success", "Login bem-sucedido!", "Aproveite o app.", 1200);
-        setTimeout(()=>{
-          VerificarQuemE();
-        }, 800)
+          showToast("success", "Login bem-sucedido!", "Aproveite o app.", 1200);
+          setTimeout(() => {
+            VerificarQuemE();
+          }, 800)
         })
 
         .then(() => {
@@ -104,6 +110,12 @@ export default function Login() {
 
   useEffect(() => {
     VerificarQuemE();
+
+    async function WarUp() {
+      await axios.get('https://apivango.azurewebsites.net/api/Auth/WarmUp')
+    };
+
+    WarUp();
   }, []);
 
   const [fonteLoaded] = useFonts({
@@ -162,7 +174,7 @@ export default function Login() {
             <View style={styles.botaoNovaConta}>
               <Text style={styles.naoecadastrado}>Não é cadastrado? </Text>
 
-              <TouchableOpacity onPress={() => { navigation.navigate('Cadastro') }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('CadastroTela1') }}>
 
                 <Text style={styles.novaConta}>Nova conta</Text>
               </TouchableOpacity>

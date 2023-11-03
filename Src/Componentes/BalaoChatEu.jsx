@@ -31,26 +31,24 @@ const styles = StyleSheet.create({
         display: "flex",
         width: "60%",
         alignSelf: "flex-end",
-        // backgroundColor: "#F7770D",
         flexDirection: "row",
         justifyContent: "flex-end",
-        marginTop: 7,
-        marginBottom: 7
+        marginBottom: 2
     },
 
     balao: {
         backgroundColor: "#F99A4C",
         padding: 7,
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         borderTopStartRadius: 15,
         borderBottomStartRadius: 15,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
 
     },
 
     texto: {
-        textAlign: "auto",  
+        textAlign: "auto",
         fontSize: 17,
         fontFamily: "Montserrat_400Regular",
         color: "white",
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
         color: "white",
         right: 10,
         position: "absolute",
-        top: 9
+        bottom: 1,
     }
 
 });

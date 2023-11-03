@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
         // backgroundColor: "#F7770D",
         flexDirection: "row",
         justifyContent: "flex-start",
-        marginTop: 7,
-        marginBottom: 7
+        marginBottom: 2
     },
 
     balao: {
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
         color: "#252525",
         right: 10,
         position: "absolute",
-        top: 9
+        bottom: 1
     }
 
 });

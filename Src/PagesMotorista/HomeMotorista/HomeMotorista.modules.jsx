@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
         height: "40%",
         display: "flex",
         position: "relative",
+        width: "100%"
     },
 
     nome: {

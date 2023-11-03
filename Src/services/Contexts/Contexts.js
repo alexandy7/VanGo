@@ -51,7 +51,9 @@ export async function Token(){
 
 
 export async function RemoverToken(){
-    await AsyncStorage.removeItem("@jwt")
+    await AsyncStorage.removeItem("@jwt");
+    await AsyncStorage.removeItem("TelaVisitada");
+
 }
 
 // Verifica quem fez login e direciona para a pagina certa.

@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
 
     texto:{
-        fontSize: 14,
+        fontSize: 13,
         fontFamily: "Montserrat_400Regular"
     }
 })

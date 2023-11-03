@@ -10,6 +10,7 @@ import axios from "axios";
 import MeuText from "../../Componentes/MeuText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import TituloCadastro from "../../Componentes/Titulocadastros";
+import showToast from "../../services/Toast/Toast";
 export default function SolicitarTurma() {
 
     const navigation = useNavigation();
@@ -67,8 +68,8 @@ export default function SolicitarTurma() {
         }
 
         catch (error) {
-
-            console.error("Houve um erro aqui: ", error);
+            console.log("Houve um erro aqui: ", error);
+            showToast('error', 'Inválido', 'Esse código não existe.', 4000)
         }
     }
 
@@ -99,7 +100,7 @@ export default function SolicitarTurma() {
             <ScrollView style={styles.scroll}>
 
                 {
-                    solicitacaoenviada ? (
+                    false ? (
 
                         <View>
 
@@ -132,11 +133,11 @@ export default function SolicitarTurma() {
                                     nomePlaceholder={'Exemplo: #33782'}
                                     icon={'key'}
                                     mudou={(text) => { setCodigo(text) }}
-                                // keyboardType="numeric"
+                                    keyboardType="numeric"
                                 />
 
                                 <View style={styles.botao}>
-                                    <Touchable texto={'Enviar'} evento={() => EnviarSolicitacao()}></Touchable>
+                                    <Touchable texto={'Enviar'} evento={() => EnviarSolicitacao()}/>
                                 </View>
                             </View>
                         )

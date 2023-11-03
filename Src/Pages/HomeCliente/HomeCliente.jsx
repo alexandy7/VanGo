@@ -116,7 +116,7 @@ export default function HomeCliente() {
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
-                        <TouchableOpacity onPress={() => { navigation.navigate('Chat') }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatCliente') }}>
                             <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
                         </TouchableOpacity>
 
@@ -147,7 +147,6 @@ export default function HomeCliente() {
             {
                 //Caso esteja conectado a internet, renderiza a tela
                 internet ? (
-
                     <View>
                         <CardTurma
                             nome={"Turma da manhã"}

@@ -193,9 +193,10 @@ const styles = StyleSheet.create({
     vencimento: {
         position: "relative",
         fontSize: 11,
-        marginRight: "15%",
         marginBottom: 5,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        width: "100%",
+        textAlign: "center"
     },
 
 })

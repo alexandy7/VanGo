@@ -253,7 +253,7 @@ export default function PagamentosMotorista() {
                     (
                         vazio ? (
                             <View style={{JustifyContent: "center"}}>
-                                <NotFound />
+                                <NotFound/>
                             </View>
                         )
                             :

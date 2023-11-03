@@ -38,14 +38,15 @@ const styles = StyleSheet.create({
     },
 
     divnome:{
-        height: "40%",
+        height: "50%",
         display: "flex",
         position: "relative",
+        marginLeft: "5%",
+        width: "100%"
     },
 
     nome: {
         fontSize: 20,
-        marginLeft: "5%",
         color: "white",
         fontFamily: "Montserrat_500Medium"
     },

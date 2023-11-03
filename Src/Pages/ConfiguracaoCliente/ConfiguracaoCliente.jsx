@@ -50,6 +50,7 @@ export default function ConfiguracaoMoto() {
                 <Lista icone='exit-outline' titulo="Sair" cor={true} evento={()=>{
                     navigation.navigate('Login');
                     RemoverToken();
+                    
                 }}/>
 
             </View>

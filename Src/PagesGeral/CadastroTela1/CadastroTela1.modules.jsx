@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         width: "80%",
         height: 45,
-        backgroundColor: "#F99A4C",
         marginTop: 45,
         borderRadius: 15,
         display: "flex",

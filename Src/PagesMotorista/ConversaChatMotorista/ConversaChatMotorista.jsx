@@ -26,7 +26,7 @@ const ConversaChatMotorista = ({ route }) => {
     const [user, setUser] = useState({});
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
-
+    const [inicio, setInicio] = useState();
     const testando = [
         { sender: `Cliente`, text: `Oi, tudo bem?` },
         { sender: "Motorista", text: "Sim, como posso ajuda-lo?" },
@@ -35,6 +35,7 @@ const ConversaChatMotorista = ({ route }) => {
     ];
 
     useEffect(() => {
+        setInicio(performance.now());
         BuscarUsuario();
     }, []);
 
@@ -59,7 +60,10 @@ const ConversaChatMotorista = ({ route }) => {
         if (connection) {
             try {
                 connection.start()
-                    .then(() => console.log("Conectado ao hub SignalR!"))
+                    .then(() => {
+                        let fim = performance.now();
+                        console.log(`Conectado ao hub SignalR! ${(fim - inicio) / 1000}`);
+                    })
                     .then(() => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
                             // console.log(sender, reciver, message, `Motorista/${user.id_motorista}`);
@@ -91,7 +95,7 @@ const ConversaChatMotorista = ({ route }) => {
         let agora = new Date();
         const horas = agora.getHours();
         const minutos = agora.getMinutes();
-        const tempoEnvio = `${horas}:${minutos > 9 ? minutos : '0' + minutos}`;
+        const tempoEnvio = `${horas > 9 ? horas : '0' + horas}:${minutos > 9 ? minutos : '0' + minutos}`;
 
         atualizarState('Motorista', minhaMensagem, tempoEnvio);
         const usuario = `Motorista/${user.id_motorista}`; 

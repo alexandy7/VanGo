@@ -24,7 +24,8 @@ export default function ConversaChatCliente() {
     const [user, setUser] = useState({});
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
-
+    const [inicio, setInicio] = useState();
+    
     const testando = [
         { sender: `Cliente`, text: `Oi, tudo bem?` },
         { sender: "Motorista", text: "Sim, como posso ajuda-lo?" },
@@ -33,6 +34,7 @@ export default function ConversaChatCliente() {
     ]
 
     useEffect(() => {
+        setInicio(performance.now());
         BuscarUsuario();
     }, []);
 
@@ -56,7 +58,11 @@ export default function ConversaChatCliente() {
         if (connection) {
             try {
                 connection.start()
-                    .then(() => console.log("Conectado ao hub SignalR!"))
+                    .then(() => {
+                        let fim = performance.now();
+                        console.log(`Conectado ao hub SignalR! ${(fim - inicio) / 1000}`);
+                        
+                    })
                     .then(() => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
                             if (reciver === `Cliente/${user.id_cliente}`) {

@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderColor: "#F7770D",
         fontFamily: "Montserrat_400Regular",
-        marginRight: "5%"
+        marginRight: "5%",
     }
 
 })

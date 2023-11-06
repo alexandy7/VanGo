@@ -37,6 +37,9 @@ import VisualizarCliente from "../../PagesMotorista/VisualizarCliente/Visualizar
 import RecusarSolicitacao from "../../PagesMotorista/RecusarSolicitacao/RecusarSolicitacao";
 import ConversaChatMotorista from "../../PagesMotorista/ConversaChatMotorista/ConversaChatMotorista";
 import CadastroCliente1 from "../../Pages/CadastroCliente1/CadastroCliente1";
+import CadastroCliente2 from "../../Pages/CadastroCliente2/CadastroCliente2";
+import CadastroCliente3 from "../../Pages/CadastroCliente3/CadastroCliente3";
+import CadastroMotorista1 from "../../PagesMotorista/CadastroMotorista1/CadastroMotorista1";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -216,6 +219,8 @@ export default function AppNavigator() {
       <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroCliente1" component={CadastroCliente1}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroCliente2" component={CadastroCliente2}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroCliente3" component={CadastroCliente3}  options={{headerShown: false}}/>
       
       <Stack.Screen name="CadastroTela1" component={CadastroTela1}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
@@ -238,6 +243,7 @@ export default function AppNavigator() {
       <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma}  options={{headerShown: false}}/>
       <Stack.Screen name="ConversaChatMotorista" component={ConversaChatMotorista}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroMotorista1" component={CadastroMotorista1}  options={{headerShown: false}}/>
     </Stack.Navigator>
    
   );

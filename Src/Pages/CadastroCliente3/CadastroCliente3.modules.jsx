@@ -5,7 +5,15 @@ const styles = StyleSheet.create({
     main: {
         display: "flex",
         flex: 1,
-        backgroundColor: "white"
+        backgroundColor: "white",
+    },
+
+    caixacima: {
+        height: "80%"
+    },
+
+    caixabotao: {
+
     },
 
     caixaheader: {

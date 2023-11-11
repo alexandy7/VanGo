@@ -12,6 +12,7 @@ import { string } from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
+import { ActivityIndicator } from "react-native";
 export default function ConversaChatCliente() {
 
     const navigation = useNavigation();
@@ -23,9 +24,11 @@ export default function ConversaChatCliente() {
 
     const [connection, setConnection] = useState(null);
     const [user, setUser] = useState({});
+    const [motorista, setMotorista] = useState({});
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
+    const [buscandoMensagens, setBuscandoMensagens] = useState(true);
 
     const testando = [
         { sender: `Cliente`, text: `Oi, tudo bem?` },
@@ -44,9 +47,28 @@ export default function ConversaChatCliente() {
     async function BuscarUsuario() {
         await UserData()
             .then((response) => {
+                setUser(response);
+                BuscarMensagens(response.id_cliente);
+
+                async function BuscarInfoMotorista(id_motorista) {
+                    let token = await Token();
+
+                    let response = await ApiCliente.get(`BuscarInfoMotorista/${id_motorista}`, {
+                        headers: {
+                            Authorization: "Bearer " + token,
+                            "Content-Type": "application/json",
+                        }
+                    });
+
+                    let json = response.data;
+                    setMotorista(json);
+                };
+                BuscarInfoMotorista(response.id_motorista);
+            })
+
+            .then(() => {
                 try {
-                    setUser(response);
-                    BuscarMensagens(response.id_cliente);
+
                     const newConnection = new HubConnectionBuilder()
                         .withUrl("https://apivango.azurewebsites.net/Solicitacao")
                         .build();
@@ -55,7 +77,7 @@ export default function ConversaChatCliente() {
                 catch (error) {
                     console.log(error);
                 };
-            });
+            })
     };
 
 
@@ -71,7 +93,7 @@ export default function ConversaChatCliente() {
         });
 
         let data = response.data;
-        
+
         const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
             const novaMensagem = {
                 sender: remetente,
@@ -83,9 +105,11 @@ export default function ConversaChatCliente() {
 
         data.forEach(item => {
             adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
-          });
+        });
+
+        setBuscandoMensagens(false);
     }
-    
+
     useEffect(() => {
         if (connection) {
             try {
@@ -158,27 +182,50 @@ export default function ConversaChatCliente() {
                 </TouchableOpacity>
 
                 <View style={styles.divimagemheader}>
-                    <Image style={styles.imagemheader} source={require("../../../assets/Ana.jpeg")} />
+                    <Image style={styles.imagemheader} source={{ uri: motorista.foto_motorista }} />
                 </View>
 
                 <View style={styles.divtextoheader}>
-                    <Text style={styles.texto1header}>{"Magnolia do corsa"}</Text>
-                    <Text style={styles.texto2header}>{"E.e cu rosa"}</Text>
+                    <Text style={styles.texto1header}>{motorista.nome_motorista}</Text>
                 </View>
             </View>
 
-            <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                data={messages}
-                renderItem={({ item }) => {
-                    if (item.sender.includes("Cliente")) {
-                        return <BalaoChatEu mensagem={item.text} hora={item.envio} />
-                    }
-                    else {
-                        return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
-                    };
-                }}
-            />
+            {
+                buscandoMensagens ? (
+                    <View style={{ justifyContent: "center", flex: 1 }}>
+                        <ActivityIndicator color={"orange"} size={40} />
+                    </View>
+                )
+                    :
+                    (
+                        <FlatList
+                            keyExtractor={(item, index) => index.toString()}
+                            data={messages.slice().reverse()} //Para exibir as ultimas mensagens primeiro
+                            renderItem={({ item }) => {
+                                if (item.sender.includes("Cliente")) {
+                                    return <BalaoChatEu mensagem={item.text} hora={item.envio} />
+                                }
+                                else {
+                                    return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
+                                };
+                            }}
+                            inverted={true} //Inverte a direção de exibição da lista
+                            ListHeaderComponent={() => {
+                                return (
+                                    <View style={{ marginTop: "2%" }}>
+                                    </View>
+                                )
+                            }}
+
+                            ListFooterComponent={() => {
+                                return (
+                                    <View style={{ marginTop: "2%" }}>
+                                    </View>
+                                )
+                            }}
+                        />
+                    )
+            }
 
             <View style={styles.divcaixatexto}>
                 <View style={styles.caixademensagem}>

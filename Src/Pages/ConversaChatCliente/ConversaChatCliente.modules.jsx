@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 50,
         borderBottomStartRadius: 50,
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        overflow: 'hidden'
     },
 
     divsetaheader: {

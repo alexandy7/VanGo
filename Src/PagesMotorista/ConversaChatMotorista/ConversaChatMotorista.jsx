@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_300Light } from "@expo-google-fonts/montserrat"
 import styles from "./ConversaChatMotorista.modules";
@@ -31,6 +31,7 @@ const ConversaChatMotorista = ({ route }) => {
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
+    const [buscandoMensagens, setBuscandoMensagens] = useState(true);
 
     useEffect(() => {
         setInicio(performance.now());
@@ -68,7 +69,7 @@ const ConversaChatMotorista = ({ route }) => {
         });
 
         let data = response.data;
-        
+
         const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
             const novaMensagem = {
                 sender: remetente,
@@ -80,9 +81,10 @@ const ConversaChatMotorista = ({ route }) => {
 
         data.forEach(item => {
             adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
-          });
+        });
 
-          scrollToBottom();
+        // buscandoMensagens(false);
+        scrollToBottom();
     }
 
     useEffect(() => {
@@ -171,22 +173,29 @@ const ConversaChatMotorista = ({ route }) => {
                     <Text style={styles.texto2header}>{"E.e cu rosa"}</Text>
                 </View>
             </View>
+            {
+                buscandoMensagens ? (
 
-            <FlatList
-                keyExtractor={(item, index) => index.toString()}
-                data={messages}
-                ref={flatListRef}
-                renderItem={({ item }) => {
-                    if (item.sender.includes("Motorista")) {
-                        return <BalaoChatEu mensagem={item.text} hora={item.envio} />
-                    }
-                    else {
-                        return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
-                    };
-                }}
-                onContentSizeChange={() => flatListRef.current.scrollToEnd()}
-            />
-
+                    <FlatList
+                    keyExtractor={(item, index) => index.toString()}
+                    data={messages}
+                    ref={flatListRef}
+                    renderItem={({ item }) => {
+                        if (item.sender.includes("Motorista")) {
+                            return <BalaoChatEu mensagem={item.text} hora={item.envio} />
+                        }
+                        else {
+                            return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
+                        };
+                    }}
+                    onContentSizeChange={() => flatListRef.current.scrollToEnd()}
+                    />
+                    )
+                    :
+                    (
+                        <ActivityIndicator color="orange" size={50} style={{justifyContent: "center", alignSelf: "center", }}/>
+                    )
+            }
             <View style={styles.divcaixatexto}>
                 <View style={styles.caixademensagem}>
                     <View style={styles.divreguainput}>

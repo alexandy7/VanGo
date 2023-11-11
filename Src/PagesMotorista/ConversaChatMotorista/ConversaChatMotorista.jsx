@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_300Light } from "@expo-google-fonts/montserrat"
@@ -7,12 +7,17 @@ import BalaoChatEu from "../../Componentes/BalaoChatEu";
 import BalaoChatVoce from "../../Componentes/BalaoChatVoce";
 import { TextInput } from "react-native";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { UserData } from "../../services/Contexts/Contexts"
+import { Token, UserData } from "../../services/Contexts/Contexts"
 import { date, string } from "yup";
 import { useNavigation } from "@react-navigation/native";
+import ApiCliente from "../../services/Api/ApiCiente";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 
 const ConversaChatMotorista = ({ route }) => {
 
+    // const {id_cliente, foto_cliente, nome_cliente} = route.params;
+
+    const flatListRef = useRef();
     const navigation = useNavigation();
 
     const [fonteLoaded] = useFonts({
@@ -20,19 +25,12 @@ const ConversaChatMotorista = ({ route }) => {
         Montserrat_300Light
     });
 
-    // const { id_cliente, id_motorista} = route.paramns;
 
     const [connection, setConnection] = useState(null);
     const [user, setUser] = useState({});
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
-    const testando = [
-        { sender: `Cliente`, text: `Oi, tudo bem?` },
-        { sender: "Motorista", text: "Sim, como posso ajuda-lo?" },
-        { sender: "Cliente", text: "Sei lá" },
-        { sender: "Motorista", text: "Beleza" }
-    ];
 
     useEffect(() => {
         setInicio(performance.now());
@@ -43,8 +41,9 @@ const ConversaChatMotorista = ({ route }) => {
         await UserData()
             //Fazendo o build aqui pois é preciso ter as informações do usuario primeiro.
             .then((response) => {
-                setUser(response);
                 try {
+                    setUser(response);
+                    BuscarMensagens();
                     const newConnection = new HubConnectionBuilder()
                         .withUrl("https://apivango.azurewebsites.net/Solicitacao")
                         .build();
@@ -55,6 +54,36 @@ const ConversaChatMotorista = ({ route }) => {
                 };
             })
     };
+
+    async function BuscarMensagens() {
+
+        let token = await Token();
+
+        //Consulta pela API do cliente pois ela funciona igual
+        let response = await ApiCliente.get(`BuscarMensagens/${13}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
+        });
+
+        let data = response.data;
+        
+        const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
+            const novaMensagem = {
+                sender: remetente,
+                text: mensagem,
+                envio: FormatadorData(dataEnvio, true)
+            };
+            setMessages(prevMessages => [...prevMessages, novaMensagem]);
+        };
+
+        data.forEach(item => {
+            adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
+          });
+
+          scrollToBottom();
+    }
 
     useEffect(() => {
         if (connection) {
@@ -68,7 +97,8 @@ const ConversaChatMotorista = ({ route }) => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
                             // console.log(sender, reciver, message, `Motorista/${user.id_motorista}`);
                             if (reciver === `Motorista/${user.id_motorista}`) {
-                                atualizarState(sender, message, tempoEnvio);
+                                let data = new Date(tempoEnvio)
+                                atualizarState(sender, message, data);
                             };
                         });
                     })
@@ -81,9 +111,13 @@ const ConversaChatMotorista = ({ route }) => {
 
 
     function atualizarState(sender, message, tempoEnvio) {
-        setMessages(prevMessages => {
 
-            return [...prevMessages, { sender: sender, text: message, envio: tempoEnvio }];
+        const horas = tempoEnvio.getHours();
+        const minutos = tempoEnvio.getMinutes();
+        const envio = `${horas}:${minutos > 9 ? minutos : '0' + minutos}`;
+
+        setMessages(prevMessages => {
+            return [...prevMessages, { sender: sender, text: message, envio: envio }];
         });
     };
 
@@ -92,16 +126,13 @@ const ConversaChatMotorista = ({ route }) => {
         if (minhaMensagem.trim() === '') {
             return;
         };
-        let agora = new Date();
-        const horas = agora.getHours();
-        const minutos = agora.getMinutes();
-        const tempoEnvio = `${horas > 9 ? horas : '0' + horas}:${minutos > 9 ? minutos : '0' + minutos}`;
 
-        atualizarState('Motorista', minhaMensagem, tempoEnvio);
-        const usuario = `Motorista/${user.id_motorista}`; 
+        let agora = new Date();
+        atualizarState('Motorista', minhaMensagem, agora);
+        const usuario = `Motorista/${user.id_motorista}`;
 
         if (connection) {
-            connection.invoke("SendMessage", usuario, 'Cliente/1', minhaMensagem, tempoEnvio)
+            connection.invoke("SendMessage", usuario, 'Cliente/1', minhaMensagem, agora, 13)
                 .catch((error) => {
                     console.error(error);
                     return;
@@ -114,6 +145,9 @@ const ConversaChatMotorista = ({ route }) => {
     if (!fonteLoaded) {
         return null;
     };
+
+
+
     return (
         <View style={styles.main}>
             <View style={styles.header}>
@@ -141,6 +175,7 @@ const ConversaChatMotorista = ({ route }) => {
             <FlatList
                 keyExtractor={(item, index) => index.toString()}
                 data={messages}
+                ref={flatListRef}
                 renderItem={({ item }) => {
                     if (item.sender.includes("Motorista")) {
                         return <BalaoChatEu mensagem={item.text} hora={item.envio} />
@@ -149,6 +184,7 @@ const ConversaChatMotorista = ({ route }) => {
                         return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
                     };
                 }}
+                onContentSizeChange={() => flatListRef.current.scrollToEnd()}
             />
 
             <View style={styles.divcaixatexto}>

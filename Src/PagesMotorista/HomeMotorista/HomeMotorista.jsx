@@ -85,13 +85,14 @@ export default function HomeMotorista() {
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('NotificacaoMotorista') }}>
+                            <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
+                        </TouchableOpacity>
+                        
                         <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatMotorista') }}>
                             <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { navigation.navigate('NotificacaoMotorista') }}>
-                            <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
-                        </TouchableOpacity>
 
                     </View>
                 </View>

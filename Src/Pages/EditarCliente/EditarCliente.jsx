@@ -140,6 +140,8 @@ export default function EditarCliente() {
                     <View style={styles.main}>
                         <InputPrompt
                             visible={confirmarEdicao}
+                            titulo={'Digite sua senha para confirmar:'}
+                            mensagemErro={'Senha incorreta'}
                             onCancel={() => setConfirmarEdicao(false)}
                             mudouu={(text) => {
                                 setSenha(text);

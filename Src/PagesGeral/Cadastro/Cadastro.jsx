@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
-import styles from "./CadastroTela1.modules";
+import styles from "./Cadastro.modules";
 import BotaoGeral from "../../Componentes/BotaoGeral";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from 'react-native-animatable';
-
-export default function CadastroTela1() {
+import Toast from '../../services/Toast/Toast'
+export default function Cadastro() {
 
     const navigation = useNavigation();
 
@@ -15,6 +15,10 @@ export default function CadastroTela1() {
     const [buttonResponsavel, setButtonResponsavel] = useState('#F99A4C');
     const [fundoAndTextMoto, setFundoAndTextMoto] = useState('white');
     const [buttonMoto, setButtonMoto] = useState('#F99A4C');
+    
+    const [volanteImg, setVolanteImg] = useState(require('../../../assets/volante.png'));
+    const [mamaeImg, setMamaeImg] = useState(require('../../../assets/mamae.png'));
+
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -71,16 +75,19 @@ export default function CadastroTela1() {
                         if (buttonMoto === 'white') {
                             setFundoAndTextMoto('white');
                             setButtonMoto('#F99A4C');
+                            setVolanteImg(require('../../../assets/volante.png'));
                             return;
                         };
                         if (buttonResponsavel === 'white') {
                             setButtonResponsavel('#F99A4C');
-                            setFundoAndTextoResp('white')
+                            setFundoAndTextoResp('white');
+                            setMamaeImg(require('../../../assets/mamae.png'));
                         };
+                        setVolanteImg(require('../../../assets/volante2.png'))
                         setFundoAndTextMoto('#F99A4C');
                         setButtonMoto('white');
                     }}>
-                        <Image style={styles.imagem} source={require("../../../assets/volante.png")} />
+                        <Image style={styles.imagem} source={volanteImg} />
                         <View style={[styles.botao, { backgroundColor: buttonMoto }]}>
                             <Text style={[styles.textobotao, { color: fundoAndTextMoto }]}>Motorista</Text>
                         </View>
@@ -94,17 +101,20 @@ export default function CadastroTela1() {
                             handlePressInClient();
                             if (buttonResponsavel === 'white') {
                                 setButtonResponsavel('#F99A4C');
-                                setFundoAndTextoResp('white')
+                                setFundoAndTextoResp('white');
+                                setMamaeImg(require('../../../assets/mamae.png'));
                                 return;
                             };
                             if (buttonMoto === 'white') {
                                 setFundoAndTextMoto('white');
                                 setButtonMoto('#F99A4C')
+                                setVolanteImg(require('../../../assets/volante.png'));
                             };
+                            setMamaeImg(require('../../../assets/mamae2.png'))
                             setFundoAndTextoResp('#F99A4C')
                             setButtonResponsavel('white')
                         }}>
-                        <Image style={styles.imagem} source={require("../../../assets/mamae.png")} />
+                        <Image style={styles.imagem} source={mamaeImg} />
                         <View style={[styles.botao, { backgroundColor: buttonResponsavel }]}>
                             <Text style={[styles.textobotao, { color: fundoAndTextoResp }]}>Responsável</Text>
                         </View>
@@ -114,11 +124,17 @@ export default function CadastroTela1() {
 
             <BotaoGeral texto={"Prosseguir"} icone={"chevron-forward-outline"} evento={() => {
                 if (buttonResponsavel === 'white') {
-                    navigation.navigate('CadastroCliente');
+                    navigation.navigate('CadastroCliente1');
                     return;
                 }
 
-                navigation.navigate('CadastroMotorista');
+                else if (buttonMoto === 'white'){
+                    navigation.navigate('CadastroMotorista1');
+                }
+
+                else{
+                    Toast('error', 'Inválido', 'Escolha uma opção', 2000);
+                }
             }} />
         </View>
     )

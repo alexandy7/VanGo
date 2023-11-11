@@ -6,7 +6,7 @@ import { GuardarToken, RemoverToken, Token, UserData } from '../services/Context
 import ApiCliente from '../services/Api/ApiCiente';
 import axios from 'axios';
 import { ActivityIndicator } from 'react-native';
-export default function InputPrompt({ visible, onCancel, mudouu, senha, erro, evento, clicou }) {
+export default function InputPrompt({ visible, onCancel, mudouu, senha, erro, evento, clicou, titulo, mensagemErro }) {
 
     const animatableRef = useRef(null); // Referência para a animação
 
@@ -28,13 +28,13 @@ export default function InputPrompt({ visible, onCancel, mudouu, senha, erro, ev
 
                 <View style={[styles.modal, { borderWidth: erro ? 1 : 0, borderColor: "grey" }]}>
 
-                    <Text style={{ alignSelf: "center", fontSize: 16 }}>Digite sua senha para confirmar:</Text>
+                    <Text style={{ alignSelf: "center", fontSize: 16 }}>{titulo}</Text>
                     <MeuText
                         nomePlaceholder={"Digite aqui"}
                         mudou={mudouu}
                         valorInput={senha}
                     />
-                    {erro && <View><Text style={{ color: "red" }}>Senha incorreta</Text></View>}
+                    {erro && <View><Text style={{ color: "red" }}>{mensagemErro}</Text></View>}
 
                     <View style={styles.viewBotao}>
 

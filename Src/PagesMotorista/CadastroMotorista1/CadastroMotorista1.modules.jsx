@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 
     tituloinput: {
         fontFamily: "Montserrat_400Regular",
-        fontSize: 17,
+        fontSize: 15,
         color: "#F7770D",
     },
 

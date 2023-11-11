@@ -7,9 +7,11 @@ import InputEdicao from "../../Componentes/InputEdicao";
 import { TextInput } from "react-native";
 import BotaoGeral from "../../Componentes/BotaoGeral";
 import VisualizarValorFatura from "../../Componentes/VisualizarValorFatura";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CadastroMotorista1() {
 
+const navigation = useNavigation();
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,

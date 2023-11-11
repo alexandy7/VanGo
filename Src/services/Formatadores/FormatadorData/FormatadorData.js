@@ -1,6 +1,6 @@
 const hoje = new Date(); // Pegando o dia de hoje 
 
-export default function FormatadorData(DataComponente) {
+export default function FormatadorData(DataComponente, hora) {
 
     const dataNotificacao = new Date(DataComponente);
     const diaAnterior = hoje.getDate() - 1;
@@ -17,7 +17,7 @@ export default function FormatadorData(DataComponente) {
 
     let horaOuData;
 
-    if (mesmoDia) {
+    if (mesmoDia || hora) {
         // Caso seja o mesmo dia, mostra somente as horas
         horaOuData = dataNotificacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
         return horaOuData;

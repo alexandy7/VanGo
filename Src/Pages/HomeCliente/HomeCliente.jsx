@@ -116,14 +116,13 @@ export default function HomeCliente() {
 
                 <View style={styles.divicones}>
                     <View style={styles.alinhaicone}>
-                        <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatCliente') }}>
-                            <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
-                        </TouchableOpacity>
-
                         <TouchableOpacity onPress={() => { navigation.navigate('NotificacaoCliente') }}>
                             <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
                         </TouchableOpacity>
 
+                        <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatCliente') }}>
+                            <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

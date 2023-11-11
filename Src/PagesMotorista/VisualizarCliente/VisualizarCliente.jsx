@@ -6,8 +6,10 @@ import { Token, UserData } from "../../services/Contexts/Contexts";
 import PerfilVisualizacao from "../../Componentes/PerfilVisualizacao";
 import styles from "./VisualizarCliente.modules";
 import CaixaPerfil from "../../Componentes/CaixaPerfil";
-import { Ionicons } from '@expo/vector-icons'
 import ApiMotorista from "../../services/Api/ApiMotorista";
+import VisualizarValorFatura from "../../Componentes/VisualizarValorFatura";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
+import InputPrompt from "../../Componentes/Modal";
 
 
 const VisualizarCliente = ({ route }) => {
@@ -17,14 +19,18 @@ const VisualizarCliente = ({ route }) => {
     const { nome, foto, id } = route.params;
     const [cliente, setCliente] = useState({});
 
-    const [nomeSobrenome, setNomeSobrenome] = useState(' ')
-    const [nomeResponsável, setNomeResponsavel] = useState(' ')
-    const [enderecoUsuario, setEnderecoUsuario] = useState(' ')
-    const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ')
-    const [escola, setEscola] = useState(' ')
+    const [nomeSobrenome, setNomeSobrenome] = useState(' ');
+    const [nomeResponsável, setNomeResponsavel] = useState(' ');
+    const [enderecoUsuario, setEnderecoUsuario] = useState(' ');
+    const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ');
+    const [escola, setEscola] = useState(' ');
+
+    const [confirmarEdicao, setConfirmarEdicao] = useState(false);
+    const [valor, setValor] = useState();
+    const [clicado, setClicado] = useState(false);
+    const [erro, setErro] = useState(false);
 
     useEffect(() => {
-        console.log(nome, foto, id)
         BuscarCliente();
 
         let nomeSeparado = nome.split(' ');
@@ -33,9 +39,7 @@ const VisualizarCliente = ({ route }) => {
 
     async function BuscarCliente() {
         try {
-
             const token = await Token();
-
             let response = await ApiMotorista.get(`BuscarCliente/${id}`, {
                 headers: {
                     Authorization: "Bearer " + token,
@@ -52,7 +56,7 @@ const VisualizarCliente = ({ route }) => {
 
                 let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1];
                 setNomeResponsavel(nomeResponsavel + '...');
-            }
+            };
 
             let enderecoSeparado = json.endereco_cliente.split(' ');
             let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1];
@@ -71,21 +75,61 @@ const VisualizarCliente = ({ route }) => {
         }
     }
 
-    if (cliente) {
-        // Formatando as informações para caber na "caixa"
 
+    async function EditarValorMensalidade() {
+        try {
+
+            let token = await Token();
+
+            const data = {
+                id_cliente: id,
+                Valor_mensalidade: valor
+            };
+
+            let response = await ApiMotorista.put('EditarValorMensalidade', data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            if (response.status !== 200) {
+                setErro(true);
+                return;
+            };
+
+            BuscarCliente();
+            setConfirmarEdicao(false);
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     return (
         <ScrollView style={styles.geral}>
 
+            <InputPrompt
+                visible={confirmarEdicao}
+                titulo={'Digite o valor:'}
+                mensagemErro={'Valor inválido'}
+                onCancel={() => setConfirmarEdicao(false)}
+                mudouu={(text) => {
+                    setValor(text);
+                }}
+                evento={() => {
+                    EditarValorMensalidade();
+                    setClicado(true);
+                }}
+                clicou={clicado}
+                erro={erro}
+            />
             <View>
                 <PerfilVisualizacao
                     fotoUser={{ uri: foto }}
                     nomeUser={nomeSobrenome}
                     evento={() => navigation.goBack()}
                 />
-
 
                 <View style={styles.regua}>
                     <CaixaPerfil
@@ -103,6 +147,14 @@ const VisualizarCliente = ({ route }) => {
                         titulotexto4={"2° endereço"}
                         icontexto4={"business-outline"}
                         evento={() => { navigation.navigate("Chat") }}
+                    />
+                </View>
+
+                <View>
+                    <VisualizarValorFatura
+                        valor={cliente.valor_mensalidade}
+                        vencimento={FormatadorData(cliente.vencimento_mensalidade)}
+                        evento={() => setConfirmarEdicao(true)}
                     />
                 </View>
 

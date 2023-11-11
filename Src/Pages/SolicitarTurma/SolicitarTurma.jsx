@@ -100,7 +100,7 @@ export default function SolicitarTurma() {
             <ScrollView style={styles.scroll}>
 
                 {
-                    false ? (
+                    solicitacaoenviada ? (
 
                         <View>
 

@@ -11,7 +11,7 @@ import { FlatList } from "react-native";
 
 const CadastroEscola = ({ route }) => {
 
-    const {cpf_responsavel, email_cliente, endereco_cliente, escolaCliente, nome_cliente, responsavel_cliente, senha_cliente} = route.params;
+    const {email_cliente, endereco_cliente, escolaCliente, nome_cliente, responsavel_cliente, senha_cliente} = route.params;
 
   const navigation = useNavigation();
   

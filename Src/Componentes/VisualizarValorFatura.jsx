@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 
-export default function VisualizarValorFatura({valor, vencimento}) {
+export default function VisualizarValorFatura({valor, vencimento, evento}) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -19,16 +19,16 @@ export default function VisualizarValorFatura({valor, vencimento}) {
     return(
         <View style={styles.container}>
             <View style={styles.esquerda}>
-                <Text style={styles.textosuperior}>R${"150,00"}</Text>
-                <Text style={styles.textoinferior}>Vencimento: {"13/12/2023"}</Text>
+                <Text style={styles.textosuperior}>R${valor}</Text>
+                <Text style={styles.textoinferior}>Vencimento: {vencimento}</Text>
             </View>
 
             <View style={styles.direita}>
-                <TouchableOpacity style={styles.botao}>
+                <TouchableOpacity style={styles.botao} onPress={evento}>
                     <Text style={styles.textobotao}>Editar</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.seta}>
+                <TouchableOpacity style={styles.seta} onPress={evento}>
                     <Ionicons style={styles.seta} name={"chevron-forward-outline"} size={30} color="#dbdbdb" />
                 </TouchableOpacity>
             </View>
@@ -38,8 +38,11 @@ export default function VisualizarValorFatura({valor, vencimento}) {
 
 const styles = StyleSheet.create({
     container: {  
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         width: "90%",
-        height: 100,
+        height: 90,
         borderWidth: 1,
         borderColor: "#F7770D",
         alignSelf: "center",
@@ -47,7 +50,8 @@ const styles = StyleSheet.create({
         elevation: 10,
         backgroundColor: "white",
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        bottom: "50%"
     },
 
     esquerda: {

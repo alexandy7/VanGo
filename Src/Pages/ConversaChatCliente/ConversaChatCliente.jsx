@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_300Light } from "@expo-google-fonts/montserrat"
-import styles from "./ConversaChat.modules";
+import styles from "./ConversaChatCliente.modules";
 import BalaoChatEu from "../../Componentes/BalaoChatEu";
 import BalaoChatVoce from "../../Componentes/BalaoChatVoce";
 import { TextInput } from "react-native";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { UserData } from "../../services/Contexts/Contexts"
+import { Token, UserData } from "../../services/Contexts/Contexts"
 import { string } from "yup";
 import { useNavigation } from "@react-navigation/native";
-
+import ApiCliente from "../../services/Api/ApiCiente";
+import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 export default function ConversaChatCliente() {
 
     const navigation = useNavigation();
@@ -25,7 +26,7 @@ export default function ConversaChatCliente() {
     const [messages, setMessages] = useState([]);
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
-    
+
     const testando = [
         { sender: `Cliente`, text: `Oi, tudo bem?` },
         { sender: "Motorista", text: "Sim, como posso ajuda-lo?" },
@@ -34,15 +35,18 @@ export default function ConversaChatCliente() {
     ]
 
     useEffect(() => {
+        //para saber o tempo de execução
         setInicio(performance.now());
+
         BuscarUsuario();
     }, []);
 
     async function BuscarUsuario() {
         await UserData()
             .then((response) => {
-                setUser(response);
                 try {
+                    setUser(response);
+                    BuscarMensagens(response.id_cliente);
                     const newConnection = new HubConnectionBuilder()
                         .withUrl("https://apivango.azurewebsites.net/Solicitacao")
                         .build();
@@ -54,6 +58,34 @@ export default function ConversaChatCliente() {
             });
     };
 
+
+    async function BuscarMensagens(id_cliente) {
+
+        let token = await Token();
+
+        let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json",
+            }
+        });
+
+        let data = response.data;
+        
+        const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
+            const novaMensagem = {
+                sender: remetente,
+                text: mensagem,
+                envio: FormatadorData(dataEnvio, true)
+            };
+            setMessages(prevMessages => [...prevMessages, novaMensagem]);
+        };
+
+        data.forEach(item => {
+            adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
+          });
+    }
+    
     useEffect(() => {
         if (connection) {
             try {
@@ -61,12 +93,12 @@ export default function ConversaChatCliente() {
                     .then(() => {
                         let fim = performance.now();
                         console.log(`Conectado ao hub SignalR! ${(fim - inicio) / 1000}`);
-                        
                     })
                     .then(() => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
                             if (reciver === `Cliente/${user.id_cliente}`) {
-                                AtualizarState(sender, message, tempoEnvio);
+                                let data = new Date(tempoEnvio);
+                                AtualizarState(sender, message, data);
                             }
                         });
                     });
@@ -77,9 +109,14 @@ export default function ConversaChatCliente() {
         };
     }, [connection]);
 
-    function AtualizarState(sender, message, tempoEnvio){
+    function AtualizarState(sender, message, tempoEnvio) {
+
+        const horas = tempoEnvio.getHours();
+        const minutos = tempoEnvio.getMinutes();
+        const envio = `${horas}:${minutos > 9 ? minutos : '0' + minutos}`;
+
         setMessages(prevMessages => {
-            return [...prevMessages, {sender: sender, text: message, envio: tempoEnvio}];
+            return [...prevMessages, { sender: sender, text: message, envio: envio }];
         });
     };
 
@@ -89,14 +126,11 @@ export default function ConversaChatCliente() {
         };
 
         let agora = new Date();
-        const horas = agora.getHours();
-        const minutos = agora.getMinutes();
-        const envio = `${horas}:${minutos > 9 ? minutos : '0' + minutos}`;
-        AtualizarState('Cliente', minhaMensagem, envio );
+        AtualizarState('Cliente', minhaMensagem, agora);
 
-        const usuario = `Cliente/${user.id_cliente}`; //Ok
+        const usuario = `Cliente/${user.id_cliente}`;
         if (connection) {
-            connection.invoke("SendMessage", usuario, `Motorista/${user.id_motorista}`, minhaMensagem, envio)
+            connection.invoke("SendMessage", usuario, `Motorista/${user.id_motorista}`, minhaMensagem, agora, Number(user.id_cliente))
                 .catch((error) => {
                     console.error(error);
                     return;
@@ -105,10 +139,10 @@ export default function ConversaChatCliente() {
         setMinhaMensagem('');
     };
 
-
     if (!fonteLoaded) {
         return null;
     };
+
     return (
         <View style={styles.main}>
             <View style={styles.header}>
@@ -137,7 +171,6 @@ export default function ConversaChatCliente() {
                 keyExtractor={(item, index) => index.toString()}
                 data={messages}
                 renderItem={({ item }) => {
-                    // console.log(item.sender)
                     if (item.sender.includes("Cliente")) {
                         return <BalaoChatEu mensagem={item.text} hora={item.envio} />
                     }

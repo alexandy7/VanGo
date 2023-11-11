@@ -55,8 +55,8 @@ export default function Login() {
     try {
 
       const data = new URLSearchParams();
-      data.append('Email', emailUsuario);
-      data.append('Senha', senhaUsuario);
+      data.append('Email', emailUsuario.trim());
+      data.append('Senha', senhaUsuario.trim());
 
       setLoading(true);
       const inicio = performance.now();
@@ -71,7 +71,7 @@ export default function Login() {
           const fim = performance.now();
 
           console.log(fim - inicio);
-          GuardarToken(response.data.token);
+          GuardarToken(response.data.token);  
         })
 
         .then(() => {
@@ -174,7 +174,7 @@ export default function Login() {
             <View style={styles.botaoNovaConta}>
               <Text style={styles.naoecadastrado}>Não é cadastrado? </Text>
 
-              <TouchableOpacity onPress={() => { navigation.navigate('CadastroTela1') }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('Cadastro') }}>
 
                 <Text style={styles.novaConta}>Nova conta</Text>
               </TouchableOpacity>

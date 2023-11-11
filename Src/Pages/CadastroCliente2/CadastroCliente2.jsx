@@ -6,9 +6,14 @@ import styles from "./CadastroCliente2.modules";
 import InputEdicao from "../../Componentes/InputEdicao";
 import { TextInput } from "react-native";
 import BotaoGeral from "../../Componentes/BotaoGeral";
+import { useNavigation } from "@react-navigation/native";
 
-export default function CadastroCliente2() {
+const CadastroCliente2 = ({route}) => {
 
+    const {nomeSobrenome, bairro } = route.params
+
+    
+const navigation = useNavigation();
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -37,7 +42,7 @@ export default function CadastroCliente2() {
             </View>
 
             <View style={styles.divtextos}>
-                <Text style={styles.textosuperior}>Adicione outro endereço</Text>
+                <Text style={styles.textosuperior}>Endereço para emergências</Text>
                 <Text style={styles.textoinferior}>Insira suas informações abaixo:</Text>
             </View>
 
@@ -76,8 +81,17 @@ export default function CadastroCliente2() {
                 <TextInput style={[styles.inputs, {width: "45%"}]}/>
             </View>
 
-            <BotaoGeral texto={"Prosseguir"} icone={"chevron-forward-outline"}/>
+            <BotaoGeral 
+            texto={"Prosseguir"} 
+            icone={"chevron-forward-outline"} 
+            evento={()=> navigation.navigate('CadastroEscola', {
+                bairro1: bairro,
+                nomeSobrenome: nomeSobrenome
+            })}
+            />
 
         </View>
     )
 }
+
+export default CadastroCliente2;

@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 import { ActivityIndicator } from "react-native";
+import axios from "axios";
 export default function ConversaChatCliente() {
 
     const navigation = useNavigation();
@@ -29,7 +30,7 @@ export default function ConversaChatCliente() {
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
     const [buscandoMensagens, setBuscandoMensagens] = useState(true);
-
+    const [inverter, setInverter] = useState(false);
     const testando = [
         { sender: `Cliente`, text: `Oi, tudo bem?` },
         { sender: "Motorista", text: "Sim, como posso ajuda-lo?" },
@@ -47,28 +48,33 @@ export default function ConversaChatCliente() {
     async function BuscarUsuario() {
         await UserData()
             .then((response) => {
-                setUser(response);
-                BuscarMensagens(response.id_cliente);
+                try {
 
-                async function BuscarInfoMotorista(id_motorista) {
-                    let token = await Token();
+                    setUser(response);
+                    BuscarMensagens(response.id_cliente);
+                    console.log(response.id_cliente);
+                    async function BuscarInfoMotorista(id_motorista) {
+                        let token = await Token();
 
-                    let response = await ApiCliente.get(`BuscarInfoMotorista/${id_motorista}`, {
-                        headers: {
-                            Authorization: "Bearer " + token,
-                            "Content-Type": "application/json",
-                        }
-                    });
+                        let response = await ApiCliente.get(`BuscarInfoMotorista/${id_motorista}`, {
+                            headers: {
+                                Authorization: "Bearer " + token,
+                                "Content-Type": "application/json",
+                            }
+                        });
 
-                    let json = response.data;
-                    setMotorista(json);
+                        let json = response.data;
+                        setMotorista(json);
+                    };
+                    BuscarInfoMotorista(response.id_motorista);
+                }
+                catch (error) {
+                    console.log(error);
                 };
-                BuscarInfoMotorista(response.id_motorista);
             })
 
             .then(() => {
                 try {
-
                     const newConnection = new HubConnectionBuilder()
                         .withUrl("https://apivango.azurewebsites.net/Solicitacao")
                         .build();
@@ -83,31 +89,45 @@ export default function ConversaChatCliente() {
 
     async function BuscarMensagens(id_cliente) {
 
-        let token = await Token();
+        try {
 
-        let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            }
-        });
+            let token = await Token();
 
-        let data = response.data;
+            let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
 
-        const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
-            const novaMensagem = {
-                sender: remetente,
-                text: mensagem,
-                envio: FormatadorData(dataEnvio, true)
+            let data = response.data;
+            console.log(data);
+            if (response.status === 200) {
+
+                if (data.length > 11) {
+                    setInverter(true);
+                }
+                const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
+                    const novaMensagem = {
+                        sender: remetente,
+                        text: mensagem,
+                        envio: FormatadorData(dataEnvio, true)
+                    };
+                    setMessages(prevMessages => [...prevMessages, novaMensagem]);
+                };
+
+                data.forEach(item => {
+                    adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
+                });
+
             };
-            setMessages(prevMessages => [...prevMessages, novaMensagem]);
-        };
 
-        data.forEach(item => {
-            adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
-        });
-
-        setBuscandoMensagens(false);
+            setBuscandoMensagens(false);
+        }
+        catch (error) {
+            console.log(error);
+            setBuscandoMensagens(false);
+        }
     }
 
     useEffect(() => {
@@ -120,6 +140,7 @@ export default function ConversaChatCliente() {
                     })
                     .then(() => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
+                            console.log(message);
                             if (reciver === `Cliente/${user.id_cliente}`) {
                                 let data = new Date(tempoEnvio);
                                 AtualizarState(sender, message, data);
@@ -134,13 +155,13 @@ export default function ConversaChatCliente() {
     }, [connection]);
 
     function AtualizarState(sender, message, tempoEnvio) {
-
+        console.log(sender, message, tempoEnvio);
         const horas = tempoEnvio.getHours();
         const minutos = tempoEnvio.getMinutes();
         const envio = `${horas}:${minutos > 9 ? minutos : '0' + minutos}`;
 
         setMessages(prevMessages => {
-            return [...prevMessages, { sender: sender, text: message, envio: envio }];
+            return [{ sender: sender, text: message, envio: envio }, ...prevMessages];
         });
     };
 
@@ -149,6 +170,10 @@ export default function ConversaChatCliente() {
             return;
         };
 
+        if (messages.length > 11) {
+            setInverter(true);
+        };
+        
         let agora = new Date();
         AtualizarState('Cliente', minhaMensagem, agora);
 
@@ -161,6 +186,7 @@ export default function ConversaChatCliente() {
                 });
         };
         setMinhaMensagem('');
+
     };
 
     if (!fonteLoaded) {
@@ -209,7 +235,7 @@ export default function ConversaChatCliente() {
                                     return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
                                 };
                             }}
-                            inverted={true} //Inverte a direção de exibição da lista
+                            inverted={inverter} //Inverte a direção de exibição da lista
                             ListHeaderComponent={() => {
                                 return (
                                     <View style={{ marginTop: "2%" }}>

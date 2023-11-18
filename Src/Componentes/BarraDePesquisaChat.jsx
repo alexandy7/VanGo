@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { TextInput } from "react-native";
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function BarraDePesquisaChat({placeholder, valor}) {
+export default function BarraDePesquisaChat({ placeholder, valor, mudou, corPlaceholder }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_400Regular,
@@ -14,13 +14,22 @@ export default function BarraDePesquisaChat({placeholder, valor}) {
         return null;
     }
 
-    return(
+    return (
         <View style={styles.container}>
+
             <TouchableOpacity style={styles.alinhaicon}>
-                <Ionicons style={styles.icon} name={"search-outline"} size={30} color="#e6e6e6"/>
-        </TouchableOpacity>
+                <Ionicons style={styles.icon} name={"search-outline"} size={30} color="#e6e6e6" />
+            </TouchableOpacity>
+
             <View style={styles.alinhainput}>
-                <TextInput placeholder={placeholder} placeholderTextColor= "#e6e6e6" style={styles.input} value={valor}></TextInput>
+                <TextInput 
+                color={corPlaceholder ? "#FFFFFF" : "black"} 
+                placeholder={placeholder} 
+                placeholderTextColor={corPlaceholder ? "#FFFFFF" : "#e6e6e6"} 
+                style={styles.input} 
+                value={valor}
+                onChangeText={mudou}
+                />
             </View>
         </View>
     )
@@ -36,27 +45,27 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         display: "flex",
         flexDirection: "row"
-        },
+    },
 
-        alinhaicon: {
-            height: "100%",
-            width: "15%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        },
-        
-        alinhainput: {
-            height: "100%",
-            width: "85%",
-            display: "flex",
-            justifyContent: "center"
-        },
+    alinhaicon: {
+        height: "100%",
+        width: "15%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+    },
 
-        input: {
-            fontSize: 15,
-            height: "100%",
-            fontFamily: "Montserrat_400Regular"
-        }
-    
+    alinhainput: {
+        height: "100%",
+        width: "85%",
+        display: "flex",
+        justifyContent: "center"
+    },
+
+    input: {
+        fontSize: 15,
+        height: "100%",
+        fontFamily: "Montserrat_400Regular"
+    }
+
 })

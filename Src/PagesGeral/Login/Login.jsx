@@ -71,7 +71,7 @@ export default function Login() {
           const fim = performance.now();
 
           console.log(fim - inicio);
-          GuardarToken(response.data.token);  
+          GuardarToken(response.data.token);
         })
 
         .then(() => {
@@ -109,13 +109,13 @@ export default function Login() {
   };
 
   useEffect(() => {
-    VerificarQuemE();
 
-    async function WarUp() {
+    async function WarUp(){
       await axios.get('https://apivango.azurewebsites.net/api/Auth/WarmUp')
     };
-
     WarUp();
+
+    VerificarQuemE();
   }, []);
 
   const [fonteLoaded] = useFonts({

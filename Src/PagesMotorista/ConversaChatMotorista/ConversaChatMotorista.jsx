@@ -12,12 +12,12 @@ import { date, string } from "yup";
 import { useNavigation } from "@react-navigation/native";
 import ApiCliente from "../../services/Api/ApiCiente";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
+import axios from "axios";
 
 const ConversaChatMotorista = ({ route }) => {
 
-    // const {id_cliente, foto_cliente, nome_cliente} = route.params;
+     const {id_cliente, foto_cliente, nome_cliente} = route.params;
 
-    const flatListRef = useRef();
     const navigation = useNavigation();
 
     const [fonteLoaded] = useFonts({
@@ -32,6 +32,7 @@ const ConversaChatMotorista = ({ route }) => {
     const [minhaMensagem, setMinhaMensagem] = useState('');
     const [inicio, setInicio] = useState();
     const [buscandoMensagens, setBuscandoMensagens] = useState(true);
+    const [inverter, setInverter] = useState(false);
 
     useEffect(() => {
         setInicio(performance.now());
@@ -61,7 +62,7 @@ const ConversaChatMotorista = ({ route }) => {
         let token = await Token();
 
         //Consulta pela API do cliente pois ela funciona igual
-        let response = await ApiCliente.get(`BuscarMensagens/${13}`, {
+        let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",
@@ -69,7 +70,10 @@ const ConversaChatMotorista = ({ route }) => {
         });
 
         let data = response.data;
-
+        
+        if (data.length > 11) {
+            setInverter(true);
+        }
         const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
             const novaMensagem = {
                 sender: remetente,
@@ -83,8 +87,8 @@ const ConversaChatMotorista = ({ route }) => {
             adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
         });
 
-        // buscandoMensagens(false);
-        scrollToBottom();
+         setBuscandoMensagens(false);
+
     }
 
     useEffect(() => {
@@ -134,12 +138,12 @@ const ConversaChatMotorista = ({ route }) => {
         const usuario = `Motorista/${user.id_motorista}`;
 
         if (connection) {
-            connection.invoke("SendMessage", usuario, 'Cliente/1', minhaMensagem, agora, 13)
+            connection.invoke("SendMessage", usuario, `Cliente/${id_cliente}`, minhaMensagem, agora, 13)
                 .catch((error) => {
                     console.error(error);
                     return;
                 });
-        };
+        };  
         setMinhaMensagem('');
     };
 
@@ -148,8 +152,7 @@ const ConversaChatMotorista = ({ route }) => {
         return null;
     };
 
-
-
+    
     return (
         <View style={styles.main}>
             <View style={styles.header}>
@@ -158,42 +161,51 @@ const ConversaChatMotorista = ({ route }) => {
                         connection.stop();
                         console.log('Desconectado do SignalR!')
                     };
-
                     navigation.goBack();
                 }}>
                     <Ionicons name={"chevron-back-outline"} size={40} color="white" />
                 </TouchableOpacity>
 
                 <View style={styles.divimagemheader}>
-                    <Image style={styles.imagemheader} source={require("../../../assets/Ana.jpeg")} />
+                    <Image style={styles.imagemheader} source={{uri: foto_cliente}} />
                 </View>
 
                 <View style={styles.divtextoheader}>
-                    <Text style={styles.texto1header}>{"Magnolia do corsa"}</Text>
-                    <Text style={styles.texto2header}>{"E.e cu rosa"}</Text>
+                    <Text style={styles.texto1header}>{nome_cliente}</Text>
                 </View>
             </View>
             {
                 buscandoMensagens ? (
-
-                    <FlatList
-                    keyExtractor={(item, index) => index.toString()}
-                    data={messages}
-                    ref={flatListRef}
-                    renderItem={({ item }) => {
-                        if (item.sender.includes("Motorista")) {
-                            return <BalaoChatEu mensagem={item.text} hora={item.envio} />
-                        }
-                        else {
-                            return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
-                        };
-                    }}
-                    onContentSizeChange={() => flatListRef.current.scrollToEnd()}
-                    />
-                    )
+                    <ActivityIndicator color="orange" size={50} style={{ justifyContent: "center", alignSelf: "center", }} />
+                )
                     :
                     (
-                        <ActivityIndicator color="orange" size={50} style={{justifyContent: "center", alignSelf: "center", }}/>
+                        <FlatList
+                            keyExtractor={(item, index) => index.toString()}
+                            data={inverter ? messages.slice().reverse() : messages}
+                            renderItem={({ item }) => {
+                                if (item.sender.includes("Motorista")) {
+                                    return <BalaoChatEu mensagem={item.text} hora={item.envio} />
+                                }
+                                else {
+                                    return <BalaoChatVoce mensagem={item.text} hora={item.envio} />
+                                };
+                            }}
+                            inverted={inverter} //Inverte a direção de exibição da lista
+                            ListHeaderComponent={() => {
+                                return (
+                                    <View style={{ marginTop: "2%" }}>
+                                    </View>
+                                )
+                            }}
+
+                            ListFooterComponent={() => {
+                                return (
+                                    <View style={{ marginTop: "2%" }}>
+                                    </View>
+                                )
+                            }}
+                        />
                     )
             }
             <View style={styles.divcaixatexto}>

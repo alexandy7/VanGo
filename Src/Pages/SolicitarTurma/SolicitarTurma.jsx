@@ -20,25 +20,24 @@ export default function SolicitarTurma() {
 
     useEffect(() => {
         async function DadosUsuario() {
-            let user = await UserData();
-            setUser(user);
+            let usuario = await UserData();
+            setUser(usuario);
 
             const visitouTela = await AsyncStorage.getItem('TelaVisitada');
             if (visitouTela) {
                 setSolicitacaoenviada(true);
             };
+
+            const intervalId = setInterval(() => {
+                VerificarSolicitacao(usuario.id_cliente);
+            }, 20000);
+
+            // Clean up the interval on component unmount
+            return () => clearInterval(intervalId);
         };
         DadosUsuario();
 
-        const intervalId = setInterval(() => {
-            VerificarSolicitacao();
-        }, 20000);
-
-        // Clean up the interval on component unmount
-        return () => clearInterval(intervalId);
     }, []);
-
-
 
 
     async function EnviarSolicitacao() {
@@ -74,12 +73,10 @@ export default function SolicitarTurma() {
     }
 
 
-    async function VerificarSolicitacao() {
+    async function VerificarSolicitacao(usuario) {
         try {
-            console.log('aa')
             let token = await Token();
-            console.log(user)
-            let response = await ApiCliente.get(`VerificarSolicitacao/${user.id_cliente}`, {
+            let response = await ApiCliente.get(`VerificarSolicitacao/${usuario}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",

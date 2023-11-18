@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     },
 
     scroll: {
-        backgroundColor: "white"
+        backgroundColor: "white",
+        flex: 1
     },
 
     header: {

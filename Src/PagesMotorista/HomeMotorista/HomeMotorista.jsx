@@ -89,7 +89,7 @@ export default function HomeMotorista() {
                             <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
                         </TouchableOpacity>
                         
-                        <TouchableOpacity onPress={() => { navigation.navigate('ConversaChatMotorista') }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('Chat') }}>
                             <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
                         </TouchableOpacity>
 

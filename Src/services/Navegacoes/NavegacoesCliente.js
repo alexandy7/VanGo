@@ -43,6 +43,7 @@ import CadastroCliente1 from "../../Pages/CadastroCliente1/CadastroCliente1";
 import CadastroCliente2 from "../../Pages/CadastroCliente2/CadastroCliente2";
 import CadastroCliente3 from "../../Pages/CadastroCliente3/CadastroCliente3";
 import CadastroMotorista1 from "../../PagesMotorista/CadastroMotorista1/CadastroMotorista1";
+import CadastroTelaInicial from "../../PagesGeral/CadastroTelaInicial/CadastroTelaInicial";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -221,6 +222,7 @@ export default function AppNavigator() {
       <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista}  options={{headerShown: false}}/>
       <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
       <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
+      <Stack.Screen name="CadastroTelaInicial" component={CadastroTelaInicial}  options={{headerShown: false}}/>
       <Stack.Screen name="CadastroCliente1" component={CadastroCliente1}  options={{headerShown: false}}/>
       <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
       <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>

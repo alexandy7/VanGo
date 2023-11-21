@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     textobotao: {
         fontSize: 16,
         color: "white",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
+        fontWeight: "bold"
     }
 
 })

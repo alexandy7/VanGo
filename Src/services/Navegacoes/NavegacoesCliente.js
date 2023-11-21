@@ -4,10 +4,10 @@ import { Ionicons } from '@expo/vector-icons'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
-import AdicionarFoto from "../../Pages/AdicionarFoto/AdicionarFoto";
+import CadastroCliente5 from "../../Pages/CadastroCliente5/CadastroCliente5";
 import Login from "../../PagesGeral/Login/Login";
 import RecuperarSenha from '../../Pages/RecuperarSenha/RecuperarSenha';
-import CadastroEscola from '../../Pages/CadastroEscola/CadastroEscola';
+import CadastroEscola from '../../Pages/CadastroCliente3/CadastroCliente3';
 import PerfilCliente from '../../Pages/PerfilCliente/PerfilCliente';
 import ConfiguracaoCliente from "../../Pages/ConfiguracaoCliente/ConfiguracaoCliente";
 import PagamentoCliente from "../../Pages/PagamentoCliente/PagamentoCliente";
@@ -22,7 +22,7 @@ import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotor
 
 
 import CadastroConcluido from "../../PagesGeral/CadastroConcluido/CadastroConcluido";
-import Cadastro from "../../PagesGeral/Cadastro/Cadastro";
+import TelaInicialCadastro from "../../PagesGeral/TelaInicialCadastro/TelaInicialCadastro";
 
 import CadastrarClienteTurma from "../../PagesMotorista/CadastrarClienteTurma/CadastrarClienteTurma";
 import CadastroVeiculo from '../../PagesMotorista/CadastroVeiculo/CadastroVeiculo';
@@ -43,7 +43,7 @@ import CadastroCliente1 from "../../Pages/CadastroCliente1/CadastroCliente1";
 import CadastroCliente2 from "../../Pages/CadastroCliente2/CadastroCliente2";
 import CadastroCliente3 from "../../Pages/CadastroCliente3/CadastroCliente3";
 import CadastroMotorista1 from "../../PagesMotorista/CadastroMotorista1/CadastroMotorista1";
-import CadastroTelaInicial from "../../PagesGeral/CadastroTelaInicial/CadastroTelaInicial";
+import CadastroCliente4 from "../../Pages/CadastroCliente4/CadastroCliente4";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -208,45 +208,45 @@ export default function AppNavigator() {
   return (
 
     <Stack.Navigator>
-      <Stack.Screen name="Login" component={Login}  options={{headerShown: false}}/>
-      <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroEscola" component={CadastroEscola}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroConcluido" component={CadastroConcluido}  options={{headerShown: false}}/>
-      <Stack.Screen name="Chat" component={Chat}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConversaChatCliente" component={ConversaChatCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="PerfilCliente" component={PerfilCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="HomeCliente" component={HomeCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="PagamentoCliente" component={PagamentoCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="EditarCliente" component={EditarCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="Cadastro" component={Cadastro}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroTelaInicial" component={CadastroTelaInicial}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroCliente1" component={CadastroCliente1}  options={{headerShown: false}}/>
-      <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  options={{headerShown: false}}/>
-      <Stack.Screen name="SolicitarTurma" component={SolicitarTurma}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroCliente2" component={CadastroCliente2}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroCliente3" component={CadastroCliente3 }  options={{headerShown: false}}/>
-      <Stack.Screen name="AdicionarFoto" component={AdicionarFoto}  options={{headerShown: false}}/>
-      <Stack.Screen name="TabBarCliente" component={TabBarCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="VisualizarCliente" component={VisualizarCliente}  options={{headerShown: false}}/>
-      <Stack.Screen name="PerfilMotorista" component={PerfilMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConfiguracaoMoto" component={ConfiguracaoMoto}  options={{headerShown: false}}/>
-      <Stack.Screen name="NotificacaoMotorista" component={NotificacaoMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="PagamentosMotorista" component={PagamentosMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="SolicitacoesTurmaMotorista" component={SolicitacoesTurmaMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="Turmas" component={Turmas}  options={{headerShown: false}}/>
-      <Stack.Screen name="TabBarMotorista" component={TabBarMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="CriarTurmas" component={CriarTurmas}  options={{headerShown: false}}/>
-      <Stack.Screen name="HomeMotorista" component={HomeMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="AceitarPagamento" component={AceitarPagamento}  options={{headerShown: false}}/>
-      <Stack.Screen name="EditarMotorista" component={EditarMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma}  options={{headerShown: false}}/>
-      <Stack.Screen name="ConversaChatMotorista" component={ConversaChatMotorista}  options={{headerShown: false}}/>
-      <Stack.Screen name="CadastroMotorista1" component={CadastroMotorista1}  options={{headerShown: false}}/>
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+      <Stack.Screen name="AnexarPagamentos" component={AnexarPagamentos} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroEscola" component={CadastroEscola} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroConcluido" component={CadastroConcluido} options={{ headerShown: false }} />
+      <Stack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
+      <Stack.Screen name="ConversaChatCliente" component={ConversaChatCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="ConfiguracaoCliente" component={ConfiguracaoCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="PerfilCliente" component={PerfilCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="HomeCliente" component={HomeCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="NotificacaoCliente" component={NotificacaoCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="PagamentoCliente" component={PagamentoCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="VisualizarMotorista" component={VisualizarMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="EditarCliente" component={EditarCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="TelaInicialCadastro" component={TelaInicialCadastro} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroCliente4" component={CadastroCliente4} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroCliente1" component={CadastroCliente1} options={{ headerShown: false }} />
+      <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} options={{ headerShown: false }} />
+      <Stack.Screen name="SolicitarTurma" component={SolicitarTurma} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroCliente2" component={CadastroCliente2} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroCliente3" component={CadastroCliente3} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroCliente5" component={CadastroCliente5} options={{ headerShown: false }} />
+      <Stack.Screen name="TabBarCliente" component={TabBarCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="VisualizarCliente" component={VisualizarCliente} options={{ headerShown: false }} />
+      <Stack.Screen name="PerfilMotorista" component={PerfilMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo} options={{ headerShown: false }} />
+      <Stack.Screen name="ConfiguracaoMoto" component={ConfiguracaoMoto} options={{ headerShown: false }} />
+      <Stack.Screen name="NotificacaoMotorista" component={NotificacaoMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="PagamentosMotorista" component={PagamentosMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="SolicitacoesTurmaMotorista" component={SolicitacoesTurmaMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="Turmas" component={Turmas} options={{ headerShown: false }} />
+      <Stack.Screen name="TabBarMotorista" component={TabBarMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="CriarTurmas" component={CriarTurmas} options={{ headerShown: false }} />
+      <Stack.Screen name="HomeMotorista" component={HomeMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="AceitarPagamento" component={AceitarPagamento} options={{ headerShown: false }} />
+      <Stack.Screen name="EditarMotorista" component={EditarMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="RecusarSolicitacao" component={RecusarSolicitacao} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma} options={{ headerShown: false }} />
+      <Stack.Screen name="ConversaChatMotorista" component={ConversaChatMotorista} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroMotorista1" component={CadastroMotorista1} options={{ headerShown: false }} />
     </Stack.Navigator>
 
   );

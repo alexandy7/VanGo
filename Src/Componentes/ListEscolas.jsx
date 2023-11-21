@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import InputEdicao from '../Componentes/InputEdicao';
 
 export default function ListEscolas({ escolaCliente, valorEscola }) {
+
     const [suggestions, setSuggestions] = useState([
         { escola: 'Alba de Mello Bonilha', cidade: 'São luiz' },
         { escola: 'ABELARDO MARQUES DA SILVA', cidade: 'FAZENDINHA' },

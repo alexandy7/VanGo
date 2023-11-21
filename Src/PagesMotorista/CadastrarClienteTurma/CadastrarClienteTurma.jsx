@@ -64,7 +64,7 @@ const CadastrarClienteTurma = ({ route }) => {
         }
 
         const token = await Token();
-        await axios.put("https://localhost:7149/api/Motorista/InserirClienteTurma", data, {
+        await ApiMotorista.put("InserirClienteTurma", data, {
             headers: {
                 Authorization: "Bearer " + token,
                 "Content-Type": "application/json",

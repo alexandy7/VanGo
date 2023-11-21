@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     fatura: {
         fontSize: 16,
         color: "black",
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_500Medium"
     },
 
     seta: {
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginBottom: 5,
         marginLeft: 3,
-        fontFamily: "Montserrat_400Regular",
+        fontFamily: "Montserrat_500Medium",
     },
 
     reguavencimento: {

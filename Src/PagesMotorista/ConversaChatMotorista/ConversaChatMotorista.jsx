@@ -161,7 +161,7 @@ const ConversaChatMotorista = ({ route }) => {
                         connection.stop();
                         console.log('Desconectado do SignalR!')
                     };
-                    navigation.goBack();
+                    navigation.navigate('Chat', { key: `Chat-${Date.now()}` })
                 }}>
                     <Ionicons name={"chevron-back-outline"} size={40} color="white" />
                 </TouchableOpacity>

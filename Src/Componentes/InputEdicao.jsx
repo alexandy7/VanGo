@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: 14,
-        width: "100%",
+        width: "90%",
         fontFamily: "Montserrat_400Regular"
     },
 

@@ -91,25 +91,25 @@ export default function PagamentosMotorista() {
         switch (criterio) {
             case "pago":
                 setButtonPendente("#e0e0e0");
-                
+
                 setButtonPago("#F7770D");
-                
+
                 setButtonVencido("#e0e0e0");
                 break;
 
             case "vencido":
                 setButtonPendente("#e0e0e0");
-                
+
                 setButtonVencido("#F7770D");
-                
+
                 setButtonPago("#e0e0e0");
                 break;
 
             case "pendente":
                 setButtonPendente("#F7770D");
-                
+
                 setButtonPago("#e0e0e0");
-                
+
                 setButtonVencido("#e0e0e0");
                 break;
 
@@ -164,7 +164,7 @@ export default function PagamentosMotorista() {
 
             <View style={styles.alinhabotoes}>
 
-                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPendente}]} onPress={() => { filtrarStatusMensalidade("pendente") }}>
+                <TouchableOpacity style={[styles.botao, { backgroundColor: buttonPendente }]} onPress={() => { filtrarStatusMensalidade("pendente") }}>
                     <Text style={styles.textobotao}>Pendente</Text>
                 </TouchableOpacity>
 
@@ -191,12 +191,28 @@ export default function PagamentosMotorista() {
 
                         renderItem={({ item }) => {
 
-                            const Color = item.situacao_mensalidade === "pago" ? "#00B383" : "#F71B0D";
-                            // const Seta = item.situacao_mensalidade === "pago" ? true : false;
-                            const icon = Color === "#00B383" ? "checkmark" : "warning"
-
                             let nomeSeparado = item.nome_cliente.split(' ');
                             let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
+
+                            let Color;
+                            let Icon;
+
+                            switch (item.situacao_mensalidade) {
+                                case "pago":
+                                    Color = "green";
+                                    Icon = "checkmark";
+                                    break;
+
+                                case "pendente":
+                                    Color = "#FF8C00";
+                                    Icon = "time-outline";
+                                    break;
+
+                                case "vencido":
+                                    Color = "red";
+                                    Icon = "warning";
+                                    break;
+                            };
 
                             return (
                                 <CardPagamento
@@ -208,9 +224,9 @@ export default function PagamentosMotorista() {
                                     })}
                                     nome={Nome}
                                     valor={item.valor_mensalidade}
-                                    color={'#6A5ACD'}
+                                    color={Color}
                                     vencimento={FormatadorData(item.vencimento_mensalidade)}
-                                    icon={icon}
+                                    icon={Icon}
                                     status={item.situacao_mensalidade}
                                     seta={true}
 
@@ -252,8 +268,8 @@ export default function PagamentosMotorista() {
                     :
                     (
                         vazio ? (
-                            <View style={{JustifyContent: "center"}}>
-                                <NotFound/>
+                            <View style={{ JustifyContent: "center" }}>
+                                <NotFound />
                             </View>
                         )
                             :

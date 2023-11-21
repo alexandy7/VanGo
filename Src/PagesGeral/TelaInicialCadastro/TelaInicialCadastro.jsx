@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
-import styles from "./Cadastro.modules";
+import styles from "./TelaInicialCadastro.modules";
 import BotaoGeral from "../../Componentes/BotaoGeral";
 import { useNavigation } from "@react-navigation/native";
 import * as Animatable from 'react-native-animatable';
 import Toast from '../../services/Toast/Toast'
-export default function Cadastro() {
+
+export default function TelaInicialCadastro() {
 
     const navigation = useNavigation();
 
@@ -116,7 +117,7 @@ export default function Cadastro() {
                         }}>
                         <Image style={styles.imagem} source={mamaeImg} />
                         <View style={[styles.botao, { backgroundColor: buttonResponsavel }]}>
-                            <Text style={[styles.textobotao, { color: fundoAndTextoResp }]}>Responsável</Text>
+                            <Text style={[styles.textobotao, { color: fundoAndTextoResp }]}>Cliente</Text>
                         </View>
                     </TouchableOpacity>
                 </Animatable.View>

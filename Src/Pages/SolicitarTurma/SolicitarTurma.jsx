@@ -17,7 +17,8 @@ export default function SolicitarTurma() {
     const [solicitacaoenviada, setSolicitacaoenviada] = useState(false);
     const [codigo, setCodigo] = useState('');
     const [user, setUser] = useState({})
-
+    const [intervalo, setIntervalo] = useState(1)
+    
     useEffect(() => {
         async function DadosUsuario() {
             let usuario = await UserData();
@@ -32,8 +33,8 @@ export default function SolicitarTurma() {
                 VerificarSolicitacao(usuario.id_cliente);
             }, 20000);
 
-            // Clean up the interval on component unmount
-            return () => clearInterval(intervalId);
+            
+            return () => {clearInterval(intervalId)};
         };
         DadosUsuario();
 
@@ -84,6 +85,7 @@ export default function SolicitarTurma() {
             });
 
             if (response.status === 200) {
+                clearInterval(intervalId)
                 navigation.goBack();
             };
         }

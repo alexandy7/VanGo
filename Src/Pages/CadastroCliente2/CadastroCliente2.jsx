@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
@@ -8,12 +8,18 @@ import { TextInput } from "react-native";
 import BotaoGeral from "../../Componentes/BotaoGeral";
 import { useNavigation } from "@react-navigation/native";
 
-const CadastroCliente2 = ({route}) => {
+const CadastroCliente2 = ({ route }) => {
 
-    const {nomeSobrenome, bairro } = route.params
+    const { nomeSobrenome1, bairro1 } = route.params
 
-    
-const navigation = useNavigation();
+
+    const navigation = useNavigation();
+
+    const [nomeCliente2, setNomeCliente2] = useState('');
+    const [sobreNomeCliente2, setSobreNomeCliente2] = useState('');
+    const [cepCliente2, setCepCliente2] = useState();
+    const [bairro2, setBairro2] = useState('');
+    const [numero2, setNumero2] = useState();
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -26,9 +32,9 @@ const navigation = useNavigation();
     }
 
     return (
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
             <View style={styles.caixaheader}>
-                <TouchableOpacity style={styles.divseta} onPress={()=>{navigation.goBack()}}>
+                <TouchableOpacity style={styles.divseta} onPress={() => { navigation.goBack() }}>
                     <Ionicons style={styles.seta} name={"chevron-back-outline"} size={40} color="#dbdbdb" />
                 </TouchableOpacity>
 
@@ -46,51 +52,88 @@ const navigation = useNavigation();
                 <Text style={styles.textoinferior}>Insira suas informações abaixo:</Text>
             </View>
 
-            <View style={[styles.divinputs, {height: 70}]}>
+            <View style={[styles.divinputs, { height: 70 }]}>
                 <Text style={styles.tituloinput}>Nome</Text>
-                <TextInput style={[styles.inputs, {width: "40%"}]}/>
+                <TextInput
+                    style={[styles.inputs, { width: "40%" }]}
+                    value={nomeCliente2}
+                    onChangeText={(text) => setNomeCliente2(text)}
+                />
 
                 <Text style={styles.tituloinput}>Sobrenome</Text>
-                <TextInput style={[styles.inputs, {width: "55%"}]}/>
+                <TextInput
+                    style={[styles.inputs, { width: "55%" }]}
+                    value={sobreNomeCliente2}
+                    onChangeText={(text) => setSobreNomeCliente2(text)}
+                />
             </View>
 
-            <View style={[styles.divinputs, {height: 80}]}>
+            <View style={[styles.divinputs, { height: 80 }]}>
                 <Text style={styles.tituloinput}>CEP</Text>
-                <TextInput style={[styles.inputs, {width: "60%"}]}/>
+                <TextInput
+                    style={[styles.inputs, { width: "60%" }]}
+                    onChangeText={(text) => {
+                        if (cepCliente2.length === 5) {
+                            setCepCliente2('-' + text);
+                            return;
+                        };
+
+                        setCepCliente2(text);
+                    }}
+                />
                 <Text style={styles.textocep}>Clique aqui para saber seu CEP</Text>
             </View>
 
-            <View style={[styles.divinputs, {height: 70}]}>
+            <View style={[styles.divinputs, { height: 70 }]}>
                 <Text style={styles.tituloinput}>Logradouro</Text>
-                <TextInput style={[styles.inputs, {width: "47.5%"}]}/>
+                <TextInput style={[styles.inputs, { width: "47.5%" }]} />
 
                 <Text style={styles.tituloinput}>Bairro</Text>
-                <TextInput style={[styles.inputs, {width: "47.5%"}]}/>
+                <TextInput
+                    style={[styles.inputs, { width: "47.5%" }]}
+                    value={bairro2}
+                    onChangeText={(text) => setBairro2(text)}
+                />
             </View>
 
-            <View style={[styles.divinputs, {height: 70}]}>
+            <View style={[styles.divinputs, { height: 70 }]}>
                 <Text style={styles.tituloinput}>Complemento</Text>
-                <TextInput style={[styles.inputs, {width: "45%"}]}/>
+                <TextInput style={[styles.inputs, { width: "45%" }]} />
 
                 <Text style={styles.tituloinput}>Número</Text>
-                <TextInput style={[styles.inputs, {width: "20%"}]}/>
+                <TextInput
+                    style={[styles.inputs, { width: "20%" }]}
+                    value={numero2}
+                    onChangeText={(text) => setNumero2(text)}
+                />
             </View>
 
-            <View style={[styles.divinputs, {height: 70}]}>
+            <View style={[styles.divinputs, { height: 70 }]}>
                 <Text style={styles.tituloinput}>Estado</Text>
-                <TextInput style={[styles.inputs, {width: "45%"}]}/>
+                <TextInput style={[styles.inputs, { width: "45%" }]} />
             </View>
 
-            <BotaoGeral 
-            texto={"Prosseguir"} 
-            icone={"chevron-forward-outline"} 
-            evento={()=> navigation.navigate('CadastroEscola', {
-                bairro1: bairro,
-                nomeSobrenome: nomeSobrenome
-            })}
+            <BotaoGeral
+                texto={"Prosseguir"}
+                icone={"chevron-forward-outline"}
+                evento={() => {
+                    // if (nomeCliente2 === "" || sobreNomeCliente2 === "" || bairro2 === "" || numero2 === "") {
+                    //     showToast("error", "Campo vazio!", "Preencha todos os campos.", 2000);
+                    //     return;
+                    // }
+
+                    navigation.navigate('CadastroCliente3', {
+                        bairro1: bairro1,
+                        nomeSobrenome1: nomeSobrenome1,
+
+                        bairro2: bairro2 + ' ' + numero2,
+                        nomeSobrenome2: nomeCliente2 + ' ' + sobreNomeCliente2
+                    })
+                }
+                }
             />
 
-        </View>
+        </ScrollView>
     )
 }
 

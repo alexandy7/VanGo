@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        width: "90%",
+        width: "80%",
         alignSelf: "center",
     },
 

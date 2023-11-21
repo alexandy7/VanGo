@@ -174,7 +174,7 @@ export default function Login() {
             <View style={styles.botaoNovaConta}>
               <Text style={styles.naoecadastrado}>Não é cadastrado? </Text>
 
-              <TouchableOpacity onPress={() => { navigation.navigate('Cadastro') }}>
+              <TouchableOpacity onPress={() => { navigation.navigate('TelaInicialCadastro') }}>
 
                 <Text style={styles.novaConta}>Nova conta</Text>
               </TouchableOpacity>

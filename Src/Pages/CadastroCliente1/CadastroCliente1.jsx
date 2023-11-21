@@ -7,6 +7,7 @@ import InputEdicao from "../../Componentes/InputEdicao";
 import { TextInput } from "react-native";
 import BotaoGeral from "../../Componentes/BotaoGeral";
 import { useNavigation } from "@react-navigation/native";
+import showToast from "../../services/Toast/Toast";
 
 export default function CadastroCliente1() {
 
@@ -35,7 +36,7 @@ export default function CadastroCliente1() {
     }
 
     return (
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
             <View style={styles.caixaheader}>
                 <TouchableOpacity style={styles.divseta} onPress={()=>{navigation.goBack()}}>
                     <Ionicons style={styles.seta} name={"chevron-back-outline"} size={40} color="#dbdbdb" />
@@ -119,11 +120,17 @@ export default function CadastroCliente1() {
             <BotaoGeral 
             texto={"Prosseguir"} 
             icone={"chevron-forward-outline"} 
-            evento={() => navigation.navigate('CadastroCliente2', {
-                nomeSobrenome: nomeCliente + sobreNomeCliente,
-                bairro: bairro + ' ' +  numero,
-            })}/>
+            evento={() => {
+                // if(nomeCliente === "" || sobreNomeCliente === "" || bairro === "" || numero === ""){
+                //     showToast("error", "Campo vazio!", "Preencha todos os campos.", 2000 );
+                //     return;
+                // }
+                navigation.navigate('CadastroCliente2', {
+                nomeSobrenome1: nomeCliente + ' ' + sobreNomeCliente,
+                bairro1: bairro + ' ' +  numero,
+            })
+            }}/>
 
-        </View>
+        </ScrollView>
     )
 }

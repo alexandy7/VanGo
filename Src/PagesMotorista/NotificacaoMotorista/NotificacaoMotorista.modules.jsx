@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
         alignSelf: "center",
     },
 
+    viewNotificacoes:{
+        flex: 1,
+        alignSelf: "center", 
+        alignItems: "center"
+    }
 });
 
 export default styles;

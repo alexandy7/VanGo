@@ -1,57 +1,89 @@
-import React from "react";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import { Ionicons } from '@expo/vector-icons'
-import { useFonts, Montserrat_500Medium, Montserrat_400Regular, Montserrat_600SemiBold } from "@expo-google-fonts/montserrat"
+import React, { useState } from "react";
+import { View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import TituloCadastro from "../../Componentes/Titulocadastros";
+import MeuText from "../../Componentes/MeuText";
+import Touchable from '../../Componentes/Touchable'
 import styles from "./CadastroCliente3.modules";
-import InputEdicao from "../../Componentes/InputEdicao";
+import ListEscolas from "../../Componentes/ListEscolas";
+import { FlatList } from "react-native";
+import showToast from "../../services/Toast/Toast";
 import { TextInput } from "react-native";
-import BotaoGeral from "../../Componentes/BotaoGeral";
-
-export default function CadastroCliente3() {
 
 
-    const [fonteLoaded] = useFonts({
-        Montserrat_500Medium,
-        Montserrat_400Regular,
-        Montserrat_600SemiBold
-    });
+const CadastroCliente3 = ({ route }) => {
 
-    if (!fonteLoaded) {
-        return null;
-    }
+  const { bairro1, nomeSobrenome1, bairro2, nomeSobrenome2 } = route.params;
 
-    return (
-        <View style={styles.main}>
-            <View style={styles.caixacima}>
-                {/* essa caixa serve para manter o botão fixo em relação a tela, sempre estando embaixo */}
-                {/* alinhar com porcentagem não funciona nesse caso */}
-                <View style={styles.caixaheader}>
-                    <TouchableOpacity style={styles.divseta} onPress={()=>{navigation.goBack()}}>
-                        <Ionicons style={styles.seta} name={"chevron-back-outline"} size={40} color="#dbdbdb" />
-                    </TouchableOpacity>
+  const navigation = useNavigation();
 
-                    <View style={styles.divimagem}>
-                        <Image style={styles.logo} source={require("../../../assets/Logo.png")} />
-                    </View>
+  const [nomeCrianca, setNomeCrianca] = useState('')
+  const [sobrenomeCrianca, setSobrenomeCrianca] = useState('')
+  const [escola, setEscola] = useState('')
 
-                    <View style={styles.divregua}>
-                        <Text style={styles.numeropasso}>03/04</Text>
-                    </View>
-                </View>
+  return (
 
-                <View style={styles.divtextos}>
-                    <Text style={styles.textosuperior}>Adicione outro endereço</Text>
-                    <Text style={styles.textoinferior}>Insira suas informações abaixo:</Text>
-                </View>
-
-                <View style={[styles.divinputs, {height: 70}]}>
-                    <Text style={styles.tituloinput}>Nome</Text>
-                    <TextInput style={[styles.inputs, {width: "100%"}]}/>
-                </View>
+    <FlatList
+      style={styles.scroll}
+      data={' '}
+      renderItem={() => {
+        return (
+          <View style={styles.geral}>
+            <Text style={styles.numeropasso}>03/04</Text>
+            <View style={{ marginTop: "20%" }}>
+              <TituloCadastro textoh1={'Cadastre a criança'} textoh2={'Insira as informações abaixo:'} />
             </View>
 
-            <BotaoGeral texto={"Prosseguir"} icone={"chevron-forward-outline"}/>
+            <View style={[styles.divinputs, { height: 70 }]}>
+              <Text style={styles.tituloinput}>Nome</Text>
+              <TextInput
+                style={[styles.inputs, { width: "40%" }]}
+                value={nomeCrianca}
+                onChangeText={(text) => setNomeCrianca(text)}
+              />
 
-        </View>
-    )
+              <Text style={styles.tituloinput}>Sobrenome</Text>
+              <TextInput
+                style={[styles.inputs, { width: "55%" }]}
+                value={sobrenomeCrianca}
+                onChangeText={(text) => setSobrenomeCrianca(text)}
+              />
+            </View>
+
+            <View style={styles.inputes}>
+              <Text style={[styles.tituloinput, {marginLeft: "6%"}]}>Escola</Text>
+              <ListEscolas
+                escolaCliente={escola}
+                valorEscola={(text) => setEscola(text)}
+              />
+            </View>
+
+            <View style={styles.concluir}>
+              <Touchable texto={'Prosseguir'} evento={() => {
+
+                // if (escola === '') {
+                //   showToast("error", "Escola", "Selecione sua escola!", 2000);
+                //   return;
+                // }
+
+                
+                  navigation.navigate("CadastroCliente4", {
+                    bairro1: bairro1,
+                    nomeSobrenome1: nomeSobrenome1,
+                    bairro2: bairro2,
+                    nomeSobrenome2: nomeSobrenome2,
+                    nomeCrianca: nomeCrianca + ' ' + sobrenomeCrianca,
+                    escolaCliente: escola
+                  })
+                
+              }} />
+            </View>
+          </View>
+        )
+      }}
+    />
+
+  );
 }
+
+export default CadastroCliente3;

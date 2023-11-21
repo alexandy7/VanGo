@@ -22,6 +22,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 
+    numeropasso: {
+        fontFamily: "Montserrat_400Regular",
+        color: "#F7770D",
+        marginTop: 30,
+        position: "absolute",
+        right: 15
+    },
+
     divesquerda: {
         height: 80,
         width: "15%",
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
 
     divdireita: {
         height: 80,
-        width: "15%",   
+        width: "15%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -99,7 +107,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#e8e8e8"
     },
 
-    foto:{
+    foto: {
         height: 250,
         width: 250,
         borderRadius: 250,
@@ -143,7 +151,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "flex-end"
     },
-    
+
     alinhameio: {
         width: "70%",
         height: "100%",

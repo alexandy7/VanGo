@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import styles from "./AdicionarFoto.modules";
+import styles from "./CadastroCliente5modules";
 import NotFound from "../../Componentes/NotFound";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import * as ImagePicker from 'expo-image-picker';
@@ -11,35 +11,36 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import { ActivityIndicator } from "react-native";
 import SemWifi from "../../Componentes/SemWifi";
 import NetInfo from '@react-native-community/netinfo';
+import showToast from "../../services/Toast/Toast";
 
-const AdicionarFoto = ({ route }) => {
-    
-    const { email_cliente, senha_cliente, nome_cliente, cpf_responsavel, endereco_cliente, responsavel_cliente, escolaCliente } = route.params;
-    
+const CadastroCliente5 = ({ route }) => {
+
+    const { bairro1, nomeSobrenome1, bairro2, nomeSobrenome2, nomeCrianca, escolaCliente, emailCliente, senhaCliente } = route.params;
+
     const navigation = useNavigation();
-    
+
     const [_base64, setBase64] = useState("");
     const [exibirFoto, setExibirFoto] = useState(false);
     const [foto, setFoto] = useState(null);
     const [clicado, setClicado] = useState(false);
     const [internet, setInternet] = useState(true);
-    
+
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
     });
-    
-        useEffect(() => {
-            checkInternetConnection();
-        }, [internet]);
+
+    useEffect(() => {
+        checkInternetConnection();
+    }, [internet]);
 
     if (!fonteLoaded) {
         return null;
     };
-    
+
     async function checkInternetConnection() {
         const state = await NetInfo.fetch();
-        
+
         if (!state.isConnected) {
             console.log('O dispositivo está conectado à internet.');
             return;
@@ -75,14 +76,13 @@ const AdicionarFoto = ({ route }) => {
 
     async function CadastrarCliente() {
         const data = {
-            Email_cliente: email_cliente,
-            Senha_cliente: senha_cliente,
-            Nome_cliente: nome_cliente,
+            Email_cliente: emailCliente,
+            Senha_cliente: senhaCliente,
+            Nome_cliente: nomeCrianca,
             Base64: _base64,
-            Cpf_responsavel: cpf_responsavel,
-            Endereco_cliente: endereco_cliente,
-            Endereco_reserva: 'endereco teste',
-            Responsavel_cliente: responsavel_cliente,
+            Endereco_cliente: bairro1,
+            Endereco_reserva: bairro2,
+            Responsavel_cliente: nomeSobrenome1,
             Escola_cliente: escolaCliente
         };
 
@@ -91,6 +91,7 @@ const AdicionarFoto = ({ route }) => {
             const resposta = await axios.post('https://apivango.azurewebsites.net/api/Auth/CadastrarCliente', data);
 
             if (resposta != null) {
+                showToast("sucess", "Concluido!", "Aproveite o app!", 3000)
                 navigation.navigate('Login');
             } else {
                 console.log('Usuário não encontrado');
@@ -105,6 +106,7 @@ const AdicionarFoto = ({ route }) => {
     return (
         <View style={styles.main}>
             <View style={styles.header}>
+                <Text style={styles.numeropasso}>5/5</Text>
                 <View style={styles.divesquerda}>
                     <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
                         <Ionicons name="chevron-back-outline" size={35} color={"gray"} />
@@ -127,7 +129,7 @@ const AdicionarFoto = ({ route }) => {
                 </View>
 
                 <View style={styles.divtexto}>
-                    <Text style={styles.texto1}>Adicione sua foto de perfil</Text>
+                    <Text style={styles.texto1}>Adicione a foto da criança</Text>
                     <Text style={styles.texto2}>Insira as informações abaixo</Text>
                 </View>
             </View>
@@ -199,4 +201,4 @@ const AdicionarFoto = ({ route }) => {
 
 }
 
-export default AdicionarFoto;
+export default CadastroCliente5;

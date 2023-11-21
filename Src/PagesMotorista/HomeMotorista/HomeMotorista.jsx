@@ -24,9 +24,12 @@ export default function HomeMotorista() {
     }, [])
 
     async function BuscarUsuario() {
-        const usuario = await UserData();
-        setUser(usuario);
-        BuscarTurmas(usuario.id_motorista);
+        await UserData()
+            .then((response) => {
+                setUser(response);
+                BuscarTurmas(response.id_motorista);
+
+            })
     }
 
     async function BuscarTurmas(id_motorista) {
@@ -88,7 +91,7 @@ export default function HomeMotorista() {
                         <TouchableOpacity onPress={() => { navigation.navigate('NotificacaoMotorista') }}>
                             <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
                         </TouchableOpacity>
-                        
+
                         <TouchableOpacity onPress={() => { navigation.navigate('Chat') }}>
                             <Ionicons style={styles.icone} name={"chatbubble-ellipses-sharp"} size={40} color='white' />
                         </TouchableOpacity>

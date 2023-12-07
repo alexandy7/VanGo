@@ -1,26 +1,37 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardComprovante({item, DataPagamento, DataVencimento}) 
-{
+export default function CardComprovante({ item, DataPagamento, verComprovante }) {
 
-    return(
+
+    const [fonteLoaded] = useFonts({
+        Montserrat_500Medium,
+        Montserrat_400Regular
+    });
+
+    if (!fonteLoaded) {
+        return null;
+    }
+    return (
         <View style={styles.container}>
             <View style={styles.divanexo}>
-                <Ionicons name='eye' size={25} color='#F7770D'/>
-                <Text style={styles.textocomprovante}>Comprovante</Text>
-            </View>
-
-            <View style={styles.divinfos}>
-                <View style={styles.divpagamento}>
-                    <Text style={styles.textopagamento}>Pago: {DataPagamento}</Text>
+                <View style={styles.icone}>
+                    <Ionicons name='lock-closed' size={28} color='white' />
                 </View>
 
-                <View style={styles.divvencimento}>
-                    <Text style={styles.textovencimento}>Venc.: {DataVencimento} </Text>
+                <View style={{marginLeft: 10, borderLeftWidth: 0.5, borderColor: "black", height: 50, paddingLeft: 15}}>
+                    <Text style={styles.textocomprovante}>Comprovante</Text>
+                    <View style={{flexDirection: "row"}}>
+                        <Text style={{color: "#00B383", fontWeight: "bold"}}>Pagamento: </Text>
+                        <Text>{DataPagamento}</Text>
+                    </View>
                 </View>
             </View>
+            <TouchableOpacity onPress={verComprovante} style={{justifyContent: "center", left: "150%"}}>
+                    <Ionicons name='chevron-forward' size={28} color='black' />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -28,60 +39,31 @@ export default function CardComprovante({item, DataPagamento, DataVencimento})
 const styles = StyleSheet.create({
     container: {
         width: "90%",
-        height: 80,
-        borderColor: '#F7770D',
-        borderRadius: 10,
         alignSelf: 'center',
-        borderWidth: 1,
         marginBottom: 8,
         display: "flex",
         flexDirection: "row",
         backgroundColor: 'white',
+        marginTop: "3%",
     },
 
     divanexo: {
-        height: 78,
-        width: "50%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-evenly",
         flexDirection: "row",
     },
 
-    textocomprovante:{
-        fontSize: 19,
-        fontWeight: "bold",
+    icone: {
+        backgroundColor: "#F7770D",
+        borderRadius: 30,
+        height: 50,
+        width: 52,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+
+    textocomprovante: {
+        fontSize: 18,
         position: "relative",
+        fontFamily: "Montserrat_500Medium"
     },
 
-    divinfos: {
-        display: "flex",
-        flexDirection: "column",
-        width: "50%",
-        height: 78
-    },
-
-    divpagamento:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        height: 39
-    },
-
-    textopagamento:{
-        fontSize: 14,
-    },
-
-    divvencimento:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        height: 39,
-    },
-
-    textovencimento: {
-        fontSize: 14
-    }
 })

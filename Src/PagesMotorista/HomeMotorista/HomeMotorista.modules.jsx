@@ -51,6 +51,16 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat_500Medium",
     },
 
+    bolinha: {
+        position: 'absolute',
+        right: 6,
+        top: 3,
+        width: 10,
+        height: 10,
+        borderRadius: 10,
+        backgroundColor: 'red',
+    },
+
     divicones: {
         width: "40%",
         height: "100%",

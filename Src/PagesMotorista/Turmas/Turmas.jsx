@@ -181,13 +181,11 @@ const Turmas = ({ route }) => {
                 )
                     :
                     (
-
-
                         <View>
                             {
                                 encontrado ? (
                                     <FlatList
-                                        keyExtractor={(item) => item.nome_cliente + item.data_ausencia}
+                                        keyExtractor={(item, index) => item.nome_cliente + item.data_ausencia + index}
                                         data={pesquisaFiltrada}
                                         refreshing={loadingRefresh}
                                         onRefresh={() => {
@@ -197,7 +195,6 @@ const Turmas = ({ route }) => {
                                         renderItem={({ item }) => {
 
                                             const borderColor = item.status === "ausente" ? "red" : "green";
-
                                             return (
                                                 <CardAluno
                                                     foto={{ uri: item.foto_cliente }}

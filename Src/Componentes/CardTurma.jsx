@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
-import { useFonts, Montserrat_500Medium, Montserrat_400Regular} from "@expo-google-fonts/montserrat"
+import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardTurma({nome, chave, horarioinic, horariofin, evento, desativado}) {
+export default function CardTurma({ nome, chave, descricao, evento, desativado }) {
 
-    const [fonteLoaded] = useFonts ({
+    const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
     });
@@ -14,22 +14,25 @@ export default function CardTurma({nome, chave, horarioinic, horariofin, evento,
         return null;
     }
 
-    return(
+    return (
         <TouchableOpacity activeOpacity={0.9} onPress={evento} disabled={desativado ? true : false}>
             <View style={styles.container}>
+
                 <View style={styles.divsuperior}>
                     <Text style={styles.titulo}>{nome}</Text>
-                    <Text style={styles.txtsecundario}></Text>
                 </View>
+
                 <View style={styles.divinferior}>
+
                     <View style={styles.juncao1}>
-                        <Ionicons name='time' size={20} color='orange'/>
-                        <Text style={styles.info}>{horarioinic} - {horariofin}</Text>
+                        <Ionicons name='information-circle' size={20} color='orange' />
+                        <Text style={styles.info}>{descricao}</Text>
                     </View>
-                    <View style={styles.juncao2}>
-                        <Ionicons name='key' size={20} color='orange'/>
-                        <Text style={styles.info}>#{chave}</Text>
+                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <Ionicons name='key' size={20} color='orange' />
+                        <Text style={styles.txtsecundario}>#{chave}</Text>
                     </View>
+
                 </View>
             </View>
         </TouchableOpacity>
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
 
     txtsecundario: {
         fontSize: 18,
-        color: "orange",
+        color: "grey",
         marginRight: "5%",
         marginBottom: "1%",
         fontFamily: "Montserrat_400Regular"
@@ -87,7 +90,8 @@ const styles = StyleSheet.create({
     info: {
         fontSize: 17,
         color: "gray",
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        marginLeft: 5
     },
 
     juncao1: {

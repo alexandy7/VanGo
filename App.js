@@ -1,9 +1,10 @@
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'expo-status-bar';
 import AppNavigator from './Src/services/Navegacoes/NavegacoesCliente';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import { AppRegistry, LogBox } from 'react-native';
-LogBox.ignoreAllLogs();
+
+//LogBox.ignoreAllLogs();
 
 export default function App() {
 
@@ -27,7 +28,7 @@ export default function App() {
     error: (props) => (
       <ErrorToast
         {...props}
-        style={{borderLeftColor: 'red'}}
+        style={{ borderLeftColor: 'red', borderLeftWidth: 15 }}
         text1Style={{
           fontSize: 20
         }}
@@ -44,7 +45,7 @@ export default function App() {
         <AppNavigator />
         <StatusBar hidden={true} />
       </NavigationContainer>
-      <Toast config={toastConfig}/>
+      <Toast config={toastConfig} />
     </>
   );
 }

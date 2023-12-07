@@ -10,6 +10,7 @@ import ApiMotorista from "../../services/Api/ApiMotorista";
 import VisualizarValorFatura from "../../Componentes/VisualizarValorFatura";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 import InputPrompt from "../../Componentes/Modal";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 
 const VisualizarCliente = ({ route }) => {
@@ -20,9 +21,6 @@ const VisualizarCliente = ({ route }) => {
     const [cliente, setCliente] = useState({});
 
     const [nomeSobrenome, setNomeSobrenome] = useState(' ');
-    const [nomeResponsável, setNomeResponsavel] = useState(' ');
-    const [enderecoUsuario, setEnderecoUsuario] = useState(' ');
-    const [enderecoUsuario2, setEnderecoUsuario2] = useState(' ');
     const [escola, setEscola] = useState(' ');
 
     const [confirmarEdicao, setConfirmarEdicao] = useState(false);
@@ -30,12 +28,55 @@ const VisualizarCliente = ({ route }) => {
     const [clicado, setClicado] = useState(false);
     const [erro, setErro] = useState(false);
 
+    const [connection, setConnection] = useState(null);
+
+
     useEffect(() => {
         BuscarCliente();
 
         let nomeSeparado = nome.split(' ');
         setNomeSobrenome(nomeSeparado[0] + ' ' + nomeSeparado[1])
+
+        const newConnection = new HubConnectionBuilder()
+            .withUrl("https://apivango.azurewebsites.net/notificacao")
+            .build();
+        setConnection(newConnection);
     }, []);
+
+    useEffect(() => {
+        if (connection) {
+            try {
+                connection.start()
+                    .then(() => {
+                        console.log(`Conectado ao hub SignalR!`);
+                    })
+                    .then(() => {
+                        connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
+                            // console.log(sender, reciver, message, `Motorista/${user.id_motorista}`);
+                            if (reciver === `Motorista/${user.id_motorista}`) {
+                                let data = new Date(tempoEnvio)
+                                atualizarState(sender, message, data);
+                            };
+                        });
+                    })
+            }
+            catch (error) {
+                console.error(error);
+            };
+        }
+    }, [connection]);
+
+    async function EnviarNotificacao(){
+
+        console.log(id, cliente.id_motorista);
+        if (connection) {
+            connection.invoke("EnviarNotificacao", id, cliente.id_motorista)
+                .catch((error) => {
+                    console.error(error);
+                    return;
+                });
+        };
+    }
 
     async function BuscarCliente() {
         try {
@@ -49,22 +90,6 @@ const VisualizarCliente = ({ route }) => {
 
             let json = response.data;
             setCliente(json);
-
-            let responsavelSeparado = json.responsavel_cliente.split(' ')
-            setNomeResponsavel(responsavelSeparado);
-            if (responsavelSeparado.length > 1) {
-
-                let nomeResponsavel = responsavelSeparado[0] + ' ' + responsavelSeparado[1];
-                setNomeResponsavel(nomeResponsavel + '...');
-            };
-
-            let enderecoSeparado = json.endereco_cliente.split(' ');
-            let endereco = enderecoSeparado[0] + ' ' + enderecoSeparado[1];
-            setEnderecoUsuario(endereco + '...');
-
-            let endereco2Separado = json.endereco_reserva.split(' ');
-            let endereco2 = endereco2Separado[0] + ' ' + endereco2Separado[1];
-            setEnderecoUsuario2(endereco2 + '...')
 
             let escolaSeparado = json.escola_cliente.split(' ');
             let escola = escolaSeparado[0] + ' ' + escolaSeparado[1];
@@ -134,19 +159,26 @@ const VisualizarCliente = ({ route }) => {
                 <View style={styles.regua}>
                     <CaixaPerfil
                         brushOrChat={"chatbubbles"}
-                        texto1={nomeResponsável}
+                        texto1={cliente.responsavel_cliente}
                         titulotexto1={"Responsável"}
                         icontexto1={"person-outline"}
+                        signal={()=> {EnviarNotificacao()}}
                         texto2={escola}
                         titulotexto2={"Escola"}
                         icontexto2={"time-outline"}
-                        texto3={enderecoUsuario}
+                        texto3={cliente.endereco_cliente}
                         titulotexto3={"Endereço"}
                         icontexto3={"home-outline"}
-                        texto4={enderecoUsuario2}
+                        texto4={cliente.endereco_reserva}
                         titulotexto4={"2° endereço"}
                         icontexto4={"business-outline"}
-                        evento={() => { navigation.navigate("Chat") }}
+                        evento={() => {
+                            navigation.navigate("ConversaChatMotorista", {
+                                id_cliente: id,
+                                foto_cliente: foto,
+                                nome_cliente: nome
+                            })
+                        }}
                     />
                 </View>
 

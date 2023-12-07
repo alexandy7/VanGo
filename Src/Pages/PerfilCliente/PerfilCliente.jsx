@@ -9,6 +9,7 @@ import CardVerMotorista from "../../Componentes/CardVerMotorista";
 import ApiCliente from "../../services/Api/ApiCiente";
 import SemWifi from "../../Componentes/SemWifi";
 import NetInfo from '@react-native-community/netinfo';
+import FormatadorTexto from "../../services/Formatadores/FormatadorTextos/FormatadorTextos.js";
 
 export default function PerfilCliente() {
 
@@ -102,16 +103,16 @@ export default function PerfilCliente() {
                 <View style={styles.regua}>
                     <CaixaPerfil
                         brushOrChat={"brush"}
-                        texto1={nomeResponsável}
+                        texto1={usuario.responsavel_cliente}
                         titulotexto1={"Responsável"}
                         icontexto1={"person-outline"}
                         texto2={escola}
                         titulotexto2={"Escola"}
                         icontexto2={"time-outline"}
-                        texto3={enderecoUsuario}
+                        texto3={"Neia Gomes de sá"}
                         titulotexto3={"Endereço"}
                         icontexto3={"home-outline"}
-                        texto4={enderecoUsuario2}
+                        texto4={"Avenida esperança 9"}
                         titulotexto4={"2° endereço"}
                         icontexto4={"business-outline"}
 

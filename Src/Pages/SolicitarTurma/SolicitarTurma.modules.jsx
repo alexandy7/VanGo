@@ -52,13 +52,11 @@ const styles = StyleSheet.create({
     MsgAguardando: {
         alignSelf: "center",
         backgroundColor: "#F7770D",
-        width: '95%',
-        height: '9%',
-        borderRadius: 10,
+        width: '100%',
         justifyContent: 'center',
+        height: 45,
         flex: 1,
         marginTop: "30%"
-        
     },
 
     viewGif: {

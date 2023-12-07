@@ -21,12 +21,13 @@ const styles = StyleSheet.create({
     },
 
     ultimospagamentos: {
+        flex: 1,
         fontSize: 20,
         position: "relative",
-        left: 42,
+        left: "50%",
         bottom: 5,
         marginTop: "5%",
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
     },
 
 })

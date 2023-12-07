@@ -171,9 +171,9 @@ export default function EditarMotorista() {
                 mudou={(text) => { setNome(text) }}
             />
 
-            <Text style={styles.tituloform}>Cor</Text>
+            <Text style={styles.tituloform}>Tempo</Text>
             <InputEdicao
-                valor={"nomeCliente"}
+                valor={"5 Anos"}
                 largura={"86%"}
                 mudou={(text) => { setNomeCliente(text) }}
             />

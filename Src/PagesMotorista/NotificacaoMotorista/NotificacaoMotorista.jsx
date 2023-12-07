@@ -18,7 +18,7 @@ export default function NotificacaoMotorista() {
     const [carregamento, setCarregamento] = useState(false);
     const [loadingRefresh, setLoadingRefresh] = useState(false);
     const [notificacaoEncontrada, setNotificacaoEncontrada] = useState(true);
-    
+
     useEffect(() => {
         checkInternetConnection();
         setCarregamento(true);
@@ -27,11 +27,22 @@ export default function NotificacaoMotorista() {
 
     async function BuscarUsuario() {
         try {
+            await UserData()
+                .then((response) => {
+                    BuscarNotificacoes(response.id_motorista);
+                });
+        }
 
-            const user = await UserData();
+        catch (error) {
+            console.log('Houve um erro aqui', error)
+        }
+    }
+
+    async function BuscarNotificacoes(id_motorista) {
+        try {
 
             let token = await Token();
-            const response = await ApiMotorista.get(`LerNotificacao/${user.id_motorista}`, {
+            const response = await ApiMotorista.get(`LerNotificacao/${id_motorista}`, {
                 headers: {
                     Authorization: "Bearer " + token,
                     "Content-Type": "application/json",
@@ -43,12 +54,11 @@ export default function NotificacaoMotorista() {
             setCarregamento(false);
             setLoadingRefresh(false);
         }
-
         catch (error) {
-            console.log('Houve um erro aqui', error)
+            console.log(error);
+            setNotificacaoEncontrada(false);
         }
     }
-
     //Verifica se o usuário está conectado na internet
     const checkInternetConnection = async () => {
         const state = await NetInfo.fetch();
@@ -77,7 +87,7 @@ export default function NotificacaoMotorista() {
             </View>
 
             {
-                false ? (
+                notificacaoEncontrada ? (
 
                     <View>
                         {
@@ -97,25 +107,34 @@ export default function NotificacaoMotorista() {
                                             setLoadingRefresh(true);
                                             BuscarUsuario();
                                         }}
+                                        
+                                        ListFooterComponent={() => {
+                                            return(
+                                                <View style={{ marginBottom: 120 }}></View>
+                                            )
+                                        }}
                                         renderItem={({ item }) => {
                                             let nomeSeparado = item.nome_cliente.split(' ');
                                             let Nome = nomeSeparado[0] + ' ' + nomeSeparado[1];
-                                            console.log(item.foto_cliente);
+                                            console.log(item.lida);
                                             return (
                                                 <Notificacao
                                                     fotouser={{ uri: item.foto_cliente }}
                                                     nomeuser={Nome}
                                                     info={item.mensagem_notificacao}
                                                     hora={FormatadorData(item.data_notificacao)}
-                                                    key={item.id_notificacao} //Key serve para dar uma identificação unica ao elemento
+                                                    key={item.id_notificacao}
+                                                    lida={item.lida}
                                                     clickImagem={() => navigation.navigate("VisualizarCliente", {
                                                         nome: item.nome_cliente,
                                                         foto: item.foto_cliente,
                                                         id: item.id_cliente
                                                     })}
+                                                    
                                                 />
                                             )
                                         }}
+
                                     />
                                 )
                         }

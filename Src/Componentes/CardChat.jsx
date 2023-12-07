@@ -4,8 +4,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_600SemiBold, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import { useNavigation } from "@react-navigation/native";
 
-export default function CardChat({foto, nome, hora, ultimaMensagem, QuantidadeMensagem, verPerfil, verConversa}) 
-{
+export default function CardChat({ foto, nome, hora, ultimaMensagem, QuantidadeMensagem, verPerfil, verConversa }) {
 
     const navigation = useNavigation();
 
@@ -18,10 +17,10 @@ export default function CardChat({foto, nome, hora, ultimaMensagem, QuantidadeMe
         return null;
     }
 
-    return(
+    return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.divimagem} activeOpacity={0.8} onPress={verPerfil}>
-                <Image source={foto} style={styles.imagem}/>
+                <Image source={foto} style={styles.imagem} />
             </TouchableOpacity>
 
             {/* essa view é responsável por manter a view superior e a inferior alinhadas dentro da caixa,
@@ -39,9 +38,17 @@ export default function CardChat({foto, nome, hora, ultimaMensagem, QuantidadeMe
                         <Text style={styles.mensagem}>{ultimaMensagem}</Text>
                     </View>
 
-                    <View style={styles.divQuantidadeMensagem}>
-                        <Text style={styles.quantidadeMensagem}>{QuantidadeMensagem}</Text>
-                    </View>
+                    {
+                        QuantidadeMensagem > 0 ? (
+                            <View style={styles.divQuantidadeMensagem}>
+                                <Text style={styles.quantidadeMensagem}>{QuantidadeMensagem}</Text>
+                            </View>
+                        )
+                            :
+                            (
+                                <View></View>
+                            )
+                    }
                 </View>
 
             </TouchableOpacity>
@@ -61,7 +68,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         display: 'flex',
         flexDirection: "row",
-  },
+    },
 
     divimagem: {
         width: "25%",
@@ -137,7 +144,6 @@ const styles = StyleSheet.create({
 
     quantidadeMensagem: {
         fontSize: 16,
-        marginRight: "5%",
         backgroundColor: "orange",
         borderRadius: 27,
         width: 27,

@@ -72,6 +72,14 @@ export default function PagamentosMotorista() {
 
             let json = response.data;
             setMensalidade(json);
+            
+            if (listaFiltrada[0]) {
+                setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === listaFiltrada[0].situacao_mensalidade));
+                setLoadingRefresh(false);
+                setEncontrado(true);
+                return;
+            }
+
             setListaFiltrada(json.filter((mensalidade) => mensalidade.situacao_mensalidade === "pendente"));
             setLoadingRefresh(false);
             setEncontrado(true);
@@ -112,9 +120,7 @@ export default function PagamentosMotorista() {
 
                 setButtonVencido("#e0e0e0");
                 break;
-
         }
-
     }
 
     const lista = listaFiltrada.filter((pesquisa) => pesquisa.nome_cliente.toLowerCase().includes(searchMensalidade.toLocaleLowerCase()))
@@ -182,7 +188,7 @@ export default function PagamentosMotorista() {
                 encontrado ? (
 
                     <SectionList
-                        keyExtractor={(item) => item.id_mensalidade}
+                        keyExtractor={(item) => item.id_pagamento}
                         refreshing={loadingRefresh}
                         onRefresh={() => {
                             setLoadingRefresh(true);
@@ -224,20 +230,20 @@ export default function PagamentosMotorista() {
                                     })}
                                     nome={Nome}
                                     valor={item.valor_mensalidade}
-                                    color={Color}
+                                    cor={Color}
                                     vencimento={FormatadorData(item.vencimento_mensalidade)}
                                     icon={Icon}
                                     status={item.situacao_mensalidade}
-                                    seta={true}
+                                    seta={item.situacao_mensalidade !== "vencido" ? true : false}
 
                                     evento={() => {
-                                        navigation.navigate("AceitarPagamento", {
+                                        navigation.replace("AceitarPagamento", {
                                             imagem: item.foto_cliente,
                                             nome: item.nome_cliente,
                                             valor: item.valor_mensalidade,
                                             color: Color,
                                             vencimento: item.vencimento_mensalidade,
-                                            icon: icon,
+                                            icon: Icon,
                                             status: item.situacao_mensalidade,
                                             comprovante: item.comprovante_pagamento,
                                             id_cliente: item.id_cliente,
@@ -251,7 +257,7 @@ export default function PagamentosMotorista() {
                         }}
 
                         ListFooterComponent={() => (
-                            // Componente criado para o TabBar não sobrepor as mensalidades
+                            // Footer criado para o TabBar não sobrepor as mensalidades
                             <View style={{ backgroundColor: "white", height: 90 }}>
                                 <Text></Text>
                             </View>

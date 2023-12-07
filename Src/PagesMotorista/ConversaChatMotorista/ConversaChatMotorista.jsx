@@ -16,7 +16,7 @@ import axios from "axios";
 
 const ConversaChatMotorista = ({ route }) => {
 
-     const {id_cliente, foto_cliente, nome_cliente} = route.params;
+    const { id_cliente, foto_cliente, nome_cliente } = route.params;
 
     const navigation = useNavigation();
 
@@ -47,7 +47,7 @@ const ConversaChatMotorista = ({ route }) => {
                     setUser(response);
                     BuscarMensagens();
                     const newConnection = new HubConnectionBuilder()
-                        .withUrl("https://apivango.azurewebsites.net/Solicitacao")
+                        .withUrl("https://apivango.azurewebsites.net/chat")
                         .build();
                     setConnection(newConnection);
                 }
@@ -59,36 +59,44 @@ const ConversaChatMotorista = ({ route }) => {
 
     async function BuscarMensagens() {
 
-        let token = await Token();
+        try {
 
-        //Consulta pela API do cliente pois ela funciona igual
-        let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
+            let token = await Token();
+
+            //Consulta pela API do cliente pois ela funciona igual
+            let response = await ApiCliente.get(`BuscarMensagens/${id_cliente}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            let data = response.data;
+
+            if (data.length > 11) {
+                setInverter(true);
             }
-        });
-
-        let data = response.data;
-        
-        if (data.length > 11) {
-            setInverter(true);
-        }
-        const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
-            const novaMensagem = {
-                sender: remetente,
-                text: mensagem,
-                envio: FormatadorData(dataEnvio, true)
+            const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
+                const novaMensagem = {
+                    sender: remetente,
+                    text: mensagem,
+                    envio: FormatadorData(dataEnvio, true)
+                };
+                setMessages(prevMessages => [...prevMessages, novaMensagem]);
             };
-            setMessages(prevMessages => [...prevMessages, novaMensagem]);
-        };
 
-        data.forEach(item => {
-            adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
-        });
+            data.forEach(item => {
+                adicionarMensagem(item.remetente, item.mensagem, item.data_envio_mensagem);
+            });
 
-         setBuscandoMensagens(false);
+            setBuscandoMensagens(false);
 
+        }
+
+        catch (error) {
+            console.log(error);
+            setBuscandoMensagens(false);
+        }
     }
 
     useEffect(() => {
@@ -127,23 +135,25 @@ const ConversaChatMotorista = ({ route }) => {
         });
     };
 
-
     const enviarMensagem = () => {
         if (minhaMensagem.trim() === '') {
             return;
         };
 
         let agora = new Date();
-        atualizarState('Motorista', minhaMensagem, agora);
+
+        agora.setUTCHours(agora.getUTCHours() - 3)
+        atualizarState('Motorista', minhaMensagem, new Date());
+
         const usuario = `Motorista/${user.id_motorista}`;
 
         if (connection) {
-            connection.invoke("SendMessage", usuario, `Cliente/${id_cliente}`, minhaMensagem, agora, 13)
+            connection.invoke("SendMessage", usuario, `Cliente/${id_cliente}`, minhaMensagem, agora, id_cliente)
                 .catch((error) => {
                     console.error(error);
                     return;
                 });
-        };  
+        };
         setMinhaMensagem('');
     };
 
@@ -152,7 +162,7 @@ const ConversaChatMotorista = ({ route }) => {
         return null;
     };
 
-    
+
     return (
         <View style={styles.main}>
             <View style={styles.header}>
@@ -167,7 +177,7 @@ const ConversaChatMotorista = ({ route }) => {
                 </TouchableOpacity>
 
                 <View style={styles.divimagemheader}>
-                    <Image style={styles.imagemheader} source={{uri: foto_cliente}} />
+                    <Image style={styles.imagemheader} source={{ uri: foto_cliente }} />
                 </View>
 
                 <View style={styles.divtextoheader}>
@@ -218,6 +228,8 @@ const ConversaChatMotorista = ({ route }) => {
                             value={minhaMensagem}
                             onChangeText={(text) => setMinhaMensagem(text)}
                             isFocused={true}
+                            multiline={true}
+
                         />
                     </View>
                     <TouchableOpacity style={styles.divreguaicon} onPress={() => {

@@ -14,6 +14,7 @@ import ApiCliente from "../../services/Api/ApiCiente";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
 import { ActivityIndicator } from "react-native";
 import axios from "axios";
+import showToast from "../../services/Toast/Toast";
 export default function ConversaChatCliente() {
 
     const navigation = useNavigation();
@@ -76,7 +77,7 @@ export default function ConversaChatCliente() {
             .then(() => {
                 try {
                     const newConnection = new HubConnectionBuilder()
-                        .withUrl("https://apivango.azurewebsites.net/Solicitacao")
+                        .withUrl("https://apivango.azurewebsites.net/chat")
                         .build();
                     setConnection(newConnection);
                 }
@@ -101,19 +102,19 @@ export default function ConversaChatCliente() {
             });
 
             let data = response.data;
-            console.log(data);
             if (response.status === 200) {
 
                 if (data.length > 11) {
                     setInverter(true);
-                }
+                };
+                
                 const adicionarMensagem = (remetente, mensagem, dataEnvio) => {
                     const novaMensagem = {
                         sender: remetente,
                         text: mensagem,
                         envio: FormatadorData(dataEnvio, true)
                     };
-                    setMessages(prevMessages => [...prevMessages, novaMensagem]);
+                    setMessages(prevMessages => [novaMensagem, ...prevMessages,]);
                 };
 
                 data.forEach(item => {
@@ -140,7 +141,6 @@ export default function ConversaChatCliente() {
                     })
                     .then(() => {
                         connection.on("ReceiveMessage", (sender, reciver, message, tempoEnvio) => {
-                            console.log(message);
                             if (reciver === `Cliente/${user.id_cliente}`) {
                                 let data = new Date(tempoEnvio);
                                 AtualizarState(sender, message, data);
@@ -171,9 +171,9 @@ export default function ConversaChatCliente() {
         };
 
         if (messages.length > 11) {
-            setInverter(true);
+            setInverter(false);
         };
-        
+
         let agora = new Date();
         AtualizarState('Cliente', minhaMensagem, agora);
 
@@ -263,6 +263,8 @@ export default function ConversaChatCliente() {
                             value={minhaMensagem}
                             onChangeText={(text) => setMinhaMensagem(text)}
                             isFocused={true}
+                            multiline={true}
+
                         />
                     </View>
                     <TouchableOpacity style={styles.divreguaicon} onPress={() => {

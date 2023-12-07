@@ -46,7 +46,7 @@ export default function CriarTurmas() {
 
         try {
 
-            if(nomeTurma === "" || periodoTurma === ""){
+            if (nomeTurma === "" || periodoTurma === "") {
                 console.log("Preencha todos os campos!");
                 return;
             }
@@ -106,13 +106,25 @@ export default function CriarTurmas() {
             </View>
 
             <View style={styles.divtextos}>
-                <Text style={styles.textosuperior}>Crie a sua nova turma</Text>
+                <Text style={styles.textosuperior}>Crie a sua  turma</Text>
                 <Text style={styles.textoinferior}>Insira as informações abaixo:</Text>
             </View>
 
             <View style={styles.divinputs}>
-                <InputCriacao mudou={(text) => setNomeTurma(text)} icone={"grid"} dado={"Nome da Turma"} />
-                <InputCriacao mudou={(text) => setPeriodoTurma(text)} icone={"time-outline"} dado={"Periodo"} />
+                <InputCriacao
+                    valor={nomeTurma}
+                    mudou={(text) => {
+                        setNomeTurma(text);
+                    }}
+                    icone={"grid"}
+                    dado={"Nome da Turma"}
+                />
+                <InputCriacao 
+                valor={periodoTurma}
+                mudou={(text) => setPeriodoTurma(text)} 
+                icone={"leaf-outline"} 
+                dado={"Breve descrição"} 
+                />
             </View>
 
             <View style={styles.divbotoes}>
@@ -126,8 +138,8 @@ export default function CriarTurmas() {
                     {
                         loading ? (
                             <View style={styles.alinhameio}>
-                            <Text style={styles.textoconcluir}><ActivityIndicator color="white"/></Text>
-                        </View>
+                                <Text style={styles.textoconcluir}><ActivityIndicator color="white" /></Text>
+                            </View>
 
                         )
                             :

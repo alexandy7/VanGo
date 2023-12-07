@@ -19,7 +19,7 @@ import NotificacaoCliente from "../../Pages//NotificacaoCliente/NotificacaoClien
 import Chat from "../../PagesMotorista/Chat/Chat";
 import ConversaChatCliente from "../../Pages/ConversaChatCliente/ConversaChatCliente";
 import VisualizarMotorista from "../../Pages/VisualizarMotorista/VisualizarMotorista";
-
+import VizualizarComprovante from "../../Pages/VizualizarComprovante/VizualizarComprovante";
 
 import CadastroConcluido from "../../PagesGeral/CadastroConcluido/CadastroConcluido";
 import TelaInicialCadastro from "../../PagesGeral/TelaInicialCadastro/TelaInicialCadastro";
@@ -43,8 +43,9 @@ import CadastroCliente1 from "../../Pages/CadastroCliente1/CadastroCliente1";
 import CadastroCliente2 from "../../Pages/CadastroCliente2/CadastroCliente2";
 import CadastroCliente3 from "../../Pages/CadastroCliente3/CadastroCliente3";
 import CadastroMotorista1 from "../../PagesMotorista/CadastroMotorista1/CadastroMotorista1";
+import CadastroMotorista2 from "../../PagesMotorista/CadastroMotorista2/CadastroMotorista2";
 import CadastroCliente4 from "../../Pages/CadastroCliente4/CadastroCliente4";
-
+import CadastroMotorista3 from "../../PagesMotorista/CadastroMotorista3/CadastroMotorista3"
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -189,13 +190,12 @@ function TabBarMotorista() {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => {
-
+            
             if (focused) {
               return <Ionicons name="person-sharp" color={'#F7770D'} size={30} />
             }
 
             return <Ionicons name="person-sharp" color={'rgba(0, 0, 0, 0.3)'} size={30} />
-
           },
         }}
       />
@@ -234,6 +234,7 @@ export default function AppNavigator() {
       <Stack.Screen name="PerfilMotorista" component={PerfilMotorista} options={{ headerShown: false }} />
       <Stack.Screen name="CadastroVeiculo" component={CadastroVeiculo} options={{ headerShown: false }} />
       <Stack.Screen name="ConfiguracaoMoto" component={ConfiguracaoMoto} options={{ headerShown: false }} />
+      <Stack.Screen name="VizualizarComprovante" component={VizualizarComprovante} options={{ headerShown: false }} />
       <Stack.Screen name="NotificacaoMotorista" component={NotificacaoMotorista} options={{ headerShown: false }} />
       <Stack.Screen name="PagamentosMotorista" component={PagamentosMotorista} options={{ headerShown: false }} />
       <Stack.Screen name="SolicitacoesTurmaMotorista" component={SolicitacoesTurmaMotorista} options={{ headerShown: false }} />
@@ -247,6 +248,8 @@ export default function AppNavigator() {
       <Stack.Screen name="CadastrarClienteTurma" component={CadastrarClienteTurma} options={{ headerShown: false }} />
       <Stack.Screen name="ConversaChatMotorista" component={ConversaChatMotorista} options={{ headerShown: false }} />
       <Stack.Screen name="CadastroMotorista1" component={CadastroMotorista1} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroMotorista2" component={CadastroMotorista2} options={{ headerShown: false }} />
+      <Stack.Screen name="CadastroMotorista3" component={CadastroMotorista3} options={{ headerShown: false }} />
     </Stack.Navigator>
 
   );

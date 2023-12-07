@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
 
     hora: {
-        fontSize: 18,
+        fontSize: 15,
         color: "#383838",
         marginRight: "5%"
     },

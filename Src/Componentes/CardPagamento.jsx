@@ -4,7 +4,7 @@ import { Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CardPagamento({ imagem, nome, valor, icon, color, status, vencimento, evento, seta, clickImagem }) {
+export default function CardPagamento({ imagem, nome, valor, icon, cor, status, vencimento, evento, seta, clickImagem }) {
 
     const [fonteLoaded] = useFonts({
         Montserrat_500Medium,
@@ -22,7 +22,7 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
             </TouchableOpacity>
 
 
-            <View style={styles.containertexto}>
+            <TouchableOpacity onPress={evento} activeOpacity={1} style={styles.containertexto}>
 
                 <View style={styles.divsuperior}>
                     <View style={styles.reguanome}>
@@ -30,7 +30,7 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
                     </View>
 
                     <View style={styles.reguafatura}>
-                        <Text style={[styles.fatura, { color }]}>{"R$" + valor}</Text>
+                        <Text style={[styles.fatura, { color: cor }]}>{"R$" + valor}</Text>
                     </View>
                     {
                         seta ? (
@@ -53,8 +53,8 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
                 <View style={styles.divinferior}>
 
                     <View style={styles.reguastatus}>
-                        <Ionicons style={styles.warning} name={icon} size={20} color={color} />
-                        <Text style={[styles.situacao, { color }]}>{status}</Text>
+                        <Ionicons style={styles.warning} name={icon} size={20} color={cor} />
+                        <Text style={[styles.situacao, { color: cor }]}>{status}</Text>
                     </View>
 
                     <View style={styles.reguavencimento}>
@@ -62,7 +62,7 @@ export default function CardPagamento({ imagem, nome, valor, icon, color, status
                     </View>
 
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

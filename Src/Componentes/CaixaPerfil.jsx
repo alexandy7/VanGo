@@ -5,7 +5,7 @@ import PincelEditar from "./PincelEditar";
 import { TouchableOpacity } from "react-native";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function CaixaPerfil({texto1, titulotexto1, icontexto1, texto2, titulotexto2, icontexto2, texto3, titulotexto3, icontexto3, texto4, titulotexto4, icontexto4, brushOrChat, evento}) {
+export default function CaixaPerfil({texto1, titulotexto1, icontexto1, texto2, titulotexto2, icontexto2, texto3, titulotexto3, icontexto3, texto4, titulotexto4, icontexto4, brushOrChat, evento, signal}) {
 
         const [fonteLoaded] = useFonts({
             Montserrat_500Medium,
@@ -37,11 +37,13 @@ export default function CaixaPerfil({texto1, titulotexto1, icontexto1, texto2, t
                     <View style={styles.divicone}>
                         <Ionicons name={icontexto2} size={30} color='#F7770D' style={styles.iconesup}/>
                     </View>
-                    
-                    <View style={styles.divtexto}>
+                    {
+                    //TouchableOpacity temporal apenas para a apresentação
+                    }
+                    <TouchableOpacity onPress={signal} style={styles.divtexto}>
                         <Text style={styles.texto1sup}>{texto2}</Text>
                         <Text style={styles.texto2sup}>{titulotexto2}</Text>
-                    </View>
+                    </TouchableOpacity>
 
                 </View>
             </View>
@@ -66,7 +68,7 @@ export default function CaixaPerfil({texto1, titulotexto1, icontexto1, texto2, t
                     </View>
                     
                     <View style={styles.divtexto}>
-                        <Text style={styles.texto1inf}>{texto4}</Text>
+                        <Text style={[styles.texto1inf, {height: texto4 === "Integral" ?  25 : 40}]}>{texto4}</Text>
                         <Text style={styles.texto2inf}>{titulotexto4} </Text>
                     </View>
                 </View>
@@ -91,13 +93,14 @@ const styles = StyleSheet.create({
         elevation: 10,
         alignSelf: "center",
         borderRadius: 20,
-        flexDirection: "column"
+        flexDirection: "column",
+        shadowColor: "black",
+        shadowRadius: 5
     },
 
     divsuperior: {
         height: 100,
         width: "100%",
-        // backgroundColor: "yellow",
         display: "flex",
         flexDirection: "row",
     },
@@ -105,7 +108,6 @@ const styles = StyleSheet.create({
     ladoesquerdo: {
         height: "100%",
         width: "50%",
-        // backgroundColor: "lightblue",
         display: "flex",
         flexDirection: "row",
         paddingLeft: "1%"
@@ -114,7 +116,6 @@ const styles = StyleSheet.create({
     ladodireito: {
         height: "100%",
         width: "50%",
-        // backgroundColor: "pink",
         display: "flex",
         flexDirection: "row",
         paddingRight: "1%"
@@ -146,7 +147,8 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
         position: "relative",
         top: 5,
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
+        textAlign: "justify",
     },
 
     texto2sup: {
@@ -161,7 +163,6 @@ const styles = StyleSheet.create({
     divinferior: {
         height: 100,
         width: "100%",
-        // backgroundColor: "yellow",
         display: "flex",
         flexDirection: "row",
     },
@@ -176,7 +177,9 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
         position: "relative",
         bottom: 5,
-        fontFamily: "Montserrat_500Medium"
+        fontFamily: "Montserrat_500Medium",
+        textAlign: "justify",
+        height: 40
     },
 
     texto2inf: {
@@ -185,7 +188,8 @@ const styles = StyleSheet.create({
         marginLeft: "10%",
         position: "relative",
         bottom: 5,
-        fontFamily: "Montserrat_400Regular"
+        fontFamily: "Montserrat_400Regular",
+        
     },
 
     divpincel: {

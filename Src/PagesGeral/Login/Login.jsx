@@ -85,7 +85,6 @@ export default function Login() {
           setLoading(false);
         })
 
-
         .catch((error) => {
           setErro(true);
           console.log(`deu ruim aqui mane`, error);
@@ -109,8 +108,7 @@ export default function Login() {
   };
 
   useEffect(() => {
-
-    async function WarUp(){
+    async function WarUp() {
       await axios.get('https://apivango.azurewebsites.net/api/Auth/WarmUp')
     };
     WarUp();

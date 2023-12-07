@@ -12,7 +12,6 @@ import { ActivityIndicator } from "react-native";
 import InputPrompt from "../../Componentes/Modal";
 import Restart from 'react-native-restart';
 import ListEscolas from "../../Componentes/ListEscolas";
-import RNRestart from 'react-native-restart';
 
 export default function EditarCliente() {
 

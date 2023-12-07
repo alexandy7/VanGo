@@ -47,14 +47,12 @@ const styles = StyleSheet.create({
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-start",
-        position: "absolute",
-        right: 15
     },
 
     numeropasso: {
         fontFamily: "Montserrat_400Regular",
         color: "#F7770D",
-        marginTop: 30,
+        marginTop: 30
     },
 
     divtextos: {
@@ -78,14 +76,13 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         flexWrap: "wrap",
-        width: "90%",
+        width: "80%",
         alignSelf: "center",
-        marginBottom: 3,
     },
 
     tituloinput: {
         fontFamily: "Montserrat_400Regular",
-        fontSize: 15,
+        fontSize: 17,
         color: "#F7770D",
     },
 
@@ -104,8 +101,8 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderColor: "#F7770D",
         fontFamily: "Montserrat_400Regular",
-        marginRight: "5%",
-    }
+        marginRight: "5%"
+    },
 
 })
 

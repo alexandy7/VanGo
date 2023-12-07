@@ -61,10 +61,10 @@ const CadastroCliente3 = ({ route }) => {
             <View style={styles.concluir}>
               <Touchable texto={'Prosseguir'} evento={() => {
 
-                // if (escola === '') {
-                //   showToast("error", "Escola", "Selecione sua escola!", 2000);
-                //   return;
-                // }
+                 if (escola === '') {
+                   showToast("error", "Escola", "Selecione sua escola!", 2000);
+                   return;
+                 }
 
                 
                   navigation.navigate("CadastroCliente4", {
@@ -72,7 +72,7 @@ const CadastroCliente3 = ({ route }) => {
                     nomeSobrenome1: nomeSobrenome1,
                     bairro2: bairro2,
                     nomeSobrenome2: nomeSobrenome2,
-                    nomeCrianca: nomeCrianca + ' ' + sobrenomeCrianca,
+                    nomeCrianca: nomeCrianca.trim() + ' ' + sobrenomeCrianca.trim(),
                     escolaCliente: escola
                   })
                 

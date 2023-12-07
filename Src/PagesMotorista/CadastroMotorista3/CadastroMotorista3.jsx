@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
-import styles from "./CadastroCliente5modules";
+import styles from "./CadastroMotorista3.modules";
 import NotFound from "../../Componentes/NotFound";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 import * as ImagePicker from 'expo-image-picker';
@@ -13,9 +13,9 @@ import SemWifi from "../../Componentes/SemWifi";
 import NetInfo from '@react-native-community/netinfo';
 import showToast from "../../services/Toast/Toast";
 
-const CadastroCliente5 = ({ route }) => {
+const CadastroMotorista3 = ({ route }) => {
 
-    const { bairro1, nomeSobrenome1, bairro2, nomeSobrenome2, nomeCrianca, escolaCliente, emailCliente, senhaCliente } = route.params;
+    const { nomeSobrenome, anosAtuacao, periodoMotorista, cidadeMotorista, emailMotorista, senhaMotorista } = route.params;
 
     const navigation = useNavigation();
 
@@ -74,28 +74,28 @@ const CadastroCliente5 = ({ route }) => {
         };
     };
 
-    async function CadastrarCliente() {
+    async function CadastrarMotorista() {
         const data = {
-            Email_cliente: emailCliente,
-            Senha_cliente: senhaCliente,
-            Nome_cliente: nomeCrianca,
+            Email_motorista: emailMotorista,
+            Senha_motorista: senhaMotorista,
+            Nome_motorista: nomeSobrenome,
             Base64: _base64,
-            Endereco_cliente: bairro1,
-            Endereco_reserva: bairro2,
-            Responsavel_cliente: nomeSobrenome1,
-            Escola_cliente: escolaCliente
+            Endereco_motorista: cidadeMotorista,
+            Periodo_atuacao_motorista: periodoMotorista,
+            Tempo_atuacao_motorista: anosAtuacao,
         };
 
         try {
 
-            const resposta = await axios.post('https://apivango.azurewebsites.net/api/Auth/CadastrarCliente', data);
+            const resposta = await axios.post('https://localhost:7149/api/Auth/CadastrarMotorista', data);
 
-            if (resposta != null) {
-                showToast("success", "Concluido!", "Aproveite o app!", 3000)
-                navigation.navigate('Login');
-            } else {
-                console.log('Usuário não encontrado');
+            if (resposta.status != 200) {
+                console.log('Ocorreu um erro interno');
+                return;
             };
+
+            showToast("success", "Concluido!", "Aproveite o app!", 3000);
+            navigation.replace('Login');
         }
 
         catch (error) {
@@ -106,7 +106,7 @@ const CadastroCliente5 = ({ route }) => {
     return (
         <View style={styles.main}>
             <View style={styles.header}>
-                <Text style={styles.numeropasso}>5/5</Text>
+                <Text style={styles.numeropasso}>3/3</Text>
                 <View style={styles.divesquerda}>
                     <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
                         <Ionicons name="chevron-back-outline" size={35} color={"gray"} />
@@ -129,7 +129,7 @@ const CadastroCliente5 = ({ route }) => {
                 </View>
 
                 <View style={styles.divtexto}>
-                    <Text style={styles.texto1}>Adicione a foto da criança</Text>
+                    <Text style={styles.texto1}>Adicione uma foto de perfil</Text>
                     <Text style={styles.texto2}>Insira as informações abaixo</Text>
                 </View>
             </View>
@@ -157,7 +157,7 @@ const CadastroCliente5 = ({ route }) => {
                         {
                             // Quando clicado, aparece a animação do ActivityIndicator
                             clicado ? (
-                                <TouchableOpacity disabled={true} style={styles.botaoconcluir} onPress={() => { CadastrarCliente() }}>
+                                <TouchableOpacity disabled={true} style={styles.botaoconcluir} onPress={() => { CadastrarMotorista() }}>
                                     <View style={styles.alinhainicio}>
                                         <Text></Text>
                                     </View>
@@ -173,7 +173,7 @@ const CadastroCliente5 = ({ route }) => {
                                 (
                                     <TouchableOpacity style={styles.botaoconcluir}
                                         onPress={() => {
-                                            CadastrarCliente();
+                                            CadastrarMotorista();
                                             setClicado(true);
                                         }}>
                                         <View style={styles.alinhainicio}>
@@ -201,4 +201,4 @@ const CadastroCliente5 = ({ route }) => {
 
 }
 
-export default CadastroCliente5;
+export default CadastroMotorista3;

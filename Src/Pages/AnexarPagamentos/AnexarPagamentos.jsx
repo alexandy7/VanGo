@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 import styles from "./AnexarPagamentos.modules";
@@ -12,6 +12,7 @@ import axios from "axios";
 import ApiCliente from "../../services/Api/ApiCiente";
 import NetInfo from '@react-native-community/netinfo';
 import SemWifi from "../../Componentes/SemWifi";
+import showToast from "../../services/Toast/Toast";
 
 const AnexarPagamentos = ({ route }) => {
 
@@ -24,6 +25,8 @@ const AnexarPagamentos = ({ route }) => {
     const [exibirFoto, setExibirFoto] = useState(false);
     const [usuario, setUsuario] = useState({});
     const [conexao, setConexao] = useState(true);
+    const [enviado, setEnviado] = useState(false);
+    const [enviando, setEnviando] = useState(false);
 
     useEffect(() => {
         ChecarConexao();
@@ -87,13 +90,20 @@ const AnexarPagamentos = ({ route }) => {
     async function EnviarPagamento() {
 
         try {
+            if (base64 === null) {
+                showToast("error", "Comprovante", "Insira um comprovante!", 2000);
+                return;
+            };
 
             let token = await Token();
 
             let data = {
                 Id_mensalidade: idMensalidade,
-                Comprovante_pagamento_Base64: base64
-            }
+                Comprovante_pagamento_Base64: base64,
+                Id_cliente: usuario.id_cliente,
+                Foto_cliente: usuario.foto_cliente,
+                Id_motorista: usuario.Id_motorista
+            };
 
             let response = await ApiCliente.post("EnviarPagamento", data, {
                 headers: {
@@ -107,7 +117,7 @@ const AnexarPagamentos = ({ route }) => {
                 return;
             };
 
-            navigation.navigate("PagamentoCliente");
+            navigation.navigate("TabBarCliente", {screen: "PagamentoCliente"});
         }
         catch (error) {
             console.log(error);
@@ -128,7 +138,6 @@ const AnexarPagamentos = ({ route }) => {
                 </View>
             </View>
 
-
             {
                 //Caso esteja conectado a internet renderiza a tela
                 conexao ? (
@@ -140,10 +149,9 @@ const AnexarPagamentos = ({ route }) => {
                             icon={icon}
                             status={status}
                             vencimento={vencimento}
-                            color={color}
+                            cor={color}
                             seta={false}
                         />
-
 
                         {
                             exibirFoto ? (
@@ -161,15 +169,35 @@ const AnexarPagamentos = ({ route }) => {
                                 )
                         }
 
-                        <TouchableOpacity style={styles.botaoanexar} onPress={() => { EnviarPagamento() }}>
-                            <Text style={styles.textoanexar}>Enviar Anexo</Text>
-                        </TouchableOpacity>
+                        {
+                            enviando ? (
+                                <TouchableOpacity style={styles.botaoanexar}>
+                                    <ActivityIndicator style={styles.textoanexar} color={"white"} />
+                                </TouchableOpacity>
+                            )
+                                :
+                                (
+                                    enviado ? (
+                                        <View></View>
+                                    )
+                                        :
+                                        (
+                                            <TouchableOpacity style={styles.botaoanexar} 
+                                            onPress={() => { 
+                                                EnviarPagamento();
+                                                setEnviando(true);
+                                             }}>
+                                                <Text style={styles.textoanexar}>Enviar Anexo</Text>
+                                            </TouchableOpacity>
+                                        )
+                                )
+                        }
                     </View>
                 )
                     :
                     (
-                        <View style={{marginTop: 100, flex: 1}}>
-                            <SemWifi/>
+                        <View style={{ marginTop: 100, flex: 1 }}>
+                            <SemWifi />
                         </View>
                     )
             }

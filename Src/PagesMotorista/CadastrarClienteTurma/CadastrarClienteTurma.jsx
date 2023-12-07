@@ -29,8 +29,8 @@ const CadastrarClienteTurma = ({ route }) => {
     const [usuario, setUsuario] = useState({});
     const [nomeCliente, setNomeCliente] = useState('');
     const [clienteAtual, setClienteAtual] = useState(1);
-    const [valorMensalidade, setValorMensalidade] = useState('150');
-    const [vencimentoMensalidade, setVencimentoMensalidade] = useState('23/04/2024');
+    const [valorMensalidade, setValorMensalidade] = useState();
+    const [vencimentoMensalidade, setVencimentoMensalidade] = useState();
     const [utilizacao, setUtilizacao] = useState('');
 
     const [date, setDate] = useState(new Date());
@@ -51,25 +51,32 @@ const CadastrarClienteTurma = ({ route }) => {
     }
 
     async function AceitarSolicitacao() {
-        //Fazendo isso para formatar a data no formato aceitado pelo MySql/C#
-        let partes = vencimentoMensalidade.split('/');
-        let vencimento = partes[2] + '-' + partes[1] + '-' + partes[0];
+        try {
 
-        const data = {
-            Id_cliente: Clientes[clienteAtual - 1].idCliente,
-            Id_turma: Clientes[clienteAtual - 1].idTurma,
-            Id_motorista: usuario.id_motorista,
-            Vencimento_mensalidade: vencimento.replace(/\//g, '-'),
-            Valor_mensalidade: Number(valorMensalidade)
+            //Fazendo isso para formatar a data no formato aceitado pelo MySql/C#
+            let partes = vencimentoMensalidade.split('/');
+            let vencimento = partes[2] + '-' + partes[1] + '-' + partes[0];
+
+            const data = {
+                Id_cliente: Clientes[clienteAtual - 1].idCliente,
+                Id_turma: Clientes[clienteAtual - 1].idTurma,
+                Id_motorista: usuario.id_motorista,
+                Vencimento_mensalidade: vencimento,
+                Valor_mensalidade: Number((valorMensalidade.replace(/,/g, ".")).substring(2))
+            }
+
+            const token = await Token();
+            await ApiMotorista.put("InserirClienteTurma", data, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            })
         }
 
-        const token = await Token();
-        await ApiMotorista.put("InserirClienteTurma", data, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            }
-        })
+        catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -110,8 +117,8 @@ const CadastrarClienteTurma = ({ route }) => {
                 dado={"Ex: R$200,00"}
                 sombra={true}
                 valor={valorMensalidade}
-                mudou={(text) => { setValorMensalidade(text) }} 
-                />
+                mudou={(text) => { setValorMensalidade(text) }}
+            />
 
             <Text style={styles.tituloform}>Vencimento da mensalidade</Text>
             <InputEdicao
@@ -126,7 +133,7 @@ const CadastrarClienteTurma = ({ route }) => {
 
             <Text style={styles.tituloform}>Utilização dos serviços</Text>
             <InputEdicao
-                typeInput={"only-numbers"}
+                typeInput={"numeric"}
                 largura={'85%'}
                 borda={false}
                 dado={"Ex: Ida e volta"}

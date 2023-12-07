@@ -8,6 +8,8 @@ import styles from "./HomeMotorista.modules";
 import { Token, UserData } from "../../services/Contexts/Contexts";
 import { useFonts, Montserrat_500Medium } from "@expo-google-fonts/montserrat"
 import ApiMotorista from "../../services/Api/ApiMotorista";
+import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
+import InputPrompt from "../../Componentes/Modal";
 
 export default function HomeMotorista() {
 
@@ -28,9 +30,8 @@ export default function HomeMotorista() {
             .then((response) => {
                 setUser(response);
                 BuscarTurmas(response.id_motorista);
-
-            })
-    }
+            });
+    };
 
     async function BuscarTurmas(id_motorista) {
         try {
@@ -73,6 +74,7 @@ export default function HomeMotorista() {
     return (
 
         <View style={styles.main}>
+
             <View style={styles.header}>
 
                 <View style={styles.alinhanomefoto}>
@@ -90,6 +92,7 @@ export default function HomeMotorista() {
                     <View style={styles.alinhaicone}>
                         <TouchableOpacity onPress={() => { navigation.navigate('NotificacaoMotorista') }}>
                             <Ionicons style={styles.icone} name={"notifications-sharp"} size={40} color='white' />
+                            <View style={styles.bolinha} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => { navigation.navigate('Chat') }}>
@@ -113,7 +116,7 @@ export default function HomeMotorista() {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.alinhabotao} onPress={() => { navigation.navigate('ConfiguracaoCliente') }}>
-                    <BotaoHome icone={"location"} texto="Localização" />
+                    <BotaoHome icone={"settings-outline"} texto="Configuração" />
                 </TouchableOpacity>
             </View>
 
@@ -155,7 +158,7 @@ export default function HomeMotorista() {
                                 <CardTurma
                                     nome={item.nome_turma}
                                     chave={item.id_turma}
-                                    horarioinic={item.periodo_turma}
+                                    descricao={item.periodo_turma}
                                     evento={() => {
                                         navigation.navigate('Turmas', {
                                             idTurma: item.id_turma,

@@ -37,32 +37,32 @@ export default function PerfilMotorista() {
 
             <View>
                 <Perfil
-                    fotoUser={{uri: user.foto_motorista}}
+                    fotoUser={{ uri: user.foto_motorista }}
                     nomeUser={nome}
-                    evento={()=> navigation.navigate('ConfiguracaoMoto')}
-                    >
+                    evento={() => navigation.navigate('ConfiguracaoMoto')}
+                >
                 </Perfil>
 
                 {
                     x ? (
 
                         <View style={styles.regua}>
-                            <CaixaPerfil 
-                        texto1={"5 Anos"}
-                        titulotexto1={"Tempo"}
-                        icontexto1={"hourglass-outline"}
-                        texto2={user.QuantidadeClientes}
-                        titulotexto2={"Alunos"}
-                        icontexto2={"person-outline"}
-                        texto3={FormatadorTexto(user.endereco_motorista, 1, 2)}
-                        titulotexto3={"Cidade"}
-                        icontexto3={"business-outline"}
-                        texto4={"Integral"}
-                        titulotexto4={"Periodo"}
-                        icontexto4={"time-outline"}
-                        brushOrChat={"brush"}
-                        evento={() => { navigation.navigate("EditarMotorista") }}
-                    />
+                            <CaixaPerfil
+                                texto1={"5 Anos"}
+                                titulotexto1={"Tempo"}
+                                icontexto1={"hourglass-outline"}
+                                texto2={user.QuantidadeClientes}
+                                titulotexto2={"Alunos"}
+                                icontexto2={"person-outline"}
+                                texto3={"Santana de Parnaiba"}
+                                titulotexto3={"Cidade"}
+                                icontexto3={"business-outline"}
+                                texto4={"Integral"}
+                                titulotexto4={"Periodo"}
+                                icontexto4={"time-outline"}
+                                brushOrChat={"brush"}
+                                evento={() => { navigation.navigate("EditarMotorista") }}
+                            />
                         </View>
                     )
                         :

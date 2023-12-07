@@ -68,22 +68,6 @@ const CadastroCliente2 = ({ route }) => {
                 />
             </View>
 
-            <View style={[styles.divinputs, { height: 80 }]}>
-                <Text style={styles.tituloinput}>CEP</Text>
-                <TextInput
-                    style={[styles.inputs, { width: "60%" }]}
-                    onChangeText={(text) => {
-                        if (cepCliente2.length === 5) {
-                            setCepCliente2('-' + text);
-                            return;
-                        };
-
-                        setCepCliente2(text);
-                    }}
-                />
-                <Text style={styles.textocep}>Clique aqui para saber seu CEP</Text>
-            </View>
-
             <View style={[styles.divinputs, { height: 70 }]}>
                 <Text style={styles.tituloinput}>Logradouro</Text>
                 <TextInput style={[styles.inputs, { width: "47.5%" }]} />
@@ -125,7 +109,6 @@ const CadastroCliente2 = ({ route }) => {
                     navigation.navigate('CadastroCliente3', {
                         bairro1: bairro1,
                         nomeSobrenome1: nomeSobrenome1,
-
                         bairro2: bairro2 + ' ' + numero2,
                         nomeSobrenome2: nomeCliente2 + ' ' + sobreNomeCliente2
                     })

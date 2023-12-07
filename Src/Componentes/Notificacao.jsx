@@ -1,18 +1,16 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
-import { Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat";
 
 
-export default function Notificacao({ fotouser, nomeuser, info, hora, clickImagem }) {
+export default function Notificacao({ fotouser, nomeuser, info, hora, clickImagem, lida }) {
 
     const[fontsLoaded] = useFonts({
         Montserrat_500Medium,
         Montserrat_400Regular
     })
     return (
-        <View style={[styles.container, styles.shadow]}>
+        <View style={[styles.container, styles.shadow, {shadowColor: lida ? "#000" : "#F7770D", elevation: lida ? 10 : 15}]}>
 
             <TouchableOpacity activeOpacity={0.8} style={styles.divimagem} onPress={clickImagem}>
                 <Image source={fotouser} style={styles.imagem}></Image>
@@ -20,8 +18,8 @@ export default function Notificacao({ fotouser, nomeuser, info, hora, clickImage
 
             <View style={styles.alinha}>
                 <View style={styles.divsuperior}>
-                    <Text style={styles.nomedouser}>{nomeuser}</Text>
-                    <Text style={styles.horario}>{hora}</Text>
+                    <Text style={[styles.nomedouser, {color: lida ? "black" : "#F7770D"}]}>{nomeuser}</Text>
+                    <Text style={[styles.horario, {color: lida ? "black" : "#F7770D"}]}>{hora}</Text>
                 </View>
 
                 <View style={styles.divinferior}>
@@ -83,7 +81,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: "55%",
         alignItems: "center",
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
     },
 
     nomedouser: {
@@ -100,7 +98,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         position: "relative",
         marginLeft: "2%",
-        marginBottom: "3%",
         fontFamily: "Montserrat_400Regular",
         justifyContent: "center"
     },
@@ -120,11 +117,8 @@ const styles = StyleSheet.create({
         marginBottom: "2%"
     },
 
-    shadow: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
+    shadow: { 
         shadowOpacity: 0.5,
         shadowRadius: 5,
-        elevation: 15,
-    },
+    },              
 });

@@ -72,25 +72,10 @@ export default function CadastroCliente1() {
                 />
             </View>
 
-            <View style={[styles.divinputs, {height: 80}]}>
-                <Text style={styles.tituloinput}>CEP</Text>
-                <TextInput 
-                style={[styles.inputs, {width: "60%"}]}
-                onChangeText={(text)=> {
-                    if(cepCliente.length === 5){
-                        setCepCliente('-' + text);
-                        return;
-                    };
-
-                    setCepCliente(text);
-                }}
-                />
-                <Text style={styles.textocep}>Clique aqui para saber seu CEP</Text>
-            </View>
-
             <View style={[styles.divinputs, {height: 70}]}>
                 <Text style={styles.tituloinput}>Logradouro</Text>
-                <TextInput style={[styles.inputs, {width: "47.5%"}]}/>
+                <TextInput 
+                style={[styles.inputs, {width: "47.5%"}]}/>
 
                 <Text style={styles.tituloinput}>Bairro</Text>
                 <TextInput 

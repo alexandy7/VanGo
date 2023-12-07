@@ -11,8 +11,8 @@ import ApiCliente from "../../services/Api/ApiCiente";
 
 const VisualizarMotorista = ({ route }) => {
 
-    const { nome_motorista, foto_motorista, id_motorista, quantidadeclientes, endereco_motorista, periodo_motorista } = route.params;
-    const [motorista, setMotorista] = useState({});
+    const { nome_motorista, foto_motorista, quantidadeclientes, endereco_motorista, periodo_motorista } = route.params;
+
     const navigation = useNavigation();
 
     // useEffect(()=>{
@@ -59,8 +59,8 @@ const VisualizarMotorista = ({ route }) => {
                         titulotexto4={"Periodo"}
                         icontexto4={"time-outline"}
                         brushOrChat={"chatbubbles"}
-                        evento={() => { navigation.navigate("Chat") }}
-                    ></CaixaPerfil>
+                        evento={() => { navigation.navigate("ConversaChatCliente") }}
+                    />
                 </View>
 
             </View>

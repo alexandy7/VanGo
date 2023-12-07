@@ -19,8 +19,8 @@ export default function PagamentoCliente() {
     const [nomeSobrenome, setNomeSobrenome] = useState('');
     const [encontrado, setEncontrado] = useState(true);
     const [loading, setLoading] = useState(true);
-    const [pagamentos, setPagamentos] = useState(null);
-    const [mensalidades, setMensalidades] = useState(null);
+    const [pagamentos, setPagamentos] = useState({});
+    const [mensalidades, setMensalidades] = useState({});
     const [recarregar, setRecarregar] = useState(false);
 
     const [icone, setIcone] = useState('');
@@ -28,10 +28,41 @@ export default function PagamentoCliente() {
     const [setaComponente, setSetaComponente] = useState();
 
     useEffect(() => {
-        BuscarUsuario();
-        //Define oque será exibido na mensalidade
-        if (mensalidades) {
-            switch (mensalidades[mensalidades.length - 1].situacao_mensalidade) {
+        BuscarUsuario()
+
+    }, [])
+
+
+    async function BuscarUsuario() {
+        try {
+            const response = await UserData();
+            setUsuario(response);
+            BuscarComprovantes(response.id_cliente); // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
+
+            let nomeSeparado = response.nome_cliente.split(' ');
+            setNomeSobrenome(nomeSeparado[0] + ' ' + nomeSeparado[1])
+        }
+
+        catch (error) {
+            console.error('Houve um erro: ', error);
+        }
+    }
+
+    async function BuscarComprovantes(idCliente) {
+
+        try {
+
+            let token = await Token()
+
+            const response = await ApiCliente.get(`ListarPagamentosAndMensalidade/${idCliente}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            let json = response.data;
+            switch (json.mensalidades[json.mensalidades.length - 1].situacao_mensalidade) {
                 case 'prazo':
                     setIcone('time');
                     setColorIcone('black');
@@ -68,39 +99,6 @@ export default function PagamentoCliente() {
                     setSetaComponente(true);
 
             }
-        }
-    }, [mensalidades])
-
-
-    async function BuscarUsuario() {
-        try {
-            const response = await UserData();
-            setUsuario(response);
-            BuscarComprovantes(response.id_cliente); // Enviando como parametro pois quando o `BuscarComprovantes` é chamado, o `usuario` ainda não foi atualizado
-
-            let nomeSeparado = response.nome_cliente.split(' ');
-            setNomeSobrenome(nomeSeparado[0] + ' ' + nomeSeparado[1])
-        }
-
-        catch (error) {
-            console.error('Houve um erro: ', error);
-        }
-    }
-
-    async function BuscarComprovantes(idCliente) {
-
-        try {
-
-            let token = await Token()
-
-            const response = await ApiCliente.get(`ListarPagamentosAndMensalidade/${idCliente}`, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                    "Content-Type": "application/json",
-                }
-            });
-
-            let json = response.data;
 
             setPagamentos(json.pagamentos);
             setMensalidades(json.mensalidades);
@@ -145,7 +143,7 @@ export default function PagamentoCliente() {
 
     // )
 
-    function formatarDataAmericana(dataAmericana) {
+    function formatarData(dataAmericana) {
         // Cria um objeto de data usando a string no formato americano
         let dataObjeto = new Date(dataAmericana);
 
@@ -166,7 +164,6 @@ export default function PagamentoCliente() {
         <View style={styles.container}>
 
             {
-
                 loading ? (
                     <ActivityIndicator color="#F7770D" size={40} style={{ justifyContent: "center", marginTop: "90%" }} />
                 )
@@ -182,17 +179,17 @@ export default function PagamentoCliente() {
                                     nome={nomeSobrenome}
                                     valor={mensalidades[mensalidades.length - 1].valor_mensalidade}
                                     icon={icone}
-                                    color={colorIcone}
+                                    cor={colorIcone}
                                     status={mensalidades[mensalidades.length - 1].situacao_mensalidade}
-                                    vencimento={formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
+                                    vencimento={formatarData(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10))}
                                     seta={setaComponente}
 
-                                    evento={() => navigation.navigate("AnexarPagamentos", {
+                                    evento={() => navigation.replace("AnexarPagamentos", {
                                         valor: mensalidades[mensalidades.length - 1].valor_mensalidade,
                                         icon: icone,
                                         color: colorIcone,
                                         status: mensalidades[mensalidades.length - 1].situacao_mensalidade,
-                                        vencimento: formatarDataAmericana(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10)),
+                                        vencimento: formatarData(mensalidades[mensalidades.length - 1].vencimento_mensalidade.substring(0, 10)),
                                         idMensalidade: mensalidades[mensalidades.length - 1].id_mensalidade,
                                         nome: nomeSobrenome
                                     })}
@@ -222,10 +219,13 @@ export default function PagamentoCliente() {
 
                                                 return (
                                                     <CardComprovante
-                                                        DataPagamento={formatarDataAmericana(item.data_pagamento.substring(0, 10))}
-                                                        DataVencimento={formatarDataAmericana(item.vencimento_mensalidade.substring(0, 10))}
+                                                        DataPagamento={formatarData(item.data_pagamento.substring(0, 10))}
+                                                        DataVencimento={formatarData(item.vencimento_mensalidade.substring(0, 10))}
                                                         key={item.id_pagamento}
-                                                    ></CardComprovante>
+                                                        verComprovante={()=> navigation.navigate("VizualizarComprovante", {
+                                                            comprovante: item.comprovante_pagamento
+                                                        })}
+                                                    />
                                                     //substring limita a quantidade de caracteres que irá exibir
                                                 )
                                             }}

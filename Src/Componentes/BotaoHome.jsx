@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { useFonts, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
 
-export default function BotaoHome({icone, texto}) 
+export default function BotaoHome({icone, texto, breve}) 
 {
 
     const [fonteLoaded] = useFonts ({
@@ -16,7 +16,7 @@ export default function BotaoHome({icone, texto})
 
     return(
         <View style={styles.container}>
-            <View style= {styles.bg}>
+            <View style= {[styles.bg, {backgroundColor: breve ? "#A9A9A9" : "#F7770D"}]}>
                 <Ionicons style={styles.icone} name={icone} size={50} color='white'/>
             </View>
 

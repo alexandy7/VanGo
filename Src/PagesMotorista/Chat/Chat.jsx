@@ -23,19 +23,27 @@ export default function Chat() {
     }, []);
 
     async function BuscarConversas() {
-        const usuario = await UserData();
-        const token = await Token();
+        try {
 
-        let conversas = await ApiMotorista.get(`BuscarConversas/${usuario.id_motorista}`, {
-            headers: {
-                Authorization: "Bearer " + token,
-                "Content-Type": "application/json",
-            }
-        });
+            const usuario = await UserData();
+            const token = await Token();
 
-        let json = conversas.data;
-        setConversasFiltradas(json);
-        setConversas(json);
+            let conversas = await ApiMotorista.get(`BuscarConversas/${usuario.id_motorista}`, {
+                headers: {
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json",
+                }
+            });
+
+            let json = conversas.data;
+            console.log(json);
+            setConversasFiltradas(json);
+            setConversas(json);
+        }
+
+        catch (error) {
+            console.log(error);
+        }
     }
 
     const [fonteLoaded] = useFonts({
@@ -51,7 +59,7 @@ export default function Chat() {
         <View style={styles.scroll}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
-                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.navigate("TabBarMotorista") }}>
                         <Ionicons name="chevron-back-outline" size={30} color={"white"} />
                     </TouchableOpacity>
                 </View>
@@ -69,11 +77,11 @@ export default function Chat() {
             </View>
 
             <View style={styles.alinhabarra}>
-                <BarraDePesquisaChat 
-                corPlaceholder={true}
-                placeholder={"Exemplo: Jonathan Joestar"} 
-                valor={search}
-                mudou={(text)=> setSearch(text)}
+                <BarraDePesquisaChat
+                    corPlaceholder={true}
+                    placeholder={"Exemplo: Jonathan Joestar"}
+                    valor={search}
+                    mudou={(text) => setSearch(text)}
                 />
             </View>
 
@@ -82,25 +90,26 @@ export default function Chat() {
                 data={pesquisaFiltrada}
                 renderItem={({ item }) => {
                     return (
-                        <CardChat 
-                        foto={{ uri: item.foto_cliente }} 
-                        nome={item.nome_cliente} 
-                        hora={FormatadorData(item.data_envio_mensagem)} 
-                        ultimaMensagem={item.mensagem} 
-                        verPerfil={()=> {
-                            navigation.navigate('VisualizarCliente', {
-                                nome: item.nome_cliente,
-                                foto: item.foto_cliente,
-                                id: item.id_cliente_conversa
-                            })
-                        }}
-                        verConversa={()=> {
-                            navigation.navigate('ConversaChatMotorista', {
-                                id_cliente: item.id_cliente_conversa ,
-                                foto_cliente: item.foto_cliente,
-                                nome_cliente: item.nome_cliente 
-                            })
-                        }}
+                        <CardChat
+                            foto={{ uri: item.foto_cliente }}
+                            nome={item.nome_cliente}
+                            hora={FormatadorData(item.data_envio_mensagem)}
+                            ultimaMensagem={item.mensagem.length > 22 ?  item.mensagem.slice(0, 23) + "..." : item.mensagem}
+                            verPerfil={() => {
+                                navigation.navigate('VisualizarCliente', {
+                                    nome: item.nome_cliente,
+                                    foto: item.foto_cliente,
+                                    id: item.id_cliente_conversa
+                                })
+                            }}
+                            QuantidadeMensagem={item.mensagens_nao_lidas}
+                            verConversa={() => {
+                                navigation.replace('ConversaChatMotorista', {
+                                    id_cliente: item.id_cliente_conversa,
+                                    foto_cliente: item.foto_cliente,
+                                    nome_cliente: item.nome_cliente
+                                })
+                            }}
                         />
                     )
                 }}

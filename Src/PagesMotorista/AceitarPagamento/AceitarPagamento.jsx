@@ -5,13 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "./AceitarPagamento.modules";
 import CardPagamento from "../../Componentes/CardPagamento";
 import { useFonts, Montserrat_500Medium, Montserrat_400Regular } from "@expo-google-fonts/montserrat"
-import * as ImagePicker from 'expo-image-picker';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { Token } from "../../services/Contexts/Contexts";
 import ApiMotorista from "../../services/Api/ApiMotorista";
-import axios from "axios";
-import ApiCliente from "../../services/Api/ApiCiente";
 import FormatadorData from "../../services/Formatadores/FormatadorData/FormatadorData";
+import showToast from "../../services/Toast/Toast";
 
 const AceitarPagamento = ({ route }) => {
 
@@ -55,8 +53,14 @@ const AceitarPagamento = ({ route }) => {
                 }
             });
 
+            if(response.status !== 200){
+                showToast("error", "Error", "Algo deu errado. Tente novamente...", 2000);
+                navigation.navigate('TabBarMotorista', { screen: 'PagamentosMotorista' });
+                return;
+            }
+
             setClickAceitar(false);
-            navigation.navigate('PagamentosMotorista')
+            navigation.navigate('TabBarMotorista', { screen: 'PagamentosMotorista' });
         }
         catch (error) {
             console.log(error);
@@ -67,7 +71,7 @@ const AceitarPagamento = ({ route }) => {
         <ScrollView style={styles.principal}>
             <View style={styles.header}>
                 <View style={styles.divesquerda}>
-                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.goBack() }}>
+                    <TouchableOpacity style={styles.seta} onPress={() => { navigation.navigate("TabBarMotorista", {screen: "PagamentosMotorista"}) }}>
                         <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                 </View>
@@ -88,7 +92,7 @@ const AceitarPagamento = ({ route }) => {
                 icon={icon}
                 status={status}
                 vencimento={FormatadorData(vencimento)}
-                color={color}
+                cor={color}
                 seta={false}
             />
 
@@ -119,7 +123,7 @@ const AceitarPagamento = ({ route }) => {
                         {
                             clickAceitar ? (
                                 <TouchableOpacity style={styles.botaoaceitar} onPress={() => { ConfirmarPagamento() }}>
-                                    <Text style={styles.textobotaoaceitar}><ActivityIndicator color={"#F7770D"} /></Text>
+                                    <Text style={styles.textobotaoaceitar}><ActivityIndicator color={"white"} /></Text>
                                 </TouchableOpacity>
                             )
                                 :
@@ -133,7 +137,7 @@ const AceitarPagamento = ({ route }) => {
                         {
                             clickRecusar ? (
                                 <TouchableOpacity style={styles.botaorecusar} onPress={() => { ConfirmarPagamento("recusado") }}>
-                                    <Text style={styles.textobotaorecusar}><ActivityIndicator color={"#F7770D"} /></Text>
+                                    <Text style={styles.textobotaorecusar}><ActivityIndicator color={"white"} /></Text>
                                 </TouchableOpacity>
                             )
                                 :

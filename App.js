@@ -4,7 +4,7 @@ import AppNavigator from './Src/services/Navegacoes/NavegacoesCliente';
 import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 import { AppRegistry, LogBox } from 'react-native';
 
-//LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs();
 
 export default function App() {
 
